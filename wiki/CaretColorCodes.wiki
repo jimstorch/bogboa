@@ -4,7 +4,7 @@
 
 In order to make text decorating easier, you can use the following caret codes inside blocks of text.  If the client has turned off color, the tokens are simply stripped out.
 
-You'll notice there is a pattern to the codes which should be easy to remember -- lower case = dark/mode on, uppercase = bright/mode off.
+You'll notice there is a pattern to the codes which should be easy to remember -- lower case = dark/mode on, uppercase = bright/mode off.  Some, like Underline and Bold, unset using the opposite shift-state of same keyboard key.   
 
 = Caret Codes =
 {{{
@@ -25,7 +25,7 @@ You'll notice there is a pattern to the codes which should be easy to remember -
   ^C   = bold cyan
   ^w   = white
   ^W   = bold white
-  ^!   = bold on (use in a block of non-bright text)
+  ^!   = bold on (use within a block of non-bright text)
   ^1   = bold off 
   ^d   = default (should be white text on black)    
   ^kb  = black background
@@ -41,4 +41,12 @@ You'll notice there is a pattern to the codes which should be easy to remember -
   ^_   = (caret underbar) underline on
   ^-   = (caret minus) underline off
 
+}}}
+
+= Example =
+
+The following would print in dim white with the word 'gold' bolded and 'Eugene Levy' in bright red text.  Then the text is reset just before the exclamation point.
+
+{{{
+^wYou see a huge pile of ^!gold^1 guarded by ^REugene Levy^^!
 }}}
