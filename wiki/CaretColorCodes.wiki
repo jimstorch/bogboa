@@ -10,21 +10,23 @@ You'll notice there is a pattern to the codes which should be easy to remember -
 {{{
 
   ^k   = black
-  ^K   = bright black (grey)
+  ^K   = bold black (grey)
   ^r   = red
-  ^R   = bright red
+  ^R   = bold red
   ^g   = green
-  ^G   = bright green
+  ^G   = bold green
   ^y   = yellow
-  ^Y   = bright yellow
+  ^Y   = bold yellow
   ^b   = blue
-  ^B   = bright blue
+  ^B   = bold blue
   ^m   = magenta
-  ^M   = bright magenta
+  ^M   = bold magenta
   ^c   = cyan
-  ^C   = bright cyan
+  ^C   = bold cyan
   ^w   = white
-  ^W   = bright white
+  ^W   = bold white
+  ^!   = bold on (use in a block of non-bright text)
+  ^1   = bold off 
   ^d   = default (should be white text on black)    
   ^kb  = black background
   ^rb  = red background
@@ -36,7 +38,7 @@ You'll notice there is a pattern to the codes which should be easy to remember -
   ^i   = inverse text on  
   ^I   = inverse text off
   ^^   = reset all
-  ^_   = (caret-underbar) underline on
-  ^-   = (caret-minus) underline off
+  ^_   = (caret underbar) underline on
+  ^-   = (caret minus) underline off
 
 }}}
