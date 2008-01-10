@@ -7,33 +7,36 @@ In order to make text decorating easier, you can use the following caret codes i
 You'll notice there is a pattern to the codes which should be easy to remember -- lower case = dark/mode on, uppercase = bright/mode off.
 
 = Caret Codes =
+{{{
 
-  * ^k = black
-  * ^K = bright black (grey)
-  * ^r = red
-  * ^R = bright red
-  * ^g = green
-  * ^G = bright green
-  * ^y = yellow
-  * ^Y = bright yellow
-  * ^b = blue
-  * ^B = bright blue
-  * ^m = magenta
-  * ^M = bright magenta
-  * ^c = cyan
-  * ^C = bright cyan
-  * ^w = white
-  * ^W = bright white
-  * ^d = default (should be white text on black)    
-  * ^kb = black background
-  * ^rb = red background
-  * ^gb = green background
-  * ^yb = yellow background
-  * ^bb = blue background
-  * ^mb = magenta background
-  * ^cb = cyan background
-  * ^i = inverse text on  
-  * ^I = inverse text off
-  * ^^ = reset all
-  * ^_ = (caret-underbar) underline on
-  * ^- = (caret-minus) underline off
+  ^k   = black
+  ^K   = bright black (grey)
+  ^r   = red
+  ^R   = bright red
+  ^g   = green
+  ^G   = bright green
+  ^y   = yellow
+  ^Y   = bright yellow
+  ^b   = blue
+  ^B   = bright blue
+  ^m   = magenta
+  ^M   = bright magenta
+  ^c   = cyan
+  ^C   = bright cyan
+  ^w   = white
+  ^W   = bright white
+  ^d   = default (should be white text on black)    
+  ^kb  = black background
+  ^rb  = red background
+  ^gb  = green background
+  ^yb  = yellow background
+  ^bb  = blue background
+  ^mb  = magenta background
+  ^cb  = cyan background
+  ^i   = inverse text on  
+  ^I   = inverse text off
+  ^^   = reset all
+  ^_   = (caret-underbar) underline on
+  ^-   = (caret-minus) underline off
+
+}}}
