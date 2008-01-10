@@ -4,7 +4,7 @@
 
 In order to make text decorating easier, you can use the following caret codes inside blocks of text.  If the client has turned off color, the tokens are simply stripped out.
 
-You'll notice there is a pattern to the codes which should be easy to remember -- lower case = dark/mode on, uppercase = bright/mode off.  Some, like Underline and Bold, unset using the opposite shift-state of same key.   
+You'll notice there is a pattern to the codes which should be easy to remember -- lower case = dark/mode on, uppercase = bright/mode off.  Some, like Underline and Bold, unset using the opposite shift-state of same key.  Black is 'k' as in CMYK, since Blue took the 'b'.   
 
 = Caret Codes =
 {{{
@@ -50,4 +50,3 @@ The following would print in dim green with the word 'gold' bolded (brighter gre
 {{{
 ^gYou see a huge pile of ^!gold^1 guarded by ^REugene Levy^^!
 }}}
-
