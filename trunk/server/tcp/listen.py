@@ -9,8 +9,15 @@
 import socket
 import sys
 
-ADDRESS = ''
+## Port to listen for incomming connections.  You'll need root access to use
+## ports below 1025.
+
 PORT = 7777
+
+## ADDRESS is *NOT* the internet address, it's a local NIC address if you
+## want the server to listen on a particular device.  Leave blank otherwise.
+
+ADDRESS = '' 
 
 THE_SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 THE_SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
