@@ -1,0 +1,23 @@
+#Responses of various clients to the Telnet "Terminal Type" Command (see RFC 779).
+
+= Terminal Types=
+
+Results of requesting a terminal type sub-negotiation sequence.  See RFC 779 at http://www.rfc-archive.org/getrfc.php?rfc=779
+
+  * Linux Gnome-terminal Telnet = 'XTERM"
+  * Linux Eterm = "ETERM"
+  * Linux ROXterm = "XTERM"
+  * Linux Terminal = "XTERM"
+  * Linux RXVT = "RXVT"
+  * Linux Aterm = "RXVT"
+  * Linux mrxvt = "RXVT"
+  * Linux URXVT-Unicode = "RXVT-UNICODE"
+  * Linux PCMan X = Didn't work, ends entries with a CR and no LF.
+  * Linux Putty = Failed,  no response to IAC DO TERMINAL TYPE
+
+  * Windows 2000 Telnet = "ANSI"
+  * Windows XP Telnet = "ANSI"
+  * Windows WinTin++ = "TINTIN++"
+  * Windows GoSClient = "gosclient"
+  * Windows MudMagic = Failed, responded with IAC DONT TERMINAL-TYPE
+  * Windows Genius = Failed, no response to IAC DO TERMINAL TYPE
