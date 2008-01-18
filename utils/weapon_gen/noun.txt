@@ -1,0 +1,323 @@
+Adze
+Apex
+Apparatus
+Appliance
+Arbalest
+Arbir
+Armet
+Aventail
+Awl-Pike
+Awn
+Axe
+Backsword
+Baculus
+Baitchopper
+Balisong
+Ball-and-Chain
+Bangkaw
+Barb
+Bardiche
+Barong
+Bastard Sword
+Bat
+Baton
+Battle-axe
+Bayonet
+Beak
+Bec De Corbin
+Belaying-Pin
+Bill
+Billet
+Bill-Guisarme
+Billy
+Birch
+Bisento
+Blackjack
+Blade
+Blowgun
+Bludgeon
+Bokken
+Boku-Toh
+Bolas
+Bolo
+Bone
+Bo Stick
+Bow
+Branch
+Brand
+Brass Knuckles
+Broadsword
+Calvary Flail
+Cane
+Cestas
+Chain
+Chain Hauberk
+Chain whip
+Chijiriki
+Chisakatana
+Chu-Ko-Nu
+Claidhmore
+Claw
+Claymore
+Cleaver
+Club
+Composite Longbow
+Conkbuster
+Contraption
+Contrivance
+Convincer
+Corseca
+Cosh
+Crossbow
+Crowbill
+Cudgel
+Cusp
+Cutlass
+Cutter
+Cuttingedge
+Cylinder
+Dagger
+Daikyu
+Daito
+Dao
+Dart
+Device
+Dirk
+Dojigger
+Doubled-edged Sword
+Dowel
+Edge
+Engine
+Epee
+Estoc
+Falchion
+Falx
+Fang
+Fauchard
+Fauchard Fork
+Fish Spine Sword
+Flail
+Flamberge
+Flanged-Mace
+Foil
+Footman's Flail
+Footman's Mace
+Footman's Military-Pick
+Fork
+Frogsticker
+Fu
+Gadget
+Gaff
+Garrotte
+Gauche
+Gizmo
+Gladius
+Glaive
+Glaive-Guisarme
+Golok
+Great Axe
+Greatsword
+Gudendag
+Guisarme
+Guisarme-Voulge
+Gunsen
+Halberd
+Hammer
+Hanbo
+Hand-and-a-Half Sword
+Hand Axe
+Hand Crossbow
+Hankyu
+Harpoon
+Hatchet
+Heavy Crossbow
+Heavy Lance
+Hickory
+Hook
+Hook Fauchard
+Horseman's Flail
+Horseman's Mace
+Horseman's Military-Pick
+Implement
+Jag
+Javelin
+Jeddart-Axe
+Jian
+Jitte
+Jo Stick
+Kai Hammer
+Kama
+Kampilan
+Katana
+Kau-Sin-Ke
+Kawanaga
+Khopesh
+Kiseru
+Knife
+Kodachi
+Kopesh
+Kris
+Kubotan
+Kumade
+Kusarigama
+Kusari-Gama
+Kwan dao
+Kyoketsu-Shogi
+Kyu
+Lajatang
+Lance
+Lancet
+Large-Star Shuriken
+Lariat
+Light Crossbow
+Light Lance
+Lochaber Axe
+Longbow
+Long Sword
+Lucerne Hammer
+Mace
+Machete
+Machine
+Main-Gauche
+Main-gauche
+Makhaira
+Mallet
+Man-Catcher
+Manriki
+Mattock
+Maul
+Mechanism
+Medium Lance
+Metsubishi
+Military Fork
+Military Pick
+Morningstar
+Nagamaki
+Nagimaki
+Naginata
+Needle
+Nekode
+Nib
+Nightstick
+Ninja-To
+Nodachi
+Nunchaku
+Ooloo
+Oriental Mace
+Ox-Tongue Spear
+Parang
+Partisan
+Pellet Bow
+Persuader
+Pick
+Pilum
+Pin
+Pinpoint
+Point
+Pole
+Polearm
+Prick
+Prickler
+Prong
+Qiang
+Quarterstaff
+Ranseur
+Rapier
+Rawcon
+Rhomphaia
+Ripper
+Rondel
+Rope Dart
+Rosewood
+Runka
+Sabre
+Sai
+Saing-Kauw
+Sap
+Sappara
+Sarissa
+Scalpel
+Scepter
+Sceptre
+Scimitar
+Scythe
+Serrated-Edged Blade
+Shaft
+Shakujo-Yari
+Shamshir
+Shank
+Shikomi-Zue
+Shill
+Shillelagh
+Shirasaya
+Shiv
+Shortbow
+Shortsword
+Siangkam
+Sibat
+Sickle
+Skewer
+Skiver
+Slab
+Sling
+Sling Stong
+Small-Star Shuriken
+Smallsword
+Snag
+Sode-Garami
+Spear
+Spetum
+Spike
+Spike Shuriken
+Spine
+Spire
+Spur
+Staff
+Stave
+Steel
+Steel Whip
+Stick
+Sticker
+Stiletto
+Strip
+Stump
+Swatter
+Switch
+Switchblade
+Sword
+Tachi
+Talwar
+Tambo
+Tanto
+Tessen
+Tetsubo
+Thorn
+Three-Piece Rod
+Tickler
+Tiger-Claw
+Tine
+Tip
+Toki
+Tonfa
+Ton-Fa
+Tooth
+Trident
+Truncheon
+Tui-Fa
+Tulwar
+Two-Handed Sword
+Uchi-Ne
+Ulul
+Utensil
+Voulge
+Wakizashi
+Wand
+Waraxe
+Warclub
+Warhammer
+Warsword
+Whip
+Yari
+Yawara
+Yumi
+Zweihander
