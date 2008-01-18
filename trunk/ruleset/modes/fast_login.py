@@ -9,6 +9,7 @@ from server.log import THE_LOG
 from ruleset.modes.base import BaseMode
 from ruleset.dbm.mapping import check_name
 from ruleset.dbm.mapping import check_password
+from ruleset.dbm.mapping import insert_character
 
 
 GREETING = """^kb^s
@@ -42,6 +43,11 @@ class FastLogin(BaseMode):
         self.password = None
         self.state = 'name'
         self.attempts = 0
+        self.gender = 'male'
+        self.race = 'human'
+        self.role = 'fighter'
+
+
         ## Request Terminal Type
         self.conn.request_terminal_type()
         ## Request Window Size
@@ -128,7 +134,8 @@ class FastLogin(BaseMode):
             if cmd == self.password:
                 ## Restore local echo
                 self.conn.password_mode_off()
-                print "New Account Good!"
+                ## print "New Account Good!"
+                insert_character(self)
 
             else:
                 self.send('\n  ^ySorry, those did not match.\n')
