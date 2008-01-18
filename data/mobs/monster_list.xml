@@ -1,0 +1,44 @@
+<mob> 
+    <handle>fippy_darkpaw</handle> 
+    <name>Fippy Darkpaw</name> 
+    <description></description> 
+    <brain>gnoll</brain> 
+    <level>5</level> 
+    <anger> 
+        <quote>"You ruined your own lands, you'll not ruin mine!"</quote> 
+    </anger> 
+    <fear chance="5"> 
+    </fear> 
+    <pain> 
+        <quote>"It hurts, it hurts!"</quote> 
+    </pain> 
+    <death> 
+        <quote>"I'll be back in about 5 minutes!"</quote>     
+    </death> 
+    <loot> 
+        <gold min="0" max="10" /> 
+        <item chance="0"></item> 
+    </loot> 
+</mob>
+<mob> 
+    <handle>queen_sald</handle> 
+    <name>Queen Sald</name> 
+    <description></description> 
+    <brain>human</brain> 
+    <level>50</level> 
+    <anger> 
+        <quote>"Journey to Luclin!"</quote> 
+    </anger> 
+    <fear chance="0"> 
+    </fear> 
+    <pain> 
+        <quote>"You're doing it wrong!"</quote> 
+    </pain> 
+    <death> 
+        <quote>"Dammit Jim!"</quote>     
+    </death> 
+    <loot> 
+        <gold min="100" max="200" /> 
+        <item chance="1"></item> 
+    </loot> 
+</mob>
