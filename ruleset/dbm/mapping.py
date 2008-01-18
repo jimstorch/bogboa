@@ -36,8 +36,10 @@ def check_password(name, password):
     result = THE_CURSOR.execute(sql,(name,)).fetchone()
     if result:
         
-       
-       
+        if password == result[1]:
+            return True
+        else:
+            return False            
     else:
         return False  
 

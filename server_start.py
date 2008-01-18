@@ -5,8 +5,6 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-# telnet 216.255.29.170 7777
-
 from server import shared
 from server.log import THE_LOG
 

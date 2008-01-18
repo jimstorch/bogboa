@@ -10,7 +10,6 @@ import socket
 import select
 import sys
 
-#from server.tcp.connection import Connection
 from server.tcp.telnet import Telnet
 from server.tcp.listen import THE_SERVER_SOCKET
 from ruleset.modes.fast_login import FastLogin as WelcomeMode

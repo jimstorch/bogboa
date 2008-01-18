@@ -26,8 +26,8 @@ GREETING = """^kb^s
            
                  ^w^i Source available at bogboa.googlecode.com ^I
 
-  New character names should be 3 to 15 letters long, contain only letters,
-  and begin with a capital.
+  ^yNew character names should be 3 to 15 characters long, contain only 
+    letters, and begin with a capitol.
 """    
 
 
@@ -68,6 +68,7 @@ class FastLogin(BaseMode):
                 self.send('  Welcome back %s.\n' % cmd)
                 self.send('^C  Enter password:')
                 self.prompt()
+                ## Turn off local echo
                 self.conn.password_mode_on()            
                 self.state = 'get_password'
 
@@ -76,9 +77,11 @@ class FastLogin(BaseMode):
 
                 ## Is the name acceptable?
                 if self.validate_name(cmd):
-                    self.send('  The name %s is available.\n' % cmd) 
+                    self.send('  The name ^!%s^1 is available.\n' % cmd) 
                     self.send('^C  Please select a password:')
                     self.prompt()
+                    ## Turn off local echo
+                    self.conn.password_mode_on()
                     self.state = 'check_one'
                 
                 # No, ask again 
@@ -90,6 +93,7 @@ class FastLogin(BaseMode):
         elif self.state == 'get_password':
             
             if check_password(self.name, cmd):
+                ## Restore local echo
                 self.conn.password_mode_off()
                 print "Login Good!"
 
@@ -99,7 +103,7 @@ class FastLogin(BaseMode):
                 if self.attempts > 2:
                     self.deactivate()
                 else:
-                    self.send('^C  Incorrect password. Try again:')
+                    self.send('\n^C  ^yIncorrect password. Try again:')
                     self.prompt()
                     self.mode = 'get_password'
 
@@ -107,16 +111,14 @@ class FastLogin(BaseMode):
 
             ## Is the password acceptable?
             if self.validate_password(cmd):
-
                 self.password = cmd
-                self.send('^C  ...and enter it again just to be sure:')
+                self.send('\n^C  ...and enter it again just to be sure:')
                 self.prompt()
                 self.state = 'check_two'
                              
             ## Nope, ask again
             else:
-
-                self.send('^C  Please select a password:')
+                self.send('\r^C  Please select a password:')
                 self.prompt()
                 self.state = 'check_one'
 
@@ -124,11 +126,12 @@ class FastLogin(BaseMode):
             
             ## Did they match both times?
             if cmd == self.password:
+                ## Restore local echo
                 self.conn.password_mode_off()
                 print "New Account Good!"
 
             else:
-                self.send('  Sorry, those did not match\n')
+                self.send('\n  ^ySorry, those did not match.\n')
                 self.send('  ^CPlease select a password:')
                 self.prompt()
                 self.state = 'check_one'
@@ -143,20 +146,20 @@ class FastLogin(BaseMode):
         happy = True
 
         if len(name) < 3:
-            self.send('  Sorry, that name is too short.\n')
+            self.send('  ^ySorry, that name is too short.\n')
             happy = False                            
 
         if len(name) > 20:
-            self.send('  Sorry, that name is too long.\n')
+            self.send('  ^ySorry, that name is too long.\n')
             happy = False                       
         
         if len(name) and not name[0].isupper():
-            self.send('  Please start with a capital letter.\n')
+            self.send('  ^yPlease start with a capital letter.\n')
             happy = False                      
 
         for letter in name:
             if not letter.isalpha():
-                self.conn.send('  Please use letters only.\n')
+                self.send('  ^yPlease use letters only.\n')
                 happy = False
                 break                         
 
@@ -170,11 +173,11 @@ class FastLogin(BaseMode):
         happy = True
 
         if len(password) < 6:
-            self.conn.send('  Sorry, that password is too short.\n')
+            self.send('\r\n  ^ySorry, that password is too short.\n')
             happy = False                       
 
         if len(password) > 20:
-            self.conn.send('  Sorry, that password is too long.\n')
+            self.send('\r\n  ^ySorry, that password is too long.\n')
             happy = False
 
         return happy   
