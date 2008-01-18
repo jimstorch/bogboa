@@ -1,9 +1,9 @@
 <mob> 
     <handle>fippy_darkpaw</handle> 
     <name>Fippy Darkpaw</name> 
-    <description></description> 
-    <brain>gnoll</brain> 
-    <level>5</level> 
+    <description>"A very determined looking gnoll."</description> 
+    <brain>gnoll</brain>
+    <level>5</level>
     <anger> 
         <quote>"You ruined your own lands, you'll not ruin mine!"</quote> 
     </anger> 
@@ -15,7 +15,35 @@
     <death> 
         <quote>"I'll be back in about 5 minutes!"</quote>     
     </death> 
-    <loot> 
+    <loot>
+        <gold min="0" max="10" /> 
+        <item chance="0"></item> 
+    </loot> 
+</mob>
+<mob> 
+    <handle>fippy_darkpaw_02</handle> 
+    <name>Fippy Darkpaw</name> 
+    <description>"A very determined looking gnoll."</description> 
+    <stats>
+        <level>5</level> 
+        <brain>gnoll</brain>
+        <avoidance>1</avoidance>
+        <mitigation>1</mitigation>
+        <soak>1</soak>
+        <resistance>0</resistance>
+        <flee>100</flee> 
+    </stats>
+    <quotes>
+        <anger> 
+            <quote>"You ruined your own lands, you'll not ruin mine!"</quote> 
+        </anger> 
+        <pain> 
+            <quote>"It hurts, it hurts!"</quote> 
+        </pain> 
+        <death> 
+            <quote>"I'll be back in about 5 minutes!"</quote>     
+        </death>
+    <loot>
         <gold min="0" max="10" /> 
         <item chance="0"></item> 
     </loot> 
@@ -23,20 +51,27 @@
 <mob> 
     <handle>queen_sald</handle> 
     <name>Queen Sald</name> 
-    <description></description> 
-    <brain>human</brain> 
-    <level>50</level> 
-    <anger> 
-        <quote>"Journey to Luclin!"</quote> 
-    </anger> 
-    <fear chance="0"> 
-    </fear> 
-    <pain> 
-        <quote>"You're doing it wrong!"</quote> 
-    </pain> 
-    <death> 
-        <quote>"Dammit Jim!"</quote>     
-    </death> 
+    <description>"Clad in armor of cobalt, she's gonna kick your ass."</description> 
+    <stats>
+        <brain>human</brain> 
+        <level>50</level> 
+        <avoidance>5</avoidance>
+        <mitigation>10</mitigation>
+        <soak>10</soak>
+        <resistance>10</resistance>
+        <flee>0</flee> 
+    <quotes>
+        <anger> 
+            <quote>"Journey to Luclin!"</quote> 
+        </anger> 
+        <pain> 
+            <quote>"You're doing it wrong!"</quote> 
+        </pain> 
+        <death> 
+            <quote>"Dammit Jim!"</quote>     
+        </death> 
+    </quotes>
+
     <loot> 
         <gold min="100" max="200" /> 
         <item chance="1"></item> 
