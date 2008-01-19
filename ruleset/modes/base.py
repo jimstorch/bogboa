@@ -22,6 +22,7 @@ class BaseMode(object):
     #--[ Send ]----------------------------------------------------------------        
 
     def send(self, text):
+        ## convert Python linebreaks to Telnet/DOS
         text = text.replace('\n', '\r\n')
         self.conn.send(colorize(text, self.conn.use_ansi))
 

@@ -160,7 +160,6 @@ class Telnet(object):
     def send(self, text):
         """Queue text to be sent to the DE."""
         if len(text):
-            ## convert Python linebreaks to Telnet/DOS
             self.send_buffer += text
             self.send_pending = True
 
