@@ -60,8 +60,20 @@ def insert_character(client):
         client.conn.addrport()))    
 
 
-def load_character(client):
-    pass
+def load_character(name, client):
+    
+    sql = """
+    SELECT gender, race, role, suspended FROM character where name = ?;
+        """    
+    result = THE_CURSOR.execute(sql,(name,)).fetchone()
+    client.name = name
+    client.gender = result[0]
+    client.race = result[1]
+    client.role = result[2]
+    client.suspended = result[3]
+    THE_LOG.add("%s logged in using %s client from %s." % (name,
+            client.conn.terminal_type, client.conn.addrport())) 
+
 
 def save_character(client):
     pass

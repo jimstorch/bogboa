@@ -5,11 +5,13 @@
 #------------------------------------------------------------------------------
 
 from server import shared
-from server.log import THE_LOG
+
 from ruleset.modes.base import BaseMode
+from ruleset.modes.player import Player
 from ruleset.dbm.mapping import check_name
 from ruleset.dbm.mapping import check_password
 from ruleset.dbm.mapping import insert_character
+from ruleset.dbm.mapping import load_character
 
 
 GREETING = """^kb^s
@@ -28,7 +30,7 @@ GREETING = """^kb^s
                  ^w^i Source available at bogboa.googlecode.com ^I
 
   ^yNew character names should be 3 to 15 characters long, contain only 
-    letters, and begin with a capitol.
+    letters, and begin with a capital.  Thanks.
 """    
 
 
@@ -47,7 +49,6 @@ class FastLogin(BaseMode):
         self.race = 'human'
         self.role = 'fighter'
 
-
         ## Request Terminal Type
         self.conn.request_terminal_type()
         ## Request Window Size
@@ -57,12 +58,13 @@ class FastLogin(BaseMode):
         self.prompt()
 
     
-    #--[ Process Command ]-----------------------------------------------------
+    #---[ Process Command ]----------------------------------------------------
 
     def process_command(self):
+        """A state machine to process login/new accounts."""
          
         cmd = self.get_cmd()
-        print cmd
+        #print cmd
 
         ## Look for a name, either new or old
         
@@ -71,7 +73,7 @@ class FastLogin(BaseMode):
             ## Is it in the system already?
             if check_name(cmd):
                 self.name = cmd
-                self.send('  Welcome back %s.\n' % cmd)
+                self.send('  Welcome back ^!%s^1.\n' % cmd)
                 self.send('^C  Enter password:')
                 self.prompt()
                 ## Turn off local echo
@@ -83,6 +85,7 @@ class FastLogin(BaseMode):
 
                 ## Is the name acceptable?
                 if self.validate_name(cmd):
+                    self.name = cmd
                     self.send('  The name ^!%s^1 is available.\n' % cmd) 
                     self.send('^C  Please select a password:')
                     self.prompt()
@@ -101,7 +104,11 @@ class FastLogin(BaseMode):
             if check_password(self.name, cmd):
                 ## Restore local echo
                 self.conn.password_mode_off()
-                print "Login Good!"
+
+                ##
+                ## Returning Character
+                ##
+                self.begin_play()
 
             else:
                 ## Too many guesses?
@@ -111,7 +118,7 @@ class FastLogin(BaseMode):
                 else:
                     self.send('\n^C  ^yIncorrect password. Try again:')
                     self.prompt()
-                    self.mode = 'get_password'
+                    self.state = 'get_password'
 
         elif self.state == 'check_one':
 
@@ -134,8 +141,11 @@ class FastLogin(BaseMode):
             if cmd == self.password:
                 ## Restore local echo
                 self.conn.password_mode_off()
-                ## print "New Account Good!"
                 insert_character(self)
+                ##
+                ## New Character
+                ##
+                self.begin_play()
 
             else:
                 self.send('\n  ^ySorry, those did not match.\n')
@@ -145,7 +155,7 @@ class FastLogin(BaseMode):
            
             
 
-    #--[ Validate Name ]-------------------------------------------------------
+    #---[ Validate Name ]------------------------------------------------------
 
     def validate_name(self, name):
         """Check a proposed name for acceptability."""
@@ -172,7 +182,8 @@ class FastLogin(BaseMode):
 
         return happy       
 
-    #--[ Validate Password ]---------------------------------------------------
+
+    #---[ Validate Password ]--------------------------------------------------
       
     def validate_password(self, password):
         """Check a proposed password for acceptability."""
@@ -189,3 +200,14 @@ class FastLogin(BaseMode):
 
         return happy   
        
+    #---[ Begin Play ]---------------------------------------------------------
+
+    def begin_play(self):
+        """Move the connection to a playing mode."""
+
+        mode = Player(self.conn)
+        load_character(self.name, mode)
+        shared.PLAY_LIST.append(mode)
+        self.active = False
+           
+
