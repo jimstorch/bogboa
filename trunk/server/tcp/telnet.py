@@ -409,7 +409,7 @@ class Telnet(object):
 
     def _two_byte_cmd(self, cmd):
         """Handle incoming Telnet commands that are two bytes long."""
-        print "got two byte cmd %d" % ord(cmd)
+        #print "got two byte cmd %d" % ord(cmd)
 
         if cmd == SB:
             ## Begin capturing a sub-negotiation string
@@ -457,7 +457,7 @@ class Telnet(object):
     def _three_byte_cmd(self, option):
         """Handle incoming Telnet commmands that are three bytes long."""
         cmd = self.telnet_got_cmd
-        print "got three byte cmd %d:%d" % (ord(cmd), ord(option))
+        #print "got three byte cmd %d:%d" % (ord(cmd), ord(option))
 
 
         ## Incoming DO's and DONT's refer to the status of this end
@@ -652,13 +652,13 @@ class Telnet(object):
     
     def _sb_decoder(self):
         """Figures out what to do with a received sub-negotiation block."""
-        print "at decoder"
+        #print "at decoder"
         bloc = self.telnet_sb_buffer
         if len(bloc) > 2:
         
             if bloc[0] == TTYPE and bloc[1] == IS:
                 self.terminal_type = bloc[2:]
-                print "Terminal type = '%s'" % self.terminal_type
+                #print "Terminal type = '%s'" % self.terminal_type
                         
             if bloc[0] == NAWS:
                 if len(bloc) != 5:
@@ -666,7 +666,7 @@ class Telnet(object):
                 else:
                     self.columns = (256 * ord(bloc[1])) + ord(bloc[2])
                     self.rows = (256 * ord(bloc[3])) + ord(bloc[4])              
-                print "Screen is %d x %d" % (self.columns, self.rows)
+                #print "Screen is %d x %d" % (self.columns, self.rows)
 
         self.telnet_sb_buffer = ''            
 
