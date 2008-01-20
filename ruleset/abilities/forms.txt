@@ -1,0 +1,88 @@
+Trying to think my way through a command parser...
+
+    [verb]
+    {target/noun}
+    (block of text)
+    |preposition|
+    /number/
+
+
+---[ verb ]--------------------------------------------------------------------
+
+    [quit]
+    [sit]
+    [stand]
+    [rest]
+    [look]
+
+
+---[ verb + target ]-----------------------------------------------------------
+
+    [say] (hello)
+    [drop] {sword}
+    [get] {sword}
+    [get] {all}
+    [target] {orc}
+    [kill] {orc}
+
+
+----[ verb + implied target ]--------------------------------------------------
+
+    [kill]
+    [rude]
+    [hug]
+    [heal]
+
+
+---[ verb + target + string ]--------------------------------------------------
+
+    [tell] {Lias} (I just got online)
+    [whisper] {Chadu} (spare some gold plz?)
+    [note] {Kolmar} (is a loot whore)
+
+
+---[ verb + target + preposition + target ]------------------------------------
+
+    [give] {sword} |to| {Mike}    
+    [cast] {fireball} |at| {orc}
+    [revoke] {shout} |from| {Loudguy}
+    [throw] {acid} |on| {dwarf}
+    [throw] {torch} |at| {mummy}
+
+---[ verb + target + implied target ]------------------------------------------
+
+    [cast] {fireball}
+    [give] {sword}   
+
+
+---[ verb + count + target? ]--------------------------------------------------
+
+    [drop] /100/ {gold}
+
+
+---[ verb + count + noun + prep + noun? ]--------------------------------------
+
+    [give] /12/ {arrows} |to| {Mike}
+
+
+---[ verb + multiple targets? ]------------------------------------------------
+
+    [get] {sword} {gold} {key}
+    [invite] {Tom} {Dick} {Harry}  
+                
+
+---[ implied verbs? ]----------------------------------------------------------
+
+    {fireball}
+    {greater healing}
+    {water breathing}
+    {see invisible}
+
+
+---[ pronouns? ]---------------------------------------------------------------
+
+    [drop] {it}
+    [get] {it}
+    [kill] {him}
+    [heal] {her}
+
