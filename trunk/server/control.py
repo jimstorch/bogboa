@@ -13,7 +13,7 @@ from server.log import THE_LOG
 ## wouldn't broadcast the disconnection of someone from the Welcome screen.
 
 
-#--[ Test Connections ]--------------------------------------------------------
+#---[ Test Connections ]-------------------------------------------------------
 
 def test_connections():
 
@@ -28,7 +28,7 @@ def test_connections():
             client.deactivate()    
 
 
-#--[ Kill Idle Clients ]-------------------------------------------------------
+#---[ Kill Idle Clients ]------------------------------------------------------
                 
 def kill_idle_clients():
 
@@ -50,7 +50,7 @@ def kill_idle_clients():
             client.deactivate()
 
 
-#--[ Purge Dead Clients ]------------------------------------------------------
+#---[ Purge Dead Clients ]-----------------------------------------------------
 
 def purge_dead_clients():
 
@@ -66,7 +66,7 @@ def purge_dead_clients():
         if client.active == True ]         
 
 
-#--[ Process Client Input ]----------------------------------------------------
+#---[ Process Client Input ]---------------------------------------------------
         
 def process_client_commands():
 
@@ -82,11 +82,16 @@ def process_client_commands():
             if client.conn.cmd_ready:
                 client.process_command()
 
-     
-         
 
-      
-      
-            
+#---[ Is Online ]--------------------------------------------------------------
+     
+def is_online(handle):
+
+    """Check if a player with the given handle is currently playing."""
+    
+    if shared.HANDLE_DICT.has_key(handle):
+        return True
+    else:
+        return False
 
 

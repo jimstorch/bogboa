@@ -57,6 +57,7 @@ def create_tables():
         CREATE TABLE IF NOT EXISTS character 
             (
             cid INTEGER PRIMARY KEY AUTOINCREMENT,
+            handle TEXT UNIQUE,
             name TEXT UNIQUE,
             password TEXT,
             gender TEXT,

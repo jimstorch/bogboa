@@ -12,6 +12,7 @@ from ruleset.dbm.mapping import check_name
 from ruleset.dbm.mapping import check_password
 from ruleset.dbm.mapping import insert_character
 from ruleset.dbm.mapping import load_character
+from server.control import is_online
 
 
 GREETING = """^kb^s
@@ -41,7 +42,8 @@ class FastLogin(BaseMode):
     def __init__(self, conn):
         self.active = True  
         self.conn = conn
-        self.name = None
+        self.handle = ''
+        self.name = ''
         self.password = None
         self.state = 'name'
         self.attempts = 0
@@ -73,6 +75,7 @@ class FastLogin(BaseMode):
             ## Is it in the system already?
             if check_name(cmd):
                 self.name = cmd
+                self.handle = cmd.lower()
                 self.send('  Welcome back ^!%s^1.\n' % cmd)
                 self.send('^C  Enter password:')
                 self.prompt()
@@ -86,6 +89,7 @@ class FastLogin(BaseMode):
                 ## Is the name acceptable?
                 if self.validate_name(cmd):
                     self.name = cmd
+                    self.handle = cmd.lower()
                     self.send('  The name ^!%s^1 is available.\n' % cmd) 
                     self.send('^C  Please select a password:')
                     self.prompt()
@@ -189,10 +193,10 @@ class FastLogin(BaseMode):
         """Check a proposed password for acceptability."""
 
         happy = True
-
-        if len(password) < 6:
-            self.send('\r\n  ^ySorry, that password is too short.\n')
-            happy = False                       
+# TODO: restore short check
+#        if len(password) < 6:
+#            self.send('\r\n  ^ySorry, that password is too short.\n')
+#            happy = False                       
 
         if len(password) > 20:
             self.send('\r\n  ^ySorry, that password is too long.\n')
@@ -204,10 +208,21 @@ class FastLogin(BaseMode):
 
     def begin_play(self):
         """Move the connection to a playing mode."""
+        if not is_online(self.handle):
+            mode = Player(self.conn)
+            ## Load the character from the database
+            load_character(self.handle, mode)
+            ## Add it to the PLAY_LIST 
+            shared.PLAY_LIST.append(mode)
+            ## Add this to the dictionary of play handles
+            shared.HANDLE_DICT[self.handle] = mode
+            self.active = False
+        
+        else:
+            self.send('\n  ^RAccount is in use!')
+            self.send('\n  ^CPlease enter a character name:')
+            self.prompt() 
+            self.state = 'name'
 
-        mode = Player(self.conn)
-        load_character(self.name, mode)
-        shared.PLAY_LIST.append(mode)
-        self.active = False
            
 

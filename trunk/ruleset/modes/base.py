@@ -4,6 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
+from server import shared
 from server.decorate import colorize
 
 class BaseMode(object):
@@ -11,7 +12,17 @@ class BaseMode(object):
     def __init__(self, conn):
     
         self.conn = conn
+        self.handle = None
         self.active = True   
+
+    #---[ Del ]----------------------------------------------------------------
+
+    def __del__(self):
+
+#        print "Base destructor called"
+        pass
+
+
 
     #--[ Get Cmd ]-------------------------------------------------------------
 
@@ -37,8 +48,16 @@ class BaseMode(object):
                     
     def deactivate(self):
 
-        # 'self' gets deleted by control.purge_dead_clients()
-        self.conn.active = False 
+        ## If we're in the HANDLE_DICT remove us 
+        if shared.HANDLE_DICT.has_key(self.handle):
+            del(shared.HANDLE_DICT[self.handle]) 
 
-        # conn gets deleted by async.ThePortManager.poll()  
-        self.active = False     
+        ## 'self' gets deleted by control.purge_dead_clients()
+        self.active = False
+
+        ## conn gets deleted by async.ThePortManager.poll()  
+        self.conn.active = False
+
+
+        
+     

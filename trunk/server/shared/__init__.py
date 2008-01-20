@@ -28,3 +28,12 @@ PLAY_LIST = []
 
 ## List of rooms players might occupy
 ROOMS = []
+
+
+## Handle Dictionary, maps handles to client play modes
+HANDLE_DICT = {}
+
+
+## Ability Dictionary, maps ability handles to ability functions 
+ABILITY_DICT = {}
+
