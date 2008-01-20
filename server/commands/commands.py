@@ -20,6 +20,16 @@ class Commander(object):
             ## This much introspection feels kinda fragile...
             self.cmd_dict[token] = self.__class__.__dict__[cmd]
             
+    #---[ Del ]----------------------------------------------------------------
+
+    def __del__(self):
+
+        print "Base destructor called"
+
+        """Remove ourself from the dictionary of player handles."""
+
+        #del(shared.HANDLE_DICT[self.handle])  
+
 
     def cmd_say(self, client, text):
         pass
