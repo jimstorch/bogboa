@@ -9,6 +9,19 @@ from ruleset import parsers
 from ruleset import lookup
 
 
+#---[ Broadcast ]--------------------------------------------------------------
+
+def broadcast(message):
+
+    """Send a message to everyone online."""
+
+    for player in shared.PLAY_LIST:
+        player.send('\r' + message)
+
+
+broadcast.parser = None
+            
+
 
 #---[ Tell ]-------------------------------------------------------------------
 
@@ -21,10 +34,10 @@ def tell(client, target_handle, message):
     if target:
 
         if client == target:
-            target.send('^MYou tell yourself,^W %s\n' % message)
+            target.send('^MYou tell yourself,^W %s' % message)
 
         else:
-            target.send('^M%s tells you,^W %s\n' % (client.name, message))
+            target.send('^M%s tells you,^W %s' % (client.name, message))
             client.send('^wYou tell %s, %s' % (target.name, message))
         
         ## note the sender so that a reply works

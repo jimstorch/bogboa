@@ -13,6 +13,7 @@ from ruleset.dbm.mapping import check_password
 from ruleset.dbm.mapping import insert_character
 from ruleset.dbm.mapping import load_character
 from server.control import is_online
+from ruleset.abilities.speech import broadcast
 
 
 GREETING = """^kb^s
@@ -76,7 +77,7 @@ class FastLogin(BaseMode):
             if check_name(cmd):
                 self.name = cmd
                 self.handle = cmd.lower()
-                self.send('Welcome back ^!%s^1.\n' % cmd)
+                self.send('Welcome back ^!%s^1.' % cmd)
                 self.send('^CEnter password:')
                 self.prompt()
                 ## Turn off local echo
@@ -90,7 +91,7 @@ class FastLogin(BaseMode):
                 if self.validate_name(cmd):
                     self.name = cmd
                     self.handle = cmd.lower()
-                    self.send('The name ^!%s^1 is available.\n' % cmd) 
+                    self.send('The name ^!%s^1 is available.' % cmd) 
                     self.send('^CPlease select a password:')
                     self.prompt()
                     ## Turn off local echo
@@ -120,7 +121,7 @@ class FastLogin(BaseMode):
                 if self.attempts > 2:
                     self.deactivate()
                 else:
-                    self.send('\n^yIncorrect password. Try again:')
+                    self.send('^yIncorrect password. Try again:')
                     self.prompt()
                     self.state = 'get_password'
 
@@ -129,13 +130,13 @@ class FastLogin(BaseMode):
             ## Is the password acceptable?
             if self.validate_password(cmd):
                 self.password = cmd
-                self.send('\n^C...and enter it again just to be sure:')
+                self.send('^C...and enter it again just to be sure:')
                 self.prompt()
                 self.state = 'check_two'
                              
             ## Nope, ask again
             else:
-                self.send('\r^CPlease select a password:')
+                self.send('^CPlease select a password:')
                 self.prompt()
                 self.state = 'check_one'
 
@@ -152,7 +153,7 @@ class FastLogin(BaseMode):
                 self.begin_play()
 
             else:
-                self.send('\n^ySorry, those did not match.\n')
+                self.send('^ySorry, those did not match.')
                 self.send('^CPlease select a password:')
                 self.prompt()
                 self.state = 'check_one'
@@ -167,20 +168,20 @@ class FastLogin(BaseMode):
         happy = True
 
         if len(name) < 3:
-            self.send('  ^ySorry, that name is too short.\n')
+            self.send('^ySorry, that name is too short.')
             happy = False                            
 
         if len(name) > 20:
-            self.send('  ^ySorry, that name is too long.\n')
+            self.send('^ySorry, that name is too long.')
             happy = False                       
         
         if len(name) and not name[0].isupper():
-            self.send('^yPlease start with a capital letter.\n')
+            self.send('^yPlease start with a capital letter.')
             happy = False                      
 
         for letter in name:
             if not letter.isalpha():
-                self.send('^yPlease use letters only.\n')
+                self.send('^yPlease use letters only.')
                 happy = False
                 break                         
 
@@ -199,7 +200,7 @@ class FastLogin(BaseMode):
 #            happy = False                       
 
         if len(password) > 20:
-            self.send('\r\n^ySorry, that password is too long.\n')
+            self.send('^ySorry, that password is too long.')
             happy = False
 
         return happy   
@@ -212,6 +213,7 @@ class FastLogin(BaseMode):
             mode = Player(self.conn)
             ## Load the character from the database
             load_character(self.handle, mode)
+            broadcast('^y%s has come online.' % mode.name)
             ## Add it to the PLAY_LIST 
             shared.PLAY_LIST.append(mode)
             ## Add this to the dictionary of play handles
@@ -219,8 +221,8 @@ class FastLogin(BaseMode):
             self.active = False
         
         else:
-            self.send('\n^RAccount is in use!')
-            self.send('\n^CPlease enter a character name:')
+            self.send('^RAccount is in use!')
+            self.send('^CPlease enter a character name:')
             self.prompt() 
             self.state = 'name'
 

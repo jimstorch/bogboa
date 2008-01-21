@@ -6,6 +6,7 @@
 
 from server import shared
 from server.log import THE_LOG
+from ruleset.abilities.speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
@@ -25,7 +26,8 @@ def test_connections():
 
     for client in shared.PLAY_LIST:
         if client.conn.active == False:
-            client.deactivate()    
+            client.deactivate()
+            broadcast('^y%s has gone offline.' % client.name)    
 
 
 #---[ Kill Idle Clients ]------------------------------------------------------

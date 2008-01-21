@@ -34,6 +34,7 @@ class BaseMode(object):
 
     def send(self, text):
         ## convert Python linebreaks to Telnet/DOS
+        text = '\r' + text + '\n^w'
         text = text.replace('\n', '\r\n')
         self.conn.send(colorize(text, self.conn.use_ansi))
 
@@ -41,7 +42,8 @@ class BaseMode(object):
 
     def prompt(self):
         """Show the command entry prompt on the DE's screen."""
-        self.send('\r\n^G>^w ')
+        #self.send('\r^G>^w ')
+        self.conn.send(colorize('\r^G>^w '))
 
 
     #--[ Deactivate Method ]---------------------------------------------------
