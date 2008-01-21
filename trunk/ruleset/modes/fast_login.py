@@ -7,7 +7,7 @@
 
 from server.control import is_online
 from ruleset import shared
-from ruleset.modes.base import BaseMode
+from ruleset.modes.base_mode import BaseMode
 from ruleset.modes.player import Player
 from ruleset.dbm.mapping import check_name
 from ruleset.dbm.mapping import check_password
