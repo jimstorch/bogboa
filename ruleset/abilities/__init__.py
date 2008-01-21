@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
+from ruleset import shared
 from ruleset.abilities import speech
 from ruleset.abilities import system
 

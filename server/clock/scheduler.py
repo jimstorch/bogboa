@@ -9,7 +9,7 @@
 import time
 import operator
 
-from server import shared
+from ruleset import shared
 from server.clock.event import Event
 
 

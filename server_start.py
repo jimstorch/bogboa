@@ -5,7 +5,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
+from ruleset import shared
 from server.log import THE_LOG
 
 from server.clock.scheduler import THE_SCHEDULER

@@ -8,7 +8,7 @@
 
 import socket
 
-from server import shared
+from ruleset import shared
 from server.log import THE_LOG
 
 

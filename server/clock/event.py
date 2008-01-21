@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 
 #import time
-from server import shared
+from ruleset import shared
 
 
 class Event(object):

@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
+from ruleset import shared
 from ruleset import parsers
 from ruleset import lookup
 
@@ -16,7 +16,7 @@ def broadcast(message):
     """Send a message to everyone online."""
 
     for player in shared.PLAY_LIST:
-        player.send('\r' + message)
+        player.send(message)
 
 
 broadcast.parser = None
@@ -45,7 +45,7 @@ def tell(client, target_handle, message):
 
     else:
 
-        client.send("^yUnknown player '%s'." % target_handle.capitalize())
+        client.send("^'%s' is not online." % target_handle.capitalize())
 
 
 ## Specify the proper parser for this verb

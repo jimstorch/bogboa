@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
+from ruleset import shared
 from server.log import THE_LOG
 from ruleset.abilities.speech import broadcast
 

@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
+from ruleset import shared
 from ruleset.modes.base import BaseMode
 from ruleset.parsers import split_verb
 
