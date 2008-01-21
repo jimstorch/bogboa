@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
-#   File:       speech.py
-#   Purpose:    communication based abilities
+#   File:       system.py
+#   Purpose:    general system abilitites
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 

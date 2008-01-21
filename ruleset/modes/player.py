@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 
 from ruleset import shared
-from ruleset.modes.base import BaseMode
+from ruleset.modes.base_mode import BaseMode
 from ruleset.parsers import split_verb
 
 GREETING = """
