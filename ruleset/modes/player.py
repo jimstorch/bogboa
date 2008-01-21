@@ -36,6 +36,7 @@ class Player(BaseMode):
         self.grant_ability('reply')
         self.grant_ability('r')
         self.grant_ability('shout')
+        self.grant_ability('quit')
 
         self.send(GREETING)
         self.prompt()
@@ -56,24 +57,20 @@ class Player(BaseMode):
         if self.has_ability(verb):
             
             parser, function = shared.ABILITY_DICT[verb]
-            args = parser(words)
-            print args
-            function(self, *args)
+
+            if parser:
+                args = parser(words)
+                print args
+                function(self, *args)
+
+            else:
+                function(self)
+  
             self.prompt()
 
         else:
             self.send("^yUnrecognized verb '%s'." % verb)
             self.prompt()
-
-
-    #---[ Do Ability ]---------------------------------------------------------
-
-    def do_ability(self, target=None):
-        pass
-
-
-    #---[ Do Targeted Ability ]------------------------------------------------
-
 
 
     #---[ Has Ability ]--------------------------------------------------------
