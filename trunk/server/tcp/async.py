@@ -14,7 +14,7 @@ from server.tcp.telnet import Telnet
 from server.tcp.listen import THE_SERVER_SOCKET
 from ruleset.modes.fast_login import FastLogin as WelcomeMode
 # from ruleset.modes.telnet_test import TelnetTest as WelcomeMode
-from server import shared
+from ruleset import shared
 from server.log import THE_LOG
 
 

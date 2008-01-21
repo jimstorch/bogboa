@@ -4,15 +4,15 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from server import shared
 
+from server.control import is_online
+from ruleset import shared
 from ruleset.modes.base import BaseMode
 from ruleset.modes.player import Player
 from ruleset.dbm.mapping import check_name
 from ruleset.dbm.mapping import check_password
 from ruleset.dbm.mapping import insert_character
 from ruleset.dbm.mapping import load_character
-from server.control import is_online
 from ruleset.abilities.speech import broadcast
 
 
