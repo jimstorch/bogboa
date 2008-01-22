@@ -5,6 +5,6 @@
 #------------------------------------------------------------------------------
 
 ## Initialize some dictionaries
-import ruleset.abilities
+#import ruleset.abilities
 #import ruleset.rooms
 

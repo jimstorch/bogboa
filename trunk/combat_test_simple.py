@@ -6,17 +6,16 @@
 
 from ruleset.combat.combat import CombatMode
 from ruleset.combat.roll_dice import d20
-    
-##a = {}
-##a['test1'] = {}
-##a['test1']['test2'] = 2
-##print a
-##d = d20()
-##print d
+
+mobElements = (('handle', 'handle'),
+               ('name', 'name'),
+               ('description', 'description'))
+##               ('stats', (('level', 'level'),('brain', 'brain'),('soak', 'soak')),
+##               ('temp', 'temp'))
 
 conn = 1;
-Army1 = ('Barm','Sarkoris','Ugsomecur')
-Army2 = ('Queen Sald',)
+Army1 = ('barm','sarkoris','ugsomecur')
+Army2 = ('queen_sald',)
 CombatLayout = (Army1,Army2)
 ##print CombatLayout
 test = CombatMode(conn, CombatLayout)

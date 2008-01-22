@@ -4,7 +4,9 @@
 #   Author:     James Mynderse
 #------------------------------------------------------------------------------
 
+from xml.etree import cElementTree as et
 from roll_dice import d20
+##from monsters import load_monsters
 ##from server.decorate import colorize
 
 class CombatMode(object):
@@ -13,6 +15,8 @@ class CombatMode(object):
         self.conn = conn
         self.active = True
         self.CombatLayout = CombatLayout
+        self.monsters = {}
+        self.load_monsters()
         self.parse_combatlayout()
         self.display_layout()
         return
@@ -44,6 +48,69 @@ class CombatMode(object):
         return
 
     #--[ ]--
+    def load_monsters(self):
+        # make a tuple of the expected elements
+        mobStats = (('level', 'level'),
+                    ('brain', 'brain'),
+                    ('soak', 'soak'))
+        quote = ('quote', 'quote')
+        mobQuotes = (('anger', quote),
+                     ('pain', quote),
+                     ('death', quote))
+        mobElements = (('handle', 'handle'),
+                       ('name', 'name'),
+                       ('description', 'description'),
+                       ('stats', mobStats),
+                       ('quotes', mobQuotes))
+
+        # load the monsters_list.xml file
+        XMLFile = r"data\mobs\monster_list.xml"
+        tree = et.parse(XMLFile)
+
+        # get all "mob" elements
+        allMobs = tree.getroot().findall('mob')
+        for curMob in allMobs:
+            dicMob = {}
+            for curElement in mobElements:
+##                print curElement
+                dicMob[curElement[0]] = self.parse_chunk(curMob, curElement)
+##                print dicMob
+            self.monsters[dicMob['handle']] = dicMob
+        # loop through all "mob" elements
+##        for curMob in allMobs:
+##            dicMob = {}
+##            for curElement in mobElements:
+##                temp = curMob.findall(curElement[0])
+##                if (len(curElement[1]) == 1):
+##                    dicMob[curElement[0]] = temp[0].text
+##                else:
+##                    dicMob[curElement[0]] = {}
+##                    for curSubElement in curElement[1]:
+##                        print curElement[1]
+##                        print curSubElement
+##                        subtemp = temp.findall(curSubElement[0])
+##                        dicMob[curElement[0]][curSubElement[0]] = subtemp[0].text
+##            self.monsters[dicMob['handle']] = dicMob
+        return
+
+    def parse_chunk(self, curTree, curChunk):
+##        print curChunk[0]
+        temp = curTree.findall(curChunk[0])[0]
+##        print temp
+        if isinstance(curChunk[1],str):
+            if temp.text:
+                output = temp.text
+            elif temp.value:
+                output = temp.value
+        else:
+            for curSubChunk in curChunk[1]:
+                output = {}
+##                print curSubChunk
+##                output[curSubChunk[0]] = self.parse_chunk(curTree, curSubChunk)
+                output[curSubChunk[0]] = self.parse_chunk(temp, curSubChunk)
+        return output
+
+    #--[ ]--
     def parse_combatlayout(self):
         self.Combatants = {}
         self.Armies = []
@@ -53,16 +120,22 @@ class CombatMode(object):
 ##                print Combatant
                 self.Combatants[Combatant] = self.init_combatant(Combatant)
 ##                print self.Combatants[Combatant]
-        self.roll_initiative()
+##        self.roll_initiative()
         return
 
     #--[ ]--
-    def init_combatant(self,Name):
-        Combatant = {}
-        Combatant['Name'] = Name
-        Combatant['Inititive'] = 0
-        Combatant['Health'] = 0
-        Combatant['Energy'] = 0
+    def init_combatant(self,Handle):
+        if Handle in self.monsters.keys():
+            Combatant = self.monsters[Handle]
+            Combatant['inititive'] = d20()
+            Combatant['health'] = 0
+            Combatant['energy'] = 0
+        else:
+            Combatant = {}
+            Combatant['name'] = Handle
+            Combatant['inititive'] = d20()
+            Combatant['health'] = 0
+            Combatant['energy'] = 0
         return Combatant
 
     #--[ ]--
@@ -88,9 +161,9 @@ class CombatMode(object):
 ##            print Army
             for j, Combatant in enumerate(Army):
 ##                print ('\tCombatant %d: %s') % (j, Combatant)
-                print ('\t%s:') % (self.Combatants[Combatant]['Name'])
-                print ('\t\tInitiative: %d') % (self.Combatants[Combatant]['Initiative'])
-                print ('\t\tHealth: %d') % (self.Combatants[Combatant]['Health'])
-                print ('\t\tEnergy: %d') % (self.Combatants[Combatant]['Energy'])
+                print ('\t%s:') % (self.Combatants[Combatant]['name'])
+                print ('\t\tInitiative: %d') % (self.Combatants[Combatant]['initiative'])
+                print ('\t\tHealth: %d') % (self.Combatants[Combatant]['health'])
+                print ('\t\tEnergy: %d') % (self.Combatants[Combatant]['energy'])
         return
                 
