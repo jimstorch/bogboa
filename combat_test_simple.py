@@ -14,7 +14,7 @@ mobElements = (('handle', 'handle'),
 ##               ('temp', 'temp'))
 
 conn = 1;
-Army1 = ('barm','sarkoris','ugsomecur')
+Army1 = ('barm','sarkoris','ugs_the_cur')
 Army2 = ('queen_sald',)
 CombatLayout = (Army1,Army2)
 ##print CombatLayout
