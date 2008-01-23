@@ -5,6 +5,8 @@
         <description>A very determined looking gnoll.</description> 
         <stats>
             <level>5</level> 
+            <race>gnoll</race>
+            <class>warrior</class>
             <brain>gnoll</brain>
             <avoidance>1</avoidance>
             <mitigation>1</mitigation>
@@ -34,6 +36,8 @@
         <name>Queen Sald</name> 
         <description>Clad in armor of cobalt, she's gonna kick your ass.</description> 
         <stats>
+            <race>human</race>
+            <class>warrior</class>
             <brain>human</brain> 
             <level>50</level> 
             <avoidance>5</avoidance>
