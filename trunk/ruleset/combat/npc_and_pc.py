@@ -13,6 +13,8 @@
 ##    def __init__():
 ##        return
 
+StatWeighting = ('warrior',())
+
 def npcRuleSet(NPC):
 
     # create stats entry in NPC, if not present
@@ -20,13 +22,15 @@ def npcRuleSet(NPC):
         NPC['stats'] = {}
 
     # create base stats, if not present
-    npcStats = ('str','sta','agi','int','cha')
+    # (what are base stats?)
+    npcStats = ('str','sta','dex','agi','int','cha')
     for curStat in npcStats:
         if curStat not in NPC['stats'].keys():
             NPC['stats'][curStat] = 0
         
     # create health and mana, if not present
     # derived stats!
+    # (could this be done better with an intelligent use of eval?)
     npcStats = (('hp',('sta',10)),
                 ('mp',('int',10)))
     for curStat in npcStats:

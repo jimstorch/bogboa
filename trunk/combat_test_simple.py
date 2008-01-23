@@ -19,5 +19,3 @@ Army2 = ('queen_sald',)
 CombatLayout = (Army1,Army2)
 ##print CombatLayout
 test = CombatMode(conn, CombatLayout)
-
-
