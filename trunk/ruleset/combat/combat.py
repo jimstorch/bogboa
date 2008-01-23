@@ -4,6 +4,7 @@
 #   Author:     James Mynderse
 #------------------------------------------------------------------------------
 
+from npc_and_pc import npcRuleSet
 from string import capwords
 from xml.etree import cElementTree as et
 from roll_dice import d20
@@ -17,7 +18,7 @@ class CombatMode(object):
         self.active = True
         self.CombatLayout = CombatLayout
         self.MonstersByHandle = {}
-        self.MonstersByName = {}
+##        self.MonstersByName = {}
         self.load_monsters()
         self.parse_combatlayout()
         self.display_layout()
@@ -58,8 +59,12 @@ class CombatMode(object):
         allMobs = root.getchildren()
         for curMob in allMobs:
             out = self.dig_xml(curMob)
-            self.MonstersByHandle[out['handle']] = out
-            self.MonstersByName[out['name']] = out
+##            self.MonstersByHandle[out['handle']] = out
+            self.MonstersByHandle[out['handle']] = npcRuleSet(out)
+##            print self.MonstersByHandle[out['handle']]
+##            self.MonstersByName[out['name']] = out
+##            self.MonstersByHandle = npcRuleSet(self.MonstersByHandle)
+##        self.MonstersByName = npcRuleSet(self.MonstersByName)
         return
 
     #--[ ]--   
@@ -70,7 +75,13 @@ class CombatMode(object):
             for child in children:
                 out[child.tag] = self.dig_xml(child)
         else:
-            out = root.text
+            # determine what type of value is represented: int, float, str
+            if root.text.isdigit():
+                out = int(root.text)
+            elif root.text.replace('.','0',1).isdigit():
+                out = float(root.text)
+            else:
+                out = root.text
         return out
 
     #--[ ]--
@@ -91,14 +102,14 @@ class CombatMode(object):
         if Handle in self.MonstersByHandle.keys():
             Combatant = self.MonstersByHandle[Handle]
             Combatant['initiative'] = d20()
-            Combatant['health'] = 0
-            Combatant['energy'] = 0
+##            Combatant['health'] = 0
+##            Combatant['energy'] = 0
         else:
             Combatant = {}
             Combatant['name'] = capwords(Handle.replace('_', ' '))
             Combatant['initiative'] = d20()
-            Combatant['health'] = 0
-            Combatant['energy'] = 0
+            Combatant['hp'] = [0, 0]
+            Combatant['mp'] = [0, 0]
         return Combatant
 
     #--[ ]--
@@ -128,7 +139,9 @@ class CombatMode(object):
 ##                print ('\tCombatant %d: %s') % (j, Combatant)
                 print ('\t%s:') % (self.Combatants[Combatant]['name'])
                 print ('\t\tInitiative: %d') % (self.Combatants[Combatant]['initiative'])
-                print ('\t\tHealth: %d') % (self.Combatants[Combatant]['health'])
-                print ('\t\tEnergy: %d') % (self.Combatants[Combatant]['energy'])
+                print ('\t\tHealth: %d / %d') % (self.Combatants[Combatant]['hp'][0],
+                                                 self.Combatants[Combatant]['hp'][1])
+                print ('\t\tMana: %d / %d') % (self.Combatants[Combatant]['mp'][0],
+                                               self.Combatants[Combatant]['mp'][1])
         return
                 
