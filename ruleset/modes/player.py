@@ -26,7 +26,7 @@ class Player(BaseMode):
         self.race = ''
         self.role = ''
         self.target_handle = ''
-        self.ability_list = []
+        self.ability_dict = {}
         self.last_tell = ''
 
         self.grant_ability('tell')
@@ -77,24 +77,23 @@ class Player(BaseMode):
 
     def has_ability(self, ability_handle):
         """Test whether this character has access to a given ability name."""
-
-        return ability_handle in self.ability_list
+        return ability_handle in self.ability_dict
 
 
     #---[ Grant Ability ]------------------------------------------------------
     
     def grant_ability(self, ability_handle):
         """Grant the character permission to use the given ability."""
-        if not ability_handle in self.ability_list:
-            self.ability_list.append(ability_handle)
+        ## We don't care about the value, just the key
+        self.ability_dict[ability_handle] = None
 
 
     #---[ Revoke Ability ]-----------------------------------------------------        
 
     def revoke_ability(self, ability_handle):
         """Revoke permission for the character to use the given ability."""
-        if ability_handle in self.ability_list:
-            self.ability_list.remove(ability_handle)
+        if ability_handle in self.ability_dict:
+            del self.ability_dict[ability_handle]
     
 
     #---[ Del ]----------------------------------------------------------------
