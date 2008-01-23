@@ -8,6 +8,12 @@
             <race>gnoll</race>
             <class>warrior</class>
             <brain>gnoll</brain>
+            <str>1</str>
+            <sta>1</sta>
+            <dex>1</dex>
+            <agi>1</agi>
+            <int>1</int>
+            <cha>1</cha>
             <avoidance>1</avoidance>
             <mitigation>1</mitigation>
             <soak>1</soak>
@@ -36,10 +42,16 @@
         <name>Queen Sald</name> 
         <description>Clad in armor of cobalt, she's gonna kick your ass.</description> 
         <stats>
+            <level>50</level> 
             <race>human</race>
             <class>warrior</class>
             <brain>human</brain> 
-            <level>50</level> 
+            <str>10</str>
+            <sta>10</sta>
+            <dex>10</dex>
+            <agi>10</agi>
+            <int>10</int>
+            <cha>10</cha>
             <avoidance>5</avoidance>
             <mitigation>10</mitigation>
             <soak>10</soak>
