@@ -26,7 +26,7 @@ class Player(BaseMode):
         self.race = ''
         self.role = ''
         self.target_handle = ''
-        self.ability_dict = {}
+        self.abilities = {}
         self.last_tell = ''
 
         self.grant_ability('tell')
@@ -37,6 +37,16 @@ class Player(BaseMode):
         self.grant_ability('r')
         self.grant_ability('shout')
         self.grant_ability('quit')
+
+        self.grant_ability('n')
+        self.grant_ability('s')
+        self.grant_ability('e')
+        self.grant_ability('w')
+        self.grant_ability('u')
+        self.grant_ability('d')
+        self.grant_ability('enter')
+        self.grant_ability('exit')
+        self.grant_ability('recall')
 
         self.send(GREETING)
         self.prompt()
@@ -77,7 +87,7 @@ class Player(BaseMode):
 
     def has_ability(self, ability_handle):
         """Test whether this character has access to a given ability name."""
-        return ability_handle in self.ability_dict
+        return ability_handle in self.abilities
 
 
     #---[ Grant Ability ]------------------------------------------------------
@@ -85,7 +95,7 @@ class Player(BaseMode):
     def grant_ability(self, ability_handle):
         """Grant the character permission to use the given ability."""
         ## We don't care about the value, just the key
-        self.ability_dict[ability_handle] = None
+        self.abilities[ability_handle] = None
 
 
     #---[ Revoke Ability ]-----------------------------------------------------        
@@ -93,12 +103,12 @@ class Player(BaseMode):
     def revoke_ability(self, ability_handle):
         """Revoke permission for the character to use the given ability."""
         if ability_handle in self.ability_dict:
-            del self.ability_dict[ability_handle]
+            del self.abilities[ability_handle]
     
 
     #---[ Del ]----------------------------------------------------------------
 
-    def __del__(self):
-        """For testing garbage collection."""
+#    def __del__(self):
+#        """For testing garbage collection."""
 #        print "Player destructor called"
-        pass
+
