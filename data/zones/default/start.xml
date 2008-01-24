@@ -1,0 +1,7 @@
+<room>
+    <handle>start</handle>
+    <name></name>
+    <view>
+    </view>
+    <exit direction="north"></exit>    
+</room>

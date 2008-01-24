@@ -18,9 +18,7 @@ def broadcast(message):
     for player in shared.PLAY_LIST:
         player.send(message)
 
-
 broadcast.parser = None
-            
 
 
 #---[ Tell ]-------------------------------------------------------------------
@@ -47,7 +45,6 @@ def tell(client, target_handle, message):
 
         client.send("^'%s' is not online." % target_handle.capitalize())
 
-
 ## Specify the proper parser for this verb
 tell.parser = parsers.dialogue
 
@@ -64,7 +61,6 @@ def reply(client, message):
 
     else:
         client.send('^yYou have not recieved any tells.')
-
     
 reply.parser = parsers.monologue
 
@@ -83,7 +79,6 @@ def shout(client, message):
         else:
             player.send('^R%s shouts,^W %s' % (client.name, message))
 
-
 shout.parser = parsers.monologue
 
 
@@ -93,9 +88,6 @@ shout.parser = parsers.monologue
 def say(client, message):
      pass
 
-
 ## Specify the proper parser for this verb
 say.parser = parsers.monologue
-
-
 

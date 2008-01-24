@@ -15,12 +15,13 @@ class BaseRoom(object):
         self.name = ''
         self.description = ''
 
-        self.player_list = []
+        self.players = {}  
         self.item_list = []
         self.mob_list = []
         self.effect_list = []
         self.exits = []
         self.portals = []
+        self.flags = {}
 
     def add_player(self, player):
         pass
