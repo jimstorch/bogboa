@@ -42,7 +42,7 @@ def check_suspension(name):
         SELECT suspended FROM character WHERE handle = ?;
         """
 
-    result = THE_CURSOR.execute(sql,(namelow,)).fetchone()
+    result = THE_CURSOR.execute(sql,(handle,)).fetchone()
 
     if result:
 
