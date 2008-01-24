@@ -1,7 +1,11 @@
 <room>
     <handle>start</handle>
     <name></name>
-    <view>
-    </view>
-    <exit direction="north"></exit>    
+    <view></view>
+    <exit><way>north</way><to>foyer</to></exit>
+    <flag></flag>
+    <mob></mob>
+    <item></item>
+    <prop></prop>
+    <trigger></trigger>    
 </room>
