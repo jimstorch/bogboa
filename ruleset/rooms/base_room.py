@@ -8,20 +8,20 @@
 
 class BaseRoom(object):
 
-    def __init__(self):
+    def __init__(self, handle = '', ):
 
-        self.handle = ''
-        self.zone_handle = ''
-        self.name = ''
-        self.description = ''
+        self.handle = ''                # 'south_hall'
+        self.zone = ''                  # 'The Landslid Crypt'
+        self.name = ''                  # Southern Hallway
+        self.view = ''                  # 'A large ..."
 
-        self.players = {}  
-        self.item_list = []
-        self.mob_list = []
-        self.effect_list = []
-        self.exits = []
-        self.portals = []
-        self.flags = {}
+        self.exits = {}                 # 'north' : Room Obj
+        self.devices = {}               # Device Obj : None
+        self.players = {}               # Player Obj : None  
+        self.items = {}                 # Item Obj : None
+        self.mobs = {}                  # Mob Obj : None
+        self.flags = {}                 # 'dark' : None
+
 
     def add_player(self, player):
         pass
@@ -41,22 +41,9 @@ class BaseRoom(object):
     def remove_mod(self, mob)
         pass
 
-    def add_effect(self, effect):
-        pass    
-        
-    def remove_effect(self, effect):
-        pass
-
     def add_exit(self, exit):
         pass
 
     def remove_exit(self, exit):
         pass
-
-    def add_portal(self, portal):
-        pass
-
-    def remove_portal(self, portal):
-        pass
-
 
