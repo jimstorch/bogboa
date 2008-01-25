@@ -8,12 +8,12 @@
 
 class BaseRoom(object):
 
-    def __init__(self, handle = '', ):
+    def __init__(self, handle = '', name='', view='' ):
 
-        self.handle = ''                # 'south_hall'
+        self.handle = handle            # 'south_hall'
+        self.name = name                # Southern Hallway
+        self.view = view                # 'A large ..."
         self.zone = ''                  # 'The Landslid Crypt'
-        self.name = ''                  # Southern Hallway
-        self.view = ''                  # 'A large ..."
 
         self.exits = {}                 # 'north' : Room Obj
         self.devices = {}               # Device Obj : None
