@@ -17,11 +17,8 @@ class BaseMode(object):
 
     #---[ Del ]----------------------------------------------------------------
 
-    def __del__(self):
-
+#    def __del__(self):
 #        print "Base destructor called"
-        pass
-
 
 
     #--[ Get Cmd ]-------------------------------------------------------------
