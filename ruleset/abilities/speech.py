@@ -43,7 +43,7 @@ def tell(client, target_handle, message):
 
     else:
 
-        client.send("^'%s' is not online." % target_handle.capitalize())
+        client.send("^y%s is not in this world." % target_handle.capitalize())
 
 ## Specify the proper parser for this verb
 tell.parser = parsers.dialogue

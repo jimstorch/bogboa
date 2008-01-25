@@ -37,9 +37,9 @@ shared.ABILITY_DICT['se'] = (movement.south_east.parser,
     movement.south_east)
 shared.ABILITY_DICT['south'] = (movement.south.parser, movement.south)
 shared.ABILITY_DICT['s'] = (movement.south.parser, movement.south)
-shared.ABILITY_DICT['southwest'] = (movement.southwest.parser, 
+shared.ABILITY_DICT['southwest'] = (movement.south_west.parser, 
     movement.south_west)
-shared.ABILITY_DICT['sw'] = (movement.southwest.parser, 
+shared.ABILITY_DICT['sw'] = (movement.south_west.parser, 
     movement.south_west)
 shared.ABILITY_DICT['west'] = (movement.west.parser, movement.west)
 shared.ABILITY_DICT['w'] = (movement.west.parser, movement.west)

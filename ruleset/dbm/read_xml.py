@@ -16,8 +16,8 @@ def load_rooms(zone = 'default'):
            
     file_list = glob.glob('data/zones/%s/*.xml' % zone)
     for filename in file_list:
-        room = BaseRoom()
         tree = et.parse(open(filename,'rU'))
         for elem in tree.getiterator('room'):
+            room = BaseRoom()
             pass        
 
