@@ -1,0 +1,17 @@
+<xml>
+
+<room>
+    <handle>start</handle>
+    <name>Stone Landing</name>
+    <view>A stone landing.</view>
+    <exit><way>north</way><to>foyer</to></exit>
+</room>
+
+<room>
+    <handle></handle>
+    <name>Stone Landing</name>
+    <view>A stone landing.</view>
+    <exit><way>north</way><to>foyer</to></exit>
+</room>
+
+</xml>

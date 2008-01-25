@@ -26,8 +26,8 @@ LOBBY_LIST = []
 PLAY_LIST = []
 
 
-## List of rooms players might occupy
-ROOMS = []
+## Dictionary of rooms players might occupy
+ROOMS = {}
 
 
 ## Handle Dictionary, maps handles to client play modes

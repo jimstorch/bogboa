@@ -38,7 +38,7 @@ class BaseRoom(object):
     def add_mob(self, mob):
         pass
 
-    def remove_mod(self, mob)
+    def remove_mob(self, mob)
         pass
 
     def add_exit(self, exit):
