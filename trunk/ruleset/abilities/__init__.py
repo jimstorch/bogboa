@@ -16,6 +16,7 @@ shared.ABILITY_DICT['whisper'] = (speech.tell.parser, speech.tell)
 shared.ABILITY_DICT['wh'] = (speech.tell.parser, speech.tell)
 shared.ABILITY_DICT['reply'] = (speech.reply.parser, speech.reply)
 shared.ABILITY_DICT['r'] = (speech.reply.parser, speech.reply)
+shared.ABILITY_DICT['say'] = (speech.say.parser, speech.say)
 shared.ABILITY_DICT['shout'] = (speech.shout.parser, speech.shout)
 shared.ABILITY_DICT['broadcast'] = (speech.broadcast.parser, speech.broadcast)
 
@@ -27,28 +28,28 @@ shared.ABILITY_DICT['l'] = (system.look.parser, system.look)
 ## Movement
 shared.ABILITY_DICT['north'] = (movement.north.parser, movement.north)
 shared.ABILITY_DICT['n'] = (movement.north.parser, movement.north)
-shared.ABILITY_DICT['northeast'] = (movement.north_east.parser, 
-    movement.north_east)
-shared.ABILITY_DICT['ne'] = (movement.north_east.parser, 
-    movement.north_east)
+shared.ABILITY_DICT['northeast'] = (movement.northeast.parser, 
+    movement.northeast)
+shared.ABILITY_DICT['ne'] = (movement.northeast.parser, 
+    movement.northeast)
 shared.ABILITY_DICT['east'] = (movement.east.parser, movement.east)
 shared.ABILITY_DICT['e'] = (movement.east.parser, movement.east)
-shared.ABILITY_DICT['southeast'] = (movement.south_east.parser, 
-    movement.south_east)
-shared.ABILITY_DICT['se'] = (movement.south_east.parser, 
-    movement.south_east)
+shared.ABILITY_DICT['southeast'] = (movement.southeast.parser, 
+    movement.southeast)
+shared.ABILITY_DICT['se'] = (movement.southeast.parser, 
+    movement.southeast)
 shared.ABILITY_DICT['south'] = (movement.south.parser, movement.south)
 shared.ABILITY_DICT['s'] = (movement.south.parser, movement.south)
-shared.ABILITY_DICT['southwest'] = (movement.south_west.parser, 
-    movement.south_west)
-shared.ABILITY_DICT['sw'] = (movement.south_west.parser, 
-    movement.south_west)
+shared.ABILITY_DICT['southwest'] = (movement.southwest.parser, 
+    movement.southwest)
+shared.ABILITY_DICT['sw'] = (movement.southwest.parser, 
+    movement.southwest)
 shared.ABILITY_DICT['west'] = (movement.west.parser, movement.west)
 shared.ABILITY_DICT['w'] = (movement.west.parser, movement.west)
-shared.ABILITY_DICT['northwest'] = (movement.north_west.parser, 
-    movement.north_west)
-shared.ABILITY_DICT['nw'] = (movement.north_west.parser, 
-    movement.north_west)
+shared.ABILITY_DICT['northwest'] = (movement.northwest.parser, 
+    movement.northwest)
+shared.ABILITY_DICT['nw'] = (movement.northwest.parser, 
+    movement.northwest)
 shared.ABILITY_DICT['up'] = (movement.up.parser, movement.up)
 shared.ABILITY_DICT['u'] = (movement.up.parser, movement.up)
 shared.ABILITY_DICT['down'] = (movement.down.parser, movement.down)

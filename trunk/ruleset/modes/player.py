@@ -37,6 +37,7 @@ class Player(BaseMode):
         self.grant_ability('reply')
         self.grant_ability('r')
         self.grant_ability('shout')
+        self.grant_ability('say')
         self.grant_ability('quit')
 
         self.grant_ability('n')
@@ -52,7 +53,6 @@ class Player(BaseMode):
         self.grant_ability('l')
 
         self.send(GREETING)
-        self.prompt()
         
 
  

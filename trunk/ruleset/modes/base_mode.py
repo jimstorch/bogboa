@@ -51,6 +51,9 @@ class BaseMode(object):
         if shared.HANDLE_DICT.has_key(self.handle):
             del(shared.HANDLE_DICT[self.handle]) 
 
+        if self.room:
+            self.room.remove_player(self, 'into another dimension')
+
         ## 'self' gets deleted by control.purge_dead_clients()
         self.active = False
 
