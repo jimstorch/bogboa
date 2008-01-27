@@ -28,6 +28,7 @@ class Player(BaseMode):
         self.target_handle = ''
         self.abilities = {}
         self.last_tell = ''
+        self.room = None
 
         self.grant_ability('tell')
         self.grant_ability('t')
@@ -47,9 +48,12 @@ class Player(BaseMode):
         self.grant_ability('enter')
         self.grant_ability('exit')
         self.grant_ability('recall')
+        self.grant_ability('look')
+        self.grant_ability('l')
 
         self.send(GREETING)
         self.prompt()
+        
 
  
     #---[ Process Command ]----------------------------------------------------

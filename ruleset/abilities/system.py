@@ -8,6 +8,16 @@ from ruleset import shared
 from ruleset import parsers
 
 
+#---[ Look ]-------------------------------------------------------------------
+
+def look(client):
+
+    """Look at the current room."""
+
+    client.send(client.room.view)
+
+look.parser = None
+
 #---[ Quit ]-------------------------------------------------------------------
 
 def quit(client):

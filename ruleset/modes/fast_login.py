@@ -51,6 +51,7 @@ class FastLogin(BaseMode):
         self.gender = 'male'
         self.race = 'human'
         self.role = 'fighter'
+        self.room = None
 
         ## Request Terminal Type
         self.conn.request_terminal_type()
@@ -218,6 +219,8 @@ class FastLogin(BaseMode):
             shared.PLAY_LIST.append(mode)
             ## Add this to the dictionary of play handles
             shared.HANDLE_DICT[self.handle] = mode
+            ## Put into a room
+            shared.ROOMS['start'].add_player(mode,'from another dimension')
             self.active = False
         
         else:

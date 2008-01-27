@@ -16,7 +16,7 @@ from server.control import purge_dead_clients
 from server.control import process_client_commands
 from ruleset.dbm.tables import check_tables
 from ruleset.dbm.tables import create_tables
-
+from ruleset.dbm.read_xml import load_rooms
 
 #---[ Age String ]-------------------------------------------------------------
 
@@ -64,6 +64,13 @@ THE_LOG.add("**************")
 THE_LOG.add("server started")
 THE_LOG.add("**************") 
 
+
+#--[ Load Zones ]--------------------------------------------------------------
+
+## Load our mini testing zone
+load_rooms('The Landslid Crypt')
+
+print shared.ROOMS
 
 #--[ Main Loop ]---------------------------------------------------------------
 

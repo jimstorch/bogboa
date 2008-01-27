@@ -8,7 +8,16 @@
 #---[ North ]------------------------------------------------------------------
 
 def north(client):
-    pass
+    """Move north, if able."""
+
+    if 'north' in client.room.exits:
+        leaving = client.room
+        entering = leaving.exits['north']
+        leaving.remove_player(client, 'to the north')
+        entering.add_player(client, 'from the south')
+    
+    else:
+        client.send('^yThe way North is obstructed.')
 
 north.parser = None
 
@@ -53,11 +62,11 @@ def south_west(client):
 south_west.parser = None
 
 
-#---[ North ]------------------------------------------------------------------
+#---[ West ]-------------------------------------------------------------------
 
 def west(client):
     pass
-
+    
 west.parser = None
 
 
