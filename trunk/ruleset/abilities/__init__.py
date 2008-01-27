@@ -21,6 +21,8 @@ shared.ABILITY_DICT['broadcast'] = (speech.broadcast.parser, speech.broadcast)
 
 ## System
 shared.ABILITY_DICT['quit'] = (system.quit.parser, system.quit)
+shared.ABILITY_DICT['look'] = (system.look.parser, system.look)
+shared.ABILITY_DICT['l'] = (system.look.parser, system.look)
 
 ## Movement
 shared.ABILITY_DICT['north'] = (movement.north.parser, movement.north)

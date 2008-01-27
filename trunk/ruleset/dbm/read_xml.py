@@ -26,11 +26,16 @@ def load_rooms(zone = 'default'):
 
             handle = room.find('handle').text.strip()
             name = room.find('name').text.strip()
-            view = room.find('view').text.strip()       
-
+            view = room.find('view').text    
 
             new_room = BaseRoom(handle, name, view)
 
             for exit in room.getiterator('exit'):
-                print exit.find('way').text
-                print exit.find('to').text
+                way = exit.find('way').text
+                to = exit.find('to').text
+                new_room.add_exit(way, to)
+
+            shared.ROOMS[handle] = new_room
+        
+
+            

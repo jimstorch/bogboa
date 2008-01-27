@@ -117,7 +117,8 @@ def load_character(name, client):
     client.gender = result[1]
     client.race = result[2]
     client.role = result[3]
-    THE_LOG.add("%s logged in using %s client from %s." % (client.name,
+    print 'load_character', client.handle
+    THE_LOG.add("%s logged in using %s client from %s." % (client.handle,
             client.conn.terminal_type, client.conn.addrport())) 
 
 
