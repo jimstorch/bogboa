@@ -14,7 +14,7 @@ def look(client):
 
     """Look at the current room."""
 
-    client.send(client.room.view)
+    client.send('^C' + client.room.view)
 
 look.parser = None
 

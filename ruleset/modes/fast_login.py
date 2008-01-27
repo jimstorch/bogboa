@@ -221,6 +221,7 @@ class FastLogin(BaseMode):
             shared.HANDLE_DICT[self.handle] = mode
             ## Put into a room
             shared.ROOMS['start'].add_player(mode,'from another dimension')
+            mode.prompt()
             self.active = False
         
         else:

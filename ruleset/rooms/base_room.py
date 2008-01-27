@@ -26,16 +26,15 @@ class BaseRoom(object):
 
 
     def add_player(self, client, direction):
-        print 'room.add_player', client.handle
         self.players[client.handle] = client
-        self.tell_all_but(client, '%s enters the room %s.' % (
+        self.tell_all_but(client, '%s appears %s.' % (
             client.name, direction))
         client.room = self
-        print self.players
+        client.send('^cEntered %s.' % self.name)
 
     def remove_player(self, client, direction):
         del self.players[client.handle]
-        self.tell_all('%s leaves the room %s.' % (client.name, direction))
+        self.tell_all('%s departs %s.' % (client.name, direction))
 
     def tell_all_but(self, client, text):
         """Send a message to every player in the room except the client."""
@@ -63,17 +62,7 @@ class BaseRoom(object):
 
     def add_exit(self, way, to_handle):
         """Add an exit to this room"""
-
-        ## Due to the serial nature of loading from XML, quite often we'll
-        ## receive exit directions to rooms that have do not exist yet.
-        ## No problem, we'll just make a placeholder entry in the ROOMS
-        ## dictionary.
-                
-        if to_handle not in shared.ROOMS:
-            shared.ROOMS[to_handle] = None
-
-        ## Map the direction to the room itself, not a handle.
-        self.exits[way] = shared.ROOMS[to_handle]            
+        self.exits[way] = to_handle            
             
 
     def remove_exit(self, exit):

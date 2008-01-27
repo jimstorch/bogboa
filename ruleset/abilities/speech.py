@@ -86,8 +86,13 @@ shout.parser = parsers.monologue
 
 
 def say(client, message):
-     pass
+    
+    """Sends message to every player in client's room."""
 
-## Specify the proper parser for this verb
+    client.room.tell_all_but(client, '^w%s says,^W %s' % (client.name, 
+        message))
+    client.send('^wYou say, %s' % message)    
+
+
 say.parser = parsers.monologue
 

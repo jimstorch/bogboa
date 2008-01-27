@@ -50,6 +50,7 @@ def kill_idle_clients():
             THE_LOG.add('Kicking idle gameplay client %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
+            broadcast('^y%s has gone offline.' % client.name)
 
 
 #---[ Purge Dead Clients ]-----------------------------------------------------
