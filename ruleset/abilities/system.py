@@ -6,6 +6,7 @@
 
 from ruleset import shared
 from ruleset import parsers
+from server.decorate import word_wrap
 
 
 #---[ Look ]-------------------------------------------------------------------
@@ -14,7 +15,7 @@ def look(client):
 
     """Look at the current room."""
 
-    client.send('^C' + client.room.view)
+    client.send('^C' + word_wrap(client.room.view, client.conn.columns))
 
 look.parser = None
 
