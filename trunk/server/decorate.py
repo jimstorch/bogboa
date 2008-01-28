@@ -76,7 +76,7 @@ def strip_caret_codes(text):
 
 #--[ Word Wrap ]---------------------------------------------------------------
 
-def wordwrap(text, columns=75, indent=2, padding=5):
+def word_wrap(text, columns=78, indent=2, padding=2):
     """Wraps a block of text to a set column-width with paragraph indentation
     and left padding.  Single newlines are not preserved, but double-newlines 
     (paragraph breaks) are.  Designed to give text an easy to read, book-like
@@ -100,6 +100,6 @@ def wordwrap(text, columns=75, indent=2, padding=5):
         else:
             wtext += line + '\n\n'
             line = ' ' * padding + ' ' * indent
-    wtext += line + '\n'            
+    wtext += line            
     return wtext
 

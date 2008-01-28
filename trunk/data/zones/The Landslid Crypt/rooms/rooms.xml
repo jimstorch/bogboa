@@ -4,9 +4,9 @@
     <handle>start</handle>
     <name>The Fallen Threshold</name>
     <view>
-    Rock and dirt debris fill most of the room and what stones are left of the
-    walls twist and jut -- eager to finish the collapse.  To the north, an 
-    arched, stone stairwell descends into darkness.       
+    Rock and dirt debris fill most of the room and what stones are left
+    of the walls twist and jut -- eager to finish the collapse.  To the north,
+    an arched, stone stairwell descends into darkness.
     </view>
     <exit><way>north</way><to>stairs</to></exit>
 </room>

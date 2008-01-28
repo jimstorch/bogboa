@@ -26,7 +26,7 @@ def load_rooms(zone = 'default'):
 
             handle = room.find('handle').text.strip()
             name = room.find('name').text.strip()
-            view = room.find('view').text    
+            view = room.find('view').text.strip()    
 
             new_room = BaseRoom(handle, name, view)
 
