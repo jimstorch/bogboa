@@ -4,8 +4,8 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from ruleset import shared
 from server.log import THE_LOG
+from ruleset import shared
 from ruleset.abilities.speech import broadcast
 
 
@@ -84,17 +84,4 @@ def process_client_commands():
         if client.active and client.conn.active:
             if client.conn.cmd_ready:
                 client.process_command()
-
-
-#---[ Is Online ]--------------------------------------------------------------
-     
-def is_online(handle):
-
-    """Check if a player with the given handle is currently playing."""
-    
-    if shared.HANDLE_DICT.has_key(handle):
-        return True
-    else:
-        return False
-
 

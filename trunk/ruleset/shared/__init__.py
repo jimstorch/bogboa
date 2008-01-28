@@ -27,7 +27,7 @@ PLAY_LIST = []
 
 
 ## Dictionary of rooms players might occupy
-ROOMS = {}
+ROOM_DICT = {}
 
 
 ## Handle Dictionary, maps handles to client play modes

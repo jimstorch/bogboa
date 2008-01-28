@@ -13,9 +13,9 @@ def north(client):
 
     if 'north' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['north']]
-        leaving.remove_player(client, 'to the North')
-        entering.add_player(client, 'from the South')
+        entering = shared.ROOM_DICT[client.room.exits['north']]
+        leaving.remove_player(client, ' to the North')
+        entering.add_player(client, ' from the South')
     
     else:
         client.send('^yThe way North is obstructed.')
@@ -30,9 +30,9 @@ def northeast(client):
 
     if 'northeast' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['northeast']]
-        leaving.remove_player(client, 'to the Northeast')
-        entering.add_player(client, 'from the Southwest')
+        entering = shared.ROOM_DICT[client.room.exits['northeast']]
+        leaving.remove_player(client, ' to the Northeast')
+        entering.add_player(client, ' from the Southwest')
     
     else:
         client.send('^yThe way Northeast is obstructed.')
@@ -47,9 +47,9 @@ def east(client):
 
     if 'east' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['east']]
-        leaving.remove_player(client, 'to the East')
-        entering.add_player(client, 'from the West')
+        entering = shared.ROOM_DICT[client.room.exits['east']]
+        leaving.remove_player(client, ' to the East')
+        entering.add_player(client, ' from the West')
     
     else:
         client.send('^yThe way East is obstructed.')
@@ -64,9 +64,9 @@ def southeast(client):
 
     if 'southeast' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['southeast']]
-        leaving.remove_player(client, 'to the Southeast')
-        entering.add_player(client, 'from the Northwest')
+        entering = shared.ROOM_DICT[client.room.exits['southeast']]
+        leaving.remove_player(client, ' to the Southeast')
+        entering.add_player(client, ' from the Northwest')
     
     else:
         client.send('^yThe way Southeast is obstructed.')
@@ -81,9 +81,9 @@ def south(client):
 
     if 'south' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['south']]
-        leaving.remove_player(client, 'to the South')
-        entering.add_player(client, 'from the North')
+        entering = shared.ROOM_DICT[client.room.exits['south']]
+        leaving.remove_player(client, ' to the South')
+        entering.add_player(client, ' from the North')
     
     else:
         client.send('^yThe way Sorth is obstructed.')
@@ -98,9 +98,9 @@ def southwest(client):
 
     if 'southwest' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['southwest']]
-        leaving.remove_player(client, 'to the Southwest')
-        entering.add_player(client, 'from the Northeast')
+        entering = shared.ROOM_DICT[client.room.exits['southwest']]
+        leaving.remove_player(client, ' to the Southwest')
+        entering.add_player(client, ' from the Northeast')
     
     else:
         client.send('^yThe way Southwest is obstructed.')
@@ -115,9 +115,9 @@ def west(client):
 
     if 'west' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['west']]
-        leaving.remove_player(client, 'to the West')
-        entering.add_player(client, 'from the East')
+        entering = shared.ROOM_DICT[client.room.exits['west']]
+        leaving.remove_player(client, ' to the West')
+        entering.add_player(client, ' from the East')
     
     else:
         client.send('^yThe way West is obstructed.')
@@ -132,9 +132,9 @@ def northwest(client):
 
     if 'northwest' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['northwest']]
-        leaving.remove_player(client, 'to the Northwest')
-        entering.add_player(client, 'from the Southeast')
+        entering = shared.ROOM_DICT[client.room.exits['northwest']]
+        leaving.remove_player(client, ' to the Northwest')
+        entering.add_player(client, ' from the Southeast')
     
     else:
         client.send('^yThe way Northwest is obstructed.')
@@ -149,9 +149,9 @@ def up(client):
 
     if 'up' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['up']]
-        leaving.remove_player(client, 'going upwards')
-        entering.add_player(client, 'from below')
+        entering = shared.ROOM_DICT[client.room.exits['up']]
+        leaving.remove_player(client, ' headed upwards')
+        entering.add_player(client, ' from below')
     
     else:
         client.send('^yThe way up is obstructed.')
@@ -165,9 +165,9 @@ def down(client):
 
     if 'down' in client.room.exits:
         leaving = client.room
-        entering = shared.ROOMS[client.room.exits['down']]
-        leaving.remove_player(client, 'going downward')
-        entering.add_player(client, 'from above')
+        entering = shared.ROOM_DICT[client.room.exits['down']]
+        leaving.remove_player(client, ' headed downward')
+        entering.add_player(client, ' from above')
     
     else:
         client.send('^yThe way down is obstructed.')

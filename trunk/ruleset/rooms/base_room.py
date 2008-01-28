@@ -25,27 +25,63 @@ class BaseRoom(object):
         print "Loaded", self.name
 
 
+    #---[ Add Player ]---------------------------------------------------------
+
     def add_player(self, client, direction):
+        
+        """Adds player to the room population."""
+        
         self.players[client.handle] = client
-        self.tell_all_but(client, '%s appears %s.' % (
+        self.tell_all_but(client, '%s appears%s.' % (
             client.name, direction))
         client.room = self
-        client.send('^cEntered %s.' % self.name)
+        client.send('^cArrived at %s.' % self.name)
+
+    #---[ Remove Player ]------------------------------------------------------
 
     def remove_player(self, client, direction):
-        del self.players[client.handle]
-        self.tell_all('%s departs %s.' % (client.name, direction))
+    
+        """Remove player from the room population."""
+    
+        if client.handle in self.players:
+            del self.players[client.handle]
+            self.tell_all('%s departs%s.' % (client.name, direction))
+
+
+    #---[ Tell All But ]-------------------------------------------------------
 
     def tell_all_but(self, client, text):
+    
         """Send a message to every player in the room except the client."""
+
         for player in self.players.values():
             if player != client:
                 player.send(text)
 
+
+    #---[ Tell All ]-----------------------------------------------------------
+
     def tell_all(self, text):
+
         """Send a message to every player in the room."""
+
         for player in self.players.values():
             player.send(text)        
+
+
+    #---[ Add Exit ]-----------------------------------------------------------
+
+    def add_exit(self, way, to_handle):
+
+        """Add an exit to this room"""
+
+        self.exits[way] = to_handle  
+
+
+    #---[ Remove Exit ]--------------------------------------------------------
+
+    def remove_exit(self, exit):
+        pass
 
 
     def add_item(self, item):
@@ -60,11 +96,8 @@ class BaseRoom(object):
     def remove_mob(self, mob, direction):
         pass
 
-    def add_exit(self, way, to_handle):
-        """Add an exit to this room"""
-        self.exits[way] = to_handle            
+          
             
 
-    def remove_exit(self, exit):
-        pass
+
 
