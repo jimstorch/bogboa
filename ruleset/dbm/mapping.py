@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 
 import datetime
+import hashlib
 
 from ruleset.dbm.dbconnect import THE_CURSOR
 from server.log import THE_LOG
@@ -13,10 +14,10 @@ from server.log import THE_LOG
 #---[ Check Name ]-------------------------------------------------------------
 
 def check_name(name):
-    
-    handle = name.lower()
 
     """Returns True if the specified character exists in the database."""
+
+    handle = name.lower()
 
     sql = """
         SELECT handle FROM character WHERE handle = ?;
@@ -26,6 +27,7 @@ def check_name(name):
 
     if result:
         return True
+        
     else:
         return False    
 
@@ -62,6 +64,8 @@ def check_suspension(name):
 def check_password(name, password):
     
     handle = name.lower()
+    ## We don't store passwords in cleartext
+    hashed_password = hashlib.sha256(password).hexdigest()
 
     """Returns True if the specified password matches."""
 
@@ -74,7 +78,7 @@ def check_password(name, password):
 
     if result:
         
-        if password == result[0]:
+        if hashed_password == result[0]:
             return True
         else:
             return False            
@@ -90,13 +94,16 @@ def check_password(name, password):
 def insert_character(client):
 
     created = str(datetime.datetime.now()) 
+    ## Again, we don't store passwords in cleartext
+    hashed_password = hashlib.sha256(client.password).hexdigest()
+
     sql = """
     INSERT INTO character ( cid, handle, name, password, gender, race, role, 
         suspended, note, date_created, date_last_on, last_ip_address )
         VALUES ( NULL, ?, ?, ?, ?, ?, ?, 0, 'a note', ?, ?, ? ); 
         """    
     THE_CURSOR.execute(sql, ( client.name.lower(), client.name, 
-        client.password, client.gender, client.race, client.role, created,
+        hashed_password, client.gender, client.race, client.role, created,
         created, client.conn.addr ))
     THE_LOG.add("Character '%s' created by user from %s." % (client.name,
         client.conn.addrport()))    
@@ -117,7 +124,7 @@ def load_character(name, client):
     client.gender = result[1]
     client.race = result[2]
     client.role = result[3]
-    print 'load_character', client.handle
+#    print 'load_character', client.handle
     THE_LOG.add("%s logged in using %s client from %s." % (client.handle,
             client.conn.terminal_type, client.conn.addrport())) 
 

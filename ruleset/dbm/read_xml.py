@@ -14,6 +14,7 @@ from ruleset.rooms.base_room import BaseRoom
 #---[ Load Rooms ]-------------------------------------------------------------
 
 def load_rooms(zone = 'default'):
+
     """Load all the rooms in the given zone."""
  
     print "Load Rooms called"          
@@ -35,7 +36,7 @@ def load_rooms(zone = 'default'):
                 to = exit.find('to').text
                 new_room.add_exit(way, to)
 
-            shared.ROOMS[handle] = new_room
+            shared.ROOM_DICT[handle] = new_room
         
 
             

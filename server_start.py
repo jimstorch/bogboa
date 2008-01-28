@@ -70,7 +70,7 @@ THE_LOG.add("**************")
 ## Load our mini testing zone
 load_rooms('The Landslid Crypt')
 
-print shared.ROOMS
+#print shared.ROOM_DICT
 
 #--[ Main Loop ]---------------------------------------------------------------
 

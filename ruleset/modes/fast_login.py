@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------------
 #   File:       fast_login.py
-#   Purpose:    exquick -n- dirty login / registration
+#   Purpose:    quick -n- dirty login / registration
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 
-from server.control import is_online
 from ruleset import shared
+from ruleset.lookup import is_online
 from ruleset.modes.base_mode import BaseMode
 from ruleset.modes.player import Player
 from ruleset.dbm.mapping import check_name
@@ -220,7 +220,7 @@ class FastLogin(BaseMode):
             ## Add this to the dictionary of play handles
             shared.HANDLE_DICT[self.handle] = mode
             ## Put into a room
-            shared.ROOMS['start'].add_player(mode,'from another dimension')
+            shared.ROOM_DICT['start'].add_player(mode,'')
             mode.prompt()
             self.active = False
         
