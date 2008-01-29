@@ -17,8 +17,10 @@ class CombatMode(object):
         self.conn = conn
         self.active = True
         self.CombatLayout = CombatLayout
+        self.CombatAbilities = {}
         self.MonstersByHandle = {}
 ##        self.MonstersByName = {}
+        self.load_combat_abilities()
         self.load_monsters()
         self.parse_combatlayout()
         self.display_layout()
@@ -65,6 +67,18 @@ class CombatMode(object):
 ##            self.MonstersByName[out['name']] = out
 ##            self.MonstersByHandle = npcRuleSet(self.MonstersByHandle)
 ##        self.MonstersByName = npcRuleSet(self.MonstersByName)
+        return
+
+    #--[ ]--
+    def load_combat_abilities(self):
+        XMLFile = r"data\abilities\combat_abilities.xml"
+        tree = et.parse(XMLFile)
+        root = tree.getroot()
+        allClasses = root.getchildren()
+        for Class in allClasses:
+            out = self.dig_xml(Class)
+            self.CombatAbilities[Class.tag] = out
+##        print self.CombatAbilities
         return
 
     #--[ ]--   
