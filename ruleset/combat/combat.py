@@ -17,6 +17,7 @@ class CombatMode(object):
         self.conn = conn
         self.active = True
         self.CombatLayout = CombatLayout
+        self.CombatOrder = []
         self.CombatAbilities = {}
         self.MonstersByHandle = {}
 ##        self.MonstersByName = {}
@@ -108,37 +109,54 @@ class CombatMode(object):
 ##                print Combatant
                 self.Combatants[Combatant] = self.init_combatant(Combatant)
 ##                print self.Combatants[Combatant]
-##        self.roll_initiative()
+        self.roll_initiative()
         return
 
     #--[ ]--
-    def init_combatant(self,Handle):
+    def init_combatant(self, Handle):
         if Handle in self.MonstersByHandle.keys():
             Combatant = self.MonstersByHandle[Handle]
-            Combatant['initiative'] = d20()
+            Combatant['initiative'] = 0
 ##            Combatant['health'] = 0
 ##            Combatant['energy'] = 0
         else:
             Combatant = {}
+            Combatant['handle'] = Handle
             Combatant['name'] = capwords(Handle.replace('_', ' '))
-            Combatant['initiative'] = d20()
+            Combatant['initiative'] = 0
             Combatant['hp'] = [0, 0]
             Combatant['mp'] = [0, 0]
         return Combatant
 
     #--[ ]--
     def roll_initiative(self):
+        initiative = {}
         for Combatant in self.Combatants:
 ##            print self.Combatants[Combatant]
-            self.Combatants[Combatant]['initiative'] = d20()
+            new_initiative = d20()
+            self.Combatants[Combatant]['initiative'] = new_initiative
+            if new_initiative not in initiative.keys():
+                initiative[new_initiative] = self.Combatants[Combatant]['handle']
+        print initiative.keys()
+        self.CombatOrder = self.sort_dict_to_list(initiative)
+        print self.CombatOrder
         return
-    
+
+    def sort_dict_to_list(self, adict):
+        keys = adict.keys()
+        keys.sort()
+        keys.reverse()
+        out = []
+        for key in keys:
+            out.append(adict[key])
+        return out
+   
     #--[ ]--
-    def attack(self,strAttacker,strTarget):
+    def attack(self, strAttacker, strTarget, strAbility):
         return
 
     #--[ ]--
-    def defend(self):
+    def defend(self, strAttacker, strTarget, strAbility):
         return
 
     #--[ ]--
@@ -159,3 +177,6 @@ class CombatMode(object):
                                                self.Combatants[Combatant]['mp'][1])
         return
                 
+    #--[ ]--
+    def combat_loop(self):
+        combat_order = self.combat_order()
