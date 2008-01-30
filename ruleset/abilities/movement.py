@@ -86,7 +86,7 @@ def south(client):
         entering.add_player(client, ' from the North')
     
     else:
-        client.send('^yThe way Sorth is obstructed.')
+        client.send('^yThe way South is obstructed.')
 
 south.parser = None
 
@@ -154,7 +154,7 @@ def up(client):
         entering.add_player(client, ' from below')
     
     else:
-        client.send('^yThe way up is obstructed.')
+        client.send('^yThere is no way up here.')
 
 up.parser = None
 
@@ -170,7 +170,7 @@ def down(client):
         entering.add_player(client, ' from above')
     
     else:
-        client.send('^yThe way down is obstructed.')
+        client.send('^yThere is no way down here.')
 
 down.parser = None
 
