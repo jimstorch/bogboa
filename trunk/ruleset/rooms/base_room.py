@@ -73,7 +73,7 @@ class BaseRoom(object):
 
     def add_exit(self, way, to_handle):
 
-        """Add an exit to this room"""
+        """Add or change an exit from this room"""
 
         self.exits[way] = to_handle  
 
