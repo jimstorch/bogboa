@@ -26,8 +26,8 @@ class Scheduler(object):
 
 
     def add(self, delay, func, args):
-        """Add a delayed function call to the schedule.  Delay in in seconds
-        and maybe be a decimal."""
+        """Add a delayed function call to the schedule.  Delay is in seconds
+        and may be a decimal."""
         ## create a new event object
         event = Event(delay, func, args)
         self.event_list.append(event)

@@ -1,19 +1,17 @@
 #------------------------------------------------------------------------------
 #   File:       game_loop.py
-#   Purpose:    Wraps a delayed function call, used the Scheduler class.
+#   Purpose:    Wraps a delayed function call, used by the Scheduler class.
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-#import time
 from ruleset import shared
-
 
 class Event(object):
 
     def __init__(self, delay, func, args):
     
         self.active = True
-        self.when = shared.the_time + delay 
+        self.when = shared.THE_TIME + delay 
         self.func = func
         self.args = args
 
