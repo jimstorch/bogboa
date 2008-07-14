@@ -7,6 +7,7 @@
 
 from ruleset import shared
 from server.log import THE_LOG
+from server.tcp.listen import PORT
 
 from server.clock.scheduler import THE_SCHEDULER
 from server.tcp.async import THE_PORT_AUTHORITY
@@ -74,6 +75,7 @@ load_rooms('The Landslid Crypt')
 
 #--[ Main Loop ]---------------------------------------------------------------
 
+THE_LOG.add("Listening for connections on port %d" % PORT)
 
 # Our process loop
 while shared.SERVER_RUN == True:
