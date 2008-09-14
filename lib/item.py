@@ -1,3 +1,7 @@
+#------------------------------------------------------------------------------
+#   File:       lib/item.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 
 class Item(object):
@@ -5,5 +9,8 @@ class Item(object):
     def __init__(self):
     
         self.uuid = uuid
-        self.alias = None
-        self.
+        self.handle = None
+        self.module = None
+
+    
+    

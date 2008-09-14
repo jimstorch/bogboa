@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#   File:       shared/__init__.py
+#   File:       lib/shared.py
 #   Purpose:    global values used by the server
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
@@ -26,14 +26,35 @@ LOBBY_LIST = []
 PLAY_LIST = []
 
 
-## Dictionary of rooms players might occupy
+## Map an archetype alias to Archetype Object
+ARCHETYPE_DICT = {}
+
+
+## Map a UUID to a Creature Prototype Object
+PROTOTYPE_DICT = {}
+
+
+## Map a creature alias to an active Creature Object
+CREATURE_DICT = {}
+
+
+## Map an effect alias to an Effect object
+EFFECT_DICT = {}
+
+
+## Map an item UUID to an item object 
+ITEM_DICT = {}
+
+
+## Map a Player handle to a Player object
+PLAYER_DICT = {}
+
+
+## Map a Skill alias to a Skill object
+SKILL_DICT = {}
+
+
+## Map a room UUID to a Room object
 ROOM_DICT = {}
 
-
-## Handle Dictionary, maps handles to client play modes
-HANDLE_DICT = {}
-
-
-## Ability Dictionary, maps ability handles to ability functions 
-ABILITY_DICT = {}
 
