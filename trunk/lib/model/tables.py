@@ -3,71 +3,139 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-sql = """
-    CREATE TABLE archetypes (
-        uuid TEXT PRIMARY KEY.
-        alias TEXT,
-        script);
-    """     
 
-sql = """
-    CREATE TABLE races (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script);
-    """
+from lib.model.dbconnect import THE_CURSOR
 
-sql = """
-    CREATE TABLE skills (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script);
-    """
 
-sql = """
-    CREATE TABLE effects (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script TEXT,
-        module TEXT);
-    """
+def create_tables():
 
-sql = """
-    CREATE TABLE mobs (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script TEXT,
-        module TEXT);
-    """
+    sql = """
+        CREATE TABLE archetype (
+            uuid TEXT PRIMARY KEY.
+            handle TEXT,
+            script);
+        """     
 
-sql = """
-    CREATE TABLE items (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script TEXT,
-        module TEXT);
-    """
+    THE_CURSOR.execute(sql)
 
-sql = """
-    CREATE TABLE rooms (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script TEXT,
-        module TEXT);
-    """
 
-sql = """
-    CREATE TABLE modules (
-        uuid TEXT PRIMARY KEY,
-        alias TEXT,
-        script);
-    """
+    sql = """
+        CREATE TABLE race (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script);
+        """
 
-sql = """
-    CREATE TABLE flags (
-        player TEXT,
-        flag TEXT,
-        created DATETIME);
-    """
-    
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE gender (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE skill (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE effect (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script TEXT,
+            module TEXT);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE mob (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script TEXT,
+            module TEXT);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE item (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script TEXT,
+            module TEXT);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE room (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script TEXT,
+            module TEXT);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE module (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            script);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE player (
+            uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            password TEXT,
+            archetype_uuid TEXT,
+            level INT,
+            race_uuid TEXT,
+            gender_uuid TEXT,
+            money INT,
+            created DATETIME);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE player_flag (
+            player_uuid TEXT PRIMARY KEY,
+            handle TEXT,
+            value TEXT,
+            created DATETIME);
+        """
+
+    THE_CURSOR.execute(sql
+        
+    sql = """
+        CREATE TABLE player_skill (
+            player_uuid TEXT PRIMARY KEY,        
+            skill_uuid TEXT,
+            value TEXT,
+            created DATETIME);
+        """
+
+    THE_CURSOR.execute(sql
+
+    sql = """
+        CREATE TABLE inventory (
+            player_uuid TEXT PRIMARY KEY,
+            slot TEXT,
+            item_uuid);
+        """
+             
+    THE_CURSOR.execute(sql
 

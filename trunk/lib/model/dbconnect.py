@@ -18,9 +18,13 @@ except ImportError:
         sys.exit(1)
 
 # Open the database with autocommit on
-DBCONN = sqlite.connect('data/sqlite_files/mud.sqlite', isolation_level=None)
+DBCONN = sqlite.connect('data/mud.sqlite', isolation_level=None)
 
 
 #--[ Shared Database Cursor ]--------------------------------------------------
 
 THE_CURSOR = DBCONN.cursor()
+
+
+
+
