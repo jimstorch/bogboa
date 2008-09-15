@@ -1,0 +1,47 @@
+Defensive Skills
+----------------
+
+dodge
+light_armor
+medium_armor
+heavy_armor
+
+
+Magic Skills
+------------
+evocation
+conjuration
+restoration
+divination
+necromancy
+
+
+Offensive Skills
+----------------
+bows
+crossbows
+daggers
+great_axes
+axes
+great_swords
+long_swords
+short_sword
+
+
+Administration
+--------------
+thaumaturgy
+
+
+
+
+
+skill = 10 points/level
+
+skill cap = ( 10 * level ) * archetype_skill_mod
+
+effective level = 
+
+
+
+

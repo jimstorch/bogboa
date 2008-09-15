@@ -1,0 +1,223 @@
+
+
+#------------------------------------------------------------------Creature API
+
+def set_faction(uuid, value):
+    pass
+
+def set_hitpoints(value):
+    pass
+
+def follow(player):
+    pass
+
+def stop():
+    pass
+
+def teleport(uuid):
+    pass
+
+def hate(uuid, amount):
+    pass
+
+def like(uuid, amount):
+    pass
+
+def give_item(uuid):
+    pass
+
+def say(text):
+    pass
+
+def shout(text):
+    pass
+
+def emote(text):
+    pass
+
+def kill():
+    pass
+
+def banish():
+    pass
+
+def stun(duration):
+    pass
+
+def set_level(level):
+    pass
+
+def spawn(uuid, level):
+    pass
+
+def summon(uuid):
+    pass
+
+def cast(spell, args):
+    pass
+
+def self_cast(spell, args):
+    pass
+
+def poof():
+    pass
+
+def set_token(token, value):
+    pass
+
+def clear_token(token):
+    pass
+
+#----------------------------------------------------------------------Room API
+
+def narate(text):
+    pass
+
+def add_exit(direction, uuid):
+    pass
+
+def remove_exit(direction):
+    pass
+
+def spawn(uuid, level):
+    pass
+
+def summon(uuid):
+    pass
+
+def cast(spell, args):
+    pass
+
+
+def 
+
+
+#----------------------------------------------------------------------Item API
+
+def set_level(level):
+    pass
+
+def set_skill(skill):
+    pass
+
+def set_slot(slot):
+    pass
+
+def set_fixed(boolean):
+    pass
+
+def set_aliase(alias):
+    pass
+
+def poof():
+    pass
+
+#--------------------------------------------------------------------System API
+
+def schedule(cmds, delay):
+    pass
+
+def cast(spell, level=None):
+    pass
+
+
+
+#--------------------------------------------------------------------Player API
+
+def set_gender(gender):
+    pass
+
+def set_race(uuid):
+    pass
+
+def set_profession(uuid):
+    pass
+
+def rename(name):
+    pass
+
+def teach(uuid):
+    pass
+
+def set_hitpoints(value):
+    pass
+
+def save():
+    pass
+
+def bind(uuid):
+    pass
+
+def set_level(level):
+    pass
+
+def give_xp(amount):
+    pass
+
+def take_xp(amount):
+    pass
+
+def has_flag(uuid):
+    pass
+
+def set_flag(uuid, value):
+    pass
+
+def clear_flag(uuid):
+    pass
+
+def has_money(amount):
+    pass
+
+def take_money(amount):
+    pass
+
+def give_money(amount):
+    pass
+
+def zero_money(amount):
+    pass
+
+def has_faction(uuid, amount):
+    pass
+
+def adj_faction(uuid, amount):
+    pass
+
+def zero_faction(uuid);
+
+def has_skill(uuid, amount):
+    pass
+
+def adj_skill(uuid, amount):
+    pass
+
+def zero_skill(uuid):
+    pass
+
+def has_item(uuid):
+    pass
+
+def give_item(uuid):
+    pass
+
+def take_item(uuid):
+    pass
+
+def kill():
+    pass
+
+def ban():
+    pass
+
+def suspend(duration):
+    pass
+
+def teleport(uuid):
+    pass
+
+def set_token(token, value):
+    pass
+
+def clear_token(token):
+    pass

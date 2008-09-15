@@ -26,7 +26,7 @@ def create_tables():
             script);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE gender (
@@ -35,7 +35,7 @@ def create_tables():
             script);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE skill (
@@ -44,7 +44,7 @@ def create_tables():
             script);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE effect (
@@ -54,7 +54,7 @@ def create_tables():
             module TEXT);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE mob (
@@ -64,7 +64,7 @@ def create_tables():
             module TEXT);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE item (
@@ -74,7 +74,7 @@ def create_tables():
             module TEXT);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE room (
@@ -84,7 +84,7 @@ def create_tables():
             module TEXT);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE module (
@@ -93,7 +93,7 @@ def create_tables():
             script);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE player (
@@ -108,7 +108,7 @@ def create_tables():
             created DATETIME);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE player_flag (
@@ -118,7 +118,7 @@ def create_tables():
             created DATETIME);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
         
     sql = """
         CREATE TABLE player_skill (
@@ -128,7 +128,7 @@ def create_tables():
             created DATETIME);
         """
 
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE inventory (
@@ -137,5 +137,15 @@ def create_tables():
             item_uuid);
         """
              
-    THE_CURSOR.execute(sql
+    THE_CURSOR.execute(sql)
+
+
+    sql = """
+        CREATE TABLE banned_ip (
+            ip_address TEXT,
+            note TEXT,
+            created DATETIME);
+        """
+
+    THE_CURSOR.execute(sql)
 

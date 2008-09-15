@@ -4,9 +4,9 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from ruleset import shared
-from ruleset import parsers
-from server.decorate import word_wrap
+from lib import shared
+from lib import parsers
+from driver.decorate import word_wrap
 
 
 #---[ Look ]-------------------------------------------------------------------

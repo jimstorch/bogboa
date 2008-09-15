@@ -4,9 +4,9 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from ruleset import shared
-from ruleset import parsers
-from ruleset import lookup
+from lib import shared
+from lib import parsers
+from lib import lookup
 
 
 #---[ Broadcast ]--------------------------------------------------------------
