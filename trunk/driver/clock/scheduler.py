@@ -8,9 +8,10 @@
 
 import time
 import operator
+from bisect import insort
 
-from ruleset import shared
-from server.clock.event import Event
+from lib import shared
+from driver.clock.event import Event
 
 
 #--[ Scheduler Class ]---------------------------------------------------------
@@ -25,22 +26,29 @@ class Scheduler(object):
         self.start_time = time.time()  
 
 
+#    def add(self, delay, func, args):
+#        """Add a delayed function call to the schedule.  Delay is in seconds
+#        and may be a decimal."""
+#        ## create a new event object
+#        event = Event(delay, func, args)
+#        self.event_list.append(event)
+#        ## Sort the events chronologically
+#        self.event_list.sort(key=operator.attrgetter('when'))
+#        ## Return the event in case the caller needs to track it
+#        return event
+
     def add(self, delay, func, args):
         """Add a delayed function call to the schedule.  Delay is in seconds
         and may be a decimal."""
         ## create a new event object
         event = Event(delay, func, args)
-        self.event_list.append(event)
-        ## Sort the events chronologically
-        self.event_list.sort(key=operator.attrgetter('when'))
-        ## Return the event in case the caller needs to track it
-        return event
-
+        ## Do an in-order insertion 
+        insort(self.event_list, event)
+        return event 
 
     def age(self):
         """Return the age of the scheduler in seconds."""
         return shared.THE_TIME - self.start_time
-
 
     def tick(self):
         """Fire and delete all events that have a schedule time < now."""

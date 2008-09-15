@@ -10,12 +10,12 @@ import socket
 import select
 import sys
 
-from server.tcp.telnet import Telnet
-from server.tcp.listen import THE_SERVER_SOCKET
-from ruleset.modes.fast_login import FastLogin as WelcomeMode
+from driver.tcp.telnet import Telnet
+from driver.tcp.listen import THE_SERVER_SOCKET
+#from ruleset.modes.fast_login import FastLogin as WelcomeMode
 # from ruleset.modes.telnet_test import TelnetTest as WelcomeMode
-from ruleset import shared
-from server.log import THE_LOG
+from lib import shared
+from driver.log import THE_LOG
 
 
 # TODO: add a real source here

@@ -5,19 +5,19 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from ruleset import shared
-from server.log import THE_LOG
-from server.tcp.listen import PORT
+from lib import shared
+from driver.log import THE_LOG
+from driver.tcp.listen import PORT
 
-from server.clock.scheduler import THE_SCHEDULER
-from server.tcp.async import THE_PORT_AUTHORITY
-from server.control import test_connections
-from server.control import kill_idle_clients
-from server.control import purge_dead_clients
-from server.control import process_client_commands
-from ruleset.dbm.tables import check_tables
-from ruleset.dbm.tables import create_tables
-from ruleset.dbm.read_xml import load_rooms
+from driver.clock.scheduler import THE_SCHEDULER
+from driver.tcp.async import THE_PORT_AUTHORITY
+from driver.control import test_connections
+from driver.control import kill_idle_clients
+from driver.control import purge_dead_clients
+from driver.control import process_client_commands
+#from lib.model.tables import check_tables
+#from lib.model.tables import create_tables
+
 
 #---[ Age String ]-------------------------------------------------------------
 
@@ -52,13 +52,14 @@ def still_kicking(string):
 
 #--[ Server Startup Code ]-----------------------------------------------------
 
-if not check_tables():
-    THE_LOG.add("Database tables not found -- creating tables.")
-    create_tables()
+#if not check_tables():
+#    THE_LOG.add("Database tables not found -- creating tables.")
+#    create_tables()
 
 
 # Get still_kicking() ... kicking
 #THE_SCHEDULER.add(1, still_kicking,"I live.")
+
 
 # note the startup to the log
 THE_LOG.add("**************")
@@ -69,7 +70,7 @@ THE_LOG.add("**************")
 #--[ Load Zones ]--------------------------------------------------------------
 
 ## Load our mini testing zone
-load_rooms('The Landslid Crypt')
+#load_rooms('The Landslid Crypt')
 
 #print shared.ROOM_DICT
 

@@ -8,8 +8,8 @@
 
 import socket
 
-from ruleset import shared
-from server.log import THE_LOG
+from lib import shared
+from driver.log import THE_LOG
 
 
 #---[ Telnet Notes ]-----------------------------------------------------------

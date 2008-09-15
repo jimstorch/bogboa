@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from ruleset import shared
+from lib import shared
 
 class Event(object):
 
@@ -14,6 +14,11 @@ class Event(object):
         self.when = shared.THE_TIME + delay 
         self.func = func
         self.args = args
+
+    def __cmp__(self, other):
+        """Define a compare function for bisect's sorted insert"""
+        return cmp(self.when, other.when)
+
 
     def cancel(self):
         """Causes the event to not-fire when the scheduler selects it."""

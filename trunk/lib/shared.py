@@ -22,6 +22,8 @@ THE_TIME = time.time()          ## Initialize to current time
 LOBBY_LIST = []
 
 
+ACTION_DICT = {}
+
 ## List of clients in character gameplay mode 
 PLAY_LIST = []
 
