@@ -3,7 +3,7 @@
 %   Purpose:    LaTex source for the manual
 %   Author:     Jim Storch
 %------------------------------------------------------------------------------
-\documentclass{article}
+\documentclass{report}
 \usepackage{times}
 \usepackage[pdftex]{graphicx}
 \usepackage[pdftex, 
@@ -17,14 +17,16 @@
 \date{\today}
 \maketitle
 
-%\includegraphics{pic.png}
-
-
+\begin{center}
+\includegraphics[scale=0.5]{illustrations/boa.png}
+\end{center}
 
 \tableofcontents
 
 
 
+\include{chapters/introduction}
+\include{chapters/skills}
 
 
 
