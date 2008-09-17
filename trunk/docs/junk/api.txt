@@ -106,7 +106,7 @@ def set_slot(slot):
 def set_fixed(boolean):
     pass
 
-def set_aliase(alias):
+def set_alias(alias):
     pass
 
 def poof():
