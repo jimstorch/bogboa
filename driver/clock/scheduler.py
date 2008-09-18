@@ -6,6 +6,7 @@
 
 """Contains the event scheduler class and a shared instance on it."""
 
+import sys
 import time
 import operator
 from bisect import insort
@@ -13,6 +14,12 @@ from bisect import insort
 from lib import shared
 from driver.clock.event import Event
 
+if sys.platform == "win32":
+    # On Windows, the best timer is time.clock()
+    default_timer = time.clock
+else:
+    # On most other platforms the best timer is time.time()
+    default_timer = time.time
 
 #--[ Scheduler Class ]---------------------------------------------------------
 
@@ -56,7 +63,7 @@ class Scheduler(object):
         time.sleep(.001)
 
         ## Update the global time value 
-        shared.THE_TIME = time.time()
+        shared.THE_TIME = default_timer()
 
         while len(self.event_list):
             ## Look at the first event
