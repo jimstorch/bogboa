@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#   File:       lib/room.py
+#   File:       lib/rooms/room.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
@@ -12,11 +12,6 @@ class Room(object):
         self.handle = None
         self.module = None
         self.illumination = 0
-        
-    #-----------------------------------------------------------------On Create
-
-    def on_create(self):
-        pass
 
     #------------------------------------------------------------------On Enter
 
@@ -31,6 +26,11 @@ class Room(object):
     #-----------------------------------------------------------------On Death
 
     def on_death(self, mob):
+        pass
+
+    #----------------------------------------------------------------On Destroy
+
+    def on_destroy(self):
         pass
 
     #------------------------------------------------------------On Detect Aura
@@ -63,6 +63,11 @@ class Room(object):
     def on_indentify(self, mob):
         pass
 
+    #-------------------------------------------------------------------On Init
+
+    def on_init(self):
+        pass
+
     #----------------------------------------------------------------On Inspect
 
     def on_inspect(self, mob):
@@ -72,5 +77,12 @@ class Room(object):
 
     def on_look(self, mob):
         pass
+
+    #-----------------------------------------------------------------On Signal
+
+    def on_signal(self, signal):
+        pass
+
+
 
 
