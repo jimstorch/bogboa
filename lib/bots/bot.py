@@ -1,10 +1,10 @@
 #------------------------------------------------------------------------------
-#   File:       lib/creatures/creature.py
+#   File:       lib/bots/bot.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 
-class Mobile(object):
+class Bot(object):
 
     def __init__(self):
 
