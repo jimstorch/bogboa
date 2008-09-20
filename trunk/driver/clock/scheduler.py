@@ -13,6 +13,9 @@ from bisect import insort
 
 from lib import shared
 from driver.clock.event import Event
+from driver.clock.event import Series
+from driver.clock.event import Cycle
+
 
 if sys.platform == "win32":
     # On Windows, the best timer is time.clock()
@@ -52,6 +55,7 @@ class Scheduler(object):
         ## Do an in-order insertion 
         insort(self.event_list, event)
         return event 
+
 
     def age(self):
         """Return the age of the scheduler in seconds."""

@@ -13,5 +13,3 @@ class Effect(object):
         self.module = None
 
 
-
-
