@@ -10,7 +10,7 @@ from lib.model.dbconnect import THE_CURSOR
 def create_tables():
 
     sql = """
-        CREATE TABLE archetype (
+        CREATE TABLE sects (
             uuid TEXT PRIMARY KEY.
             handle TEXT,
             script);
@@ -57,7 +57,7 @@ def create_tables():
     THE_CURSOR.execute(sql)
 
     sql = """
-        CREATE TABLE mob (
+        CREATE TABLE bot (
             uuid TEXT PRIMARY KEY,
             handle TEXT,
             script TEXT,
@@ -131,7 +131,7 @@ def create_tables():
     THE_CURSOR.execute(sql)
 
     sql = """
-        CREATE TABLE inventory (
+        CREATE TABLE player_inventory (
             player_uuid TEXT PRIMARY KEY,
             slot TEXT,
             item_uuid);
