@@ -1,4 +1,13 @@
+#------------------------------------------------------------------------------
+#   File:       lib/scripting/command.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
+#from driver.clock.scheduler import THE_SCHEDULER
+
+
+
+class Batch(object):
 
 class Function(object):
 
