@@ -1,8 +1,23 @@
 # makefile for pdflatex
 
-hello.pdf: manual.tex
-	pdflatex manual.tex
-	#rm -rf *.aux *.out *.log *.toc chapters/*.aux
+# makefile for pdflatex
+
+
+SRC = manual.tex \
+	introduction.tex \
+	skills.tex \
+	license.tex 
+
+
+TARGET = manual
+TMP = tmp
+
+$(TARGET).pdf: $(SRC)
+	pdflatex --output-director $(TMP) $(TARGET).tex
+	mv $(TMP)/$(TARGET).pdf .
 
 clean::
-	rm -rf *.aux *.out *.log *.toc chapters/*.aux
+	rm -f $(TMP)/*.aux $(TMP)/*.out $(TMP)/*.log $(TMP)/*.toc 
+
+
+
