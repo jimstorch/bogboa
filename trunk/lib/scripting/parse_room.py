@@ -3,11 +3,23 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-import yaml
+import sys
 
-from lib.rooms.room import Room
+from lib.scripting.from_yaml import parse_script
+from lib.things.room import Room
+from driver.log import THE_LOG
 
 
 def parse_room(script):
 
-    pass    
+    room = Room()
+    cfg, error = test_script(script)
+
+    ## If there was an error converting the script, log it and exit
+    if cfg == None:
+        THE_LOG.add('[parse_room]: %s' % error)
+        sys.exit(1)
+
+
+
+

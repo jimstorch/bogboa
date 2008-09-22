@@ -3,10 +3,6 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-#from driver.clock.scheduler import THE_SCHEDULER
-
-
-
 class Batch(object):
 
     """
@@ -22,6 +18,7 @@ class Batch(object):
 
 
     def execute(self, mob):
-    
+
         for cmd in self.cmd_list:
+            
             
