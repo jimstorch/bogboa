@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+##-----------------------------------------------------------------------------
+##  This was an experiment in parsing a custom scripting syntax.
+##  Looks like I will be using YAML instead.
+##  9/21/08
+##-----------------------------------------------------------------------------
+
 import re
 string_list = []
 
