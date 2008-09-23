@@ -6,7 +6,7 @@
 
 from driver.log import THE_LOG
 from lib import shared
-from lib.actions.speech import broadcast
+from lib.functions.speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
