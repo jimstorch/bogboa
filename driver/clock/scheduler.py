@@ -12,9 +12,6 @@ import operator
 from bisect import insort
 
 from lib import shared
-from driver.clock.event import Event
-from driver.clock.event import Series
-from driver.clock.event import Cycle
 
 
 if sys.platform == "win32":
