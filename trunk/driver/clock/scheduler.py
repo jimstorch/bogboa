@@ -30,7 +30,7 @@ class Scheduler(object):
 
     def __init__(self):
         self.event_list = []
-        self.start_time = time.time()  
+        self.start_time = default_timer()  
 
 
 #    def add(self, delay, func, args):

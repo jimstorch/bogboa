@@ -16,6 +16,7 @@ def parse_script(script):
     """Attempt to parse a YAML script into a Python dictionary."""
 
     try:
+        ## note the use of 'safe_load' to prevent arbitrary object creation
         cfg = yaml.safe_load(script)
 
     except yaml.YAMLError, exc:
@@ -23,6 +24,9 @@ def parse_script(script):
         error = str(exc)
 
     else:
-        error = ''
+        if cfg == None:
+            error = 'Source contains no data.'
+        else:
+            error = ''
 
     return (cfg, error)
