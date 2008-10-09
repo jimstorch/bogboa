@@ -1,8 +1,7 @@
-#------------------------------------------------------------------------------
-#   File:       scheduler.py
-#   Purpose:    manages scheduled events (function calls)
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       scheduler.py
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 """Contains the event scheduler class and a shared instance on it."""
 
@@ -32,18 +31,6 @@ class Scheduler(object):
         self.event_list = []
         self.start_time = default_timer()  
 
-
-#    def add(self, delay, func, args):
-#        """Add a delayed function call to the schedule.  Delay is in seconds
-#        and may be a decimal."""
-#        ## create a new event object
-#        event = Event(delay, func, args)
-#        self.event_list.append(event)
-#        ## Sort the events chronologically
-#        self.event_list.sort(key=operator.attrgetter('when'))
-#        ## Return the event in case the caller needs to track it
-#        return event
-
     def add(self, delay, func, args):
         """Add a delayed function call to the schedule.  Delay is in seconds
         and may be a decimal."""
@@ -52,7 +39,6 @@ class Scheduler(object):
         ## Do an in-order insertion 
         insort(self.event_list, event)
         return event 
-
 
     def age(self):
         """Return the age of the scheduler in seconds."""
@@ -66,7 +52,7 @@ class Scheduler(object):
         ## Update the global time value 
         shared.THE_TIME = default_timer()
 
-        while len(self.event_list):
+        while self.event_list:
             ## Look at the first event
             event = self.event_list[0]
             ## Is is past time for it to fire?
@@ -80,7 +66,6 @@ class Scheduler(object):
             else:
                 ## all pending events are gone, let's get out of here 
                 break
-
 
 
 #--[ Global Instance ]---------------------------------------------------------

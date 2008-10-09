@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       parsers.py
-#   Purpose:    various parsers to extract command data on a per verb basis
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       parsers.py
+##  Purpose:    various parsers to extract command data on a per verb basis
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 
 

@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       listen.py
-#   Purpose:    defines the address and port the server uses
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       listen.py
+##  Purpose:    defines the address and port the server uses
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 """Sets the server port to listen for new connections on.""" 
 

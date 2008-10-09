@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       lookup.py
-#   Purpose:    matches handles (string) to a game objects
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       lookup.py
+##  Purpose:    matches handles (string) to a game objects
+##   Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 from lib import shared
 
