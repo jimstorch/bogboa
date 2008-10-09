@@ -3,7 +3,7 @@
 %   Purpose:    LaTex source for the manual
 %   Author:     Jim Storch
 %------------------------------------------------------------------------------
-\documentclass{report}
+\documentclass{article}
 \usepackage{times}
 %\usepackage{helvet} \renewcommand{\familydefault}{\sfdefault} 
 \usepackage[pdftex]{graphicx}
@@ -12,14 +12,15 @@
     pdftitle={Bogboa Documentation}]{hyperref}
 \usepackage{listings}
 \usepackage[usenames,dvipsnames]{color}
-%\usepackage{pdfcolmk}
 \definecolor{MyLightGray}{rgb}{0.95,0.95,0.95}
 \lstset{frame=single, basicstyle=\ttfamily, 
     backgroundcolor=\color{MyLightGray}, showstringspaces=false}
-\begin{document}
-%------------------------------------------------------------------------------
 
-\title{Bogboa M.U.D. Engine Manual}
+%------------------------------------------------------------------------------
+\begin{document}
+
+
+\title{BogBoa M.U.D. Engine Manual}
 \author{Jim Storch}
 \date{\today}
 \maketitle
@@ -33,6 +34,5 @@
 \include{introduction}
 %\include{skills}
 
-%------------------------------------------------------------------------------
 \end{document}
 

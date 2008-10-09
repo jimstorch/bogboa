@@ -1,16 +1,9 @@
 # makefile for pdflatex
 
-# makefile for pdflatex
-
-
-SRC = manual.tex \
-	introduction.tex \
-	skills.tex \
-	license.tex 
-
-
-TARGET = manual
+TARGET = bogboa_manual
 TMP = tmp
+SRC = $(wildcard ./*.tex)
+
 
 $(TARGET).pdf: $(SRC)
 	pdflatex --output-director $(TMP) $(TARGET).tex
