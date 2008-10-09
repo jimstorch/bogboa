@@ -3,7 +3,8 @@
 %   Purpose:    LaTex source for the manual
 %   Author:     Jim Storch
 %------------------------------------------------------------------------------
-\documentclass{article}
+\documentclass[titlepage]{article}
+\usepackage{fancyhdr}
 \usepackage{times}
 %\usepackage{helvet} \renewcommand{\familydefault}{\sfdefault} 
 \usepackage[pdftex]{graphicx}
@@ -16,23 +17,26 @@
 \lstset{frame=single, basicstyle=\ttfamily, 
     backgroundcolor=\color{MyLightGray}, showstringspaces=false}
 
+
 %------------------------------------------------------------------------------
 \begin{document}
-
 
 \title{BogBoa M.U.D. Engine Manual}
 \author{Jim Storch}
 \date{\today}
 \maketitle
 
-%\begin{center}
-%\includegraphics[scale=0.5]{illustrations/boa.png}
-%\end{center}
+\begin{center}
+\includegraphics[scale=0.5]{illustrations/boa.png}
+\end{center}
 
-%\tableofcontents
+\tableofcontents
+
+\pagestyle{fancy}
+
 
 \include{introduction}
-%\include{skills}
+\include{skills}
 
 \end{document}
 
