@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       system.py
-#   Purpose:    general system abilitites
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       system.py
+##  Purpose:    general system abilitites
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 from lib import shared
 from lib import parsers

@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       async.py
-#   Purpose:    polls for network activity and new connections
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       async.py
+##  Purpose:    polls for network activity and new connections
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 """Handle Asynchronous Telnet Connections."""
 

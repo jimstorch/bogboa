@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       server.py
-#   Purpose:    maintainance functions and such
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       server.py
+##  Purpose:    maintainance functions and such
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 from driver.log import THE_LOG
 from lib import shared

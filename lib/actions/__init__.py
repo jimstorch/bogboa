@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       ruleset/abilities/__init__.py
-#   Purpose:    initialization of stuff needed
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       ruleset/abilities/__init__.py
+##  Purpose:    initialization of stuff needed
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 from lib import shared
 from lib.actions import speech

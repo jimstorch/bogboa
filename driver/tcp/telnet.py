@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       telnet.py
-#   Purpose:    limited telnet protocol implementation
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       telnet.py
+##  Purpose:    limited telnet protocol implementation
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 """Manage one Telnet client connected via a TCP/IP socket."""
 
@@ -37,8 +37,8 @@ from driver.log import THE_LOG
 #
 # Side B replies with either:
 #
-#    "IAC WILL XX"   Meaning "I will beging using option XX"                
-#    "IAC WONT XX"   Meaning "I will not being using option XX"
+#    "IAC WILL XX"   Meaning "I will begin using option XX"                
+#    "IAC WONT XX"   Meaning "I will not begin using option XX"
 #
 #
 # The syntax is designed so that if both parties receive simultaneous requests
@@ -83,7 +83,7 @@ TTYPE   = chr( 24)      # Terminal Type
 NAWS    = chr( 31)      # Negotiate About Window Size
 LINEMO  = chr( 34)      # Line Mode
 
-#--[ Show Byte ]---------------------------------------------------------------
+#--[ Show Bytes ]--------------------------------------------------------------
 
 def show_bytes(data, direction):
     """I use this for troubleshooting while working on Telnet commands."""

@@ -1,8 +1,8 @@
-#------------------------------------------------------------------------------
-#   File:       speech.py
-#   Purpose:    communication based abilities
-#   Author:     Jim Storch
-#------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+##  File:       speech.py
+##  Purpose:    communication based abilities
+##  Author:     Jim Storch
+##-----------------------------------------------------------------------------
 
 from lib import shared
 from lib import parsers
