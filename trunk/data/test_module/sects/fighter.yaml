@@ -1,0 +1,19 @@
+##-----------------------------------------------------------------------------
+##  File:       fighter.yaml
+##-----------------------------------------------------------------------------
+uuid: 70b1de0a-4bf6-4c62-a461-72b34648f34f
+handle: fighter
+
+desc:
+    your basic sword jockey
+
+## Skill balance for this sect
+skills:
+    - healing:      0.00
+    - melee:        1.00
+    - armor:        1.00
+    - heartiness:   1.00
+
+## Abilities automatically granted to this sect
+abilities:
+    
