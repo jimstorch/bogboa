@@ -1,0 +1,21 @@
+##-----------------------------------------------------------------------------
+##  File:       wizard.yaml
+##-----------------------------------------------------------------------------
+uuid: cf494c42-32f3-42d1-8e42-13186be14fe7
+handle: wizard
+
+desc:
+    mysterious shaper of worlds
+
+## Skill balance for this sect
+skills:
+    - wizardry:     1.00
+    ## Enforce the prime-directive
+    - healing:      0.00
+    - melee:        0.00
+    ## Make them un-killable
+    - armor:        1000.0
+    - heartiness:   1000.0
+
+## Abilities automatically granted to this sect
+abilties:

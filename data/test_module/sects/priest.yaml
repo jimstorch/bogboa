@@ -1,0 +1,20 @@
+##-----------------------------------------------------------------------------
+##  File:       priest.yaml
+##-----------------------------------------------------------------------------
+uuid: 0df125e8-6568-4816-88c8-ebf87877aa37
+handle: priest
+
+desc:
+    heavy healing with moderate melee ability
+
+## Skill balance for this sect
+skills:
+    - healing:      1.00
+    - melee:        0.75
+    - armor:        0.75
+    - heartiness:   0.85
+
+## Abilities automatically granted to this sect
+abilties:
+
+
