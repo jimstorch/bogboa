@@ -34,7 +34,7 @@ from driver.loader.from_yaml import parse_script
 #           Players
 
 
-##-------------------------------------------------------------------Parse File
+#--------------------------------------------------------------------Parse File
 
 def parse_file(filename):
 
@@ -59,82 +59,73 @@ def parse_file(filename):
     return cfg
 
 
-##-------------------------------------------------------------------Items Iter
+#----------------------------------------------------------------------Cfg Iter
 
-def item_cfg_iter(module_dir):
+def cfg_iter(mask):
 
     """
-    Loads all items from YAML scripts in the given module directory.
+    Shared YAML text files to configuration iterator.
     """
 
-    print "Loading items..."
-
-    mask = os.path.join(module_dir, 'item/*.yaml')
     filenames = glob.glob(mask)
-    
     print "%d found." % len(filenames)
 
     for filename in filenames:
         cfg = parse_file(filename)
         yield cfg
 
+#-----------------------------------------------------------------Item Cfg Iter
 
-##--------------------------------------------------------------------Race Iter
+def item_cfg_iter(module_dir):
+
+    print "Loading items..."
+
+    mask = os.path.join(module_dir, 'item/*.yaml')
+    for cfg in cfg_iter(mask):
+        yield(cfg)
+
+
+#-----------------------------------------------------------------Race Cfg Iter
 
 def race_cfg_iter(module_dir):
-
-    """
-    Loads all races from YAML scripts in the given module directory.
-    """
 
     print "Loading races..."
 
     mask = os.path.join(module_dir, 'race/*.yaml')
     filenames = glob.glob(mask)
-    
-    print "%d found." % len(filenames)
-
-    for filename in filenames:
-        cfg = parse_file(filename)
-        yield cfg
+    for cfg in cfg_iter(mask):
+        yield(cfg)
 
 
-##--------------------------------------------------------------------Sect Iter
+#---------------------------------------------------------------Gender Cfg Iter
+
+def gender_cfg_iter(module_dir):
+
+    print "Loading genders..."
+
+    mask = os.path.join(module_dir, 'gender/*.yaml')
+    for cfg in cfg_iter(mask):
+        yield(cfg)
+
+
+#-----------------------------------------------------------------Sect Cfg Iter
 
 def sect_cfg_iter(module_dir):
-
-    """
-    Loads all sects from YAML scripts in the given module directory.
-    """
 
     print "Loading sects..."
 
     mask = os.path.join(module_dir, 'sect/*.yaml')
-    filenames = glob.glob(mask)
-    
-    print "%d found." % len(filenames)
-
-    for filename in filenames:
-        cfg = parse_file(filename)
-        yield cfg
+    for cfg in cfg_iter(mask):
+        yield(cfg)
 
 
-##--------------------------------------------------------------------Room Iter
+#-----------------------------------------------------------------Room Cfg Iter
 
 def room_cfg_iter(module_dir):
-
-    """
-    Loads all rooms from YAML scripts in the given module directory.
-    """
 
     print "Loading rooms..."
 
     mask = os.path.join(module_dir, 'room/*.yaml')
-    filenames = glob.glob(mask)
-    
-    print "%d found." % len(filenames)
-
-    for filename in filenames:
-        cfg = parse_file(filename)
-        yield cfg
+    for cfg in cfg_iter(mask):
+        yield(cfg)
   

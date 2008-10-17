@@ -2,9 +2,8 @@
 ##  File:       human.yaml
 ##-----------------------------------------------------------------------------
 uuid: 974b29fd-be90-4d05-8ef0-d20887b313f6
-handle: human
-desc:
-    you know what a human is, right?
+name: human
+desc: the race of man
 
 ## Base stats for this race
 stats:
