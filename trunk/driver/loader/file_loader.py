@@ -4,6 +4,14 @@
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
+"""
+File Loader
+
+Load configuration from YAML files in a module directory.
+Eventually this will be replaced with DB Loader that pulls configuration
+from a SQLite3 database.
+"""
+
 import os
 import sys
 import glob
