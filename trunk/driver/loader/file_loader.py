@@ -61,7 +61,7 @@ def item_cfg_iter(module_dir):
 
     print "Loading items..."
 
-    mask = os.path.join(module_dir, 'items/*.yaml')
+    mask = os.path.join(module_dir, 'item/*.yaml')
     filenames = glob.glob(mask)
     
     print "%d found." % len(filenames)
@@ -81,7 +81,7 @@ def race_cfg_iter(module_dir):
 
     print "Loading races..."
 
-    mask = os.path.join(module_dir, 'races/*.yaml')
+    mask = os.path.join(module_dir, 'race/*.yaml')
     filenames = glob.glob(mask)
     
     print "%d found." % len(filenames)
@@ -101,7 +101,7 @@ def sect_cfg_iter(module_dir):
 
     print "Loading sects..."
 
-    mask = os.path.join(module_dir, 'sects/*.yaml')
+    mask = os.path.join(module_dir, 'sect/*.yaml')
     filenames = glob.glob(mask)
     
     print "%d found." % len(filenames)
@@ -121,7 +121,7 @@ def room_cfg_iter(module_dir):
 
     print "Loading rooms..."
 
-    mask = os.path.join(module_dir, 'rooms/*.yaml')
+    mask = os.path.join(module_dir, 'room/*.yaml')
     filenames = glob.glob(mask)
     
     print "%d found." % len(filenames)
