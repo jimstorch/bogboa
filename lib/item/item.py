@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/things/item.py
+##  File:       lib/item/item.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -7,11 +7,8 @@
 class Item(object):
 
     def __init__(self):
+        pass
     
-        self.uuid = uuid
-        self.handle = None
-        self.module = None
-
     #-----------------------------------------------------------------On Attack
 
     def on_attack(self, mob):

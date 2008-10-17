@@ -20,6 +20,6 @@ def parse_room(script):
         THE_LOG.add('[parse_room]: %s' % error)
         sys.exit(1)
 
-
+    
 
 

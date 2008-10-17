@@ -53,7 +53,7 @@ def parse_file(filename):
 
 ##-------------------------------------------------------------------Items Iter
 
-def item_iter(module_dir):
+def item_cfg_iter(module_dir):
 
     """
     Loads all items from YAML scripts in the given module directory.
@@ -73,7 +73,7 @@ def item_iter(module_dir):
 
 ##--------------------------------------------------------------------Race Iter
 
-def race_iter(module_dir):
+def race_cfg_iter(module_dir):
 
     """
     Loads all races from YAML scripts in the given module directory.
@@ -93,7 +93,7 @@ def race_iter(module_dir):
 
 ##--------------------------------------------------------------------Sect Iter
 
-def sect_iter(module_dir):
+def sect_cfg_iter(module_dir):
 
     """
     Loads all sects from YAML scripts in the given module directory.
@@ -113,7 +113,7 @@ def sect_iter(module_dir):
 
 ##--------------------------------------------------------------------Room Iter
 
-def room_iter(module_dir):
+def room_cfg_iter(module_dir):
 
     """
     Loads all rooms from YAML scripts in the given module directory.
