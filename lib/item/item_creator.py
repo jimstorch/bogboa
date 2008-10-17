@@ -6,18 +6,37 @@
 import sys
 
 from lib.item.item import Item
+from lib.shared import PROTO_ITEM
 
+#-----------------------------------------------------------------Register Item
 
 def register_item(item):
-    pass
 
+    """
+    Given a configured item, register it with the shared PROTO_ITEM dictionary.
+    """
+
+    if item.uuid in PROTO_ITEM:
+        print ( "ERROR! Duplicate UUID (%s) found while registering item"
+            " '%s'."  % (item.uuid, item.handle) )
+        sys.exit(1)
+    else:
+        PROTO_ITEM[item.uuid] = item
+
+
+#---------------------------------------------------------------Configured Item
 
 def configured_item(cfg):
+
+    """
+    Given a configuration dictionary, create an item and configure it.
+    Returns the configured item.
+    """
 
     item = Item()
 
     if 'handle' in cfg:
-        handle = cfg.pop('handle')
+        item.handle = cfg.pop('handle')
     else:
         print "ERROR! Missing handle in item config."
         sys.exit(1)
@@ -43,6 +62,7 @@ def configured_item(cfg):
     else:
         item.buy = None
 
+    ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
         print "WARNING! Unrecognized key(s) in config for item '%s':" % handle, 
         print cfg.keys()
