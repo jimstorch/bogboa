@@ -2,7 +2,7 @@
 ##  File:       wizard.yaml
 ##-----------------------------------------------------------------------------
 uuid: cf494c42-32f3-42d1-8e42-13186be14fe7
-handle: wizard
+name: wizard
 
 desc:
     mysterious shaper of worlds

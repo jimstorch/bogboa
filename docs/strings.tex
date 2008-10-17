@@ -1,0 +1,44 @@
+%   strings.tex
+
+\section{String Substitutions}
+
+The following \emph{string substitutions} can be used in descriptions, 
+emotes, and dialog:
+
+\begin{description}
+    \item[ \$\{module\} ] The name of the current module. 
+    \item[ \$\{room\} ] The name of the current room.
+    \item[ \$\{name\} ] The name of the npc/player.
+    \item[ \$\{race\} ] The race of the npc/player.
+    \item[ \$\{gender\} ] The gender of the npc/player; 
+        \emph{male/female/thing}.
+    \item[ \$\{sect\} ] The sect (class) of the npc/player
+    \item[ \$\{level\} ] The level of the npc/player.
+    \item[ \$\{pn\} ] Pronoun in the nominative form; \emph{he/she/it}.
+    \item[ \$\{po\} ] Pronoun in the objective form; \emph{him/her/it}.
+    \item[ \$\{pn\} ] Possessive pronoun before a noun; 
+        ``Sonja swings \emph{her} axe."
+    \item[ \$\{np\} ] Possessive pronoun following the noun;
+        ``Sonja takes the gold that is now \emph{hers}."
+    \item[ \$\{pr\} ] Pronoun in the reflexive form; 
+        ``Conan wonders to \emph{himself}." 
+
+\end{description}
+
+
+\begin{lstlisting}[caption=String Sub Example]
+The ${race} struggles against the magic web spell
+with all ${pn} strength but is unabled to free ${pr}.
+\end{lstlisting}
+    
+
+Might produce:\\
+
+\emph{``The goblin struggles against the magic web spell
+with all his strength but is unable to free himself."}\\
+
+Or:\\
+
+\emph{``The skeleton struggles against the magic web spell
+with all its strength but is unable to free itself."}\\
+

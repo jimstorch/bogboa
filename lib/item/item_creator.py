@@ -24,7 +24,7 @@ def register_item(item):
         PROTO_ITEM[item.uuid] = item
 
 
-#---------------------------------------------------------------Configured Item
+#----------------------------------------------------------------Configure Item
 
 def configured_item(cfg):
 
@@ -35,10 +35,10 @@ def configured_item(cfg):
 
     item = Item()
 
-    if 'handle' in cfg:
-        item.handle = cfg.pop('handle')
+    if 'name' in cfg:
+        item.name = cfg.pop('name')
     else:
-        print "ERROR! Missing handle in item config."
+        print "ERROR! Missing name in item config."
         sys.exit(1)
 
     if 'uuid' in cfg:

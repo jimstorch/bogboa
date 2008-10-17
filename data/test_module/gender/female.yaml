@@ -1,0 +1,10 @@
+## female.yaml
+uuid: 7bdc3f55-55fb-470e-9370-8544bdf0c7e4
+name: female
+
+nominative: she
+objective: her
+possessive_noun: her
+noun_possessive: hers
+reflexive: herself
+

@@ -2,7 +2,7 @@
 ##  File:       priest.yaml
 ##-----------------------------------------------------------------------------
 uuid: 0df125e8-6568-4816-88c8-ebf87877aa37
-handle: priest
+name: priest
 
 desc:
     heavy healing with moderate melee ability

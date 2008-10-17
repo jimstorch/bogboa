@@ -1,0 +1,7 @@
+uuid: b958d98d-a63d-455c-be8c-5c5ce2f9b4ab
+module: test module
+name: B1
+
+desc:
+
+    This should choke as the same UUID as 'start'

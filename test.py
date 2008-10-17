@@ -5,19 +5,19 @@
 
 
 from driver.loader.file_loader import item_cfg_iter
-from lib.item.item_loader import configured_item
+from driver.loader.file_loader import room_cfg_iter
+from lib.item.item_creator import configured_item
+from lib.item.item_creator import register_item
 
 module = 'data/test_module'
 
 
 
-for cfg in item_cfg_iter(module):
+#for cfg in item_cfg_iter(module):
+#    item = configured_item(cfg)
+#    register_item(item)
+#    print item
 
-    #item = Item()
-    #config_item(cfg, item)
-    #register_item(item)
 
-    #print cfg
-
-    item = configured_item(cfg)
-    print item
+for cfg in room_cfg_iter(module):
+    print cfg

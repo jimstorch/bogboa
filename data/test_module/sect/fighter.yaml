@@ -2,10 +2,10 @@
 ##  File:       fighter.yaml
 ##-----------------------------------------------------------------------------
 uuid: 70b1de0a-4bf6-4c62-a461-72b34648f34f
-handle: fighter
+name: fighter
 
 desc:
-    your basic sword jockey
+    Master of armed combat
 
 ## Skill balance for this sect
 skills:

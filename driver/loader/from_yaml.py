@@ -5,8 +5,12 @@
 
 import sys
 
-import yaml
-
+try:
+    import yaml
+except ImportError:
+    print ( "Please install the PyYAML library for Python. "
+            "See www.pyyaml.org" )
+    sys.exit(1)
 
 ## Single point of conversion in the event we move away from YAML
 ## Also, having it external like this lets me call it from an OLC-style tool 
