@@ -6,7 +6,7 @@
 
 from driver.log import THE_LOG
 from lib import shared
-from lib.actions.speech import broadcast
+from lib.action.speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
@@ -14,7 +14,7 @@ from lib.actions.speech import broadcast
 ## wouldn't broadcast the disconnection of someone from the Welcome screen.
 
 
-#---[ Test Connections ]-------------------------------------------------------
+#--------------------------------------------------------------Test Connections
 
 def test_connections():
 
@@ -30,7 +30,7 @@ def test_connections():
             broadcast('^y%s has gone offline.' % client.name)    
 
 
-#---[ Kill Idle Clients ]------------------------------------------------------
+#-------------------------------------------------------------Kill Idle Clients
                 
 def kill_idle_clients():
 
@@ -53,7 +53,7 @@ def kill_idle_clients():
             broadcast('^y%s has gone offline.' % client.name)
 
 
-#---[ Purge Dead Clients ]-----------------------------------------------------
+#------------------------------------------------------------Purge Dead Clients
 
 def purge_dead_clients():
 
@@ -69,7 +69,7 @@ def purge_dead_clients():
         if client.active == True ]         
 
 
-#---[ Process Client Input ]---------------------------------------------------
+#----------------------------------------------------------Process Client Input
         
 def process_client_commands():
 

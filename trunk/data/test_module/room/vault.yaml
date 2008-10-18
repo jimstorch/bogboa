@@ -1,0 +1,17 @@
+uuid: 64a7db65-60c6-465c-9c03-65ebd66d003d
+module: test module
+name: Vault of the Matriarch
+desc:
+    Lady Evefen Stathiz, august matriarch of the clan, has certainly seen
+    better days.  Her moldering bones lay scattered in several heaps.  The
+    massive, marble sarcophagus that once guarded her rest has been dumped on
+    its side and, strangely, dragged towards the entrance of the chamber.
+
+    Most of the room's marble tile has been pilfered, as well as lamp sconces
+    and various metal fixtures.
+
+    There is a doorway missing a door to the west.
+
+
+west: 152699a2-7e99-4442-bff2-3b684fe26f39 #lower_chamber
+

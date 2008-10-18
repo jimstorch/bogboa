@@ -43,7 +43,9 @@ def parse_file(filename):
     """
 
     try:
-        script = open(filename, 'r').read()
+        fp = open(filename, 'r')
+        script = fp.read()
+        fp.close()
 
     except IOError:
         print "Error opening file '%s'" % filename

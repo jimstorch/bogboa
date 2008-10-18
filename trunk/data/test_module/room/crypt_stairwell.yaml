@@ -1,0 +1,10 @@
+uuid: b1601493-d405-4c36-85b9-4ea040af25fa
+module: test module
+name: Crypt Stairwell
+desc:
+    A narrow, sharply sloping passage lined with dark granite stairs.  They
+    certainly believe in burying their dead down deep. 
+
+s: b958d98d-a63d-455c-be8c-5c5ce2f9b4ab #start
+n: 3ab46816-5e09-45d5-9653-c77069fb6082 #landing
+

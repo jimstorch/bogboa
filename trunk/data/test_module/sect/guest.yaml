@@ -1,0 +1,12 @@
+uuid: f2f8003b-2097-45e7-b869-eba0bfd8c891
+name: guest
+desc:
+    Pre-login Status    
+
+## Abilities automatically granted to this sect
+abilities:
+    - quit
+    - login
+    - create
+    - help
+

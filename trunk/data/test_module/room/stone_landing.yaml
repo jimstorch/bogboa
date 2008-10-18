@@ -1,0 +1,16 @@
+uuid: 3ab46816-5e09-45d5-9653-c77069fb6082
+module: test module
+name: Stone Landing
+desc:
+    Inset into the floor is a great marble slab bearing the Stathiz family
+    crest.  The slab shows chips and chisel marks where someone failed to
+    dislodge it.  In fact, the entire floor is scuffed and scarred.  To the
+    south, an arched stairwell leads upward and short halls open to chambers
+    both east and west.
+
+
+s: b1601493-d405-4c36-85b9-4ea040af25fa #stairs
+e: 4d327abf-611c-4d37-8300-a6d983d86cd4 #upper_chamber
+#w: #chapel
+
+   

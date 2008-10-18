@@ -1,0 +1,15 @@
+uuid: 4d327abf-611c-4d37-8300-a6d983d86cd4
+module: test module
+name: Upper Chamber
+desc:
+    The walls of this chamber are lined with burial shelves but the sealing
+    stones have been ripped away and taken.  Gone too are all signs of coffins.
+    Only the bones of the dead remain, robbed of all jewelry, preserved 
+    clothing, and even buttons. 
+
+    Five wide stairs split the room into a sunken chamber to the north and an
+    archway leads to the west.  
+
+n: 152699a2-7e99-4442-bff2-3b684fe26f39 #lower_chamber
+w: 3ab46816-5e09-45d5-9653-c77069fb6082 #landing
+

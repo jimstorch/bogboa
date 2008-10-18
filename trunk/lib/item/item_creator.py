@@ -18,7 +18,7 @@ def register_item(item):
 
     if item.uuid in PROTO_ITEM:
         print ( "ERROR! Duplicate UUID (%s) found while registering item"
-            " '%s'."  % (item.uuid, item.handle) )
+            " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:
         PROTO_ITEM[item.uuid] = item
@@ -44,7 +44,7 @@ def configured_item(cfg):
     if 'uuid' in cfg:
         item.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for item '%s'." % handle
+        print "ERROR! Missing UUID in config for item '%s'." % item.name
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -64,7 +64,7 @@ def configured_item(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print "WARNING! Unrecognized key(s) in config for item '%s':" % handle, 
-        print cfg.keys()
+        print ( "WARNING! Unrecognized key(s) in config for item '%s': %s" 
+            % ( item.name, cfg.keys()) )
 
     return item    

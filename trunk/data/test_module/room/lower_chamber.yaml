@@ -1,0 +1,17 @@
+uuid: 152699a2-7e99-4442-bff2-3b684fe26f39
+module: test module
+name: Lower Chamber
+desc:
+    Sharing the same vaulted ceiling as the upper chamber, this sunken end
+    is smaller and devoid of shelves.  A ponderous, iron door that once sealed
+    an opening to west lays tumbled unto the floor.  Clearly, the robbers
+    spent countless hours chipping deep sockets in the granite wall to dislodge
+    its mighty hinges.   
+
+    In addition to the violated entrance to the east, a hallway leads north and
+    a short series of steps lead upward to the south.     
+
+east: 64a7db65-60c6-465c-9c03-65ebd66d003d #vault
+#north: #ossuary
+south: 4d327abf-611c-4d37-8300-a6d983d86cd4 #upper_chamber
+

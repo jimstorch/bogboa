@@ -6,12 +6,12 @@
 
 class Room(object):
 
-    def __init__(self, script=None):
+    def __init__(self):
 
         self.uuid = None
-        self.handle = None
         self.module = None
-        self.illumination = 0
+        self.name = None
+        self.exit = {}
 
     #------------------------------------------------------------------On Enter
 

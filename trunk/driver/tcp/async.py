@@ -10,12 +10,11 @@ import socket
 import select
 import sys
 
+from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
 from driver.tcp.listen import THE_SERVER_SOCKET
-#from ruleset.modes.fast_login import FastLogin as WelcomeMode
-# from ruleset.modes.telnet_test import TelnetTest as WelcomeMode
+from driver.connect import lobby_connect
 from lib import shared
-from driver.log import THE_LOG
 
 
 # TODO: add a real source here
@@ -101,7 +100,11 @@ class PortAuthority(object):
                 self.fdconn[conn.fileno] = conn
 
                 ## Whatever we do with new connections goes here:
-                shared.LOBBY_LIST.append(WelcomeMode(conn))
+   
+                lobby_connect(conn)
+
+
+                #shared.LOBBY_LIST.append(WelcomeMode(conn))
 
             else:
                 ## Call the connection's recieve method
