@@ -9,19 +9,19 @@ class Player(object):
     def __init__(self):
 
         ## Identity
+        self.conn = None
+        self.active = False
         self.uuid = None
-        self.handle = None
+        self.name = None
         self.race = None
         self.gender = None
-        self.archetype = None
+        self.sect = None
         self.level = None
         self.skill_map = {}
-
         self.room = None
         
         self.friendly_target = None
         self.hostile_target = None        
-
 
 
     #---------------------------------------------------------------Adj Faction
@@ -69,6 +69,12 @@ class Player(object):
     def clear_token(self, token):
         pass
 
+    #----------------------------------------------------------------Deactivate
+
+    def deactivate(self):
+        self.active = False
+        self.conn.active = False
+
     #----------------------------------------------------------------Do Ability
 
     def do_ability(self, ability_uuid):
@@ -82,6 +88,11 @@ class Player(object):
     #-----------------------------------------------------------------Give Item
 
     def give_item(self, item_uuid):
+        pass
+
+    #-------------------------------------------------------------Grant Ability
+
+    def grant_ability(self, ability_uuid):
         pass
 
     #---------------------------------------------------------------Has Ability
@@ -119,6 +130,11 @@ class Player(object):
     def kill(self):
         pass
 
+    #-----------------------------------------------------------Process Command
+
+    def process_command(self):
+        print self.conn.get_cmd()
+
     #-----------------------------------------------------------------On Attack
 
     def on_attack(self, mob):
@@ -142,6 +158,11 @@ class Player(object):
     #-------------------------------------------------------------------On Slay
 
     def on_slay(self, mob):
+        pass
+
+    #------------------------------------------------------------Revoke Ability
+
+    def revoke_ability(self, ability_uuid):
         pass
 
     #----------------------------------------------------------------------Save
@@ -204,11 +225,6 @@ class Player(object):
     def take_item(self, item_uuid):
         pass
 
-    #-------------------------------------------------------------Teach Ability
-
-    def teach_ability(self, ability_uuid):
-        pass
-
     #------------------------------------------------------------------Teleport
 
     def teleport(self, room_uuid):
@@ -216,7 +232,7 @@ class Player(object):
 
     #--------------------------------------------------------------Zero Faction
 
-    def zero_faction(self, faction_uuid);
+    def zero_faction(self, faction_uuid):
         pass
 
     #----------------------------------------------------------------Zero Money

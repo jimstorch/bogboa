@@ -8,15 +8,16 @@ higher healing skill would naturally heal better than one with a lower rating
 while a third character with no healing skill could not learn the ability in
 the first place.
 
-That last point is important.  In Bogboa, you don't wire abilities directly to
-set classes.  You specifty a minimum skill level required to learn an ability
-and any character who meets or exceeds that skill can obtain it.
-\footnote{They might have to fetch a scroll from the bottom of a dungeon or 
+That last point is important.  In Bogboa, you don't limit abilities to
+specific classes.  You specifty a minimum skill level required to learn an 
+ability and any character who meets or exceeds that skill can obtain it.
+\footnote{They may have to fetch a scroll from the bottom of a dungeon or 
 pay a trainer hundreds of gold, however.}
 
-This means that if you gave a melee class a tiny conjuration skill, say .1, 
+This means that if you gave one class a tiny conjuration skill, say .1, 
 they could learn conjuration spells at 1/10th the ability (and level) of a
-caster with a conjuration skill of 1.0.
+class with a conjuration skill of 1.0.  Giving a class a skill modifier of
+zero insures they will never advance it.
 
 Skills are \emph{capped} per character level.  The formula for this is:
 
@@ -31,16 +32,27 @@ the problem this creates, let's imagine a level 10 cavalier player fighting
 an equal level troll.  The troll has a moderate 0.8 clubbing skill.  Now we
 have the player doing the dps of a level 14 fighter against a mob doing the
 dps of a level 8.  Sure, you \emph{might} be able to balance this by making the
-cavalier a paper tiger but, again, I suggest starting out conservatively.\\
+cavalier a paper tiger but, again, I suggest starting out conservatively.
     
 \subsection{Advancing Skills}
 
-Players advance skills by \emph{using} them.
+Players advance skills by \emph{using} them.  Freshly created characters begin
+with skills at zero.  Each time they perform an ability, a skill-up roll is
+performed by the server.  Each successful roll raises the skill by one point
+until the current level cap is met.  Rolls are weighted where the upper points
+are harder to achieve.
 
-NPCs share the same class skill modifiers are automatically granted max skills per their level and share the same
-class modifiers as players.  
- 
+Obviously, you must provide players access to abilities in skill categories
+intended for their class. For example, if the first `psychic' skill requires
+20 points to learn then no player can get it.  You can either provide trainer
+NPCs that offer basic, rating zero skills or grant base abilities to each class 
+(or both).  
 
+\subsection{Non Player Characters}
+
+NPCs use the same skill modifiers for their class as players but are
+automatically granted max skills for their assigned level.  It is important to
+remember that skill \emph{tweaking} effects monsters as well. 
     
 
  

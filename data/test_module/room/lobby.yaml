@@ -1,0 +1,8 @@
+uuid: 0c9997b9-5068-46d9-a245-12991bdf3f17
+module: test module
+name: The Lobby
+desc:
+    This is the lobby -- where you may login an existing character or
+    create a new one.
+
+

@@ -27,10 +27,10 @@ ACTION = {}
 ##  Prototypes are "models" that are used either as a reference for game math
 ##  or a blueprint from which to spawn game objects.  
 ## 
-PROTO_ITEM = {}
-PROTO_RACE = {}
-PROTO_GENDER = {}
-PROTO_SECT = {}
+ITEM = {}
+RACE = {}
+GENDER = {}
+SECT = {}
 PROTO_NPC = {}
 
 ##

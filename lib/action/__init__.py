@@ -5,57 +5,57 @@
 ##-----------------------------------------------------------------------------
 
 from lib import shared
-from lib.actions import speech
-from lib.actions import system
-from lib.actions import movement
+from lib.action import speech
+from lib.action import system
+from lib.action import movement
 
 ## Speech
-shared.ACTION_DICT['tell'] = (speech.tell.parser, speech.tell)
-shared.ACTION_DICT['t'] = (speech.tell.parser, speech.tell)
-shared.ACTION_DICT['whisper'] = (speech.tell.parser, speech.tell)
-shared.ACTION_DICT['wh'] = (speech.tell.parser, speech.tell)
-shared.ACTION_DICT['reply'] = (speech.reply.parser, speech.reply)
-shared.ACTION_DICT['r'] = (speech.reply.parser, speech.reply)
-shared.ACTION_DICT['say'] = (speech.say.parser, speech.say)
-shared.ACTION_DICT['shout'] = (speech.shout.parser, speech.shout)
-shared.ACTION_DICT['broadcast'] = (speech.broadcast.parser, speech.broadcast)
+shared.ACTION['tell'] = (speech.tell.parser, speech.tell)
+shared.ACTION['t'] = (speech.tell.parser, speech.tell)
+shared.ACTION['whisper'] = (speech.tell.parser, speech.tell)
+shared.ACTION['wh'] = (speech.tell.parser, speech.tell)
+shared.ACTION['reply'] = (speech.reply.parser, speech.reply)
+shared.ACTION['r'] = (speech.reply.parser, speech.reply)
+shared.ACTION['say'] = (speech.say.parser, speech.say)
+shared.ACTION['shout'] = (speech.shout.parser, speech.shout)
+shared.ACTION['broadcast'] = (speech.broadcast.parser, speech.broadcast)
 
 ## System
-shared.ACTION_DICT['quit'] = (system.quit.parser, system.quit)
-shared.ACTION_DICT['look'] = (system.look.parser, system.look)
-shared.ACTION_DICT['l'] = (system.look.parser, system.look)
+shared.ACTION['quit'] = (system.quit.parser, system.quit)
+shared.ACTION['look'] = (system.look.parser, system.look)
+shared.ACTION['l'] = (system.look.parser, system.look)
 
 ## Movement
-shared.ACTION_DICT['north'] = (movement.north.parser, movement.north)
-shared.ACTION_DICT['n'] = (movement.north.parser, movement.north)
-shared.ACTION_DICT['northeast'] = (movement.northeast.parser, 
+shared.ACTION['north'] = (movement.north.parser, movement.north)
+shared.ACTION['n'] = (movement.north.parser, movement.north)
+shared.ACTION['northeast'] = (movement.northeast.parser, 
     movement.northeast)
-shared.ACTION_DICT['ne'] = (movement.northeast.parser, 
+shared.ACTION['ne'] = (movement.northeast.parser, 
     movement.northeast)
-shared.ACTION_DICT['east'] = (movement.east.parser, movement.east)
-shared.ACTION_DICT['e'] = (movement.east.parser, movement.east)
-shared.ACTION_DICT['southeast'] = (movement.southeast.parser, 
+shared.ACTION['east'] = (movement.east.parser, movement.east)
+shared.ACTION['e'] = (movement.east.parser, movement.east)
+shared.ACTION['southeast'] = (movement.southeast.parser, 
     movement.southeast)
-shared.ACTION_DICT['se'] = (movement.southeast.parser, 
+shared.ACTION['se'] = (movement.southeast.parser, 
     movement.southeast)
-shared.ACTION_DICT['south'] = (movement.south.parser, movement.south)
-shared.ACTION_DICT['s'] = (movement.south.parser, movement.south)
-shared.ACTION_DICT['southwest'] = (movement.southwest.parser, 
+shared.ACTION['south'] = (movement.south.parser, movement.south)
+shared.ACTION['s'] = (movement.south.parser, movement.south)
+shared.ACTION['southwest'] = (movement.southwest.parser, 
     movement.southwest)
-shared.ACTION_DICT['sw'] = (movement.southwest.parser, 
+shared.ACTION['sw'] = (movement.southwest.parser, 
     movement.southwest)
-shared.ACTION_DICT['west'] = (movement.west.parser, movement.west)
-shared.ACTION_DICT['w'] = (movement.west.parser, movement.west)
-shared.ACTION_DICT['northwest'] = (movement.northwest.parser, 
+shared.ACTION['west'] = (movement.west.parser, movement.west)
+shared.ACTION['w'] = (movement.west.parser, movement.west)
+shared.ACTION['northwest'] = (movement.northwest.parser, 
     movement.northwest)
-shared.ACTION_DICT['nw'] = (movement.northwest.parser, 
+shared.ACTION['nw'] = (movement.northwest.parser, 
     movement.northwest)
-shared.ACTION_DICT['up'] = (movement.up.parser, movement.up)
-shared.ACTION_DICT['u'] = (movement.up.parser, movement.up)
-shared.ACTION_DICT['down'] = (movement.down.parser, movement.down)
-shared.ACTION_DICT['d'] = (movement.down.parser, movement.down)
-shared.ACTION_DICT['enter'] = (movement.enter.parser, movement.enter)
-shared.ACTION_DICT['exit'] = (movement.exit.parser, movement.exit)
-shared.ACTION_DICT['recall'] = (movement.recall.parser, movement.recall)
+shared.ACTION['up'] = (movement.up.parser, movement.up)
+shared.ACTION['u'] = (movement.up.parser, movement.up)
+shared.ACTION['down'] = (movement.down.parser, movement.down)
+shared.ACTION['d'] = (movement.down.parser, movement.down)
+shared.ACTION['enter'] = (movement.enter.parser, movement.enter)
+shared.ACTION['exit'] = (movement.exit.parser, movement.exit)
+shared.ACTION['recall'] = (movement.recall.parser, movement.recall)
 
 
