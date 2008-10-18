@@ -1,4 +1,48 @@
 \section{Skills}
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc tortor ipsum, tincidunt vel, varius vel, imperdiet sit amet, mi. Cras ipsum risus, iaculis et, viverra et, congue quis, orci. Nullam adipiscing dui. Aenean placerat. Aliquam rhoncus, purus vel scelerisque pretium, ipsum sem tincidunt metus, nec scelerisque justo diam at tortor. Vestibulum vitae libero. Cras condimentum auctor neque. Proin ac ante. Donec vel nunc. In justo. Duis sed justo.
+Bogboa is a \emph{skills} based RPG engine.  You can think of a skill as both
+a category for player abilities and rating of effectiveness when performing
+those abilities in that category.  For example, the ability to mend the wounds
+of others might fall within the skill \emph{healing}.  A character with a 
+higher healing skill would naturally heal better than one with a lower rating
+while a third character with no healing skill could not learn the ability in
+the first place.
 
+That last point is important.  In Bogboa, you don't wire abilities directly to
+set classes.  You specifty a minimum skill level required to learn an ability
+and any character who meets or exceeds that skill can obtain it.
+\footnote{They might have to fetch a scroll from the bottom of a dungeon or 
+pay a trainer hundreds of gold, however.}
+
+This means that if you gave a melee class a tiny conjuration skill, say .1, 
+they could learn conjuration spells at 1/10th the ability (and level) of a
+caster with a conjuration skill of 1.0.
+
+Skills are \emph{capped} per character level.  The formula for this is:
+
+\[ Level \times 10 \times Class Skill Rating \]
+      
+For your own sanity (and balance reasons), I recommend that you use
+a rating of 1.0 for class-defining skills.  Give the best swordfighting
+class a `sword skill' of 1.0 and adjust other swordsmen relative to that.
+You might be tempted to create something like a cavalier class with
+exceptional swordfighting and grant them a 1.4 skill rating.  To illustrate
+the problem this creates, let's imagine a level 10 cavalier player fighting
+an equal level troll.  The troll has a moderate 0.8 clubbing skill.  Now we
+have the player doing the dps of a level 14 fighter against a mob doing the
+dps of a level 8.  Sure, you \emph{might} be able to balance this by making the
+cavalier a paper tiger but, again, I suggest starting out conservatively.\\
+    
+\subsection{Advancing Skills}
+
+Players advance skills by \emph{using} them.
+
+NPCs share the same class skill modifiers are automatically granted max skills per their level and share the same
+class modifiers as players.  
+ 
+
+    
+
+ 
+
+    
