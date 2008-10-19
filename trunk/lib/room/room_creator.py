@@ -45,7 +45,7 @@ def configured_room(cfg):
     if 'uuid' in cfg:
         room.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for room '%s'." % name
+        print "ERROR! Missing UUID in config for room '%s'." % room.name
         sys.exit(1)
 
     if 'desc' in cfg:
