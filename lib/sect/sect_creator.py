@@ -45,7 +45,7 @@ def configured_sect(cfg):
     if 'uuid' in cfg:
         sect.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for sect '%s'." % name
+        print "ERROR! Missing UUID in config for sect '%s'." % sect.name
         sys.exit(1)
 
     if 'desc' in cfg:
