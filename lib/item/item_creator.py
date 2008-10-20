@@ -13,7 +13,7 @@ from lib.shared import ITEM
 def register_item(item):
 
     """
-    Given a configured item, register it with the shared PROTO_ITEM dictionary.
+    Given a configured item, register it with the shared ITEM dictionary.
     """
 
     if item.uuid in ITEM:
