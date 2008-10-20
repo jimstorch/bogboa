@@ -6,7 +6,7 @@
 import sys
 
 from lib.item.item import Item
-from lib.shared import PROTO_ITEM
+from lib.shared import ITEM
 
 #-----------------------------------------------------------------Register Item
 
@@ -16,12 +16,12 @@ def register_item(item):
     Given a configured item, register it with the shared PROTO_ITEM dictionary.
     """
 
-    if item.uuid in PROTO_ITEM:
+    if item.uuid in ITEM:
         print ( "ERROR! Duplicate UUID (%s) found while registering item"
             " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:
-        PROTO_ITEM[item.uuid] = item
+        ITEM[item.uuid] = item
 
 
 #----------------------------------------------------------------Configure Item
