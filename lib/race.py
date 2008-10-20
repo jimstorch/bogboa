@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/race/race.py
+##  File:       lib/race.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -14,6 +14,10 @@ class Race(object):
 
     def __init__(self):
     
+        uuid = None
+        name = None
+        module = None
+
         self.stat = {}
         self.skill_adj = {}
         self.ability = {}

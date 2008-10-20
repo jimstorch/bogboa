@@ -1,0 +1,10 @@
+uuid: 33ef1808-6ccb-4b3f-beef-5ea19f3eec3f
+name: Test Module Pirates
+module: test module
+
+friends:
+    - [ 5eef27a0-fe9d-4b14-b319-e6bfbcb5e655, 0.8 ]
+
+foes:
+    - [ 967e498b-7a39-4311-a1f4-77331d518dab, 0.2 ] 
+

@@ -5,33 +5,30 @@
 
 module = 'data/test_module'
 
-from driver.loader.file_loader import item_cfg_iter
-from lib.item import configured_item
-from lib.item import register_item
+from driver.loader.file_loader import *
+from lib.item import configured_item, register_item
+from lib.room import configured_room, register_room
+from lib.sect import configured_sect, register_sect
+from lib.race import configured_race, register_race
+from lib.gender import configured_gender, register_gender
 
 for cfg in item_cfg_iter(module):
-    register_item(configured_item(cfg))
+    item = configured_item(cfg)
+    register_item(item)
 
-from driver.loader.file_loader import room_cfg_iter
-from lib.room import configured_room
-from lib.room import register_room
 for cfg in room_cfg_iter(module):
-    register_room(configured_room(cfg))
+    room = configured_room(cfg)
+    register_room(room)
 
-from driver.loader.file_loader import sect_cfg_iter
-from lib.sect import configured_sect
-from lib.sect import register_sect
 for cfg in sect_cfg_iter(module):
-    register_sect(configured_sect(cfg))
+    sect = configured_sect(cfg)
+    register_sect(sect)
 
-from driver.loader.file_loader import race_cfg_iter
-from lib.race import configured_race
-from lib.race import register_race
 for cfg in race_cfg_iter(module):
-    register_race(configured_race(cfg))
+    race = configured_race(cfg)
+    register_race(race)
 
-from driver.loader.file_loader import gender_cfg_iter
-from lib.gender import configured_gender
-from lib.gender import register_gender
 for cfg in gender_cfg_iter(module):
-    register_gender(configured_gender(cfg))
+    print cfg
+    gender = configured_gender(cfg)
+    register_gender(gender)
