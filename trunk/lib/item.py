@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/item/item.py
+##  File:       lib/item.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -12,7 +12,10 @@ from lib.shared import ITEM
 class Item(object):
 
     def __init__(self):
-        pass
+
+        uuid = None
+        name = None
+        module = None
     
     #-----------------------------------------------------------------On Attack
 

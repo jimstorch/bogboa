@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/things/sect.py
+##  File:       lib/sect.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -12,6 +12,10 @@ from lib.shared import SECT
 class Sect(object):
 
     def __init__(self):
+
+        uuid = None
+        name = None
+        module = None
     
         self.uuid = None
         self.handle = None
