@@ -11,7 +11,7 @@ import operator
 from bisect import insort
 
 from lib import shared
-from driver.clock.event import Event
+
 
 if sys.platform == "win32":
     # On Windows, the best timer is time.clock()
@@ -128,7 +128,7 @@ class Scheduler(object):
     def __init__(self):
         self.event_list = []
         self.start_time = default_timer()
-        shared.THE_TIME = default_timer()  
+        shared.THE_TIME = self.start_time
 
     def add(self, delay, func, args=()):
         """Add a delayed function call to the schedule.  Delay is in seconds
@@ -158,7 +158,6 @@ class Scheduler(object):
             if event.when < shared.THE_TIME:
                 ## And is it still active?
                 if event.active:
-                    ## call it
                     event.func(*event.args)
                 ## and delete it from the list
                 self.event_list.pop(0)

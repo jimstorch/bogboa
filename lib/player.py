@@ -17,9 +17,12 @@ class Player(object):
         self.gender = None
         self.sect = None
         self.level = None
-        self.skill_map = {}
+        self.skill = {}
+        self.ability = {}
+        self.flag = {}          # Flags are persistent variables
+        self.token = {}         # Tokens are non persistent variables
+
         self.room = None
-        
         self.friendly_target = None
         self.hostile_target = None        
 
@@ -66,8 +69,9 @@ class Player(object):
 
     #---------------------------------------------------------------Clear Token
 
-    def clear_token(self, token):
-        pass
+    def clear_token(self, token_name):
+        if token_name in self.token:
+            del self.token[token_name]
 
     #----------------------------------------------------------------Deactivate
 
@@ -84,6 +88,11 @@ class Player(object):
 
     def do_ability_self(self, ability_uuid):
         pass
+
+    #-----------------------------------------------------------------Get Token
+
+    def get_token(self, token_name):
+        self.token.get(token_name, None)
 
     #-----------------------------------------------------------------Give Item
 
@@ -124,6 +133,12 @@ class Player(object):
 
     def has_item(self, item_uuid):
         pass
+
+    #------------------------------------------------------------------Has Item
+
+    def has_token(self, token_name):
+        return token_name in self.token
+
 
     #----------------------------------------------------------------------Kill
 
@@ -207,8 +222,8 @@ class Player(object):
 
     #-----------------------------------------------------------------Set Token
 
-    def set_token(self, token, value):
-        pass
+    def set_token(self, token_name, value):
+        self.token[token_name] = value
 
     #----------------------------------------------------------------------Stun
 
