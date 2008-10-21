@@ -9,9 +9,9 @@ from lib import shared
 from driver.log import THE_LOG
 from driver.tcp.listen import PORT
 
-from driver.clock.scheduler import THE_SCHEDULER
-from driver.clock.scheduler import Cycle
-from driver.clock.scheduler import Series
+from driver.scheduler import THE_SCHEDULER
+from driver.scheduler import Cycle
+from driver.scheduler import Series
 
 from driver.tcp.async import THE_PORT_AUTHORITY
 from driver.control import test_connections
@@ -45,7 +45,7 @@ for cfg in sect_cfg_iter(module):
     register_sect(sect)
 
 #------------------------------------------------------------------------------
-#       Schedule Cyclic Events
+#       Schedule Repeating Events
 #------------------------------------------------------------------------------
 
 Cycle(3, test_connections)
