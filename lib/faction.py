@@ -20,10 +20,24 @@ class Faction(object):
         associated = {}
 
 
+#---------------------------------------------------------------Cascade Faction
+
+def cascade_faction(faction, amount, player):
+
+    """
+    Process a faction event that modifys the faction and all related factions.
+    """
+
+    pass
 
 #-------------------------------------------------------------------Adj Faction
 
 def adj_faction(faction, amount, player):
+
+    """
+    Modify a single faction, ingnoring related ones.    
+    """
+
     pass
 
 

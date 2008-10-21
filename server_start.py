@@ -10,6 +10,9 @@ from driver.log import THE_LOG
 from driver.tcp.listen import PORT
 
 from driver.clock.scheduler import THE_SCHEDULER
+from driver.clock.scheduler import Cycle
+from driver.clock.scheduler import Series
+
 from driver.tcp.async import THE_PORT_AUTHORITY
 from driver.control import test_connections
 from driver.control import kill_idle_clients
@@ -30,20 +33,25 @@ THE_LOG.add("**************")
 module = 'data/test_module'
 
 from driver.loader.file_loader import room_cfg_iter
-from lib.room.room_creator import configured_room
-from lib.room.room_creator import register_room
-
+from lib.room import configured_room, register_room
 for cfg in room_cfg_iter(module):
     room = configured_room(cfg)
     register_room(room)
 
 from driver.loader.file_loader import sect_cfg_iter
-from lib.sect.sect_creator import configured_sect
-from lib.sect.sect_creator import register_sect
-
+from lib.sect import configured_sect, register_sect
 for cfg in sect_cfg_iter(module):
     sect = configured_sect(cfg)
     register_sect(sect)
+
+#------------------------------------------------------------------------------
+#       Schedule Cyclic Events
+#------------------------------------------------------------------------------
+
+Cycle(3, test_connections)
+Cycle(3, kill_idle_clients)
+Cycle(6, purge_dead_clients)
+
 
 #------------------------------------------------------------------------------
 #       Main Loop
@@ -51,15 +59,11 @@ for cfg in sect_cfg_iter(module):
 
 THE_LOG.add("Listening for connections on port %d" % PORT)
 
-# Our process loop
 while shared.SERVER_RUN == True:
     THE_SCHEDULER.tick()
     THE_PORT_AUTHORITY.poll()
-    test_connections()
-    kill_idle_clients()
-    purge_dead_clients()
     process_client_commands()
 
-# All done   
+## All done   
 THE_LOG.add('Normal shutdown')
 

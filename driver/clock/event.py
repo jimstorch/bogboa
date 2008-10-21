@@ -5,12 +5,13 @@
 
 from lib import shared
 
+#-------------------------------------------------------------------------Event
 
 class Event(object):
 
     """ Wraps a delayed function call, used by the Scheduler class."""
 
-    def __init__(self, delay, func, args=None):
+    def __init__(self, delay, func, args):
     
         self.active = True
         self.when = shared.THE_TIME + delay 
