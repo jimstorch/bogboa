@@ -4,7 +4,7 @@
 ##-----------------------------------------------------------------------------
 
 from lib import shared
-from lib.player.player import Player
+from lib.player import Player
 
 lobby_uuid = "0c9997b9-5068-46d9-a245-12991bdf3f17"
 anonymous_uuid = "2d9817b7-48e2-45a7-9fb7-606bdb4acdac"

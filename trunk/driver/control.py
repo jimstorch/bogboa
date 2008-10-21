@@ -40,13 +40,13 @@ def kill_idle_clients():
     """
 
     for client in shared.LOBBY_LIST:
-        if client.conn.idle() > 3000:
+        if client.conn.idle() > 30:
             THE_LOG.add('Kicking idle lobby client from %s' %  
                 client.conn.addrport())
             client.deactivate()
             
     for client in shared.PLAY_LIST:
-        if client.conn.idle() > 3000:
+        if client.conn.idle() > 30:
             THE_LOG.add('Kicking idle gameplay client %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
