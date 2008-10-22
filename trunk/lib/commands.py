@@ -10,37 +10,44 @@ ALIAS = {}
 alias_list = (
 
     ## Movement
-    ('north', 'nor', 'n'),
-    ('east', 'eas', 'e'),
-    ('south', 'sou', 's'),
-    ('west', 'wes', 'w'),
-    ('up', 'u', 'climb'),
-    ('down', 'dn', 'd'),
+    ('north', 'nor', 'n', '8'),
+    ('east', 'eas', 'e', '6'),
+    ('south', 'sou', 's', '2'),
+    ('west', 'wes', 'w', '4'),
+    ('up', 'u', 'climb', '9'),
+    ('down', 'dn', 'dwn', 'd', '3'),
     ('recall', 'home'),
     ('enter',)
 
     ## Communication
     ('say', '/s'),
     ('shout', 'yell', '/y'),
+    ('ooc',),
     ('tell', 'whisper', '/t', '/w'),
-    ('reply', '/r'),
+    ('reply', 'r', '/r'),
     ('emote', '/em', ':'),
 
     ## Information
-    ('help', '?'),
-    ('score', 'played', 'info'),
+    ('help', '?', 'info'),
+    ('score', 'played','stats'),
     ('time', 'date', 'clock'),
     ('inventory', 'i', 'inven'),
 
     ## Interaction
+    ('don', 'wear', 'eqip'),
+    ('remove', 'unequip'),
+    ('take', 'get', 'pickup', 'grab'),
+    ('drop', 'discard', 'toss', 'throw')
     ('do', 'cast', 'doability', 'spell'),
-    ('look', 'l'),
+    ('look', 'l', '5'),
     ('attack', 'kill', 'atk', 'slay', 'att'),
     ('target', 'tar'),
     ('search',),
 
     ## System
     ('quit', 'exit', 'logoff'),
+    ('yes',),
+    ('no',)
 
     ## Wizardry
     ('ban',),
@@ -49,6 +56,11 @@ alias_list = (
     ('teleport', 'port'),
     ('zap',)
 
+    ## Silly
+    ('verbose',),
+    ('plugh', 'xyzzy'),
+    ('pizza',),
+    ('iddqd', 'idkfa'),
     )
     
 ## Map every alias to the first command in each line.

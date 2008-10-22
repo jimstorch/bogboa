@@ -1,22 +1,22 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/things/bot.py
+##  File:       lib/npc.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
 
-class Bot(object):
+class Npc(object):
 
     def __init__(self):
 
         ## Identity
         self.uuid = None
-        self.handle = None
+        self.name = None
+        self.module = None
         self.alias = None
         self.race = None
         self.gender = None
-        self.archetype = None
+        self.sect = None
         self.level = None
-        self.module = None
 
 
     #--------------------------------------------------------------------Banish

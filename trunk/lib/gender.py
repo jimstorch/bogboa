@@ -13,16 +13,16 @@ class Gender(object):
 
     def __init__(self):
     
-        uuid = None
-        name = None
-        module = None
+        self.uuid = None
+        self.name = None
+        self.module = None
         
-        nominative = None
-        objective = None
-        possessive_noun = None
-        noun_possessive = None
-        reflexive = None
-        
+        self.nominative = None
+        self.objective = None
+        self.possessive_noun = None
+        self.noun_possessive = None
+        self.reflexive = None
+
 
 #---------------------------------------------------------------Register gender
 

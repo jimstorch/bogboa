@@ -13,11 +13,11 @@ class Faction(object):
 
     def __init__(self):
     
-        uuid = None
-        name = None
-        module = None
+        self.uuid = None
+        self.name = None
+        self.module = None
 
-        associated = {}
+        self.related = {}
 
 
 #---------------------------------------------------------------Cascade Faction

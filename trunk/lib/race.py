@@ -14,9 +14,9 @@ class Race(object):
 
     def __init__(self):
     
-        uuid = None
-        name = None
-        module = None
+        self.uuid = None
+        self.name = None
+        self.module = None
 
         self.stat = {}
         self.skill_adj = {}

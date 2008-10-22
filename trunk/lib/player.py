@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/things/player.py
+##  File:       lib/player.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -13,6 +13,7 @@ class Player(object):
         self.active = False
         self.uuid = None
         self.name = None
+        self.alias = None
         self.race = None
         self.gender = None
         self.sect = None
