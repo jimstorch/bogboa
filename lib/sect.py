@@ -12,19 +12,27 @@ from lib.shared import SECT
 class Sect(object):
 
     def __init__(self):
-
-        uuid = None
-        name = None
-        module = None
-    
+   
         self.uuid = None
-        self.handle = None
-        self.skill_dict = {}
-        self.ability_dict = {}
-        
+        self.name = None
+        self.module = None
 
-    def save(self):
-        pass
+        self.skill_mod = {}     # Dictionary of Skill modifiers
+        self.ability = {}       # List of sect abilities by name
+
+    #-------------------------------------------------------------Get Skill Mod        
+
+    def get_skill_mod(self, skill_name):
+        """
+        Return the sect skill modifier or zero if skill not found.
+        """
+        return self.skill_mod(skill_name, 0.0)
+
+    #---------------------------------------------------------------Has Ability
+
+    def has_ability(self, ability_name):
+        return ability_name in self.ability
+   
 
         
 #-----------------------------------------------------------------Register sect
