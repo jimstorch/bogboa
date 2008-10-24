@@ -1,8 +1,7 @@
 ##-----------------------------------------------------------------------------
-##  File:       lib/commands.py
+##  File:       lib/verb.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
-
 
 from lib.action import movement
 from lib.action import speech
@@ -11,13 +10,35 @@ from lib.action import usage
 from lib.action import wizard
 from lib.action import silly
 
+
+VERB_THESAURUS = {}
+VERB_PARSER = {}
+VERB_HANDLER = {}
+
+for command in COMMAND_LIST:
+
+    ## Verb Thesaurus is used to match aliases to the one_true_verb(tm)
+    aliases = command[0]
+    for alias in aliases:
+        one_true_verb = aliases[0]
+        VERB_THESAURUS[alias] = one_true_verb
+
+    ## Specify the parser to use with this verb
+    VERB_PARSER[one_true_verb] = command[1]
+   
+    ## Specify the function to use with this verb
+    VERB_HANDLER[one_true_verb] = command[2]
+
+
+#------------------------------------------------------------------Command List
+
 ## Commands take the following format:
-##      [0] = tuple of aliases with tuple[0] = One True Verb(tm)
+##      [0] = tuple of aliases with tuple[0] == One True Verb(tm)
 ##      [1] = parser function to convert extra words into arguments
 ##      [2] = verb function to call with those arguments
+ 
 
-
-command_list = (
+COMMAND_LIST = (
 
     ## Movement
 
@@ -76,4 +97,33 @@ command_list = (
     (('iddqd', 'idkfa'), silly.iddqd.parser, silly.iddqd),
 
     )
+
+
+#--------------------------------------------------------------------Split Verb
+   
+def split_verb(text):
+
+    """Break a sentence into the verb and the balance of the remaining words.
+    Strips off trailing punctuation and extra spaces.
+    Returns a (verb, balance) tuple."""    
+    
+    words = text.split()
+    count = len(words)
+
+    if count == 0:
+        verb = None
+        balance = []        
+
+    elif count == 1:
+        a_verb = words[0].lower()
+        balance = []
+
+    else:
+        a_verb = words[0].lower()
+        balance = words[1:] 
+   
+    one_true_verb = VERB_THESAURUS.get(a_verb, None)
+
+    return (one_true_verb, balance)
+
 

@@ -6,3 +6,7 @@ desc:
     create a new one.
 
 
+on_enter: [ inform, 'Welcome to The Lobby.' ]
+
+
+
