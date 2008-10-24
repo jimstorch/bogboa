@@ -1,6 +1,5 @@
 ##-----------------------------------------------------------------------------
-##  File:       speech.py
-##  Purpose:    communication based abilities
+##  File:       lib/action/speech.py
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
@@ -9,7 +8,7 @@ from lib import parsers
 from lib import lookup
 
 
-#---[ Broadcast ]--------------------------------------------------------------
+#---------------------------------------------------------------------Broadcast
 
 def broadcast(message):
 
@@ -18,10 +17,10 @@ def broadcast(message):
     for player in shared.PLAY_LIST:
         player.send(message)
 
-broadcast.parser = None
+broadcast.parser = parsers.monologue
 
 
-#---[ Tell ]-------------------------------------------------------------------
+#--------------------------------------------------------------------------Tell
 
 def tell(client, target_handle, message):
 
@@ -45,11 +44,10 @@ def tell(client, target_handle, message):
 
         client.send("^y%s is not in this world." % target_handle.capitalize())
 
-## Specify the proper parser for this verb
 tell.parser = parsers.dialogue
 
 
-#---[ Reply ]------------------------------------------------------------------
+#-------------------------------------------------------------------------Reply
 
 def reply(client, message):
 
@@ -65,7 +63,7 @@ def reply(client, message):
 reply.parser = parsers.monologue
 
 
-#---[ Shout ]------------------------------------------------------------------
+#-------------------------------------------------------------------------Shout
 
 def shout(client, message):
 
@@ -82,7 +80,7 @@ def shout(client, message):
 shout.parser = parsers.monologue
 
 
-#---[ Say ]--------------------------------------------------------------------
+#---------------------------------------------------------------------------Say
 
 
 def say(client, message):
