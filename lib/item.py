@@ -1,11 +1,13 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/item.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/item.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
 from lib.shared import ITEM
+from driver.log import THE_LOG
 
 #--------------------------------------------------------------------------Item
 
@@ -138,25 +140,9 @@ class Item(object):
         pass
 
 
-#-----------------------------------------------------------------Register Item
-
-def register_item(item):
-
-    """
-    Given a configured item, register it with the shared ITEM dictionary.
-    """
-
-    if item.uuid in ITEM:
-        print ( "ERROR! Duplicate UUID (%s) found while registering item"
-            " '%s'."  % (item.uuid, item.name) )
-        sys.exit(1)
-    else:
-        ITEM[item.uuid] = item
-
-
 #----------------------------------------------------------------Configure Item
 
-def configured_item(cfg):
+def configure_item(cfg):
 
     """
     Given a configuration dictionary, create an item and configure it.
@@ -168,13 +154,13 @@ def configured_item(cfg):
     if 'name' in cfg:
         item.name = cfg.pop('name')
     else:
-        print "ERROR! Missing name in item config."
+        THE_LOG.add("ERROR! Missing name in item config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         item.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for item '%s'." % item.name
+        THE_LOG.add("ERROR! Missing UUID in config for item '%s'." % item.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -194,10 +180,24 @@ def configured_item(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print ( "WARNING! Unrecognized key(s) in config for item '%s': %s" 
+        THE_LOG.add("WARNING! Unrecognized key(s) in config for item '%s': %s" 
             % ( item.name, cfg.keys()) )
 
     return item    
 
 
+#-----------------------------------------------------------------Register Item
+
+def register_item(item):
+
+    """
+    Given a configured item, register it with the shared ITEM dictionary.
+    """
+
+    if item.uuid in ITEM:
+        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering item"
+            " '%s'."  % (item.uuid, item.name) )
+        sys.exit(1)
+    else:
+        ITEM[item.uuid] = item
 

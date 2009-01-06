@@ -1,16 +1,16 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/player.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/avatar.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 
-class Player(object):
+class Avatar(object):
 
     def __init__(self):
 
         ## Identity
-        self.conn = None
-        self.active = False
+        self.client = None
         self.uuid = None
         self.name = None
         self.alias = None
@@ -74,12 +74,6 @@ class Player(object):
         if token_name in self.token:
             del self.token[token_name]
 
-    #----------------------------------------------------------------Deactivate
-
-    def deactivate(self):
-        self.active = False
-        self.conn.active = False
-
     #----------------------------------------------------------------Do Ability
 
     def do_ability(self, ability_uuid):
@@ -140,16 +134,10 @@ class Player(object):
     def has_token(self, token_name):
         return token_name in self.token
 
-
     #----------------------------------------------------------------------Kill
 
     def kill(self):
         pass
-
-    #-----------------------------------------------------------Process Command
-
-    def process_command(self):
-        print self.conn.get_cmd()
 
     #-----------------------------------------------------------------On Attack
 

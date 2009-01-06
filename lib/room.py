@@ -1,11 +1,14 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/room.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/room.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
 from lib.shared import ROOM
+from driver.log import THE_LOG
+
 
 
 #--------------------------------------------------------------------------Room
@@ -90,26 +93,9 @@ class Room(object):
         pass
 
 
-#-----------------------------------------------------------------Register Room
-
-def register_room(room):
-
-    """
-    Given a configured room, register it with the shared ROOM dictionary.
-    """
-
-    if room.uuid in ROOM:
-        print ( "ERROR! Duplicate UUID (%s) found while registering "
-            "room '%s' in module '%s'."  %
-            (room.uuid, room.name, room.module))
-        sys.exit(1)
-    else:
-        ROOM[room.uuid] = room
-
-
 #----------------------------------------------------------------Configure Room
 
-def configured_room(cfg):
+def configure_room(cfg):
 
     """
     Given a configuration dictionary, create a room and configure it.
@@ -121,13 +107,13 @@ def configured_room(cfg):
     if 'name' in cfg:
         room.name = cfg.pop('name')
     else:
-        print "ERROR! Missing name in room config."
+        THE_LOG.add("ERROR! Missing name in room config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         room.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for room '%s'." % room.name
+        THE_LOG.add("ERROR! Missing UUID in config for room '%s'." % room.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -139,7 +125,8 @@ def configured_room(cfg):
         room.module = cfg.pop('module')
     else:
         room.module = None
-        print "WARNING: Missing 'module' value for room '%s'." % room.name       
+        THE_LOG.add("WARNING: Missing 'module' value for room '%s'." % 
+            room.name)       
 
     ## Connect hard-coded exits
     if 'north' in cfg:
@@ -172,10 +159,25 @@ def configured_room(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print ( "WARNING! Unrecognized key(s) in config for room '%s': %s" 
+        THE_LOG.add("WARNING! Unrecognized key(s) in config for room '%s': %s" 
             % ( room.name, cfg.keys()) ) 
 
     return room    
 
 
+#-----------------------------------------------------------------Register Room
+
+def register_room(room):
+
+    """
+    Given a configured room, register it with the shared ROOM dictionary.
+    """
+
+    if room.uuid in ROOM:
+        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+            "room '%s' in module '%s'."  %
+            (room.uuid, room.name, room.module))
+        sys.exit(1)
+    else:
+        ROOM[room.uuid] = room
 

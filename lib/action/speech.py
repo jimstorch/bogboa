@@ -1,7 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/action/speech.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/action/speech.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 from lib import shared
 from lib import parsers
@@ -16,8 +17,6 @@ def broadcast(message):
 
     for player in shared.PLAY_LIST:
         player.send(message)
-
-broadcast.parser = parsers.monologue
 
 
 #--------------------------------------------------------------------------Tell

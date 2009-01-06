@@ -1,11 +1,13 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/faction.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/faction.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
 from lib.shared import FACTION
+from driver.log import THE_LOG
 
 #------------------------------------------------------------------------Gender
 
@@ -41,26 +43,9 @@ def adj_faction(faction, amount, player):
     pass
 
 
-#--------------------------------------------------------------Register Faction
+#-------------------------------------------------------------Configure Faction
 
-def register_faction(faction):
-
-    """
-    Given a configured faction, register it with the shared FACTION dictionary.
-    """
-
-    if faction.uuid in FACTION:
-        print ( "ERROR! Duplicate UUID (%s) found while registering "
-            "faction '%s' from module '%s'."  %  (
-            faction.uuid, faction.name, faction.module) )
-        sys.exit(1)
-    else:
-        FACTION[faction.uuid] = faction
-
-
-#------------------------------------------------------------Configured Faction
-
-def configured_faction(cfg):
+def configure_faction(cfg):
 
     """
     Given a configuration dictionary, create a faction and configure it.
@@ -72,13 +57,14 @@ def configured_faction(cfg):
     if 'name' in cfg:
         faction.name = cfg.pop('name')
     else:
-        print "ERROR! Missing name in faction config."
+        THE_LOG.add("ERROR! Missing name in faction config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         faction.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for faction '%s'." % faction.name
+        THE_LOG.add("ERROR! Missing UUID in config for faction '%s'." % 
+            faction.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -91,13 +77,28 @@ def configured_faction(cfg):
     else:
         faction.module = None
 
-
-
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print ( "WARNING! Unrecognized key(s) in config for faction '%s': %s" 
-            % ( faction.name, cfg.keys()) ) 
+        THE_LOG.add("WARNING! Unrecognized key(s) in config for faction"
+            " '%s': %s" % ( faction.name, cfg.keys()) ) 
 
     return faction
 
-        
+
+#--------------------------------------------------------------Register Faction
+
+def register_faction(faction):
+
+    """
+    Given a configured faction, register it with the shared FACTION dictionary.
+    """
+
+    if faction.uuid in FACTION:
+        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+            "faction '%s' from module '%s'."  %  (
+            faction.uuid, faction.name, faction.module) )
+        sys.exit(1)
+    else:
+        FACTION[faction.uuid] = faction
+
+

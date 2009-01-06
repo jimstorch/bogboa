@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+uuid: 9b6732b4-07d2-43ca-96a8-01b237a0634e
+name: sect
+#aliases: [ info ]
+module: test module
+
+text:
+
+    This is the text for the sect help file.

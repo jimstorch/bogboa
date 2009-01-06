@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+uuid: 23208cc9-266c-443a-af3c-852a0fcc88bd
+name: help
+#aliases: [ info ]
+module: test module
+
+text:
+
+    This is the text for the base help file.
