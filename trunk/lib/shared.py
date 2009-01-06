@@ -1,8 +1,9 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/shared.py
-##  Purpose:    global values used by the server
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/shared.py
+#   Purpose:    global values used by the server
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 ## Boolean used by the main loop, False = stop the server
 SERVER_RUN = True
@@ -22,6 +23,9 @@ PLAY_LIST = []
 ##  Am I using this?
 ## 
 ACTION = {}
+
+##  Help files
+HELP = {}
 
 ##
 ##  Prototypes are "models" that are used either as a reference for game math

@@ -1,8 +1,9 @@
-##-----------------------------------------------------------------------------
-##  File:       telnet.py
-##  Purpose:    limited telnet protocol implementation
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       telnet.py
+#   Purpose:    limited telnet protocol implementation
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 """Manage one Telnet client connected via a TCP/IP socket."""
 
@@ -113,6 +114,7 @@ class Telnet(object):
     """Represents a client connection via Telnet."""
 
     def __init__(self, sock, addr_tup):
+        self.protocol = 'telnet'
         self.active = True          # Turns False when the connection is lost
         self.sock = sock            # The connection's socket
         self.fileno = sock.fileno() # The socket's file descriptor
@@ -144,9 +146,9 @@ class Telnet(object):
         #print "Telnet destructor called"
         pass
 
-    #---[ Get Cmd ]------------------------------------------------------------
+    #---[ Get Command ]--------------------------------------------------------
 
-    def get_cmd(self):
+    def get_command(self):
         """Get a line of text that was received from the DE. The class's
         cmd_ready attribute will be true if lines are available."""
         cmd = None

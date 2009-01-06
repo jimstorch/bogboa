@@ -1,7 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/gender.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/gender.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
@@ -24,26 +25,9 @@ class Gender(object):
         self.reflexive = None
 
 
-#---------------------------------------------------------------Register gender
+#--------------------------------------------------------------Configure Gender
 
-def register_gender(gender):
-
-    """
-    Given a configured gender, register it with the shared gender dictionary.
-    """
-
-    if gender.uuid in GENDER:
-        print ( "ERROR! Duplicate UUID (%s) found while registering "
-            "gender '%s' from module '%s'."  %  (
-            gender.uuid, gender.name, gender.module) )
-        sys.exit(1)
-    else:
-        GENDER[gender.uuid] = gender
-
-
-#-------------------------------------------------------------Configured Gender
-
-def configured_gender(cfg):
+def configure_gender(cfg):
 
     """
     Given a configuration dictionary, create a gender and configure it.
@@ -104,4 +88,21 @@ def configured_gender(cfg):
         print ( "WARNING! Unrecognized key(s) in config for gender '%s': %s" 
             % ( gender.name, cfg.keys()) ) 
 
-    return gender         
+    return gender
+
+
+#---------------------------------------------------------------Register Gender
+
+def register_gender(gender):
+
+    """
+    Given a configured gender, register it with the shared gender dictionary.
+    """
+
+    if gender.uuid in GENDER:
+        print ( "ERROR! Duplicate UUID (%s) found while registering "
+            "gender '%s' from module '%s'."  %  (
+            gender.uuid, gender.name, gender.module) )
+        sys.exit(1)
+    else:
+        GENDER[gender.uuid] = gender         

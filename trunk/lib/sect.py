@@ -1,11 +1,13 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/sect.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/sect.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
 from lib.shared import SECT
+from driver.log import THE_LOG
 
 #--------------------------------------------------------------------------Sect
 
@@ -32,29 +34,11 @@ class Sect(object):
 
     def has_ability(self, ability_name):
         return ability_name in self.ability
-   
-
-        
-#-----------------------------------------------------------------Register sect
-
-def register_sect(sect):
-
-    """
-    Given a configured sect, register it with the shared sect dictionary.
-    """
-
-    if sect.uuid in SECT:
-        print ( "ERROR! Duplicate UUID (%s) found while registering "
-            "sect '%s' from module '%s'."  %  (
-            sect.uuid, sect.name, sect.module) )
-        sys.exit(1)
-    else:
-        SECT[sect.uuid] = sect
 
 
-#----------------------------------------------------------------Configure sect
+#----------------------------------------------------------------Configure Sect
 
-def configured_sect(cfg):
+def configure_sect(cfg):
 
     """
     Given a configuration dictionary, create a sect and configure it.
@@ -66,13 +50,13 @@ def configured_sect(cfg):
     if 'name' in cfg:
         sect.name = cfg.pop('name')
     else:
-        print "ERROR! Missing name in sect config."
+        THE_LOG.add("ERROR! Missing name in sect config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         sect.uuid = cfg.pop('uuid')
     else:
-        print "ERROR! Missing UUID in config for sect '%s'." % sect.name
+        THE_LOG.add("ERROR! Missing UUID in config for sect '%s'." % sect.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -88,9 +72,24 @@ def configured_sect(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print ( "WARNING! Unrecognized key(s) in config for sect '%s': %s" 
+        THE_LOG.add("WARNING! Unrecognized key(s) in config for sect '%s': %s" 
             % ( sect.name, cfg.keys()) ) 
 
     return sect    
 
-    
+
+#-----------------------------------------------------------------Register Sect
+
+def register_sect(sect):
+
+    """
+    Given a configured sect, register it with the shared sect dictionary.
+    """
+
+    if sect.uuid in SECT:
+        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+            "sect '%s' from module '%s'."  %  (
+            sect.uuid, sect.name, sect.module) )
+        sys.exit(1)
+    else:
+        SECT[sect.uuid] = sect    

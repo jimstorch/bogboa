@@ -1,7 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/action/info.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/action/info.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 from lib import parsers
 
@@ -15,3 +16,12 @@ def look(client):
     client.send('^C' + word_wrap(client.room.view, client.conn.columns))
 
 look.parser = None
+
+
+#--------------------------------------------------------------------------Help
+
+def help(client):
+
+    """Display the selected help text."""
+
+    
