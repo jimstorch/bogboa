@@ -14,18 +14,6 @@ from lib.action import wizard
 VERB_ALIAS = {}
 VERB_HANDLER = {}
 
-for command in COMMAND_LIST:
-
-    ## Verb Alias is used to match synonymns to the one_true_verb(tm)
-    aliases = command[0]
-    one_true_verb = aliases[0]
-    for alias in aliases:
-        VERB_ALIAS[alias] = one_true_verb
-   
-    ## Specify the function to use with this verb
-    VERB_HANDLER[one_true_verb] = command[1]
-
-
 #------------------------------------------------------------------Command List
 
 ## Commands take the following format:
@@ -71,20 +59,20 @@ COMMAND_LIST = (
     (('take', 'get', 'pickup', 'grab'), usage.take),
     (('drop', 'discard', 'toss', 'throw'), usage.drop), 
     (('do', 'cast', 'doability', 'spell'), usage.do),
-    (('attack', 'kill', 'atk', 'slay'), usage.attack),
-    (('target', 'tar'), usage.target),
-    (('search',), usage.search),
+#    (('attack', 'kill', 'atk', 'slay'), usage.attack),
+#    (('target', 'tar'), usage.target),
+#    (('search',), usage.search),
 
     ## System
 
-    (('quit', 'exit', 'logoff'), system.quit),
+#    (('quit', 'exit', 'logoff'), system.quit),
 
     ## Wizardry
     (('ban',), wizard.ban), 
     (('grant',), wizard.grant),
     (('kick', 'punt'), wizard.kick),
-    (('revoke',), wizard.revoke).
-    (('summon',) wizard.summon),
+    (('revoke',), wizard.revoke),
+    (('summon',), wizard.summon),
     (('teleport', 'port'), wizard.teleport),
     (('zap',), wizard.zap),
 
@@ -96,32 +84,16 @@ COMMAND_LIST = (
 
     )
 
+## Populate the command list
 
-#--------------------------------------------------------------------Split Verb
+for command in COMMAND_LIST:
+
+    ## Verb Alias is used to match synonymns to the one_true_verb(tm)
+    aliases = command[0]
+    one_true_verb = aliases[0]
+    for alias in aliases:
+        VERB_ALIAS[alias] = one_true_verb
    
-def split_verb(text):
-
-    """Break a sentence into the verb and the balance of the remaining words.
-    Strips off trailing punctuation and extra spaces.
-    Returns a (verb, balance) tuple."""    
-    
-    words = text.split()
-    count = len(words)
-
-    if count == 0:
-        verb = None
-        balance = []        
-
-    elif count == 1:
-        a_verb = words[0].lower()
-        balance = []
-
-    else:
-        a_verb = words[0].lower()
-        balance = words[1:] 
-   
-    one_true_verb = VERB_ALIAS.get(a_verb, None)
-
-    return (one_true_verb, balance)
-
+    ## Specify the function to use with this verb
+    VERB_HANDLER[one_true_verb] = command[1]
 

@@ -41,6 +41,8 @@ from driver.loader.from_yaml import parse_script
 
 def load_module(module):
 
+    THE_LOG.add(">> Loading Module: '%s'"  % module)
+
     ## Load Rooms    
     from lib.room import configure_room, register_room
     for cfg in room_cfg_iter(module):
@@ -96,7 +98,7 @@ def cfg_iter(mask):
     """
 
     filenames = glob.glob(mask)
-    THE_LOG.add("%d found." % len(filenames))
+    THE_LOG.add(">> %d found." % len(filenames))
 
     for filename in filenames:
         cfg = parse_file(filename)
@@ -106,7 +108,7 @@ def cfg_iter(mask):
 
 def item_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading items...")
+    THE_LOG.add(">> Loading Items")
 
     mask = os.path.join(module_dir, 'item/*.yaml')
     for cfg in cfg_iter(mask):
@@ -117,7 +119,7 @@ def item_cfg_iter(module_dir):
 
 def race_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading races...")
+    THE_LOG.add(">> Loading Races")
 
     mask = os.path.join(module_dir, 'race/*.yaml')
     filenames = glob.glob(mask)
@@ -129,7 +131,7 @@ def race_cfg_iter(module_dir):
 
 def gender_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading genders...")
+    THE_LOG.add(">> Loading Genders")
 
     mask = os.path.join(module_dir, 'gender/*.yaml')
     for cfg in cfg_iter(mask):
@@ -140,7 +142,7 @@ def gender_cfg_iter(module_dir):
 
 def sect_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading sects...")
+    THE_LOG.add(">> Loading Sects")
 
     mask = os.path.join(module_dir, 'sect/*.yaml')
     for cfg in cfg_iter(mask):
@@ -151,7 +153,7 @@ def sect_cfg_iter(module_dir):
 
 def room_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading rooms...")
+    THE_LOG.add(">> Loading Rooms")
 
     mask = os.path.join(module_dir, 'room/*.yaml')
     for cfg in cfg_iter(mask):
@@ -162,7 +164,7 @@ def room_cfg_iter(module_dir):
 
 def help_cfg_iter(module_dir):
 
-    THE_LOG.add("Loading help files...")
+    THE_LOG.add(">> Loading Help Pages")
 
     mask = os.path.join(module_dir, 'help/*.yaml')
     for cfg in cfg_iter(mask):

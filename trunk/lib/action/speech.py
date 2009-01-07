@@ -19,6 +19,15 @@ def broadcast(message):
         player.send(message)
 
 
+#-------------------------------------------------------------------------Emote
+
+def emote(message):
+
+    """Displays an emote to everyone in the room."""
+
+    pass
+
+
 #--------------------------------------------------------------------------Tell
 
 def tell(client, target_handle, message):
@@ -60,6 +69,21 @@ def reply(client, message):
         client.send('^yYou have not recieved any tells.')
     
 reply.parser = parsers.monologue
+
+
+#---------------------------------------------------------------------------OOC
+
+def ooc(client, message):
+
+    """Sends 'message' to every players."""
+
+    for player in shared.PLAY_LIST:
+
+        if player == client:
+            client.send('^wYou OOC; %s' % message)                
+        
+        else:
+            player.send('^R%s OOC; ^W %s' % (client.name, message))
 
 
 #-------------------------------------------------------------------------Shout
