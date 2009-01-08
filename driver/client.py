@@ -4,8 +4,9 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-# telnet_conn -> client -> avatar
+# connection --> client <-- avatar
 
+#from lib.stringsub import StringSub
 from lib.verb import VERB_ALIAS
 from lib.verb import VERB_HANDLER
 
@@ -16,10 +17,17 @@ class Client(object):
 
     def __init__(self):
 
-        self.conn = None
-        self.active = False
-        self.avatar = None
-        self.verb_args = None            ## Used by verb handlers
+        self.conn = None                ## Network connection 
+        self.active = False             ## Delete during housekeeping?
+        self.avatar = None              ## Player's character in the world
+        self.verb_args = None           ## arguments for the verb handlers
+        self.room = None                ## Current location of the player
+        self.target = None              ## Player's hostile target
+        self.btarget = None             ## Player's beneficial target
+        self.ctarget = None             ## Player's conversational target
+
+        ## Dictionary-like object used for string substitutions
+        #self.stringsub = StringSub(self)    
 
     #--------------------------------------------------------------------Inform
 

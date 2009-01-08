@@ -5,6 +5,8 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
+SERVER_NAME = 'BogBoa Test Realm'
+
 ## Boolean used by the main loop, False = stop the server
 SERVER_RUN = True
 

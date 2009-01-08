@@ -21,7 +21,7 @@ def broadcast(message):
 
 #-------------------------------------------------------------------------Emote
 
-def emote(message):
+def emote(client):
 
     """Displays an emote to everyone in the room."""
 
@@ -30,9 +30,11 @@ def emote(message):
 
 #--------------------------------------------------------------------------Tell
 
-def tell(client, target_handle, message):
+def tell(client):
 
-    """Send message from client to target."""
+    """
+    Send message from client to client's target.
+    """
 
     target = lookup.find_player(target_handle)
 
@@ -57,7 +59,7 @@ tell.parser = parsers.dialogue
 
 #-------------------------------------------------------------------------Reply
 
-def reply(client, message):
+def reply(client):
 
     """Shortcut that tells to the last person who sent you one."""
 
@@ -73,7 +75,7 @@ reply.parser = parsers.monologue
 
 #---------------------------------------------------------------------------OOC
 
-def ooc(client, message):
+def ooc(client):
 
     """Sends 'message' to every players."""
 
@@ -88,7 +90,7 @@ def ooc(client, message):
 
 #-------------------------------------------------------------------------Shout
 
-def shout(client, message):
+def shout(client):
 
     """Sends 'message' to every players."""
 
@@ -106,7 +108,7 @@ shout.parser = parsers.monologue
 #---------------------------------------------------------------------------Say
 
 
-def say(client, message):
+def say(client):
     
     """Sends message to every player in client's room."""
 
