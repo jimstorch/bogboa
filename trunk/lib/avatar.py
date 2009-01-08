@@ -23,10 +23,6 @@ class Avatar(object):
         self.flag = {}          # Flags are persistent variables
         self.token = {}         # Tokens are non persistent variables
 
-        self.room = None
-        self.friendly_target = None
-        self.hostile_target = None        
-
 
     #---------------------------------------------------------------Adj Faction
 

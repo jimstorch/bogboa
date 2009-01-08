@@ -15,8 +15,6 @@ def look(client):
 
     client.send('^C' + word_wrap(client.room.view, client.conn.columns))
 
-look.parser = None
-
 
 #--------------------------------------------------------------------------Help
 
@@ -51,7 +49,6 @@ def time(client):
     """Fix Me"""
 
     pass
-
 
 #---------------------------------------------------------------------Inventory
 

@@ -18,7 +18,7 @@ VERB_HANDLER = {}
 
 ## Commands take the following format:
 ##      [0] = tuple of aliases with tuple[0] == One True Verb(tm)
-##      [1] = verb function to call with those arguments
+##      [1] = handler function to call with those arguments
  
 
 COMMAND_LIST = (
@@ -50,7 +50,7 @@ COMMAND_LIST = (
     (('score', 'played','stats'), info.score),
     (('time', 'date', 'clock'), info.time),
     (('inventory', 'i', 'inven'), info.inventory),
-    (('look', 'l', '5'), info.look),    
+    (('look', 'l', '5','x','examine'), info.look),    
 
     ## Interaction
 
@@ -84,7 +84,10 @@ COMMAND_LIST = (
 
     )
 
-## Populate the command list
+
+#----------------------------------------------------------------Initialization
+
+## Populate the verb alias and the verb handler dictionaries
 
 for command in COMMAND_LIST:
 
