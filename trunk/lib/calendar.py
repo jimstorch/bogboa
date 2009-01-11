@@ -4,9 +4,8 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-import time
+from lib.shared import THE_TIME
 
-#from lib.shared import THE_TIME
 
 """
 Game Calendar:
@@ -68,27 +67,27 @@ GAME_SECOND = GAME_MINUTE / 60.0
 #    phase = self.year % 12
 #    house = HOUSES[self.phase]
 
-#------------------------------------------------------------------Date Msg
+#----------------------------------------------------------------------Date Msg
 
 
 def date_msg(self):
     """
     Return the julian date and the current house.
     """
-    tstamp = time.time() - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
     phase = self.year % 12
     return ('day %d of the Year of the %s' %
         (julian, HOUSES[phase]))
 
 
-#------------------------------------------------------------------Time Msg
+#----------------------------------------------------------------------Time Msg
 
 def time_msg(self):
     """
     Return HH:MM and the period of day.
     """
-    tstamp = time.time() - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR) 
     minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
 
@@ -111,7 +110,7 @@ def time_msg(self):
     return retval
 
 
-#--------------------------------------------------------------Datetime Msg
+#------------------------------------------------------------------Datetime Msg
 
 def datetime_msg(self):
     """
@@ -120,7 +119,7 @@ def datetime_msg(self):
     return '%s, %s' % (time_msg(), date_msg())
 
 
-#------------------------------------------------------------------Sunlight
+#----------------------------------------------------------------------Sunlight
 
 def sunlight(self):
 
@@ -128,7 +127,7 @@ def sunlight(self):
     Calculate the current sunlight level.
     Return an integer value in the range of 0 (Midnight) to 12 (Noon).
     """
-    tstamp = time.time() - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))
         
