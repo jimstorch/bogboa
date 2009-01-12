@@ -74,7 +74,7 @@ class Client(object):
 
     def soft_prompt(self):
         """Called when a leading new-line is not desired"""
-        self.send('>')
+        self.send('> ')
 
     #-------------------------------------------------------------------Verbing
 

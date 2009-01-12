@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       monitor.py
+#   File:       driver/monitor.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 from driver.log import THE_LOG
 from lib import shared
-from lib.action.speech import broadcast
+from lib.commands.speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.

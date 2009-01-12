@@ -1,13 +1,14 @@
-##-----------------------------------------------------------------------------
-##  File:       lib/verb.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       lib/verb.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
-from lib.action import movement
-from lib.action import speech
-from lib.action import info
-from lib.action import usage
-from lib.action import wizard
+from lib.commands import movement
+from lib.commands import speech
+from lib.commands import info
+from lib.commands import usage
+from lib.commands import wizard
 #from lib.action import silly
 
 
