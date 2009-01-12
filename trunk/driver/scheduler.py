@@ -14,14 +14,6 @@ from bisect import insort
 from lib import shared
 
 
-if sys.platform == "win32":
-    # On Windows, the best timer is time.clock()
-    default_timer = time.clock
-else:
-    # On most other platforms the best timer is time.time()
-    default_timer = time.time
-
-
 #-------------------------------------------------------------------------Event
 
 class Event(object):
@@ -128,7 +120,7 @@ class Scheduler(object):
 
     def __init__(self):
         self.event_list = []
-        self.start_time = default_timer()
+        self.start_time = time.time()
         shared.THE_TIME = self.start_time
 
     def add(self, delay, func, args=()):
@@ -150,7 +142,7 @@ class Scheduler(object):
         time.sleep(.001)
 
         ## Update the global time value 
-        shared.THE_TIME = default_timer()
+        shared.THE_TIME = time.time()
 
         while self.event_list:
             ## Look at the first event

@@ -10,7 +10,6 @@ from lib.shared import ROOM
 from driver.log import THE_LOG
 
 
-
 #--------------------------------------------------------------------------Room
 
 class Room(object):
@@ -21,11 +20,23 @@ class Room(object):
         self.module = None
         self.name = None
         self.exit = {}
+        self.scripts = {}
+        self.clients = {}
+        self.npcs = {}
+        self.items = {}
+
+
+    #---------------------------------------------------------------------Enter
+
+    def enter(self, client):
+        client.send('Welcome')
+        client.prompt()
+
 
     #------------------------------------------------------------------On Enter
 
     def on_enter(self, mob):
-        pass
+        
 
     #-------------------------------------------------------------------On Exit
 
@@ -156,6 +167,10 @@ def configure_room(cfg):
     if 'd' in cfg:
         room.exit['down'] = cfg.pop('d')
 
+    ## Scripting
+    if 'on_enter' in cfg:
+        room.scripts['on_enter'] = cfg.pop('on_enter')
+    
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
