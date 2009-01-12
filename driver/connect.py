@@ -22,7 +22,7 @@ def lobby_connect(conn):
 #    player.sect = shared.SECT[guest_uuid]
 
     shared.LOBBY_LIST.append(client)
-    client.prompt()
+    shared.ROOM[lobby_uuid].enter(client)
 
 
 def game_connect(conn):
