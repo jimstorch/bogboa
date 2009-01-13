@@ -37,9 +37,9 @@ load_module(module)
 #       Schedule Repeating Events
 #------------------------------------------------------------------------------
 
-Cycle(5, test_connections)
-Cycle(5, kill_idle_clients)
-Cycle(5, purge_dead_clients)
+Cycle(2, test_connections)
+Cycle(2, kill_idle_clients)
+Cycle(2, purge_dead_clients)
 
 
 #------------------------------------------------------------------------------

@@ -9,6 +9,7 @@ from mud.commands import speech
 from mud.commands import info
 from mud.commands import usage
 from mud.commands import wizard
+from mud.commands import system
 #from mud.action import silly
 
 
@@ -66,7 +67,8 @@ COMMAND_LIST = (
 
     ## System
 
-#    (('quit', 'exit', 'logoff'), system.quit),
+    (('quit', 'exit', 'logoff'), system.quit),
+    (('bug',), system.bug),
 
     ## Wizardry
     (('ban',), wizard.ban), 
