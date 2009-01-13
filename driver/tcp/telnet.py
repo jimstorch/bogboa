@@ -9,7 +9,7 @@
 
 import socket
 
-from lib import shared
+from mud import shared
 from driver.log import THE_LOG
 
 

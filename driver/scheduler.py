@@ -11,7 +11,7 @@ import time
 import operator
 from bisect import insort
 
-from lib import shared
+from mud import shared
 
 
 #-------------------------------------------------------------------------Event

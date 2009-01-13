@@ -16,7 +16,7 @@ import os
 import sys
 import glob
 
-from lib import shared
+from mud import shared
 from driver.log import THE_LOG
 from driver.loader.from_yaml import parse_script
 
@@ -44,19 +44,19 @@ def load_module(module):
     THE_LOG.add(">> Loading Module: '%s'"  % module)
 
     ## Load Rooms    
-    from obj.room import configure_room, register_room
+    from mud.room import configure_room, register_room
     for cfg in room_cfg_iter(module):
         room = configure_room(cfg)
         register_room(room)
 
     ## Load Guilds
-    from obj.guild import configure_guild, register_guild
+    from mud.guild import configure_guild, register_guild
     for cfg in guild_cfg_iter(module):
         guild = configure_guild(cfg)
         register_guild(guild)
 
     ## Load Help
-    from obj.help import configure_help, register_help
+    from mud.help import configure_help, register_help
     for cfg in help_cfg_iter(module):
         help = configure_help(cfg)
         register_help(help)

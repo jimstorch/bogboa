@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/gender.py
+#   File:       mud/gender.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 import sys
 
-from lib.shared import GENDER
+from mud.shared import GENDER
 
 #------------------------------------------------------------------------Gender
 

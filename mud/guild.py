@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/guild.py
+#   File:       mud/guild.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 import sys
 
-from lib.shared import GUILD
+from mud.shared import GUILD
 from driver.log import THE_LOG
 
 #-------------------------------------------------------------------------Guild
@@ -45,7 +45,7 @@ def configure_guild(cfg):
     Returns the configured guild.
     """
 
-    guild = guild()
+    guild = Guild()
 
     if 'name' in cfg:
         guild.name = cfg.pop('name')
@@ -93,4 +93,4 @@ def register_guild(guild):
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        GUILD[GUILD.uuid] = guild    
+        GUILD[guild.uuid] = guild    

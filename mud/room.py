@@ -6,7 +6,7 @@
 
 import sys
 
-from lib.shared import ROOM
+from mud.shared import ROOM
 from driver.log import THE_LOG
 
 

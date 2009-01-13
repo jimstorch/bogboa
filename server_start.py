@@ -5,7 +5,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from lib import shared
+from mud import shared
 from driver.log import THE_LOG
 from driver.tcp.listen import PORT
 
@@ -18,9 +18,6 @@ from driver.monitor import test_connections
 from driver.monitor import kill_idle_clients
 from driver.monitor import purge_dead_clients
 from driver.monitor import process_client_commands
-#from lib.model.tables import check_tables
-#from lib.model.tables import create_tables
-
 from driver.loader.file_loader import load_module
 
 

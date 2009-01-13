@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/verb.py
+#   File:       mud/verb.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from lib.commands import movement
-from lib.commands import speech
-from lib.commands import info
-from lib.commands import usage
-from lib.commands import wizard
-#from lib.action import silly
+from mud.commands import movement
+from mud.commands import speech
+from mud.commands import info
+from mud.commands import usage
+from mud.commands import wizard
+#from mud.action import silly
 
 
 VERB_ALIAS = {}
