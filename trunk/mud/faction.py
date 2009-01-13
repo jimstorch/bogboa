@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/faction.py
+#   File:       mud/faction.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 import sys
 
-from lib.shared import FACTION
+from mud.shared import FACTION
 from driver.log import THE_LOG
 
 #------------------------------------------------------------------------Gender

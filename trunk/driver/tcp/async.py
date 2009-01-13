@@ -14,7 +14,7 @@ from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
 from driver.tcp.listen import THE_SERVER_SOCKET
 from driver.connect import lobby_connect
-from lib import shared
+from mud import shared
 
 
 # TODO: add a real source here

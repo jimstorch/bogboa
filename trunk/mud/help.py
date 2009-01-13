@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/help.py
+#   File:       mud/help.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 import sys
 
-from lib.shared import HELP
+from mud.shared import HELP
 from driver.log import THE_LOG
 
 

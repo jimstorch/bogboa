@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       driver/client.py
+#   File:       mud/client.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 # connection --> client <-- avatar
 
 #from lib.stringsub import StringSub
-from lib.verb import VERB_ALIAS
-from lib.verb import VERB_HANDLER
+from mud.verb import VERB_ALIAS
+from mud.verb import VERB_HANDLER
 
 
 #------------------------------------------------------------------------Client

@@ -4,9 +4,9 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from lib import shared
-from lib import parsers
-from lib import lookup
+from mud import shared
+from mud import parsers
+from mud import lookup
 
 
 #---------------------------------------------------------------------Broadcast

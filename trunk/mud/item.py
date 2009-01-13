@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/item.py
+#   File:       mud/item.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 import sys
 
-from lib.shared import ITEM
+from mud.shared import ITEM
 from driver.log import THE_LOG
 
 #--------------------------------------------------------------------------Item

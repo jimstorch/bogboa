@@ -4,8 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from lib import parsers
-from lib.shared import HELP
+from mud.shared import HELP
 
 #--------------------------------------------------------------------------Look
 

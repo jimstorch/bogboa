@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       lib/calendar.py
+#   File:       mud/calendar.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from lib.shared import THE_TIME
+from mud.shared import THE_TIME
 
 
 """
