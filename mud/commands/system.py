@@ -3,8 +3,7 @@
 ##  Author:     Jim Storch
 ##-----------------------------------------------------------------------------
 
-from lib import parsers
-
+from driver.scheduler import THE_SCHEDULER
 
 #--------------------------------------------------------------------------Quit
 
@@ -12,9 +11,13 @@ def quit(client):
 
     """Exit from the game."""
 
-    client.deactivate()
+    client.send('Logging you off -- Take care.')
+    THE_SCHEDULER.add(.10, client.deactivate)
 
-quit.parser = None
+#---------------------------------------------------------------------------Bug
 
+def bug(client):
 
+    """Permit the player to report a bug to the bug log."""
 
+    pass
