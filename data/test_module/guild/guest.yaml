@@ -3,7 +3,7 @@ name: guest
 desc:
     Pre-login Status    
 
-## Abilities automatically granted to this sect
+## Abilities automatically granted to this guild
 abilities:
     - quit
     - login

@@ -7,7 +7,7 @@ name: wizard
 desc:
     mysterious shaper of worlds
 
-## Skill balance for this sect
+## Skill balance for this guild
 skills:
     - wizardry:     1.00
     ## Enforce the prime-directive
@@ -17,5 +17,5 @@ skills:
     - armor:        1000.0
     - heartiness:   1000.0
 
-## Abilities automatically granted to this sect
+## Abilities automatically granted to this guild
 abilties:
