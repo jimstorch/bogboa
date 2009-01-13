@@ -36,7 +36,7 @@ HELP = {}
 ITEM = {}
 RACE = {}
 GENDER = {}
-SECT = {}
+GUILD = {}
 PROTO_NPC = {}
 
 ##

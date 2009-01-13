@@ -27,7 +27,7 @@ from driver.loader.from_yaml import parse_script
 #           Items
 #           Races
 #           Genders
-#           Sects
+#           Guilds
 #           Bots
 #
 #       Reals
@@ -44,19 +44,19 @@ def load_module(module):
     THE_LOG.add(">> Loading Module: '%s'"  % module)
 
     ## Load Rooms    
-    from lib.room import configure_room, register_room
+    from obj.room import configure_room, register_room
     for cfg in room_cfg_iter(module):
         room = configure_room(cfg)
         register_room(room)
 
-    ## Load Sects
-    from lib.sect import configure_sect, register_sect
-    for cfg in sect_cfg_iter(module):
-        sect = configure_sect(cfg)
-        register_sect(sect)
+    ## Load Guilds
+    from obj.guild import configure_guild, register_guild
+    for cfg in guild_cfg_iter(module):
+        guild = configure_guild(cfg)
+        register_guild(guild)
 
     ## Load Help
-    from lib.help import configure_help, register_help
+    from obj.help import configure_help, register_help
     for cfg in help_cfg_iter(module):
         help = configure_help(cfg)
         register_help(help)
@@ -138,13 +138,13 @@ def gender_cfg_iter(module_dir):
         yield(cfg)
 
 
-#-----------------------------------------------------------------Sect Cfg Iter
+#----------------------------------------------------------------Guild Cfg Iter
 
-def sect_cfg_iter(module_dir):
+def guild_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Sects")
+    THE_LOG.add(">> Loading Guilds")
 
-    mask = os.path.join(module_dir, 'sect/*.yaml')
+    mask = os.path.join(module_dir, 'guild/*.yaml')
     for cfg in cfg_iter(mask):
         yield(cfg)
 
