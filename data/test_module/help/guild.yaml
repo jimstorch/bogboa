@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 uuid: 9b6732b4-07d2-43ca-96a8-01b237a0634e
 name: guild
-aliases: [ guilds class classes roles role sect ]
+aliases: [ guilds, class, classes, roles, role, sect ]
 module: test module
 
 text:
