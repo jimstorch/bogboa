@@ -1,7 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       mud/effect.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       mud/api/effect.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 ## Effects are responsible for computing mitigation via resistances and 
 ## immunities, adjusting health levels, and sending combat messages to
