@@ -4,9 +4,9 @@ desc:
     Pre-login Status    
 
 ## Abilities automatically granted to this guild
-abilities:
-    - quit
-    - login
-    - create
-    - help
+#abilities:
+#    - quit
+#    - login
+#    - create
+#    - help
 

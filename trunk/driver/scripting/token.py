@@ -6,6 +6,7 @@
 from driver.scripting.source_iter import CharIter
 from driver.scripting.security import WHITELIST
 
+
 NUMBER_START = '-.1234567890'
 NUMBER_MORE = '.1234567890'
 ID_START = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -13,6 +14,7 @@ ID_MORE = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890.'
 SYMBOLS = '={}(),;*/'
 CONDITIONALS = ['if', 'elif', 'else',]
 KEYWORDS = ['and', 'or', 'not',]
+
 
 #-------------------------------------------------------------------------Token
 
@@ -82,7 +84,8 @@ class Tokenizer(object):
         return token
 
     def tokenize(self):
-        ## Pretty little state machine
+
+        ## "Everyone writes a crummy parser/tokenizer by hand at least once"
         lex = ''
         state = 'hunting'
         quote_style = None
@@ -90,8 +93,6 @@ class Tokenizer(object):
         newline_count = 0
         
         for char in self.char_iter:
-
-            #print char, state
 
             ## Start of a new lexeme
             if state == 'hunting':
@@ -181,7 +182,7 @@ class Tokenizer(object):
         
             elif state == 'quoting':
 
-                ## Handle newlines, note the fall through to the next if
+                ## Handle newlines, note the fall-through to the next 'if'
                 ## since newlines are also white spaces
                 if char == '\n':
                     newline_count += 1
@@ -246,7 +247,6 @@ class Tokenizer(object):
                 ## Otherwise, carry the character
                 lex += char
                 continue
-
                                                    
             elif state == 'numberish':
                 if char.isspace() or char in SYMBOLS:
@@ -281,10 +281,11 @@ class Tokenizer(object):
                     ## Is it a function call?
                     if char == '(' or self.char_iter.next_non_space() == '(':
                         ## Legal function name?
-                        if lex not in WHITELIST:
-                            return ("Security Error: "
-                            "Function call '%s' is not in whitelist\n%s" %
-                            (lex, self.char_iter.trace() ) )                              
+                        ## TODO: Re-enable this check
+#                        if lex not in WHITELIST:
+#                            return ("Security Error: "
+#                            "Function call '%s' is not in whitelist\n%s" %
+#                            (lex, self.char_iter.trace() ) )                              
 
                         token = self.create_token('call', lex)
                         self.tokens.append(token)                    
@@ -329,7 +330,6 @@ class Tokenizer(object):
             return ('Tokenizer Error: '
                 'Quoted string was never closed.\n%s' %
                 self.char_iter.trace() )              
-
                    
         ## Tokenizer was able to tokenize the entire text
         return ''                 

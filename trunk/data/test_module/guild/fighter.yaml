@@ -4,12 +4,12 @@ desc:
     Master of armed combat
 
 ## Skill balance for this sect
-skills:
-    - healing:      0.00
-    - melee:        1.00
-    - armor:        1.00
-    - heartiness:   1.00
+#skills:
+#    - healing:      0.00
+#    - melee:        1.00
+#    - armor:        1.00
+#    - heartiness:   1.00
 
 ## Abilities automatically granted to this sect
-abilities:
+#abilities:
     

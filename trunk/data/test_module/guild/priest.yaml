@@ -8,13 +8,13 @@ desc:
     heavy healing with moderate melee ability
 
 ## Skill balance for this sect
-skills:
-    - healing:      1.00
-    - melee:        0.75
-    - armor:        0.75
-    - heartiness:   0.85
+#skills:
+#    - healing:      1.00
+#    - melee:        0.75
+#    - armor:        0.75
+#    - heartiness:   0.85
 
 ## Abilities automatically granted to this guild
-abilties:
+#abilties:
 
 

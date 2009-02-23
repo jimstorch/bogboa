@@ -8,6 +8,8 @@ import sys
 
 from mud.shared import ROOM
 from driver.log import THE_LOG
+#from driver.bogscript import bytecompile
+
 
 
 #--------------------------------------------------------------------------Room
@@ -20,88 +22,94 @@ class Room(object):
         self.module = None
         self.name = None
         self.exit = {}
-        self.scripts = {}
         self.clients = {}
         self.npcs = {}
         self.items = {}
-
-
-    #---------------------------------------------------------------------Enter
-
-    def enter(self, client):
-        client.send('Welcome')
-        client.prompt()
-
+        self.scripts = {}
 
     #------------------------------------------------------------------On Enter
 
     def on_enter(self, mob):
-        pass
+        if 'on_enter' in self.scripts:
+            exec self.scripts['on_enter'] 
 
     #-------------------------------------------------------------------On Exit
 
     def on_exit(self, mob):
-        pass
+        if 'on_exit' in self.scripts:
+            exec self.scripts['on_exit'] 
 
     #-----------------------------------------------------------------On Death
 
     def on_death(self, mob):
-        pass
+        if 'on_death' in self.scripts:
+            exec self.scripts['on_death'] 
 
     #----------------------------------------------------------------On Destroy
 
     def on_destroy(self):
-        pass
+        if 'on_destroy' in self.scripts:
+            exec self.scripts['on_destroy'] 
 
     #------------------------------------------------------------On Detect Aura
 
     def on_detect_aura(self, mob):
-        pass
+        if 'on_detect_aura' in self.scripts:
+            exec self.scripts['on_detect_aura'] 
 
     #-----------------------------------------------------------On Detect Magic
 
     def on_detect_magic(self, mob):
-        pass
+        if 'on_detect_magic' in self.scripts:
+            exec self.scripts['on_detech_magic'] 
 
     #------------------------------------------------------------On Detect Trap
 
-    def on_detect_trap(self, mob):
-        pass
+    def on_detect_traps(self, mob):
+        if 'on_detect_traps' in self.scripts:
+            exec self.scripts['on_detect_traps'] 
 
     #-------------------------------------------------------------------On Drop
 
     def on_drop(self, item):
-        pass
+        if 'on_drop' in self.scripts:
+            exec self.scripts['on_drop'] 
 
     #-------------------------------------------------------------------On Hear
 
     def on_hear(self, mob):
-        pass
+        if 'on_hear' in self.scripts:
+            exec self.scripts['on_hear'] 
 
     #--------------------------------------------------------------On Indentify
     
-    def on_indentify(self, mob):
-        pass
+    def on_identify(self, mob):
+        if 'on_identify' in self.scripts:
+            exec self.scripts['on_identify'] 
 
     #-------------------------------------------------------------------On Init
 
     def on_init(self):
-        pass
+        if 'on_init' in self.scripts:
+            exec self.scripts['on_init'] 
 
     #----------------------------------------------------------------On Inspect
 
     def on_inspect(self, mob):
-        pass
+        if 'on_inspect' in self.scripts:
+            exec self.scripts['on_inspect'] 
 
     #------------------------------------------------------------------On Look
 
     def on_look(self, mob):
-        pass
+        if 'on_look' in self.scripts:
+            exec self.scripts['on_look'] 
 
     #-----------------------------------------------------------------On Signal
 
     def on_signal(self, signal):
-        pass
+        if 'on_signal' in self.scripts:
+            exec self.scripts['on_signal'] 
 
 
 #----------------------------------------------------------------Configure Room
@@ -168,9 +176,21 @@ def configure_room(cfg):
         room.exit['down'] = cfg.pop('d')
 
     ## Scripting
-    if 'on_enter' in cfg:
-        room.scripts['on_enter'] = cfg.pop('on_enter')
-    
+
+    keys = cfg.keys()
+    ## All remaining mappings should be script snippets
+    for key in keys:
+        ## Look for script snippets that begin with 'on_'
+        if key[:3] == 'on_':
+            ## Do our class have a method for this event?
+            if key not in room.__class__.__dict__:
+                THE_LOG.add ( "WARNING! Unknown event '%s' given for "
+                    "room '%s' in module '%s'." % 
+                    (key, room.name, room.module) )
+
+            script = cfg.pop(key)
+            #print key, script
+            #bytecompile(room, key, script)    
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
