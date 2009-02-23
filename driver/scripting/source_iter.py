@@ -144,3 +144,4 @@ class CharIter(object):
         msg += '\n' + arrow
 
         return msg
+

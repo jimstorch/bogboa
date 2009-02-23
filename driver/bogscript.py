@@ -83,9 +83,7 @@ does not reverse them when you remove it, thus creating a stat inflation
 handpump.  
 
 Audit scripts and only work with builders you trust.
-
 """
-
 
 from driver.scripting.token import Tokenizer
 from driver.scripting.pygen import PyGen

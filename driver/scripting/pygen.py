@@ -33,6 +33,7 @@ class PyGen(object):
                 self.is_conditional = False
             self.pycode += '\n'
 
+        ## Indent the next line 4 spaces per indent level
         self.line = ' ' * (self.indent * 4)         
 
     def generate(self):
@@ -130,14 +131,7 @@ class PyGen(object):
         if self.parens < 0:
             return 'PyGen Error:  Extra closing parenthesis in source.'
                 
-        #print self.code
+        #print self.pycode
         return ''    
-
-
-        
-        
-
-        
-
 
 
