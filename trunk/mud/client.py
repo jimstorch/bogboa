@@ -25,9 +25,28 @@ class Client(object):
         self.target = None              ## Player's hostile target
         self.btarget = None             ## Player's beneficial target
         self.ctarget = None             ## Player's conversational target
+        self.abilities = set()          ## Commands usuable by client
 
         ## Dictionary-like object used for string substitutions
         #self.stringsub = StringSub(self)    
+
+
+    #-----------------------------------------------------------Grant Abilities
+
+    def grant_ability(self, ability_name):
+        """Authorize player to use an ability."""
+        if ability_name not in self.abilities:
+            self.abilities.add(ability_name)
+            self.send('\nYou receive a new ability: %s' % ability_name)
+        else:
+            self.send("\nOddness -- attempt to re-grant ability '%s'." %
+                ability_name)
+
+    #-----------------------------------------------------------Clear Abilities
+
+    def clear_abilities(self):
+        """Remove all abilities from player."""
+        self.abilities.clear()
 
     #--------------------------------------------------------------------Inform
 
@@ -40,7 +59,8 @@ class Client(object):
         cmd = self.conn.get_command()
         if cmd:
             verb, args = self._verbing(cmd)
-            if verb:
+            ## Did we get a verb and it is authozied?
+            if verb and verb in self.abilities:
                 print cmd
                 #self.send('You want to %s.\n' % verb)
                 self.verb_args = args

@@ -4,6 +4,10 @@ name: help
 #aliases: [ info ]
 module: test module
 
-text:
+text: |
 
-    This is the text for the base help file.
+    Help
+    ====
+
+    Greetings, this is the help system. Try 'help topics' for a list of 
+    available help texts.

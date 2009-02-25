@@ -1,0 +1,15 @@
+uuid: 61676ea6-bd48-4bab-9292-4bb5ae56b1e1
+name: race
+aliases: [ races, ]
+module: test module
+
+text: |
+
+    Races
+    =====
+
+    The following races are available for player characters.  You may find
+    more information by entering 'help' followed by the race name.
+
+    [ humans ] desc
+    [ elves  ] desc

@@ -3,19 +3,18 @@ module: test module
 name: The Lobby
 desc:
 
-    This is the lobby -- where you may login an existing character or
-    create a new one.
+    Welcome.
+  
+    You may 'load' an existing character
+    or 'create' a new one.
 
+on_enter: |
 
-on_enter:
+    ## This is a comment
 
-    player.tell("Welcome to the Lobby!")
+    mob.grant_ability('load')
+    mob.grant_ability('create')
+    mob.grant_ability('help')
 
-    #player.give_ability('race')
-    #player.give_ability('gender')    
-    #player.give_ability('guild')
+    mob.prompt()
 
-    
-on_giant_hamster:
-
-    foo()        
