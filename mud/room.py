@@ -8,8 +8,8 @@ import sys
 
 from mud.shared import ROOM
 from driver.log import THE_LOG
-#from driver.bogscript import bytecompile
-
+from driver.bogscript import check_event_name
+from driver.bogscript import compile_script
 
 
 #--------------------------------------------------------------------------Room
@@ -21,7 +21,7 @@ class Room(object):
         self.uuid = None
         self.module = None
         self.name = None
-        self.exit = {}
+        self.exits = {}
         self.clients = {}
         self.npcs = {}
         self.items = {}
@@ -30,8 +30,13 @@ class Room(object):
     #------------------------------------------------------------------On Enter
 
     def on_enter(self, mob):
+
+        mob.send('You enter %s.\n' % self.name)
+        mob.send(self.desc + '\n')
+        mob.room = self
+
         if 'on_enter' in self.scripts:
-            exec self.scripts['on_enter'] 
+            exec self.scripts['on_enter']
 
     #-------------------------------------------------------------------On Exit
 
@@ -149,48 +154,60 @@ def configure_room(cfg):
 
     ## Connect hard-coded exits
     if 'north' in cfg:
-        room.exit['north'] = cfg.pop('north')
+        room.exits['north'] = cfg.pop('north')
     if 'east' in cfg:
-        room.exit['east'] = cfg.pop('east')
+        room.exits['east'] = cfg.pop('east')
     if 'south' in cfg:
-        room.exit['south'] = cfg.pop('south')
+        room.exits['south'] = cfg.pop('south')
     if 'west' in cfg:
-        room.exit['west'] = cfg.pop('west')
+        room.exits['west'] = cfg.pop('west')
     if 'up' in cfg:
-        room.exit['up'] = cfg.pop('up')
+        room.exits['up'] = cfg.pop('up')
     if 'down' in cfg:
-        room.exit['down'] = cfg.pop('down')
+        room.exits['down'] = cfg.pop('down')
 
     ## Accept short-forms too
     if 'n' in cfg:
-        room.exit['north'] = cfg.pop('n')
+        room.exits['north'] = cfg.pop('n')
     if 'e' in cfg:
-        room.exit['east'] = cfg.pop('e')
+        room.exits['east'] = cfg.pop('e')
     if 's' in cfg:
-        room.exit['south'] = cfg.pop('s')
+        room.exits['south'] = cfg.pop('s')
     if 'w' in cfg:
-        room.exit['west'] = cfg.pop('w')
+        room.exits['west'] = cfg.pop('w')
     if 'u' in cfg:
-        room.exit['up'] = cfg.pop('u')
+        room.exits['up'] = cfg.pop('u')
     if 'd' in cfg:
-        room.exit['down'] = cfg.pop('d')
+        room.exits['down'] = cfg.pop('d')
 
     ## Scripting
 
     keys = cfg.keys()
-    ## All remaining mappings should be script snippets
-    for key in keys:
-        ## Look for script snippets that begin with 'on_'
-        if key[:3] == 'on_':
-            ## Do our class have a method for this event?
-            if key not in room.__class__.__dict__:
-                THE_LOG.add ( "WARNING! Unknown event '%s' given for "
-                    "room '%s' in module '%s'." % 
-                    (key, room.name, room.module) )
+    
+    #--------------------------------------------------------------------------
+    #   All remaining mappings should be bogscript snippets
+    #--------------------------------------------------------------------------
 
-            script = cfg.pop(key)
-            #print key, script
-            #bytecompile(room, key, script)    
+    for key in keys:
+
+        ## Look for script snippets that begin with 'on_'
+
+        if key[:3] == 'on_':
+            event_name = key
+            ## Issue warnings for events that don't match class methods
+            check_event_name(event_name, room)
+            script = cfg.pop(event_name)
+            (msg, code) = compile_script(script, event_name, room)
+
+        if msg == '':
+            ## Map the event name to the compiled bytecode
+            room.scripts[event_name] = code
+
+        else:
+            ## Problem with a script
+            print msg
+            sys.exit(1)
+               
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:

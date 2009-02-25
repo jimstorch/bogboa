@@ -88,12 +88,56 @@ Audit scripts and only work with builders you trust.
 from driver.scripting.token import Tokenizer
 from driver.scripting.pygen import PyGen
 from driver.scripting.bytecode import ByteCompiler
+from driver.log import THE_LOG
+
+#----------------------------------------------------------------Compile Script
+
+def compile_script(bogscript, event_name, source_obj):
+    
+    """
+    Take a snippet of bogscript and compile it into python bytecode.
+    """
+
+    #print bogscript
+
+    ## Step 1: Convert source script into tokens
+    tk = Tokenizer(bogscript)
+    msg = tk.tokenize()
+    if msg != '':
+        return (msg, None)
+
+    #for token in tk.tokens:
+    #    print token
+
+    ## Step 2: Convert tokens into Python Source
+    pg = PyGen(tk.tokens)
+    msg = pg.generate()
+    if msg != '':
+        return (msg, None)
+
+    #print pg.pycode
+
+    ## Step 3: Compile Python Source into bytecode
+    bc = ByteCompiler(pg.pycode)
+    msg = bc.encode()
+    if msg != '':
+        return (msg, None)
+
+    ## Return 
+    return ('', bc.bytecode)
 
 
+#--------------------------------------------------------------Check Event Name
 
+def check_event_name(event_name, source_obj):
 
-
-
-
+    """
+    Check a script's event name against the class methods of the target class.
+    """
+    ## Does the event name match a class method?
+    if event_name not in source_obj.__class__.__dict__:
+        THE_LOG.add ( "WARNING! Unknown event '%s' given for "
+            "room '%s' in module '%s'." % 
+            (event_name, source_obj.name, source_obj.module) )
 
 

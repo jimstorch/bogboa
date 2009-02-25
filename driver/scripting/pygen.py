@@ -12,7 +12,6 @@ class PyGen(object):
 
     """
     Given source as a collection of tokens, generate corresponding python code.
-    Used inside the Compiler class.
     """
 
     def __init__(self, tokens):
@@ -88,7 +87,7 @@ class PyGen(object):
                     continue
 
                 else:
-                    return "PyGen Error: Unhandled Symbol '%s'" % val 
+                    return "PyGen Error: Unhandled symbol '%s'" % val 
 
             elif cat == 'call':
                 self.line += val
@@ -120,16 +119,16 @@ class PyGen(object):
                 return "PyGen Error: Unhandled category '%s'" % cat 
 
         if self.indent > 0:
-            return 'PyGen Error:  Unclosed braces in source.'
+            return 'PyGen Error:  Unmatched opening brace in source.'
 
         if self.indent < 0:
-            return 'PyGen Error:  Extra closing braces in source.'        
+            return 'PyGen Error:  Unmatched closing braces in source.'        
         
         if self.parens > 0:
-            return 'PyGen Error:  Unclosed parenthesis in source.'
+            return 'PyGen Error:  Unmatched opening parenthesis in source.'
 
         if self.parens < 0:
-            return 'PyGen Error:  Extra closing parenthesis in source.'
+            return 'PyGen Error:  Unmatched closing parenthesis in source.'
                 
         #print self.pycode
         return ''    

@@ -1,0 +1,14 @@
+uuid: 96f4c710-5920-4814-99b6-1fd3d64b1d8f
+module: test module
+name: Character Creation
+desc:
+
+on_enter: |
+
+    #mob.grant_ability('race')
+    #mob.grant_ability('guild')
+    #mob.grant_ability('name')
+    #mob.grant_ability('password')
+    #mob.grant_ability('gender')
+
+    mob.prompt()

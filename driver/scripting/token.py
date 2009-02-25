@@ -73,8 +73,8 @@ class Tokenizer(object):
     Used inside the Parser class.
     """ 
     
-    def __init__(self, text):
-        self.char_iter = CharIter(text)
+    def __init__(self, bogscript):
+        self.char_iter = CharIter(bogscript)
         self.tokens = []
 
     def create_token(self, category, value):
