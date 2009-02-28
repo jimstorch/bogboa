@@ -1,12 +1,15 @@
-##-----------------------------------------------------------------------------
-##  File:       log.py
-##   Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       driver/log.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 """Module contains the Log() class."""
 
 import time
        
+
+#---------------------------------------------------------------------------Log
 
 class Log(object):
 
@@ -20,7 +23,6 @@ class Log(object):
             mode = 'w'
    
         self.file = open(filename, mode)
-              
 
     def add(self, string):
         
@@ -30,8 +32,7 @@ class Log(object):
         self.file.write('\n' + now + string)
         self.file.flush()
         print now, string
-            
-        
+       
     
 #--[ Global Instance ]---------------------------------------------------------
 

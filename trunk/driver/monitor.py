@@ -5,8 +5,8 @@
 #------------------------------------------------------------------------------
 
 from driver.log import THE_LOG
-from mud import shared
-from mud.commands.speech import broadcast
+from mudlib import shared
+from mudlib.commands.speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.

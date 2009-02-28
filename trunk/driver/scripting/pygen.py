@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       driver/scripting/pygen.py
 #   Author:     Jim Storch

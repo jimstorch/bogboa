@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       driver/scripting/bytecode.py
 #   Author:     Jim Storch

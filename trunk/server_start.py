@@ -5,7 +5,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from mud import shared
+from mudlib import shared
 from driver.log import THE_LOG
 from driver.tcp.listen import PORT
 
