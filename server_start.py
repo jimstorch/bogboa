@@ -7,7 +7,7 @@
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.tcp.listen import PORT
+from driver.config import PORT
 
 from driver.scheduler import THE_SCHEDULER
 from driver.scheduler import Cycle
@@ -29,8 +29,11 @@ THE_LOG.add("**************")
 #       Load Game Data
 #------------------------------------------------------------------------------
 
-module = 'data/test_module'
+module = 'data/base'
 load_module(module)
+
+module = 'data/test_module'
+#load_module(module)
 
 
 #------------------------------------------------------------------------------

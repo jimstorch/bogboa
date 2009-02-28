@@ -6,6 +6,8 @@
 
 """Sets the server port to listen for new connections on.""" 
 
+raise ImportError
+
 import socket
 import sys
 
@@ -17,16 +19,16 @@ PORT = 7777
 ## ADDRESS is *NOT* the internet address, it's a local NIC address if you
 ## want the server to listen on a particular device.  Leave blank otherwise.
 
-ADDRESS = '' 
+#ADDRESS = '' 
 
-THE_SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-THE_SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#THE_SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#THE_SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-try:
-    THE_SERVER_SOCKET.bind((ADDRESS, PORT))
-    THE_SERVER_SOCKET.listen(5)
+#try:
+#    THE_SERVER_SOCKET.bind((ADDRESS, PORT))
+#    THE_SERVER_SOCKET.listen(5)
 
-except socket.error, e:
-    print "Unable to create the server socket:", e
-    sys.exit(1)
+#except socket.error, e:
+#    print "Unable to create the server socket:", e
+#    sys.exit(1)
    

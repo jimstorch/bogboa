@@ -19,13 +19,13 @@ except ImportError:
 
 #------------------------------------------------------------------Parse Script
 
-def parse_script(script):
+def parse_markup(markup):
 
-    """Attempt to parse a YAML script into a Python dictionary."""
+    """Attempt to parse a YAML markup into a Python dictionary."""
 
     try:
         ## note the use of 'safe_load' to prevent arbitrary object creation
-        cfg = yaml.safe_load(script)
+        cfg = yaml.safe_load(markup)
 
     except yaml.YAMLError, exc:
         cfg = None
