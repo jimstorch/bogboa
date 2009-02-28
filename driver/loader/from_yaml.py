@@ -1,7 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       driver/loader/from_yaml.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       driver/loader/from_yaml.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 import sys
 
@@ -14,6 +15,9 @@ except ImportError:
 
 ## Single point of conversion in the event we move away from YAML
 ## Also, having it external like this lets me call it from an OLC-style tool 
+
+
+#------------------------------------------------------------------Parse Script
 
 def parse_script(script):
 

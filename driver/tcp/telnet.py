@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       telnet.py
-#   Purpose:    limited telnet protocol implementation
+#   File:       driver/tcp/telnet.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
@@ -9,7 +8,7 @@
 
 import socket
 
-from mud import shared
+from mudlib import shared
 from driver.log import THE_LOG
 
 
@@ -84,7 +83,8 @@ TTYPE   = chr( 24)      # Terminal Type
 NAWS    = chr( 31)      # Negotiate About Window Size
 LINEMO  = chr( 34)      # Line Mode
 
-#--[ Show Bytes ]--------------------------------------------------------------
+
+#--------------------------------------------------------------------Show Bytes
 
 def show_bytes(data, direction):
     """I use this for troubleshooting while working on Telnet commands."""
@@ -97,7 +97,7 @@ def show_bytes(data, direction):
     print ''
 
 
-#--[ Telnet Option Class ]-----------------------------------------------------
+#-----------------------------------------------------------------Telnet Option
 
 class TelnetOption(object):
     """Simple class used to track the status of an extended Telnet option."""
@@ -107,7 +107,7 @@ class TelnetOption(object):
         self.reply_pending = False      # Are we expecting a reply?
 
 
-#--[ Telnet Protocol Class ]---------------------------------------------------
+#------------------------------------------------------------------------Telnet
 
 class Telnet(object):
 
@@ -146,7 +146,7 @@ class Telnet(object):
         #print "Telnet destructor called"
         pass
 
-    #---[ Get Command ]--------------------------------------------------------
+    #---------------------------------------------------------------Get Command
 
     def get_command(self):
         """Get a line of text that was received from the DE. The class's
@@ -161,7 +161,7 @@ class Telnet(object):
         return cmd
 
 
-    #---[ Send ]---------------------------------------------------------------
+    #----------------------------------------------------------------------Send
 
     def send(self, text):
         """Queue text to be sent to the DE."""
@@ -170,14 +170,14 @@ class Telnet(object):
             self.send_pending = True
 
 
-    #---[ AddrPort ]-----------------------------------------------------------
+    #-----------------------------------------------------------------Addr Port
 
     def addrport(self):
         """Return the DE's IP address and port number as a string."""
         return "%s:%s" % (self.addr, self.port)
 
 
-    #---[ Idle ]---------------------------------------------------------------
+    #----------------------------------------------------------------------Idle
 
     def idle(self):
         """Returns the number of seconds that have elasped since the DE
@@ -185,14 +185,14 @@ class Telnet(object):
         return shared.THE_TIME - self.last_input_time 
 
 
-    #---[ Duration ]-----------------------------------------------------------
+    #------------------------------------------------------------------Duration
 
     def duration(self):
         """Returns the number of seconds the DE has been connected."""
         return shared.THE_TIME - self.connect_time
 
 
-    #---[ Request Do SGA ]-----------------------------------------------------
+    #------------------------------------------------------------Request Do SGA 
 
     def request_do_sga(self):
         """Request DE to Suppress Go-Ahead.  See RFC 858."""
@@ -200,7 +200,7 @@ class Telnet(object):
         self._note_reply_pending(SGA, True)
        
         
-    #---[ Request Will Echo ]--------------------------------------------------
+    #---------------------------------------------------------Request Will Echo
 
     def request_will_echo(self):
         """Tell the DE that we would like to echo their text.  See RFC 857."""
@@ -209,7 +209,7 @@ class Telnet(object):
         self.telnet_echo = True 
 
 
-    #---[ Request Wont Echo ]--------------------------------------------------
+    #---------------------------------------------------------Request Wont Echo
 
     def request_wont_echo(self):
         """Tell the DE that we would like to stop echoing their text.
@@ -219,7 +219,7 @@ class Telnet(object):
         self.telnet_echo = False
  
  
-    #---[ Password Mode On ]---------------------------------------------------
+    #----------------------------------------------------------Password Mode On
 
     def password_mode_on(self):
         """Tell DE we will echo (but don't) so typed passwords don't show."""        
@@ -227,7 +227,7 @@ class Telnet(object):
         self._note_reply_pending(ECHO, True)
 
 
-    #---[ Password Mode Off ]--------------------------------------------------
+    #---------------------------------------------------------Password Mode Off
        
     def password_mode_off(self):
         """Tell DE we are done echoing (we lied) and show typing again."""
@@ -235,7 +235,7 @@ class Telnet(object):
         self._note_reply_pending(ECHO, True) 
 
 
-    #---[ Request NAWS ]-------------------------------------------------------
+    #--------------------------------------------------------------Request NAWS
     
     def request_naws(self):
         """Request to Negotiate About Window Size.  See RFC 1073."""
@@ -243,7 +243,7 @@ class Telnet(object):
         self._note_reply_pending(NAWS, True)
 
 
-    #---[ Request Terminal Type ]----------------------------------------------
+    #-----------------------------------------------------Request Terminal Type
 
     def request_terminal_type(self):
         """Begins the Telnet negotiations to request the terminal type from
@@ -252,7 +252,7 @@ class Telnet(object):
         self._note_reply_pending(TTYPE, True)
     
 
-    #---[ Socket Send ]--------------------------------------------------------
+    #---------------------------------------------------------------Socket Send
 
     def socket_send(self):
         """Called by ThePortManagers when send data is ready."""
@@ -271,7 +271,7 @@ class Telnet(object):
             self.send_pending = False
              
 
-    #---[ Socket Recv ]--------------------------------------------------------
+    #---------------------------------------------------------------Socket Recv
 
     def socket_recv(self):
         """Called by ThePortManager when recv data is ready."""
@@ -313,7 +313,7 @@ class Telnet(object):
             self.recv_buffer = self.recv_buffer[mark+1:]
 
 
-    #---[ Recv Byte ]-----------------------------------------------------------
+    #-----------------------------------------------------------------Recv Byte
     
     def _recv_byte(self, byte):
         """Test a received character and only pass those that are printable to
@@ -326,7 +326,7 @@ class Telnet(object):
             self.recv_buffer += byte
 
 
-    #---[ Echo Byte ]----------------------------------------------------------
+    #-----------------------------------------------------------------Echo Byte
     
     def _echo_byte(self, byte):
         """Echo a character back to the client and convert LF into CR\LF."""
@@ -338,7 +338,7 @@ class Telnet(object):
             self.send_buffer += byte 
 
 
-    #---[ IAC Sniffer ]--------------------------------------------------------        
+    #---------------------------------------------------------------IAC Sniffer        
 
     def _iac_sniffer(self, byte):
         """Watches incomming data for Telnet IAC sequences. Passes the data,
@@ -410,7 +410,7 @@ class Telnet(object):
                     self._two_byte_cmd(byte)
 
 
-    #---[ Two Byte Cmd ]-------------------------------------------------------
+    #--------------------------------------------------------------Two Byte Cmd
 
     def _two_byte_cmd(self, cmd):
         """Handle incoming Telnet commands that are two bytes long."""
@@ -457,7 +457,7 @@ class Telnet(object):
         self.telnet_got_cmd = None 
 
 
-    #---[ Three Byte Cmd ]-----------------------------------------------------
+    #------------------------------------------------------------Three Byte Cmd
 
     def _three_byte_cmd(self, option):
         """Handle incoming Telnet commmands that are three bytes long."""
@@ -653,7 +653,7 @@ class Telnet(object):
         self.telnet_got_cmd = None
 
 
-    #---[ SB Decoder ]---------------------------------------------------------
+    #----------------------------------------------------------------SB Decoder
     
     def _sb_decoder(self):
         """Figures out what to do with a received sub-negotiation block."""

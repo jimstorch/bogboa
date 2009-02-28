@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       dbconnect.py
 #   Purpose:    Establish a connection to an SQLite data file
@@ -21,10 +22,10 @@ except ImportError:
 DBCONN = sqlite.connect('data/mud.sqlite', isolation_level=None)
 
 
-#--[ Shared Database Cursor ]--------------------------------------------------
+#--[ Global Instance ]---------------------------------------------------------
 
 THE_CURSOR = DBCONN.cursor()
 
-
+#------------------------------------------------------------------------------
 
 

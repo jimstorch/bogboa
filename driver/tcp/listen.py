@@ -1,8 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       listen.py
-##  Purpose:    defines the address and port the server uses
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       driver/tcp/listen.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 """Sets the server port to listen for new connections on.""" 
 

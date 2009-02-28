@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       tables.py
+#   File:       driver/model/tables.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 
 from lib.model.dbconnect import THE_CURSOR
 
+
+#-----------------------------------------------------------------Create Tables
 
 def create_tables():
 

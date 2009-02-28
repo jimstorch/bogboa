@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       driver/scripting/source_iter.py
 #   Author:     Jim Storch

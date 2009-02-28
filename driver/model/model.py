@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       mapping.py
+#   File:       driver/model/mapping.py
 #   Purpose:    Load and save object data to sqlite
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
@@ -11,7 +12,7 @@ from ruleset.dbm.dbconnect import THE_CURSOR
 from server.log import THE_LOG
 
 
-#---[ Check Name ]-------------------------------------------------------------
+#---]----------------------------------------------------------------Check Name
 
 def check_name(name):
 
@@ -32,7 +33,7 @@ def check_name(name):
         return False    
 
 
-#---[ Check Suspension ]-------------------------------------------------------
+#--------------------------------------------------------------Check Suspension
 
 def check_suspension(name):
 
@@ -59,7 +60,7 @@ def check_suspension(name):
         return False      
         
 
-#---[ Check Password ]---------------------------------------------------------
+#----------------------------------------------------------------Check Password
 
 def check_password(name, password):
     
@@ -89,7 +90,7 @@ def check_password(name, password):
         return False  
 
 
-#--[ Insert Character ]--------------------------------------------------------
+#--------------------------------------------------------------Insert Character
 
 def insert_character(client):
 
@@ -109,7 +110,7 @@ def insert_character(client):
         client.conn.addrport()))    
 
 
-#---[ Load Character ]---------------------------------------------------------
+#----------------------------------------------------------------Load Character
 
 def load_character(name, client):
 

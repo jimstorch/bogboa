@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       driver/scripting/token.py
 #   Author:     Jim Storch

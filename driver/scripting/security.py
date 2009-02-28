@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   File:       driver/scripting/security.py
 #   Author:     Jim Storch

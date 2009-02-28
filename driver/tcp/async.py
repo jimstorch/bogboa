@@ -1,8 +1,8 @@
-##-----------------------------------------------------------------------------
-##  File:       async.py
-##  Purpose:    polls for network activity and new connections
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   File:       driver/tcp/async.py
+#   Author:     Jim Storch
+#------------------------------------------------------------------------------
 
 """Handle Asynchronous Telnet Connections."""
 
@@ -14,14 +14,14 @@ from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
 from driver.tcp.listen import THE_SERVER_SOCKET
 from driver.connect import lobby_connect
-from mud import shared
+from mudlib import shared
 
 
 # TODO: add a real source here
 BAN_LIST = []   
 
 
-#--[ Port Authority Class ]----------------------------------------------------
+#----------------------------------------------------------------Port Authority
 
 class PortAuthority(object):
 
@@ -121,4 +121,5 @@ class PortAuthority(object):
 
 THE_PORT_AUTHORITY = PortAuthority(THE_SERVER_SOCKET)
 
+#------------------------------------------------------------------------------
 
