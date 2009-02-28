@@ -18,7 +18,7 @@ import glob
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.loader.from_yaml import parse_script
+from driver.loader.from_yaml import parse_markup
 
 
 ##   Order of Precedence:
@@ -72,14 +72,14 @@ def parse_file(filename):
 
     try:
         fp = open(filename, 'r')
-        script = fp.read()
+        markup = fp.read()
         fp.close()
 
     except IOError:
         THE_LOG.add("Error opening file '%s'" % filename)
         sys.exit(1)
 
-    cfg, error = parse_script(script)
+    cfg, error = parse_markup(markup)
 
     if error:
         THE_LOG.add("Error parsing YAML from file '%s':" % filename)
@@ -110,7 +110,7 @@ def item_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Items")
 
-    mask = os.path.join(module_dir, 'item/*.yaml')
+    mask = os.path.join(module_dir, 'item/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
 
@@ -121,7 +121,7 @@ def race_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Races")
 
-    mask = os.path.join(module_dir, 'race/*.yaml')
+    mask = os.path.join(module_dir, 'race/*.yml')
     filenames = glob.glob(mask)
     for cfg in cfg_iter(mask):
         yield(cfg)
@@ -133,7 +133,7 @@ def gender_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Genders")
 
-    mask = os.path.join(module_dir, 'gender/*.yaml')
+    mask = os.path.join(module_dir, 'gender/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
 
@@ -144,7 +144,7 @@ def guild_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Guilds")
 
-    mask = os.path.join(module_dir, 'guild/*.yaml')
+    mask = os.path.join(module_dir, 'guild/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
 
@@ -155,7 +155,7 @@ def room_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Rooms")
 
-    mask = os.path.join(module_dir, 'room/*.yaml')
+    mask = os.path.join(module_dir, 'room/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
   
@@ -166,7 +166,7 @@ def help_cfg_iter(module_dir):
 
     THE_LOG.add(">> Loading Help Pages")
 
-    mask = os.path.join(module_dir, 'help/*.yaml')
+    mask = os.path.join(module_dir, 'help/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
 

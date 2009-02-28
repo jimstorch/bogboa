@@ -12,13 +12,31 @@ import sys
 
 from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
-from driver.tcp.listen import THE_SERVER_SOCKET
+#from driver.tcp.listen import THE_SERVER_SOCKET
+
+from driver.config import ADDRESS
+from driver.config import PORT
+
 from driver.connect import lobby_connect
 from mudlib import shared
 
 
 # TODO: add a real source here
 BAN_LIST = []   
+
+
+#--[ Open the Server's Socket ]------------------------------------------------
+
+THE_SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+THE_SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+try:
+    THE_SERVER_SOCKET.bind((ADDRESS, PORT))
+    THE_SERVER_SOCKET.listen(5)
+
+except socket.error, e:
+    print "Unable to create the server socket:", e
+    sys.exit(1)
 
 
 #----------------------------------------------------------------Port Authority
