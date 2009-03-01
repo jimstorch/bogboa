@@ -1,15 +1,19 @@
 #------------------------------------------------------------------------------
-#   File:       data/config.yaml
+#   File:       data/config.yml
 #------------------------------------------------------------------------------
 
 #   Port to listen for incomming connections.  You'll need root access to use
 #   ports below 1025.
-
 port: 7777
 
 #   ADDRESS is *NOT* the internet address, it's a local NIC address if you
 #   want the server to listen on a particular device.  Leave blank otherwise.
-
 address: ''
 
- 
+#   Number of seconds before kicking an idle player
+idle_timeout: 600
+
+#   Year Offset is added to the year when displaying in-game dates.   
+year_offset: 0
+
+

@@ -57,5 +57,5 @@ while shared.SERVER_RUN == True:
     process_client_commands()
 
 ## All done   
-THE_LOG.add('Normal shutdown')
+THE_LOG.add('Administrative shutdown')
 

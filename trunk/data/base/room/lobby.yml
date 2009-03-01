@@ -1,5 +1,5 @@
 uuid: 0c9997b9-5068-46d9-a245-12991bdf3f17
-module: test module
+module: base
 name: The Lobby
 desc:
 
@@ -16,6 +16,7 @@ on_enter: |
     mob.grant_ability('create')
     mob.grant_ability('help')
     mob.grant_ability('quit')
+    mob.grant_ability('shutdown')
 
     mob.prompt()
 

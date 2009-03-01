@@ -12,11 +12,8 @@ import sys
 
 from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
-#from driver.tcp.listen import THE_SERVER_SOCKET
-
 from driver.config import ADDRESS
 from driver.config import PORT
-
 from driver.connect import lobby_connect
 from mudlib import shared
 
