@@ -12,7 +12,7 @@ def quit(client):
 
     """Exit from the game."""
 
-    client.send('Logging you off -- Take care.')
+    client.send('Logging you off -- take care.')
     THE_SCHEDULER.add(.10, client.deactivate)
 
 #---------------------------------------------------------------------------Bug

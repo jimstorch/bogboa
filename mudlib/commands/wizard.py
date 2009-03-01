@@ -4,58 +4,71 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from mudlib import parsers
-
+#from mudlib import parsers
+from driver.scheduler import THE_SCHEDULER
+from mudlib.commands.speech import broadcast
+from mudlib import shared
 
 #---------------------------------------------------------------------------Ban
 
-def ban(player):
+def ban(client):
     pass
-
-ban.parser = None
 
 
 #-------------------------------------------------------------------------Grant
 
-def grant(player, ability_name):
+def grant(client):
     pass
-
-grant.parser = None
 
 
 #--------------------------------------------------------------------------Kick
 
-def kick(player):
+def kick(client):
     pass
-
-kick.parser = None
 
 
 #------------------------------------------------------------------------Revoke
 
-def revoke(player, ability_name):
+def revoke(client):
     pass
 
-revoke.parser = None
+
+#----------------------------------------------------------------------Shutdown
+
+def shutdown(client):
+
+    """Shutdown the server with a ten second warning to users."""
+
+    def second_warning():
+        broadcast("\n!! Server shutdown in 5 seconds. Please log off.\n")
+
+    def kill():
+        shared.SERVER_RUN = False
+
+    if client.verb_args:
+        client.send('\nShutdown command takes no arguments.')
+        
+    else:
+        broadcast("\n!! Server shutdown in 10 seconds.  Please log off.\n")
+        THE_SCHEDULER.add(5, second_warning)
+        THE_SCHEDULER.add(10, kill)
+
 
 #------------------------------------------------------------------------Summon
 
-def summon(player):
+def summon(client):
     pass
 
-summon.parser = None
 
 #----------------------------------------------------------------------Teleport
 
-def teleport(module_name):
+def teleport(client):
     pass
-
-teleport.parser = None
 
 
 #---------------------------------------------------------------------------Zap
 
-def zap(mob):
+def zap(client):
     pass
 
-zap.parser = None
+

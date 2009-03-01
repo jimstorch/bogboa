@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 
 from driver.log import THE_LOG
+from driver.config import IDLE_TIMEOUT
 from mudlib import shared
 from mudlib.commands.speech import broadcast
 
@@ -40,13 +41,13 @@ def kill_idle_clients():
     """
 
     for client in shared.LOBBY_LIST:
-        if client.conn.idle() > 600:
+        if client.conn.idle() > IDLE_TIMEOUT:
             THE_LOG.add('Kicking idle lobby client from %s' %  
                 client.conn.addrport())
             client.deactivate()
             
     for client in shared.PLAY_LIST:
-        if client.conn.idle() > 600:
+        if client.conn.idle() > IDLE_TIMEOUT:
             THE_LOG.add('Kicking idle gameplay client %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()

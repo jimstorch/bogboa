@@ -15,7 +15,10 @@ def broadcast(message):
 
     """Send a message to everyone online."""
 
-    for player in shared.PLAY_LIST:
+    for client in shared.PLAY_LIST:
+        client.send(message)
+
+    for player in shared.LOBBY_LIST:
         player.send(message)
 
 

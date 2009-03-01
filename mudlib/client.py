@@ -61,7 +61,7 @@ class Client(object):
             verb, args = self._verbing(cmd)
             ## Did we get a verb and it is authozied?
             if verb and verb in self.abilities:
-                print cmd
+                #print cmd
                 #self.send('You want to %s.\n' % verb)
                 self.verb_args = args
                 handler = VERB_HANDLER[verb]

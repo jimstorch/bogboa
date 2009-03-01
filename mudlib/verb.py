@@ -78,6 +78,7 @@ COMMAND_LIST = (
     (('summon',), wizard.summon),
     (('teleport', 'port'), wizard.teleport),
     (('zap',), wizard.zap),
+    (('shutdown',), wizard.shutdown),
 
     ## Silly
 #    (('verbose',), silly.verbose),
