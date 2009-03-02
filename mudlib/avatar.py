@@ -12,17 +12,59 @@ class Avatar(object):
         ## Identity
         self.client = None
         self.uuid = None
-        self.name = None
+        self.name = 'Guest'
         self.alias = None
         self.race = None
         self.gender = None
-        self.sect = None
+        self.guild = None
         self.level = None
+
+        self.room = None                ## Current location of the player
+        self.target = None              ## Player's hostile target
+        self.btarget = None             ## Player's beneficial target
+        self.ctarget = None             ## Player's conversational target
+        self.abilities = set()          ## Commands usuable by client
+
         self.skill = {}
         self.ability = {}
         self.flag = {}          # Flags are persistent variables
         self.token = {}         # Tokens are non persistent variables
 
+
+
+    #----------------------------------------------------------------------Send
+
+    def send(self, msg):
+        if self.client:
+            self.client.send(msg)
+
+    #-----------------------------------------------------------Grant Abilities
+
+    def grant_ability(self, ability_name):
+        """Authorize player to use an ability and tell them."""
+        if ability_name not in self.abilities:
+            self.abilities.add(ability_name)
+            self.send('\nYou receive a new ability: %s' % ability_name)
+        else:
+            self.send("\nOddness -- attempt to re-grant ability '%s'." %
+                ability_name)
+
+    #------------------------------------------------------Grant Ability Silent
+
+    def grant_ability_silent(self, ability_name):
+        """Silently authorize a player to use an ability."""
+        self.abilities.add(ability_name)        
+
+    #-----------------------------------------------------------Clear Abilities
+
+    def clear_abilities(self):
+        """Remove all abilities from player."""
+        self.abilities.clear()
+
+    #---------------------------------------------------------------Has Ability
+
+    def has_ability(self, ability_name):
+        return ability_name in self.abilities
 
     #---------------------------------------------------------------Adj Faction
 
@@ -90,15 +132,7 @@ class Avatar(object):
     def give_item(self, item_uuid):
         pass
 
-    #-------------------------------------------------------------Grant Ability
 
-    def grant_ability(self, ability_uuid):
-        pass
-
-    #---------------------------------------------------------------Has Ability
-
-    def has_ability(self, ability_name):
-        pass
 
     #-----------------------------------------------------------------Has Money
 
