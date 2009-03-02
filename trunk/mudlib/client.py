@@ -7,6 +7,7 @@
 # connection --> client <-- avatar
 
 #from lib.stringsub import StringSub
+from mudlib.avatar import Avatar
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
@@ -19,34 +20,14 @@ class Client(object):
 
         self.conn = None                ## Network connection 
         self.active = False             ## Delete during housekeeping?
-        self.avatar = None              ## Player's character in the world
+        self.avatar = Avatar()          ## Player's character in the world
+        self.avatar.client = self
         self.verb_args = None           ## arguments for the verb handlers
-        self.room = None                ## Current location of the player
-        self.target = None              ## Player's hostile target
-        self.btarget = None             ## Player's beneficial target
-        self.ctarget = None             ## Player's conversational target
-        self.abilities = set()          ## Commands usuable by client
+
 
         ## Dictionary-like object used for string substitutions
         #self.stringsub = StringSub(self)    
 
-
-    #-----------------------------------------------------------Grant Abilities
-
-    def grant_ability(self, ability_name):
-        """Authorize player to use an ability."""
-        if ability_name not in self.abilities:
-            self.abilities.add(ability_name)
-            self.send('\nYou receive a new ability: %s' % ability_name)
-        else:
-            self.send("\nOddness -- attempt to re-grant ability '%s'." %
-                ability_name)
-
-    #-----------------------------------------------------------Clear Abilities
-
-    def clear_abilities(self):
-        """Remove all abilities from player."""
-        self.abilities.clear()
 
     #--------------------------------------------------------------------Inform
 
@@ -61,8 +42,6 @@ class Client(object):
             verb, args = self._verbing(cmd)
             ## Did we get a verb and it is authozied?
             if verb and verb in self.abilities:
-                #print cmd
-                #self.send('You want to %s.\n' % verb)
                 self.verb_args = args
                 handler = VERB_HANDLER[verb]
                 handler(self)
