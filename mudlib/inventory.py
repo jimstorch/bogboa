@@ -4,15 +4,14 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-
 ## Each container is a dictionary with the item uuid as key and the
 ## item quantity as value. 
 
-## knapsack     = consumables and reagents
+## kit          = consumables and reagents
 ## satchel      = quest items 
-## tradekit     = tradeskill items
+##           = tradeskill items
 ## backpack     = everything else
-
+## bank         = anything
 
 ## Equipt items are a dictionary of slot names and the uuid of the item
 ## in that slot, or None for empty slots
@@ -22,6 +21,15 @@
 ## head, face, neck, chest, arms, wrists, hands, legs, feet
 ## ring1, ring2, ear1, ear2
 ## primary_hand, off_hand
+
+
+
+def stow(inventory, item):
+    
+    pass
+
+
+
 
 #-------------------------------------------------------------------------Count
 
