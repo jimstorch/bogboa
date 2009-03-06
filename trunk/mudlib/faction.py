@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import FACTION
+from mudlib.shared import FACTIONS
 from driver.log import THE_LOG
 
 #------------------------------------------------------------------------Gender
@@ -93,12 +93,12 @@ def register_faction(faction):
     Given a configured faction, register it with the shared FACTION dictionary.
     """
 
-    if faction.uuid in FACTION:
+    if faction.uuid in FACTIONS:
         THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
             "faction '%s' from module '%s'."  %  (
             faction.uuid, faction.name, faction.module) )
         sys.exit(1)
     else:
-        FACTION[faction.uuid] = faction
+        FACTIONS[faction.uuid] = faction
 
 

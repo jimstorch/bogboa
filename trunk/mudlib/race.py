@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import RACE
+from mudlib.shared import RACES
 
 
 #--------------------------------------------------------------------------Race
@@ -32,13 +32,13 @@ def register_race(race):
     Given a configured race, register it with the shared race dictionary.
     """
 
-    if race.uuid in RACE:
+    if race.uuid in RACES:
         print ( "ERROR! Duplicate UUID (%s) found while registering "
             "race '%s' from module '%s'."  %  (
             race.uuid, race.name, race.module) )
         sys.exit(1)
     else:
-        RACE[race.uuid] = race
+        RACES[race.uuid] = race
 
 
 #----------------------------------------------------------------Configure race

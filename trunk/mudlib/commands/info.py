@@ -4,7 +4,7 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-from mudlib.shared import HELP
+from mudlib.shared import HELPS
 
 #--------------------------------------------------------------------------Look
 
@@ -24,13 +24,13 @@ def help(client):
     if client.verb_args:
 
         topic = client.verb_args[0].lower()
-        if topic in HELP:
-            client.send(HELP[topic].text)
+        if topic in HELPS:
+            client.send(HELPS[topic].text)
         else:
             client.send("Help topic not found.")
 
     else:
-        client.send(HELP['help'].text)
+        client.send(HELPS['help'].text)
     
 
 #-------------------------------------------------------------------------Score

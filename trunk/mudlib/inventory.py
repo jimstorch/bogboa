@@ -25,6 +25,9 @@
 ##  waist, legs, feet
 ##  primary_hand, off_hand
 
+
+from mudlib.shared import ITEMS
+
 MAX_STACK = 1000
 
 #---------------------------------------------------------------------Container
@@ -36,11 +39,40 @@ class Container(object):
         self.category = category
         self.size = size
         self.contents = {}
+        self.encumbrance = 0
+
+    #----------------------------------------------------------------------Show
+
+    def peruse(self, item_uuid=None):
+        pass
+
+    #----------------------------------------------------------------------Stow
+
+    def stow(self, item_uuid, count=1):
+        """Add one or more of the same items to a container."""
+        current = self.contents.get(item_uuid, 0)
+        self.contents[item_uuid] = current + count
+        weight = ITEMS[item_uuid].weight * count
+        self.ecumbrance += weight
+
+    #--------------------------------------------------------------------Remove
+
+    def remove(self, item_uuid, count=1)
+        """Withdraw one or more of the same items from a container.""" 
+        current = self.contents.get(item_uuid, 0)
+        if count < current:
+            self.contents[item_uuid] = current - count
+            weight = ITEMS[item_uuid].weight * count
+            self.ecumbrance -= weight
+
+        else:
+            print("Oddness -- attempt to remove more items than exist in bag")
 
     #------------------------------------------------------------------Can Stow
 
-    def can_stow(self, item):
+    def can_stow(self, item_uuid):
         """Boolean test whether item can go into this container."""        
+        item = ITEMS[item_uuid]
         if self.category = 'any' or item.category == self.category:
             return True
         else:
@@ -48,38 +80,16 @@ class Container(object):
 
     #------------------------------------------------------------------Too Many
 
-    def too_many(self, item, count=1):
+    def too_many(self, item_uuid, count=1):
         """Boolean test whether too many of this item already held."""
-        return ( self.count_item(item) + count ) >  MAX_STACK
+        return ( self.count_item(item_uuid) + count ) >  MAX_STACK
            
     #----------------------------------------------------------------Count Item
 
-    def count_item(self, item, count=1):
+    def count_item(self, item_uuid, count=1):
         """Returns the number of a given item in a bag."""
-        return self.contents.get(item,0)
+        return self.contents.get(item_uuid, 0)
 
-    #----------------------------------------------------------------------Stow
-
-    def stow(self, item, count=1):
-        """Add one or more of the same items to a container."""
-        current = self.contents.get(item, 0)
-        self.contents[item] = current + count
-
-    #--------------------------------------------------------------------Remove
-
-    def remove(self, item, count=1)
-        """Withdraw one or more of the same items from a container.""" 
-        current = self.contents.get(item, 0)
-        if count < current:
-            self.contents[item] = current - count
-
-        else:
-            print("Oddness -- attempt to remove more items than exist in bag")
-
-    #----------------------------------------------------------------------Show
-
-    def show(self):
-        pass
 
 
 #---------------------------------------------------------------------Equipment
@@ -87,7 +97,16 @@ class Container(object):
 class Equipment(object):
 
     def __init__(self):
-                
+        self.encumbrance = 0                
+
+    def inspect(self, item_uuid=None):
+        pass
+    
+    def wear(self, item_uuid):
+        pass
+
+    def remove(self, item_uuid):
+        pass
 
 
 
@@ -96,6 +115,15 @@ class Equipment(object):
 class Bank(object):
     
     def __init__(self):
+        pass
+
+    def inquire(self, item_uuid=None):
+        pass
+
+    def deposit(self, item_uuid, count=1):
+        pass
+
+    def withdraw(self, item_uuid, count=1):
         pass
 
 

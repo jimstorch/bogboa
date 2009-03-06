@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import GUILD
+from mudlib.shared import GUILDS
 from driver.log import THE_LOG
 
 #-------------------------------------------------------------------------Guild
@@ -87,10 +87,10 @@ def register_guild(guild):
     Given a configured guild, register it with the shared guild dictionary.
     """
 
-    if guild.uuid in GUILD:
+    if guild.uuid in GUILDS:
         THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
             "guild '%s' from module '%s'."  %  (
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        GUILD[guild.uuid] = guild    
+        GUILDS[guild.uuid] = guild    
