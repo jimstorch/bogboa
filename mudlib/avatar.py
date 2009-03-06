@@ -27,7 +27,7 @@ class Avatar(object):
         self.backpack = None
         self.bank = None
 
-        ## Current
+        ## Details
         self.room = None                ## Current location of the player
         self.target = None              ## Player's hostile target
         self.btarget = None             ## Player's beneficial target

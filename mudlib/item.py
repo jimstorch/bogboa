@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import ITEM
+from mudlib.shared import ITEMS
 from driver.log import THE_LOG
 
 #--------------------------------------------------------------------------Item
@@ -18,6 +18,7 @@ class Item(object):
         self.uuid = None
         self.name = None
         self.module = None
+        self.weught = 0
     
     #-----------------------------------------------------------------On Attack
 
@@ -168,15 +169,15 @@ def configure_item(cfg):
     else:
         item.desc = None
 
-    if 'sell' in cfg:
-        item.sell = cfg.pop('sell')
+    if 'weight' in cfg:
+        item.weight = cfg.pop('weight')
     else:
-        item.sell = None        
+        item.weight = 0
 
-    if 'buy' in cfg:
-         item.buy = cfg.pop('buy')     
+    if 'value' in cfg:
+        item.value = cfg.pop('value')
     else:
-        item.buy = None
+        item.value = 0        
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
@@ -194,10 +195,10 @@ def register_item(item):
     Given a configured item, register it with the shared ITEM dictionary.
     """
 
-    if item.uuid in ITEM:
+    if item.uuid in ITEMS:
         THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering item"
             " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:
-        ITEM[item.uuid] = item
+        ITEMS[item.uuid] = item
 

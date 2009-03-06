@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import ROOM
+from mudlib.shared import ROOMS
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
@@ -225,11 +225,11 @@ def register_room(room):
     Given a configured room, register it with the shared ROOM dictionary.
     """
 
-    if room.uuid in ROOM:
+    if room.uuid in ROOMS:
         THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
             "room '%s' in module '%s'."  %
             (room.uuid, room.name, room.module))
         sys.exit(1)
     else:
-        ROOM[room.uuid] = room
+        ROOMS[room.uuid] = room
 

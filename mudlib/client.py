@@ -194,7 +194,7 @@ class Client(object):
 
     #-----------------------------------------------------------------Give Item
 
-    def give_item(self, item_uuid):
+    def give_item(self, item_uuid, count=1):
         pass
 
     #-----------------------------------------------------------------Has Money
@@ -219,7 +219,7 @@ class Client(object):
 
     #------------------------------------------------------------------Has Item
 
-    def has_item(self, item_uuid):
+    def has_item(self, item_uuid, count=1):
         pass
 
     #------------------------------------------------------------------Has Item

@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import GENDER
+from mudlib.shared import GENDERS
 
 #------------------------------------------------------------------------Gender
 
@@ -99,10 +99,10 @@ def register_gender(gender):
     Given a configured gender, register it with the shared gender dictionary.
     """
 
-    if gender.uuid in GENDER:
+    if gender.uuid in GENDERS:
         print ( "ERROR! Duplicate UUID (%s) found while registering "
             "gender '%s' from module '%s'."  %  (
             gender.uuid, gender.name, gender.module) )
         sys.exit(1)
     else:
-        GENDER[gender.uuid] = gender         
+        GENDERS[gender.uuid] = gender         

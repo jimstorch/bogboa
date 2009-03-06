@@ -6,7 +6,7 @@
 
 import sys
 
-from mudlib.shared import HELP
+from mudlib.shared import HELPS
 from driver.log import THE_LOG
 
 
@@ -84,21 +84,21 @@ def register_help(help):
     Given a configured help, register it with the shared HELP dictionary.
     """
 
-    if help.name in HELP:
+    if help.name in HELPS:
         THE_LOG.add("ERROR! Duplicate name found while registering "
             "help text '%s' in module '%s'."  %  (help.name, help.module))
         sys.exit(1)
     else:
-        HELP[help.name] = help
+        HELPS[help.name] = help
 
     ## Also map any aliases for this text
     if help.aliases:
         for alias in help.aliases:
-            if alias in HELP:
+            if alias in HELPS:
                 THE_LOG.add("ERROR! Duplicate alias found while registering "
                     "help text '%s' in module '%s'."  %  
                     (help.name, help.module))
                 sys.exit(1)        
             else:
-                HELP[alias] = help
+                HELPS[alias] = help
 
