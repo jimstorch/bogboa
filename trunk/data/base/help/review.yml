@@ -1,0 +1,12 @@
+#
+#   File:   review.yml
+#
+
+name: review
+module: base
+text: |
+    The 'review' command is used during character creation to display
+    the current selections.  It is entered as a single command with no
+    arguments:
+
+        review

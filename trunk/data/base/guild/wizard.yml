@@ -1,21 +1,27 @@
-##-----------------------------------------------------------------------------
-##  File:       wizard.yaml
-##-----------------------------------------------------------------------------
-uuid: cf494c42-32f3-42d1-8e42-13186be14fe7
+##
+##  File:   wizard.yml
+##
+
 name: wizard
+desc: Mysterious Shaper of Worlds
 
-desc:
-    mysterious shaper of worlds
+##
+##  Skill modifiers for this guild 
+##
 
-## Skill balance for this guild
-#skills:
-#    - wizardry:     1.00
+skills:
+    - wizardry:     1.00
     ## Enforce the prime-directive
-#    - healing:      0.00
-#    - melee:        0.00
+    - healing:      0.00
+    - melee:        0.00
     ## Make them un-killable
-#    - armor:        1000.0
-#    - heartiness:   1000.0
+    - armor:        1000.0
+    - heartiness:   1000.0
 
-## Abilities automatically granted to this guild
-#abilties:
+##
+##   Guild specific abilities 
+##   
+
+abilties:
+
+

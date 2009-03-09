@@ -79,7 +79,6 @@ class PortAuthority(object):
             if conn.send_pending:
                 send_list.append(conn.fileno)
 
-
         ## Get active socket file descriptors from select.select()
         try:
             rlist, slist, elist = select.select(recv_list, send_list, [], 0)
@@ -115,15 +114,10 @@ class PortAuthority(object):
                 self.fdconn[conn.fileno] = conn
 
                 ## Whatever we do with new connections goes here:
-   
                 lobby_connect(conn)
-
-
-                #shared.LOBBY_LIST.append(WelcomeMode(conn))
 
             else:
                 ## Call the connection's recieve method
-                #print "calling conn %d _recv" % sockfd            
                 self.fdconn[sockfd].socket_recv()
          
         ## Process sockets with data to send

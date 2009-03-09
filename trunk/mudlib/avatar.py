@@ -9,13 +9,16 @@ class Avatar(object):
 
     def __init__(self):
 
+        ## Creation
+        self.name = ''
+        self.password = ''
+        self.race = ''
+        self.gender = ''
+        self.guild = ''
+
         ## Identity
         self.uuid = None
-        self.name = 'Guest'
         self.alias = None
-        self.race = None
-        self.gender = None
-        self.guild = None
         self.level = 1
         self.xp = 0
 

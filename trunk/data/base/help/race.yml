@@ -1,15 +1,24 @@
-uuid: 61676ea6-bd48-4bab-9292-4bb5ae56b1e1
+#
+#   File:   race.yml
+#
+
 name: race
 aliases: [ races, ]
-module: test module
+module: base
 
 text: |
+    The 'race' command is used during the character creation process to specify
+    a race for your character.  The format is the word 'race' follow by a space
+    and then the name of a playable race.
 
-    Races
-    =====
+        race human
 
-    The following races are available for player characters.  You may find
-    more information by entering 'help' followed by the race name.
+    Prior to entering the 'done' command, you may select another race by re-
+    entering the 'race' command.  Depending on race configuration, selecting a
+    race may reset your guild or gender settings.
 
-    [ humans ] desc
-    [ elves  ] desc
+    Try the following help commands for more information:
+    
+        help human
+        help elf
+

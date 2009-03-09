@@ -31,16 +31,34 @@ class Client(object):
     def send(self, msg):
         self.conn.send(msg)
 
-    #-----------------------------------------------------------Grant Abilities
+    #-------------------------------------------------------------Grant Ability
 
     def grant_ability(self, ability_name):
         """Authorize player to use an ability and tell them."""
         if ability_name not in self.avatar.abilities:
             self.avatar.abilities.add(ability_name)
-            self.send('\nYou receive a new ability: %s' % ability_name)
+            self.send('\nYou receive a new command: %s' % ability_name)
         else:
             self.send("\nOddness -- attempt to re-grant ability '%s'." %
                 ability_name)
+
+    #------------------------------------------------------------Revoke Ability
+
+    def revoke_ability(self, ability_name):
+        """De-authorize player to use an ability and tell them."""
+        if ability_name in self.avatar.abilities:
+            self.avatar.abilities.remove(ability_name)
+            self.send("\nYou've lost a command: %s" % ability_name)
+        else:
+            self.send("\nOddness -- attempt to revoke non-ability '%s'." %
+                ability_name)
+
+    #-----------------------------------------------------Revoke Ability Silent
+
+    def revoke_ability_silent(self, ability_name):
+        """Silently de-authorize a player to use an ability."""
+        if ability_name in self.avatar.abilities:
+            self.avatar.abilities.remove(ability_name)  
 
     #------------------------------------------------------Grant Ability Silent
 
@@ -255,11 +273,6 @@ class Client(object):
     #-------------------------------------------------------------------On Slay
 
     def on_slay(self, mob):
-        pass
-
-    #------------------------------------------------------------Revoke Ability
-
-    def revoke_ability(self, ability_uuid):
         pass
 
     #----------------------------------------------------------------------Save

@@ -1,20 +1,24 @@
-##-----------------------------------------------------------------------------
-##  File:       priest.yaml
-##-----------------------------------------------------------------------------
-uuid: 0df125e8-6568-4816-88c8-ebf87877aa37
+##
+##  File:   priest.yml
+##
+
 name: priest
+desc: heavy healing with moderate melee ability
 
-desc:
-    heavy healing with moderate melee ability
+##
+##  Guild skill modifiers
+##
 
-## Skill balance for this sect
-#skills:
-#    - healing:      1.00
-#    - melee:        0.75
-#    - armor:        0.75
-#    - heartiness:   0.85
+skills:
+    - healing:      1.00
+    - melee:        0.75
+    - armor:        0.75
+    - heartiness:   0.85
 
-## Abilities automatically granted to this guild
-#abilties:
+##
+##  Guild specific abilities
+##
+
+abilties:
 
 

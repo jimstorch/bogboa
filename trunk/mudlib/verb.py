@@ -4,6 +4,8 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
+
+from mudlib.commands import new_char
 from mudlib.commands import movement
 from mudlib.commands import speech
 from mudlib.commands import info
@@ -24,6 +26,17 @@ VERB_HANDLER = {}
  
 
 COMMAND_LIST = (
+
+    ## New Char
+
+    (('create',), new_char.create),
+    (('name',), new_char.name),
+    (('gender',), new_char.gender),
+    (('race',), new_char.race),
+    (('guild',), new_char.guild),
+    (('password',), new_char.password),
+    (('review',), new_char.review),
+    (('done',), new_char.done),
 
     ## Movement
 

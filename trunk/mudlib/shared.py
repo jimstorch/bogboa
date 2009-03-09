@@ -25,19 +25,18 @@ PLAY_LIST = []
 
 #--[ Reference Objects ]-------------------------------------------------------
 
-GENDERS = {}
-GUILDS = {}
-HELPS = {}
-ITEMS = {}
-NPCs = {}
-RACES = {}
+GENDERS = {}        ## index is gender name
+GUILDS = {}         ## index is guild name
+HELPS = {}          ## index is help name
+RACES = {}          ## index is race name 
+ITEMS = {}          ## index is item UUID
+NPCs = {}           ## index is npc UUID
 
 
 #--[ Objects in the game world ]-----------------------------------------------
 
-
-OBJECTS = {}
-PLAYERS = {}
-SPAWNS = {}
-ROOMS = {}
+OBJECTS = {}        ## index is object UUID
+PLAYERS = {}        ## index is player UUID
+SPAWNS = {}         ## index is spawn UUID
+ROOMS = {}          ## index is room UUID
 

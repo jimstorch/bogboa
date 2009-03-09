@@ -5,10 +5,9 @@ desc:
 
 on_enter: |
 
-    #mob.grant_ability('race')
-    #mob.grant_ability('guild')
-    #mob.grant_ability('name')
-    #mob.grant_ability('password')
-    #mob.grant_ability('gender')
-
+    mob.grant_ability('name')
+    mob.grant_ability('gender')
+    mob.grant_ability('race')
+    mob.grant_ability('guild')
+    mob.grant_ability('password')
     mob.prompt()

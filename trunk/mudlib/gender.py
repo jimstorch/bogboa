@@ -14,7 +14,7 @@ class Gender(object):
 
     def __init__(self):
     
-        self.uuid = None
+#        self.uuid = None
         self.name = None
         self.module = None
         
@@ -23,7 +23,7 @@ class Gender(object):
         self.possessive_noun = None
         self.noun_possessive = None
         self.reflexive = None
-
+        self.kinship = None
 
 #--------------------------------------------------------------Configure Gender
 
@@ -42,11 +42,11 @@ def configure_gender(cfg):
         print "ERROR! Missing name in gender config."
         sys.exit(1)
 
-    if 'uuid' in cfg:
-        gender.uuid = cfg.pop('uuid')
-    else:
-        print "ERROR! Missing UUID in config for gender '%s'." % gender.name
-        sys.exit(1)
+#    if 'uuid' in cfg:
+#        gender.uuid = cfg.pop('uuid')
+#    else:
+#        print "ERROR! Missing UUID in config for gender '%s'." % gender.name
+#        sys.exit(1)
 
     if 'desc' in cfg:
         gender.desc = cfg.pop('desc')
@@ -83,6 +83,11 @@ def configure_gender(cfg):
     else:
         gender.reflexive = None
 
+    if 'kinship' in cfg:
+        gender.kinship = cfg.pop('kinship')
+    else:
+        gender.kinship = None
+
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
         print ( "WARNING! Unrecognized key(s) in config for gender '%s': %s" 
@@ -99,10 +104,10 @@ def register_gender(gender):
     Given a configured gender, register it with the shared gender dictionary.
     """
 
-    if gender.uuid in GENDERS:
-        print ( "ERROR! Duplicate UUID (%s) found while registering "
+    if gender.name in GENDERS:
+        print ( "ERROR! Duplicate name (%s) found while registering "
             "gender '%s' from module '%s'."  %  (
             gender.uuid, gender.name, gender.module) )
         sys.exit(1)
     else:
-        GENDERS[gender.uuid] = gender         
+        GENDERS[gender.name] = gender         

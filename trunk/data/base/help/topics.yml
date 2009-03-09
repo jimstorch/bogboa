@@ -1,20 +1,12 @@
-uuid: 57ffe217-7a6c-4f48-838b-83c8a6950819
 name: topics
 aliases: [ list, topic, more ]
 module: test module
 
 text: |
-    
-    Help Topics 
-    ===========
-
     To read a topic, type 'help' followed by the topic name.  Many topics
     will list additional help entries with deeper detail. 
 
-    [ topics ] This text. 
-    [ guild  ] Overview of the guilds (classes) available to play.
-    [ race   ] Overview of the different playable races.
+        topics      This text. 
+        guild       Overview of the guilds (classes) available to play.
+        race        Overview of the playable races.
  
-    
-
-    
