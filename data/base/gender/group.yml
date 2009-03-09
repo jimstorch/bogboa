@@ -1,10 +1,13 @@
-## group.yaml
-uuid: 2abfc59a-2d6d-48fa-96cf-f2bf26097faf
-name: group
+#
+#   file:   group.yaml
+#
 
+#uuid: 2abfc59a-2d6d-48fa-96cf-f2bf26097faf
+name: group
 nominative: they
 objective: them
 possessive_noun: their
 noun_possessive: theirs
 reflexive: themselves
+kinship: Friends
 

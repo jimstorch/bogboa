@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-uuid: 23208cc9-266c-443a-af3c-852a0fcc88bd
+#
+#   File:   help.yml
+#
+
 name: help
-#aliases: [ info ]
-module: test module
+module: base
 
 text: |
 
-    Help
-    ====
-
     Greetings, this is the help system. Try 'help topics' for a list of 
-    available help texts.
+    available help texts.  You may also use a '?' instead of typing the word
+    'help'.

@@ -16,7 +16,7 @@ class Help(object):
 
     def __init__(self):
 
-        self.uuid = None
+#        self.uuid = None
         self.module = None
         self.name = None
         self.aliases = None
@@ -47,11 +47,11 @@ def configure_help(cfg):
     if 'aliases' in cfg:
         help.aliases = cfg.pop('aliases')
 
-    if 'uuid' in cfg:
-        help.uuid = cfg.pop('uuid')
-    else:
-        THE_LOG.add("ERROR! Missing UUID in config for help '%s'." % help.name)
-        sys.exit(1)
+#    if 'uuid' in cfg:
+#        help.uuid = cfg.pop('uuid')
+#    else:
+#        THE_LOG.add("ERROR! Missing UUID in config for help '%s'." % help.name)
+#        sys.exit(1)
 
     if 'text' in cfg:
         help.text = cfg.pop('text')

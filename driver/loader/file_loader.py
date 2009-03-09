@@ -49,6 +49,18 @@ def load_module(module):
         room = configure_room(cfg)
         register_room(room)
 
+    ## Load Genders
+    from mudlib.gender import configure_gender, register_gender
+    for cfg in gender_cfg_iter(module):
+        gender = configure_gender(cfg)
+        register_gender(gender)
+
+    ## Load Races
+    from mudlib.race import configure_race, register_race
+    for cfg in race_cfg_iter(module):
+        race = configure_race(cfg)
+        register_race(race)
+
     ## Load Guilds
     from mudlib.guild import configure_guild, register_guild
     for cfg in guild_cfg_iter(module):

@@ -1,18 +1,19 @@
-##-----------------------------------------------------------------------------
-##  File:       human.yaml
-##-----------------------------------------------------------------------------
-uuid: 974b29fd-be90-4d05-8ef0-d20887b313f6
+##
+##  File:   human.yml
+##
+
 name: human
-desc: the race of man
+desc: The race of man.
+   
+##
+##  Racial Skill Modifiers
+##
 
-## Base stats for this race
-stats:
+skills:
 
-## Skill bonuses automatically granted to members of this race
-skill_bonuses:
-    - heartiness:       0.00
+##
+##  Racial Abilities
+##
 
-
-## Abilities automatically granted to this race
 abilities:
-    
+

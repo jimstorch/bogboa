@@ -1,0 +1,18 @@
+#
+#   File:   gender.yml
+#
+
+name: gender
+aliases: [genders, ]
+module: base
+
+text: |
+    The 'gender' command is used during character creation to specify the
+    gender for your character.  The format is the word 'gender' follow by a
+    space and then either the word 'male' or the word 'female':
+        
+        gender male
+
+    You may change your selection by re-entering the 'gender' command at any
+    time prior to using the 'done' command. Depending on gender restrictions,
+    selecting a gender may clear your race or guild selections.

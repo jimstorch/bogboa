@@ -1,0 +1,35 @@
+#
+#   File:   name.yml
+#
+
+name: name
+aliases: [names, ]
+module: base
+
+text: |
+    The 'name' command is used during the character creation process to specify
+    the name you would like for your character.  The format is the word 'name'
+    followed by a space and the name your like (as a single word):
+
+        name Shadowcleave
+
+    Prior to saving your preferences with the 'done' command, you may change
+    your choice by using the 'name' command again.
+
+    Use proper capitalization as you wish it to appear; 'McCloud' vs 'mccloud'.
+
+    Naming Policy:
+    
+    * Should fit in a fantasy setting.
+    * Must not be derived from trademarks, celebrities, or famous fictonal
+      characters.
+    * Must not imply rank, title, or authority.
+    * Must not mimic a game NPC or another player.
+    * Must not be derived from lewd, profane, or politically or emotionally
+      charged terms.
+    * Must not reflect intolerance towards culture, race, sex, or sexual
+      orientation. 
+
+    Do not interpret the computer's acceptance of your name as an indication
+    that it passes administrative review.  In other words, if you pick an 
+    idiotic handle, don't be surprised to find your character deleted.      

@@ -15,7 +15,7 @@ class Guild(object):
 
     def __init__(self):
    
-        self.uuid = None
+#        self.uuid = None
         self.name = None
         self.module = None
 
@@ -53,12 +53,12 @@ def configure_guild(cfg):
         THE_LOG.add("ERROR! Missing name in guild config.")
         sys.exit(1)
 
-    if 'uuid' in cfg:
-        guild.uuid = cfg.pop('uuid')
-    else:
-        THE_LOG.add("ERROR! Missing UUID in config for guild '%s'." 
-            % guild.name)
-        sys.exit(1)
+#    if 'uuid' in cfg:
+#        guild.uuid = cfg.pop('uuid')
+#    else:
+#        THE_LOG.add("ERROR! Missing UUID in config for guild '%s'." 
+#            % guild.name)
+#        sys.exit(1)
 
     if 'desc' in cfg:
         guild.desc = cfg.pop('desc')
@@ -87,10 +87,10 @@ def register_guild(guild):
     Given a configured guild, register it with the shared guild dictionary.
     """
 
-    if guild.uuid in GUILDS:
-        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+    if guild.name in GUILDS:
+        THE_LOG.add("ERROR! Duplicate name (%s) found while registering "
             "guild '%s' from module '%s'."  %  (
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        GUILDS[guild.uuid] = guild    
+        GUILDS[guild.name] = guild    

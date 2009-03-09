@@ -7,6 +7,14 @@
 import math
 import random
 
+# 10 points of Deterity = 1% bonus to hit.
+# 10 points of Agility = 1% bonus to dodge.
+# 10 points of Strength = 1% bonus to damage.
+
+# max_skill = ( level * 10 ) * ( 1.0 + class_mod + race_mod )
+# proficiency
+# adeptness
+
 
 #-------------------------------------------------------------------------Skill
 
@@ -18,7 +26,6 @@ class Skill(object):
         self.name = None
 
 
-    
 
 
 

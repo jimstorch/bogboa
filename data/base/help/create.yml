@@ -1,0 +1,32 @@
+#
+#   File: create.yml
+#
+
+name: create
+aliases: [creating, new]
+module: base
+
+text: |
+    Creating a new character is a simple matter of specifying six values;
+    name, gender, race, guild, and password. You select each one using a 
+    command followed by a single value.  For example, to set your name to 
+    'Koodos', simply type:
+
+        name Shadowcleave
+
+    You can change any of these settings by repeating the command with a new
+    value.  Once you are happy with your selections, you can save with the
+    'done' command and go play your new character. Don't lose your character
+    name or password or else you wont be able to log back in later.  Passwords
+    are case sensitive.
+
+    Try the following topics for more information:
+
+        help name
+        help gender
+        help race
+        help guild
+        help password
+        help review
+        help done
+
