@@ -7,7 +7,7 @@
 import sys
 
 from mudlib.shared import RACES
-
+from driver.log import THE_LOG
 
 #--------------------------------------------------------------------------Race
 
@@ -60,7 +60,7 @@ def configure_race(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        print ( "WARNING! Unrecognized key(s) in config for race '%s': %s" 
+        THE_LOG.add( "WARNING! Unrecognized key(s) in config for race '%s': %s" 
             % ( race.name, cfg.keys()) ) 
 
     return race

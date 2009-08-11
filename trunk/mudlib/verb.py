@@ -62,6 +62,7 @@ COMMAND_LIST = (
     ## Information 
 
     (('help', '?', 'info'), info.help),
+    (('commands','command', 'cmds', '??'), info.commands),
     (('score', 'played','stats'), info.score),
     (('time', 'date', 'clock'), info.time),
     (('inventory', 'i', 'inven'), info.inventory),

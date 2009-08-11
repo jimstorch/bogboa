@@ -17,6 +17,7 @@ on_enter: |
     mob.grant_ability('help')
     mob.grant_ability('quit')
     mob.grant_ability('shutdown')
+    mob.grant_ability('commands')
 
     mob.prompt()
 

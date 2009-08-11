@@ -6,6 +6,19 @@
 
 from mudlib.shared import HELPS
 
+
+#----------------------------------------------------------------------Commands
+
+def commands(client):
+
+    """List the player's granted command set."""
+   
+
+    clist = list(client.avatar.abilities)
+    clist.sort()
+    cmds = ', '.join(clist)
+    client.send('Your current commands are:\n%s' % cmds)
+
 #--------------------------------------------------------------------------Look
 
 def look(client):
