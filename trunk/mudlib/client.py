@@ -4,10 +4,9 @@
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
-# connection --> client <-- avatar
+# connection --> client <-- body
 
-#from lib.stringsub import StringSub
-from mudlib.avatar import Avatar
+from mudlib.body import Body
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
@@ -20,8 +19,17 @@ class Client(object):
 
         self.conn = None                ## Network connection 
         self.active = False             ## Delete during housekeeping?
-        self.avatar = Avatar()          ## Player's character in the world
+
+        ## Create and cross-wire a body
+        self.body = Body()              ## Player's character in the world
+        self.body.is_player = True
+        self.body.brain = self
+
+        self.commands = set()           ## Permitted commands   
+
         self.verb_args = None           ## arguments for the verb handlers
+        
+
 
         ## Dictionary-like object used for string substitutions
         #self.stringsub = StringSub(self)    
@@ -31,52 +39,6 @@ class Client(object):
     def send(self, msg):
         self.conn.send(msg)
 
-    #-------------------------------------------------------------Grant Ability
-
-    def grant_ability(self, ability_name):
-        """Authorize player to use an ability and tell them."""
-        if ability_name not in self.avatar.abilities:
-            self.avatar.abilities.add(ability_name)
-            self.send('\nYou receive a new command: %s' % ability_name)
-        else:
-            self.send("\nOddness -- attempt to re-grant ability '%s'." %
-                ability_name)
-
-    #------------------------------------------------------------Revoke Ability
-
-    def revoke_ability(self, ability_name):
-        """De-authorize player to use an ability and tell them."""
-        if ability_name in self.avatar.abilities:
-            self.avatar.abilities.remove(ability_name)
-            self.send("\nYou've lost a command: %s" % ability_name)
-        else:
-            self.send("\nOddness -- attempt to revoke non-ability '%s'." %
-                ability_name)
-
-    #-----------------------------------------------------Revoke Ability Silent
-
-    def revoke_ability_silent(self, ability_name):
-        """Silently de-authorize a player to use an ability."""
-        if ability_name in self.avatar.abilities:
-            self.avatar.abilities.remove(ability_name)  
-
-    #------------------------------------------------------Grant Ability Silent
-
-    def grant_ability_silent(self, ability_name):
-        """Silently authorize a player to use an ability."""
-        self.avatar.abilities.add(ability_name)        
-
-    #-----------------------------------------------------------Clear Abilities
-
-    def clear_abilities(self):
-        """Remove all abilities from player."""
-        self.avatar.abilities.clear()
-
-    #---------------------------------------------------------------Has Ability
-
-    def has_ability(self, ability_name):
-        return ability_name in self.avatar.abilities
-
     #-----------------------------------------------------------Process Command
 
     def process_command(self):
@@ -84,7 +46,7 @@ class Client(object):
         if cmd:
             verb, args = self._verbing(cmd)
             ## Did we get a verb and it is authozied?
-            if verb and verb in self.avatar.abilities:
+            if verb and verb in self.commands:
                 self.verb_args = args
                 handler = VERB_HANDLER[verb]
                 handler(self)
@@ -101,8 +63,11 @@ class Client(object):
     #----------------------------------------------------------------Deactivate
 
     def deactivate(self):
+        self.body = None
+        #TODO: remember to delete from BODIES too
         self.active = False
         self.conn.active = False
+
 
     #--------------------------------------------------------------------Prompt
 
@@ -149,215 +114,50 @@ class Client(object):
         return (one_true_verb, args)    
 
 
-    #---------------------------------------------------------------Adj Faction
-
-    def adj_faction(self, faction_uuid, amount):
-        pass
-
-    #-------------------------------------------------------------Adj Hitpoints
-
-    def adj_hitpoints(self, value):
-        pass
-
-    #-----------------------------------------------------------------Adj Money
-
-    def adj_money(self, amount):
-        pass
-
-    #-----------------------------------------------------------------Adj Skill
-
-    def adj_skill(self, skill_uuid, amount):
-        pass
-
-    #--------------------------------------------------------------------Adj XP
-
-    def adj_xp(self, amount):
-        pass
-
-    #-----------------------------------------------------------------------Ban
-
-    def ban(self):
-        pass
-
-    #----------------------------------------------------------------------Bind
-
-    def bind(self, room_uuid):
-        pass
-
-    #----------------------------------------------------------------Clear Flag
-
-    def clear_flag(self, flag_uuid):
-        pass
-
-    #---------------------------------------------------------------Clear Token
-
-    def clear_token(self, token_name):
-        if token_name in self.token:
-            del self.token[token_name]
-
-    #----------------------------------------------------------------Do Ability
-
-    def do_ability(self, ability_uuid):
-        pass
-
-    #-----------------------------------------------------------Do Ability Self
-
-    def do_ability_self(self, ability_uuid):
-        pass
-
-    #-----------------------------------------------------------------Get Token
-
-    def get_token(self, token_name):
-        self.token.get(token_name, None)
-
-    #-----------------------------------------------------------------Give Item
-
-    def give_item(self, item_uuid, count=1):
-        pass
-
-    #-----------------------------------------------------------------Has Money
-
-    def has_money(self, amount):
-        pass
-
-    #-----------------------------------------------------------------Has Skill
-
-    def has_skill(self, skill_uuid, amount):
-        pass
-
-    #---------------------------------------------------------------Has Faction
-
-    def has_faction(self, faction_uuid, amount):
-        pass
-
-    #------------------------------------------------------------------Has Flag
-
-    def has_flag(self, flag_uuid):
-        pass
-
-    #------------------------------------------------------------------Has Item
-
-    def has_item(self, item_uuid, count=1):
-        pass
-
-    #------------------------------------------------------------------Has Item
-
-    def has_token(self, token_name):
-        return token_name in self.token
-
-    #----------------------------------------------------------------------Kill
-
-    def kill(self):
-        pass
-
-    #-----------------------------------------------------------------On Attack
-
-    def on_attack(self, mob):
-        pass
-
-    #------------------------------------------------------------------On Death
-
-    def on_death(self, mob):
-        pass
-
-    #----------------------------------------------------------------On Destroy
-
-    def on_destroy(self):
-        pass
-
-    #-------------------------------------------------------------------On Init
-
-    def on_init(self):
-        pass
-
-    #-------------------------------------------------------------------On Slay
-
-    def on_slay(self, mob):
-        pass
-
-    #----------------------------------------------------------------------Save
-
-    def save(self):
-        pass
-
-    #---------------------------------------------------------------Set Calling
-
-    def set_clas(self, clas_uuid):
-        pass
-
-    #----------------------------------------------------------------Set Gender
-
-    def set_gender(self, gender_uuid):
-        pass
-
-    #-------------------------------------------------------------Set Hitpoints
-
-    def set_hitpoints(self, value):
-        pass
-
-    #-----------------------------------------------------------------Set Level
-
-    def set_level(self, level):
-        pass
-
-    #------------------------------------------------------------------Set Name
-
-    def set_name(self, name):
-        pass
-
-    #------------------------------------------------------------------Set Flag
-
-    def set_flag(self, flag_uuid):
-        pass
-
-    #------------------------------------------------------------------Set Race
-
-    def set_race(self, race_uuid):
-        pass
-
-    #-----------------------------------------------------------------Set Token
-
-    def set_token(self, token_name, value):
-        self.token[token_name] = value
-
-    #----------------------------------------------------------------------Stun
-
-    def stun(self, duration):
-        pass
-
-    #-------------------------------------------------------------------Suspend
-
-    def suspend(self, days):
-        pass
-
-    #-----------------------------------------------------------------Take Item
-
-    def take_item(self, item_uuid):
-        pass
-
-    #------------------------------------------------------------------Teleport
-
-    def teleport(self, room_uuid):
-        pass
-
-    #--------------------------------------------------------------Zero Faction
-
-    def zero_faction(self, faction_uuid):
-        pass
-
-    #----------------------------------------------------------------Zero Money
-
-    def zero_money(self):
-        pass
-
-   #----------------------------------------------------------------Zero Skill
-
-    def zero_skill(self, skill_uuid):
-        pass
-
-    #-------------------------------------------------------------------Zero XP
-
-    def zero_xp(self):
-        pass
+    #-------------------------------------------------------------Grant Command
+
+    def grant_command(self, command_name):
+        """Authorize player to use an command and tell them."""
+        if command_name not in self.commands:
+            self.commands.add(command_name)
+            self.send('\nYou receive a new command: %s' % command_name)
+        else:
+            self.send("\nOddness -- attempt to re-grant command '%s'." %
+                command_name)
+
+    #------------------------------------------------------------Revoke Command
+
+    def revoke_command(self, command_name):
+        """De-authorize player to use an command and tell them."""
+        if command_name in self.commands:
+            self.commands.remove(command_name)
+            self.send("\nYou've lost a command: %s" % command_name)
+        else:
+            self.send("\nOddness -- attempt to revoke non-command '%s'." %
+                command_name)
+
+    #-----------------------------------------------------Revoke Command Silent
+
+    def revoke_command_silent(self, command_name):
+        """Silently de-authorize a player to use an command."""
+        if command_name in self.commands:
+            self.commands.remove(command_name)  
+
+    #------------------------------------------------------Grant Command Silent
+
+    def grant_command_silent(self, ability_name):
+        """Silently authorize a player to use an command."""
+        self.command.add(command_name)        
+
+    #-------------------------------------------------------------Clear Command
+
+    def clear_commands(self):
+        """Remove all command from client."""
+        self.commands.clear()
+
+    #---------------------------------------------------------------Has Command
+
+    def has_command(self, command_name):
+        return command_name in self.commands
 
 

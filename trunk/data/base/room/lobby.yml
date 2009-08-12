@@ -10,14 +10,15 @@ desc:
 
 on_enter: |
 
-    ## This is a comment
+    ## Grant the commands needed to load or create a new character
 
-    mob.grant_ability('load')
-    mob.grant_ability('create')
-    mob.grant_ability('help')
-    mob.grant_ability('quit')
-    mob.grant_ability('shutdown')
-    mob.grant_ability('commands')
-
-    mob.prompt()
-
+    if body.is_player
+        {
+        body.grant_command('load')
+        body.grant_command('create')
+        body.grant_command('help')
+        body.grant_command('quit')
+        body.grant_command('shutdown')
+        body.grant_command('commands')
+        body.prompt()
+        }

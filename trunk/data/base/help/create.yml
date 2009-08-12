@@ -16,7 +16,7 @@ text: |
 
     You can change any of these settings by repeating the command with a new
     value.  Once you are happy with your selections, you can save with the
-    'done' command and go play your new character. Don't lose your character
+    'save' command and go play your new character. Don't lose your character
     name or password or else you wont be able to log back in later.  Passwords
     are case sensitive.
 
@@ -28,5 +28,5 @@ text: |
         help guild
         help password
         help review
-        help done
+        help save
 

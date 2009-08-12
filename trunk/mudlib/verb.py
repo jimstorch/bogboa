@@ -36,7 +36,7 @@ COMMAND_LIST = (
     (('guild',), new_char.guild),
     (('password',), new_char.password),
     (('review',), new_char.review),
-    (('done',), new_char.done),
+    (('save',), new_char.save),
 
     ## Movement
 

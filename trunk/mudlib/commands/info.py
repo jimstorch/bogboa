@@ -12,9 +12,8 @@ from mudlib.shared import HELPS
 def commands(client):
 
     """List the player's granted command set."""
-   
 
-    clist = list(client.avatar.abilities)
+    clist = list(client.commands)
     clist.sort()
     cmds = ', '.join(clist)
     client.send('Your current commands are:\n%s' % cmds)
@@ -56,7 +55,7 @@ def score(client):
 
 #--------------------------------------------------------------------------Time
 
-def time(client):
+def time(body):
 
     """Fix Me"""
 
@@ -64,7 +63,7 @@ def time(client):
 
 #---------------------------------------------------------------------Inventory
 
-def inventory(client):
+def inventory(body):
 
     """Fix Me"""
 

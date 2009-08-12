@@ -24,7 +24,7 @@ class Faction(object):
 
 #---------------------------------------------------------------Cascade Faction
 
-def cascade_faction(faction, amount, player):
+def cascade_faction(faction, amount, body):
 
     """
     Process a faction event that modifys the faction and all related factions.
@@ -34,7 +34,7 @@ def cascade_faction(faction, amount, player):
 
 #-------------------------------------------------------------------Adj Faction
 
-def adj_faction(faction, amount, player):
+def adj_faction(faction, amount, body):
 
     """
     Modify a single faction, ingnoring related ones.    

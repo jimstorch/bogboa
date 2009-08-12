@@ -33,7 +33,7 @@ def lobby_connect(conn):
 
     shared.LOBBY_LIST.append(client)
     ## Fire the on_enter event
-    shared.ROOMS[lobby_uuid].on_enter(client)
+    shared.ROOMS[lobby_uuid].on_enter(client.body)
 
 
 #------------------------------------------------------------------Game Connect
