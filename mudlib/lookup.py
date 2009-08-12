@@ -46,15 +46,15 @@ from mudlib import shared
 
 #----------------------------------------------------------------------Find Mob
 
-def find_mob(index):
+def find_body(index):
 
     """Lookup a mob by index key.  Can be a player avatar or npc."""
 
-    return shared.MOBS.get(index, None)
+    return shared.BODIES.get(index, None)
 
-#----------------------------------------------------------------Next Mob Index
+#---------------------------------------------------------------Next Body Index
 
-def next_mob_index():
+def next_body_index():
     
     """Increments and returns the mob index key value."""
 

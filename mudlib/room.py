@@ -29,24 +29,25 @@ class Room(object):
 
     #------------------------------------------------------------------On Enter
 
-    def on_enter(self, mob):
+    def on_enter(self, body):
 
-        mob.send('You enter %s.\n' % self.name)
-        mob.send(self.desc + '\n')
-        mob.room = self
+        if body.is_player:
+            body.send('You enter %s.\n' % self.name)
+            body.send(self.desc + '\n')
+        body.room = self
 
         if 'on_enter' in self.scripts:
             exec self.scripts['on_enter']
 
     #-------------------------------------------------------------------On Exit
 
-    def on_exit(self, mob):
+    def on_exit(self, body):
         if 'on_exit' in self.scripts:
             exec self.scripts['on_exit'] 
 
     #-----------------------------------------------------------------On Death
 
-    def on_death(self, mob):
+    def on_death(self, body):
         if 'on_death' in self.scripts:
             exec self.scripts['on_death'] 
 
@@ -58,19 +59,19 @@ class Room(object):
 
     #------------------------------------------------------------On Detect Aura
 
-    def on_detect_aura(self, mob):
+    def on_detect_aura(self, body):
         if 'on_detect_aura' in self.scripts:
             exec self.scripts['on_detect_aura'] 
 
     #-----------------------------------------------------------On Detect Magic
 
-    def on_detect_magic(self, mob):
+    def on_detect_magic(self, body):
         if 'on_detect_magic' in self.scripts:
             exec self.scripts['on_detech_magic'] 
 
     #------------------------------------------------------------On Detect Trap
 
-    def on_detect_traps(self, mob):
+    def on_detect_traps(self, body):
         if 'on_detect_traps' in self.scripts:
             exec self.scripts['on_detect_traps'] 
 
@@ -82,13 +83,13 @@ class Room(object):
 
     #-------------------------------------------------------------------On Hear
 
-    def on_hear(self, mob):
+    def on_hear(self, body):
         if 'on_hear' in self.scripts:
             exec self.scripts['on_hear'] 
 
     #--------------------------------------------------------------On Indentify
     
-    def on_identify(self, mob):
+    def on_identify(self, body):
         if 'on_identify' in self.scripts:
             exec self.scripts['on_identify'] 
 
@@ -100,13 +101,13 @@ class Room(object):
 
     #----------------------------------------------------------------On Inspect
 
-    def on_inspect(self, mob):
+    def on_inspect(self, body):
         if 'on_inspect' in self.scripts:
             exec self.scripts['on_inspect'] 
 
     #------------------------------------------------------------------On Look
 
-    def on_look(self, mob):
+    def on_look(self, body):
         if 'on_look' in self.scripts:
             exec self.scripts['on_look'] 
 

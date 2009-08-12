@@ -16,15 +16,15 @@ from mudlib.shared import GUILDS
 
 def create(client):
 
-    client.revoke_ability_silent('load')
-    client.revoke_ability_silent('create')
-    client.grant_ability('name')
-    client.grant_ability('gender')
-    client.grant_ability('race')
-    client.grant_ability('guild')
-    client.grant_ability('password')
-    client.grant_ability('review')
-    client.grant_ability('done')
+    client.revoke_command_silent('load')
+    client.revoke_command_silent('create')
+    client.grant_command('name')
+    client.grant_command('gender')
+    client.grant_command('race')
+    client.grant_command('guild')
+    client.grant_command('password')
+    client.grant_command('review')
+    client.grant_command('save')
     review(client)
 
 #--------------------------------------------------------------------------Name
@@ -45,7 +45,7 @@ def name(client):
         client.send("That name is too long.")
         return       
 
-    client.avatar.name = _name
+    client.body.name = _name
     client.send("Your name is now %s." % _name)    
     review(client)
 
@@ -63,7 +63,7 @@ def gender(client):
         client.send("Gender must be 'male' or 'female'.")
         return
 
-    client.avatar.gender = _gender
+    client.body.gender = _gender
     client.send("Your gender is now %s." % _gender)
     review(client)
 
@@ -82,7 +82,7 @@ def race(client):
         client.send("That is not a playable race.")
         return        
 
-    client.avatar.race = _race
+    client.body.race = _race
     client.send("Your race is now %s." % _race)
     review(client)
 
@@ -106,7 +106,7 @@ def guild(client):
         client.send("That is not a playable guild.")
         return   
 
-    client.avatar.guild = _guild
+    client.body.guild = _guild
     client.send("Your guild is now %s." % _guild)
     review(client)
 
@@ -129,7 +129,7 @@ def password(client):
         client.send("That password is too long.")
         return       
 
-    client.avatar.password = _password
+    client.body.password = _password
     client.send("Your password is now %s." % _password)
     review(client)
 
@@ -138,31 +138,31 @@ def password(client):
 
 def review(client):
     client.send("\n\nCurrent character selections:\n")
-    client.send("  name     %s\n" % client.avatar.name)
-    client.send("  gender   %s\n" % client.avatar.gender)
-    client.send("  race     %s\n" % client.avatar.race)
-    client.send("  guild    %s\n" % client.avatar.guild)
-    client.send("  password %s\n" % client.avatar.password)
+    client.send("  name     %s\n" % client.body.name)
+    client.send("  gender   %s\n" % client.body.gender)
+    client.send("  race     %s\n" % client.body.race)
+    client.send("  guild    %s\n" % client.body.guild)
+    client.send("  password %s\n" % client.body.password)
     client.send(
         "Try 'help create' for more information or 'done' if finished.\n")
 
 #--------------------------------------------------------------------------Done
 
-def done(client):
+def save(client):
     
-    if client.avatar.name == '':
+    if client.body.name == '':
         client.send('You must select a name first.\n')
   
-    elif client.avatar.gender == '':
+    elif client.body.gender == '':
         client.send('You must select a gender first.\n')
 
-    elif client.avatar.race == '':
+    elif client.body.race == '':
         client.send('You must select a race first.\n')
 
-    elif client.avatar.guild == '':
+    elif client.body.guild == '':
         client.send('You must select a guild first.\n')
 
-    elif client.avatar.password == '':
+    elif client.body.password == '':
         client.send('You must select a password first.\n')    
  
     else:

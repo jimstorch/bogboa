@@ -22,17 +22,17 @@ class Item(object):
     
     #-----------------------------------------------------------------On Attack
 
-    def on_attack(self, mob):
+    def on_attack(self, body):
         pass
 
     #------------------------------------------------------------------On Equip
 
-    def on_equip(self, mob):
+    def on_equip(self, body):
         pass
 
     #-------------------------------------------------------------------On Exit
 
-    def on_depart(self, mob):
+    def on_depart(self, body):
         pass
 
     #----------------------------------------------------------------On Destroy
@@ -42,27 +42,27 @@ class Item(object):
 
     #------------------------------------------------------------On Detect Aura
 
-    def on_detect_aura(self, mob):
+    def on_detect_aura(self, body):
         pass
 
     #-----------------------------------------------------------On Detect Magic
 
-    def on_detect_magic(self, mob):
+    def on_detect_magic(self, body):
         pass
 
     #-----------------------------------------------------------On Detect Traps
 
-    def on_detect_trap(self, mob):
+    def on_detect_trap(self, body):
         pass
 
     #-------------------------------------------------------------------On Hear
 
-    def on_hear(self, mob):
+    def on_hear(self, body):
         pass
 
     #---------------------------------------------------------------On Identify
 
-    def on_identify(self, mob):
+    def on_identify(self, body):
         pass
 
     #-------------------------------------------------------------------On Init
@@ -72,27 +72,27 @@ class Item(object):
 
     #----------------------------------------------------------------On Inspect
 
-    def on_inspect(self, mob):
+    def on_inspect(self, body):
         pass
 
     #-------------------------------------------------------------------On Look
 
-    def on_look(self, mob):
+    def on_look(self, body):
         pass
 
     #-----------------------------------------------------------------On Remove
 
-    def on_remove(self, mob):
+    def on_remove(self, body):
         pass
 
     #------------------------------------------------------------On Remove Trap
 
-    def on_remove_trap(self, mob):
+    def on_remove_trap(self, body):
         pass
 
     #------------------------------------------------------------------On Enter    
 
-    def on_see(self, mob):
+    def on_see(self, body):
         pass
 
     #-----------------------------------------------------------------On Signal
@@ -102,17 +102,17 @@ class Item(object):
 
     #-----------------------------------------------------------------On Strike
 
-    def on_strike(self, mob):
+    def on_strike(self, body):
         pass
 
     #-----------------------------------------------------------------On Struck
 
-    def on_struck(self, mob):
+    def on_struck(self, body):
         pass
 
     #--------------------------------------------------------------------On Use
 
-    def on_use(self, mob):
+    def on_use(self, body):
         pass
 
     #----------------------------------------------------------------------Poof

@@ -41,7 +41,7 @@ OBJECTS = {}        ## key is object UUID
 PLAYERS = {}        ## key is player UUID
 SPAWNS = {}         ## key is spawn UUID
 ROOMS = {}          ## key is room UUID
-MOBS = {}           ## key is shared.INDEX
+BODIES = {}         ## key is shared.INDEX
 
 
 

@@ -1,0 +1,12 @@
+#
+#   File:   save.yml   
+#
+
+name: save
+module: base
+text: |
+    The 'save' command is used during character creation to tell the system
+    you are finished selecting name, gender, race, guild, and password and
+    would like to create a character with those settings.  The format is
+    simply the word 'save' with no other arguments.
+
