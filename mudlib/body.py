@@ -20,7 +20,7 @@ class Body(object):
         self.race = ''
         self.gender = ''
         self.guild = ''
-        self.level = None
+        self.level = 1
         self.strsub = None        
 
         ## Inventory

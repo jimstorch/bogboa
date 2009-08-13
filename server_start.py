@@ -21,9 +21,18 @@ from driver.monitor import process_client_commands
 from driver.loader.file_loader import load_module
 
 
+from driver.dbms.tables import check_tables
+
 THE_LOG.add("**************")
 THE_LOG.add("server started")
 THE_LOG.add("**************") 
+
+
+#------------------------------------------------------------------------------
+#       Validate the SQLite Database
+#------------------------------------------------------------------------------
+check_tables()
+
 
 #------------------------------------------------------------------------------
 #       Load Game Data
