@@ -63,7 +63,8 @@ class Client(object):
     def deactivate(self):
         """Client disconnected or was kicked."""
         ## Unlink the player's body
-        self.body.brain = None        
+        if self.body and self.body.brain:
+            self.body.brain = None        
         self.body = None #TODO: remember to delete from BODIES too
         ## Schedule for cleanup via driver.monitor.test_connections()
         self.active = False

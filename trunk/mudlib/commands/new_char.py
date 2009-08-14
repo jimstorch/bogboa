@@ -8,6 +8,8 @@ REJECT_NAMES = []
 
 from mudlib.shared import RACES
 from mudlib.shared import GUILDS
+from driver.dbms.map import check_name
+from driver.dbms.map import save_new_body
 
 """Functions for creating a new character."""
 
@@ -167,5 +169,6 @@ def save(client):
  
     else:
         client.send('Saving your new character...')
-
+    
+    save_new_body(body)
     
