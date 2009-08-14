@@ -11,17 +11,23 @@ class Body(object):
     def __init__(self):
 
         ## Identity
-        self.name = ''                ## True name
-        self.alias = ''               ## Displayed name
+        self.name = ''                  ## True name
+        self.uuid = None                
+        self.alias = ''                 ## Displayed name
         self.password = ''
         self.is_player = False    
         self.index = None               ## numerical index
         self.brain = None               ## Brain or Client object
+
+        ## Stats
         self.race = ''
         self.gender = ''
         self.guild = ''
         self.level = 1
-        self.strsub = None        
+        self.abilities = set()          ## Commands useable
+        self.skill = {}                 ## Sklls are persistent
+        self.flag = {}                  ## Flags are persistent
+        self.token = {}                 ## Tokens are non persistent
 
         ## Inventory
 #        self.money = 0
@@ -36,10 +42,7 @@ class Body(object):
         self.target = None              ## Hostile target
         self.btarget = None             ## Beneficial target
         self.ctarget = None             ## Conversational target
-        self.abilities = set()          ## Commands useable
-        self.skill = {}
-        self.flag = {}                  ## Flags are persistent variables
-        self.token = {}                 ## Tokens are non persistent variables
+
 
 
     #---------------------------------------------------------------Adj Faction

@@ -15,12 +15,8 @@ from driver.tcp.telnet import Telnet
 from driver.config import ADDRESS
 from driver.config import PORT
 from driver.connect import lobby_connect
+from driver.dbms.map import check_banned_ip
 from mudlib import shared
-
-
-# TODO: add a real source here
-BAN_LIST = []   
-
 
 #--[ Open the Server's Socket ]------------------------------------------------
 
@@ -103,7 +99,7 @@ class PortAuthority(object):
                     continue          
 
                 ## Check for banned IP's
-                if addr_tup[0] in BAN_LIST:
+                if check_banned_ip(addr_tup[0]):
                     THE_LOG.add("BANNED IP connection refused from %s:%s." % (
                         addr_tup[0], addr_tup[1]))
                     continue                     
