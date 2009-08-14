@@ -18,7 +18,7 @@ class Item(object):
         self.uuid = None
         self.name = None
         self.module = None
-        self.weught = 0
+        self.weight = 0
     
     #-----------------------------------------------------------------On Attack
 

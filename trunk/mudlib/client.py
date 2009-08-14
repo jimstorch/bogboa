@@ -20,7 +20,7 @@ class Client(object):
         self.conn = None                ## Network connection 
         self.active = False             ## Delete during housekeeping?
 
-        ## Create and cross-wire a body
+        ## Create and link a fresh body
         self.body = Body()              ## Player's character in the world
         self.body.is_player = True
         self.body.brain = self
@@ -28,8 +28,6 @@ class Client(object):
         self.commands = set()           ## Permitted commands   
 
         self.verb_args = None           ## arguments for the verb handlers
-        
-
 
         ## Dictionary-like object used for string substitutions
         #self.stringsub = StringSub(self)    
@@ -63,11 +61,13 @@ class Client(object):
     #----------------------------------------------------------------Deactivate
 
     def deactivate(self):
-        self.body = None
-        #TODO: remember to delete from BODIES too
+        """Client disconnected or was kicked."""
+        ## Unlink the player's body
+        self.body.brain = None        
+        self.body = None #TODO: remember to delete from BODIES too
+        ## Schedule for cleanup via driver.monitor.test_connections()
         self.active = False
         self.conn.active = False
-
 
     #--------------------------------------------------------------------Prompt
 
@@ -131,7 +131,7 @@ class Client(object):
         """De-authorize player to use an command and tell them."""
         if command_name in self.commands:
             self.commands.remove(command_name)
-            self.send("\nYou've lost a command: %s" % command_name)
+            self.send("\nYou lose a command: %s" % command_name)
         else:
             self.send("\nOddness -- attempt to revoke non-command '%s'." %
                 command_name)
