@@ -66,7 +66,7 @@ class PortAuthority(object):
                 recv_list.append(conn.fileno)
             ## Delete inactive connections from the dictionary
             else:
-                THE_LOG.add('Closed connection to %s' % conn.addrport()) 
+                THE_LOG.add('-- Closed connection to %s' % conn.addrport()) 
                 del self.fdconn[conn.fileno]
 
         ## Build a list of connections that need to send data
@@ -81,7 +81,7 @@ class PortAuthority(object):
         
         except select.error, err:
             ## If we can't even use select(), game over man, game over
-            THE_LOG.add("FATAL SELECT error '%d:%s'!" % (err[0], err[1])) 
+            THE_LOG.add("!! FATAL SELECT error '%d:%s'!" % (err[0], err[1])) 
             sys.exit(1)
 
         ## Process socket file descriptors with data to recieve
@@ -95,17 +95,17 @@ class PortAuthority(object):
                     sock, addr_tup = self.server_socket.accept()
                     
                 except socket.error, err:
-                    THE_LOG.add("ACCEPT error '%d:%s'." % (err[0], err[1]))  
+                    THE_LOG.add("!! ACCEPT error '%d:%s'." % (err[0], err[1]))  
                     continue          
 
                 ## Check for banned IP's
                 if check_banned_ip(addr_tup[0]):
-                    THE_LOG.add("BANNED IP connection refused from %s:%s." % (
-                        addr_tup[0], addr_tup[1]))
+                    THE_LOG.add("?? BANNED IP connection refused from %s:%s." 
+                        % (addr_tup[0], addr_tup[1]))
                     continue                     
               
                 conn = Telnet(sock, addr_tup)
-                THE_LOG.add("Opened new connection to %s" % conn.addrport())
+                THE_LOG.add("++ Opened connection to %s" % conn.addrport())
                 ## Add the connection to our dictionary
                 self.fdconn[conn.fileno] = conn
 

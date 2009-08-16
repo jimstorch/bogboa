@@ -155,13 +155,13 @@ def configure_item(cfg):
     if 'name' in cfg:
         item.name = cfg.pop('name')
     else:
-        THE_LOG.add("ERROR! Missing name in item config.")
+        THE_LOG.add("!! Missing name in item config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         item.uuid = cfg.pop('uuid')
     else:
-        THE_LOG.add("ERROR! Missing UUID in config for item '%s'." % item.name)
+        THE_LOG.add("!! Missing UUID in config for item '%s'." % item.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -181,7 +181,7 @@ def configure_item(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("WARNING! Unrecognized key(s) in config for item '%s': %s" 
+        THE_LOG.add("!! Unrecognized key(s) in config for item '%s': %s" 
             % ( item.name, cfg.keys()) )
 
     return item    
@@ -196,7 +196,7 @@ def register_item(item):
     """
 
     if item.uuid in ITEMS:
-        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering item"
+        THE_LOG.add("!! Duplicate UUID (%s) found while registering item"
             " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:

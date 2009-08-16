@@ -1,0 +1,15 @@
+#
+#   File:   testville/sout_village.yml
+#
+
+uuid: 51c44e119f094f7da38dca9be7e53c1f
+module: Testville
+name: Southern Testville
+
+desc:
+
+    Nothing yet.
+    To the South, a path leads upwards towards a small plateau.
+
+south: 8611ad17d6be417a8d9027b628f52ce3 # start
+

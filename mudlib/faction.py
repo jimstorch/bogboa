@@ -57,13 +57,13 @@ def configure_faction(cfg):
     if 'name' in cfg:
         faction.name = cfg.pop('name')
     else:
-        THE_LOG.add("ERROR! Missing name in faction config.")
+        THE_LOG.add("!! Missing name in faction config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         faction.uuid = cfg.pop('uuid')
     else:
-        THE_LOG.add("ERROR! Missing UUID in config for faction '%s'." % 
+        THE_LOG.add("!! Missing UUID in config for faction '%s'." % 
             faction.name)
         sys.exit(1)
 
@@ -79,7 +79,7 @@ def configure_faction(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("WARNING! Unrecognized key(s) in config for faction"
+        THE_LOG.add("!! Unrecognized key(s) in config for faction"
             " '%s': %s" % ( faction.name, cfg.keys()) ) 
 
     return faction
@@ -94,7 +94,7 @@ def register_faction(faction):
     """
 
     if faction.uuid in FACTIONS:
-        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+        THE_LOG.add("!! Duplicate UUID (%s) found while registering "
             "faction '%s' from module '%s'."  %  (
             faction.uuid, faction.name, faction.module) )
         sys.exit(1)

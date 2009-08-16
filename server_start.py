@@ -21,9 +21,9 @@ from driver.monitor import process_client_commands
 from driver.loader.file_loader import load_module
 from driver.dbms.tables import check_database
 
-THE_LOG.add("**************")
-THE_LOG.add("server started")
-THE_LOG.add("**************") 
+THE_LOG.add(">> **************")
+THE_LOG.add(">> server started")
+THE_LOG.add(">> **************") 
 
 
 #------------------------------------------------------------------------------
@@ -40,8 +40,8 @@ check_database()
 module = 'data/base'
 load_module(module)
 
-module = 'data/test_module'
-#load_module(module)
+module = 'data/testville'
+load_module(module)
 
 
 #------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ Cycle(2, purge_dead_clients)
 #       Main Loop
 #------------------------------------------------------------------------------
 
-THE_LOG.add("Listening for connections on port %d" % PORT)
+THE_LOG.add(">> Listening for connections on port %d" % PORT)
 
 while shared.SERVER_RUN == True:
     THE_SCHEDULER.tick()
@@ -65,5 +65,5 @@ while shared.SERVER_RUN == True:
     process_client_commands()
 
 ## All done   
-THE_LOG.add('Administrative shutdown')
+THE_LOG.add('?? Administrative shutdown')
 

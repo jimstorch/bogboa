@@ -41,7 +41,7 @@ def configure_help(cfg):
     if 'name' in cfg:
         help.name = cfg.pop('name')
     else:
-        THE_LOG.add("ERROR! Missing name in help config.")
+        THE_LOG.add("!! Missing name in help config.")
         sys.exit(1)
 
     if 'aliases' in cfg:
@@ -56,7 +56,7 @@ def configure_help(cfg):
     if 'text' in cfg:
         help.text = cfg.pop('text')
     else:
-        THE_LOG.add("ERROR! Missing text in config for help '%s'." % help.name)
+        THE_LOG.add("!! Missing text in config for help '%s'." % help.name)
         sys.exit(1)
 
 
@@ -70,7 +70,7 @@ def configure_help(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("WARNING! Unrecognized key(s) in config for help '%s': %s" 
+        THE_LOG.add("!! Unrecognized key(s) in config for help '%s': %s" 
             % ( help.name, cfg.keys()) ) 
 
     return help    
@@ -85,7 +85,7 @@ def register_help(help):
     """
 
     if help.name in HELPS:
-        THE_LOG.add("ERROR! Duplicate name found while registering "
+        THE_LOG.add("!! Duplicate name found while registering "
             "help text '%s' in module '%s'."  %  (help.name, help.module))
         sys.exit(1)
     else:
@@ -95,7 +95,7 @@ def register_help(help):
     if help.aliases:
         for alias in help.aliases:
             if alias in HELPS:
-                THE_LOG.add("ERROR! Duplicate alias found while registering "
+                THE_LOG.add("!! Duplicate alias found while registering "
                     "help text '%s' in module '%s'."  %  
                     (help.name, help.module))
                 sys.exit(1)        

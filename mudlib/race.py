@@ -60,7 +60,7 @@ def configure_race(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add( "WARNING! Unrecognized key(s) in config for race '%s': %s" 
+        THE_LOG.add( "!! Unrecognized key(s) in config for race '%s': %s" 
             % ( race.name, cfg.keys()) ) 
 
     return race
@@ -75,7 +75,7 @@ def register_race(race):
     """
 
     if race.name in RACES:
-        print ( "ERROR! Duplicate name (%s) found while registering "
+        print ( "!! Duplicate name (%s) found while registering "
             "race '%s' from module '%s'."  %  (
             race.uuid, race.name, race.module) )
         sys.exit(1)

@@ -25,55 +25,55 @@ def check_database():
     user_version = THE_CURSOR.execute("PRAGMA user_version").fetchone()[0]
     if user_version == 0:
         THE_CURSOR.execute("PRAGMA user_version=10001;")
-        THE_LOG.add("-> Using new database file.")
+        THE_LOG.add("?? Using new database file.")
     else:
-        THE_LOG.add("-> DB version is %d." % user_version)    
+        THE_LOG.add("-- DB version is %d" % user_version)    
 
     sql = """
         SELECT COUNT(*) FROM sqlite_master WHERE NAME = ?;
         """
 
     if not THE_CURSOR.execute(sql, ('body',)).fetchone()[0]:
-        THE_LOG.add("Missing 'body' table in database, creating it.")
+        THE_LOG.add("?? Missing 'body' table in database, creating it.")
         create_body_table()
 
     if not THE_CURSOR.execute(sql, ('ability',)).fetchone()[0]:
-        THE_LOG.add("Missing 'ability' table in database, creating it.")
+        THE_LOG.add("?? Missing 'ability' table in database, creating it.")
         create_ability_table()
 
     if not THE_CURSOR.execute(sql, ('skill',)).fetchone()[0]:
-        THE_LOG.add("Missing 'skill' table in database, creating it.")
+        THE_LOG.add("?? Missing 'skill' table in database, creating it.")
         create_skill_table()
 
     if not THE_CURSOR.execute(sql, ('flag',)).fetchone()[0]:
-        THE_LOG.add("Missing 'flag' table in database, creating it.")
+        THE_LOG.add("?? Missing 'flag' table in database, creating it.")
         create_flag_table()
 
     if not THE_CURSOR.execute(sql, ('inventory',)).fetchone()[0]:
-        THE_LOG.add("Missing 'inventory' table in database, creating it.")
+        THE_LOG.add("?? Missing 'inventory' table in database, creating it.")
         create_inventory_table()
             
     if not THE_CURSOR.execute(sql, ('reject_name',)).fetchone()[0]:
-        THE_LOG.add("Missing 'reject_name' table in database, creating it.")    
+        THE_LOG.add("?? Missing 'reject_name' table in database, creating it.")    
         create_reject_name_table()
         pre_reject_names()
 
     if not THE_CURSOR.execute(sql, ('banned_ip',)).fetchone()[0]:
-        THE_LOG.add("Missing 'banned_ip' table in database, creating it.")
+        THE_LOG.add("?? Missing 'banned_ip' table in database, creating it.")
         create_banned_ip_table()
 
     if not THE_CURSOR.execute(sql, ('suspension',)).fetchone()[0]:
-        THE_LOG.add("Missing 'suspension' table in database, creating it.")
+        THE_LOG.add("?? Missing 'suspension' table in database, creating it.")
         create_suspension_table()
 
 
     ## Lastly, vacuum the database
     sql = """VACUUM;"""
+    
     THE_CURSOR.execute(sql)
 
 
 #-------------------------------------------------------------Create Body Table
-
 
 def create_body_table():
 
@@ -87,12 +87,14 @@ def create_body_table():
             name TEXT PRIMARY KEY,
             uuid TEXT KEY,
             hashed_password TEXT,
+            email TEXT,
             race TEXT,
             gender TEXT,
             guild TEXT,
             level INTEGER,            
             room_uuid TEXT,
-            last_on TIMESTAMP,
+            bind_uuid TEXT,
+            last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             last_ip TEXT,
             play_count INTEGER
             );
@@ -103,7 +105,6 @@ def create_body_table():
 
 #----------------------------------------------------------Create Ability Table
 
-
 def create_ability_table():
 
     sql = """DROP TABLE IF EXISTS ability;"""
@@ -113,7 +114,7 @@ def create_ability_table():
     sql = """
         CREATE TABLE IF NOT EXISTS ability
             (
-            body_uuid TEXT PRIMARY KEY,
+            uuid TEXT PRIMARY KEY,
             ability TEXT
             );
         """
@@ -132,7 +133,7 @@ def create_skill_table():
     sql = """
         CREATE TABLE IF NOT EXISTS skill
             (
-            body_uuid TEXT PRIMARY KEY,
+            uuid TEXT PRIMARY KEY,
             skill TEXT,
             value TEXT
             );
@@ -152,7 +153,7 @@ def create_flag_table():
     sql = """
         CREATE TABLE IF NOT EXISTS flag
             (
-            body_uuid TEXT PRIMARY KEY,
+            uuid TEXT PRIMARY KEY,
             flag TEXT,
             value TEXT
             );
@@ -172,7 +173,7 @@ def create_inventory_table():
     sql = """
     CREATE TABLE IF NOT EXISTS inventory
         (
-        body_uuid TEXT PRIMARY KEY,
+        uuid TEXT PRIMARY KEY,
         slot TEXT,
         item_uuid TEXT,
         item_count INTEGER
@@ -194,7 +195,7 @@ def create_reject_name_table():
         CREATE TABLE IF NOT EXISTS reject_name
             (
             name_lower TEXT PRIMARY KEY,
-            date_added TIMESTAMP,
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             gm_name TEXT,
             gm_note TEXT
             );
@@ -212,7 +213,9 @@ def pre_reject_names():
         VALUES (?, ?, ? , ?);
         """
 
-    bad_names = ['bogboa', 'gm', 'admin', 'sysop']
+    bad_names = ['bogboa', 'gm', 'admin', 'sysop', 'anonymous', 'anon',
+        'test', 'nobody', 'noone',         
+        ]
     now = datetime.datetime.now()
 
     for name in bad_names:
@@ -231,7 +234,7 @@ def create_banned_ip_table():
         CREATE TABLE IF NOT EXISTS banned_ip
             (
             ip TEXT PRIMARY KEY,
-            date_added TIMESTAMP,
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             gm_name TEXT,
             gm_note TEXT
             );
@@ -241,7 +244,6 @@ def create_banned_ip_table():
 
 
 #--------------------------------------------------------Creat Suspension Table
-
 
 def create_suspension_table():
 
@@ -253,7 +255,7 @@ def create_suspension_table():
         CREATE TABLE IF NOT EXISTS suspension
             (
             uuid TEXT PRIMARY KEY,
-            date_added TIMESTAMP,
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             duration INTEGER,
             gm_name TEXT,
             gm_note TEXT

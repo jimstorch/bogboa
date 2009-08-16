@@ -22,28 +22,61 @@ class Room(object):
         self.module = None
         self.name = None
         self.exits = {}
-        self.clients = {}
+        self.bodies = []
         self.npcs = {}
         self.items = {}
         self.scripts = {}
 
+    #--------------------------------------------------------------Tell Players
+
+    def tell_players(self, msg):
+        
+        """Send a message to every player in the room."""
+
+        for body in self.bodies:
+            if body.is_player:
+                body.send(msg)
+
+
     #------------------------------------------------------------------On Enter
 
-    def on_enter(self, body):
+    def on_enter(self, body, direction=None):
+
+        if body.is_visible:
+
+            if direction:
+                self.tell_players('%s enters from the %s.\n' % 
+                    (body.name, direction))          
+            else:
+                self.tell_players("%s appears.\n" % body.name )       
+  
+        self.bodies.append(body)
+        body.room_uuid = self.uuid
 
         if body.is_player:
-            body.send('You enter %s.\n' % self.name)
+            body.send('\nYou enter %s.\n' % self.name)
             body.send(self.desc + '\n')
-        body.room = self
 
         if 'on_enter' in self.scripts:
             exec self.scripts['on_enter']
 
     #-------------------------------------------------------------------On Exit
 
-    def on_exit(self, body):
+    def on_exit(self, body, direction=None):
+
+        self.bodies.remove(body)             
+
+        if body.is_visible:
+
+            if direction:
+                self.tell_players('%s exits to the %s.\n' % 
+                    (body.name, direction))          
+            else:
+                self.tell_players('%s vanishes.\n' % body.name)          
+
+
         if 'on_exit' in self.scripts:
-            exec self.scripts['on_exit'] 
+            exec self.scripts['on_exit']
 
     #-----------------------------------------------------------------On Death
 
@@ -132,13 +165,13 @@ def configure_room(cfg):
     if 'name' in cfg:
         room.name = cfg.pop('name')
     else:
-        THE_LOG.add("ERROR! Missing name in room config.")
+        THE_LOG.add("!! Missing name in room config.")
         sys.exit(1)
 
     if 'uuid' in cfg:
         room.uuid = cfg.pop('uuid')
     else:
-        THE_LOG.add("ERROR! Missing UUID in config for room '%s'." % room.name)
+        THE_LOG.add("!! Missing UUID in config for room '%s'." % room.name)
         sys.exit(1)
 
     if 'desc' in cfg:
@@ -150,7 +183,7 @@ def configure_room(cfg):
         room.module = cfg.pop('module')
     else:
         room.module = None
-        THE_LOG.add("WARNING: Missing 'module' value for room '%s'." % 
+        THE_LOG.add("!!: Missing 'module' value for room '%s'." % 
             room.name)       
 
     ## Connect hard-coded exits
@@ -212,7 +245,7 @@ def configure_room(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("WARNING! Unrecognized key(s) in config for room '%s': %s" 
+        THE_LOG.add("!! Unrecognized key(s) in config for room '%s': %s" 
             % ( room.name, cfg.keys()) ) 
 
     return room    
@@ -227,7 +260,7 @@ def register_room(room):
     """
 
     if room.uuid in ROOMS:
-        THE_LOG.add("ERROR! Duplicate UUID (%s) found while registering "
+        THE_LOG.add("!! Duplicate UUID (%s) found while registering "
             "room '%s' in module '%s'."  %
             (room.uuid, room.name, room.module))
         sys.exit(1)
