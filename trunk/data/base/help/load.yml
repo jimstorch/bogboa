@@ -1,0 +1,18 @@
+#
+#   File:   load.yml
+#
+
+name: load
+aliases: [login, ]
+module: base
+
+text: |
+    The 'load' command is used to play a previously created character.
+    The format is 'load' followed by the name and password you provided
+    during the 'create' process:
+
+        load Jack swordfish77
+
+    Please note that both name and password are case sensitive and that your
+    password will be displayed on your screen so -- look over your shoulder
+    first, eh.

@@ -15,9 +15,10 @@ class Body(object):
         self.uuid = None                
         self.alias = ''                 ## Displayed name
         self.password = ''
-        self.is_player = False    
+        self.is_player = False
+        self.is_visible = False         ## Actions shown to others or not
         self.index = None               ## numerical index
-        self.brain = None               ## Brain or Client object
+        self.mind = None                ## Brain or Client object
 
         ## Stats
         self.race = ''
@@ -38,11 +39,11 @@ class Body(object):
 #        self.bank = None
 
         ## Details
-        self.room = None                ## Current location 
+        self.room_uuid = None           ## Current location
+        self.bind_uuid = None           ## Return point
         self.target = None              ## Hostile target
         self.btarget = None             ## Beneficial target
         self.ctarget = None             ## Conversational target
-
 
 
     #---------------------------------------------------------------Adj Faction
@@ -410,27 +411,27 @@ class Body(object):
     def clear_commands(self):
         """Remove all command from client."""
         if self.is_player:
-            self.brain.clear_commands()
+            self.mind.clear_commands()
 
     #-------------------------------------------------------------Grant Command
 
     def grant_command(self, command_name):
         """Authorize player to use an command and tell them."""
         if self.is_player:
-            self.brain.grant_command(command_name)
+            self.mind.grant_command(command_name)
 
     #------------------------------------------------------Grant Command Silent
 
     def grant_command_silent(self, command_name):
         """Silently authorize a player to use an command."""
         if self.is_player:
-            self.brain.grant_command_silent(command_command)
+            self.mind.grant_command_silent(command_command)
 
     #---------------------------------------------------------------Has Command
 
     def has_command(self, command_name):
         if self.is_player:
-            return self.brain.has_command(command_name)
+            return self.mind.has_command(command_name)
         else:
             return False
 
@@ -439,34 +440,34 @@ class Body(object):
     def revoke_command(self, command_name):
         """De-authorize player to use an command and tell them."""
         if self.is_player:
-            self.brain.revoke_command(command_name)
+            self.mind.revoke_command(command_name)
 
     #-----------------------------------------------------Revoke Command Silent
 
     def revoke_command_silent(self, command_name):
         """Silently de-authorize a player to use an command."""
         if self.is_player:
-            self.brain.revoke_command_silent(command_name)
+            self.mind.revoke_command_silent(command_name)
 
     #----------------------------------------------------------------------Send
 
     def send(self, msg):
         if self.is_player:
-            self.brain.send(msg)
+            self.mind.send(msg)
 
     #--------------------------------------------------------------------Prompt
 
     def prompt(self):
         """Transmit a newline and a prompt"""
         if self.is_player:
-            self.brain.prompt()
+            self.mind.prompt()
 
     #---------------------------------------------------------------Soft Prompt
 
     def soft_prompt(self):
         """Called when a leading new-line is not desired"""
         if self.is_player:
-            self.brain.soft_prompt()
+            self.mind.soft_prompt()
 
 
 

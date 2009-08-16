@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 
 
-from mudlib.commands import new_char
+from mudlib.commands import account
 from mudlib.commands import movement
 from mudlib.commands import speech
 from mudlib.commands import info
@@ -27,27 +27,30 @@ VERB_HANDLER = {}
 
 COMMAND_LIST = (
 
-    ## New Char
+    ## Account
 
-    (('create',), new_char.create),
-    (('name',), new_char.name),
-    (('gender',), new_char.gender),
-    (('race',), new_char.race),
-    (('guild',), new_char.guild),
-    (('password',), new_char.password),
-    (('review',), new_char.review),
-    (('save',), new_char.save),
+    (('create',), account.create),
+    (('name',), account.name),
+    (('gender',), account.gender),
+    (('race',), account.race),
+    (('guild',), account.guild),
+    (('password',), account.password),
+#    (('email',), account.email),
+    (('review',), account.review),
+    (('save',), account.save),
+    (('load',), account.load),
 
     ## Movement
 
-    (('north', 'nor', 'n', '8'), movement.north),
-    (('east', 'eas', 'e', '6'), movement.east),
-    (('south', 'sou', 's', '2'), movement.south),
-    (('west', 'wes', 'w', '4'), movement.west),
+    (('north', 'n', '8'), movement.north),
+    (('east', 'e', '6'), movement.east),
+    (('south', 's', '2'), movement.south),
+    (('west', 'w', '4'), movement.west),
 #    (('up', 'u', 'climb', '9'), movement.up),
-#    (('down', 'dn', 'dwn', 'd', '3'), movement.down),
+#    (('down', 'd', '3'), movement.down),
 #    (('recall', 'home'), movement.recall),
 #    (('enter',), movement.enter),
+#    (('exit',), movement.exit),
     
     ## Communication
 

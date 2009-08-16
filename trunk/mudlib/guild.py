@@ -50,7 +50,7 @@ def configure_guild(cfg):
     if 'name' in cfg:
         guild.name = cfg.pop('name')
     else:
-        THE_LOG.add("ERROR! Missing name in guild config.")
+        THE_LOG.add("!! Missing name in guild config.")
         sys.exit(1)
 
 #    if 'uuid' in cfg:
@@ -73,7 +73,7 @@ def configure_guild(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("WARNING! Unrecognized key(s) in config for guild '%s': %s" 
+        THE_LOG.add("!! Unrecognized key(s) in config for guild '%s': %s" 
             % ( guild.name, cfg.keys()) ) 
 
     return guild    
@@ -88,7 +88,7 @@ def register_guild(guild):
     """
 
     if guild.name in GUILDS:
-        THE_LOG.add("ERROR! Duplicate name (%s) found while registering "
+        THE_LOG.add("!! Duplicate name (%s) found while registering "
             "guild '%s' from module '%s'."  %  (
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)

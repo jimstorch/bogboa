@@ -1,25 +1,33 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       mudlib/action/speech.py
+#   File:       mudlib/commands/speech.py
 #   Author:     Jim Storch
 #------------------------------------------------------------------------------
 
 from mudlib import shared
-from mudlib import parsers
 from mudlib import lookup
 
 
 #---------------------------------------------------------------------Broadcast
 
-def broadcast(message):
+def broadcast(msg):
 
-    """Send a message to everyone online."""
+    """Send a message to all players."""
 
-    for client in shared.PLAY_LIST:
-        client.send(message)
+    for client in shared.PLAYERS:
+        client.send(msg)
 
-    for player in shared.LOBBY_LIST:
-        player.send(message)
+
+#-----------------------------------------------------------------All Broadcast
+
+def broadcast_all(msg):
+
+    """Send a message to players and lobby clients."""
+
+    broadcast(msg)
+
+    for client in shared.LOBBY:
+        client.send(msg)
 
 
 #-------------------------------------------------------------------------Emote
@@ -57,8 +65,6 @@ def tell(client):
 
         client.send("^y%s is not in this world." % target_handle.capitalize())
 
-tell.parser = parsers.dialogue
-
 
 #-------------------------------------------------------------------------Reply
 
@@ -73,8 +79,6 @@ def reply(client):
     else:
         client.send('^yYou have not recieved any tells.')
     
-reply.parser = parsers.monologue
-
 
 #---------------------------------------------------------------------------OOC
 
@@ -105,11 +109,8 @@ def shout(client):
         else:
             player.send('^R%s shouts,^W %s' % (client.name, message))
 
-shout.parser = parsers.monologue
-
 
 #---------------------------------------------------------------------------Say
-
 
 def say(client):
     
@@ -119,6 +120,4 @@ def say(client):
         message))
     client.send('^wYou say, %s' % message)    
 
-
-say.parser = parsers.monologue
 

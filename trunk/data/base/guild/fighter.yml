@@ -9,16 +9,16 @@ desc: Master of armed combat
 ##  Skill modifiers for this guild
 ##
 
-skills:
-    - defense:  0.20
-    - attack:   0.10
+#skills:
+#    - defense:  0.20
+#    - attack:   0.10
 
 ##
 ##  Guild specific abilities
 ##
     
-abilities:
-    - attack
+#abilities:
+#    - attack
 
 
 

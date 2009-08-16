@@ -34,15 +34,11 @@ from mudlib import shared
 
 #---------------------------------------------------------------------Find Room
 
-#def find_room(handle):
+def room(uuid):
 
-#    """Given a handle, return the Room object."""
+    """Given a uuid, return the Room object."""
 
-#    if handle in shared.ROOM_DICT:
-#        return shared.ROOM_DICT[handle]
-
-#    else:
-#        return None
+    return shared.ROOMS.get(uuid, None)
 
 #----------------------------------------------------------------------Find Mob
 

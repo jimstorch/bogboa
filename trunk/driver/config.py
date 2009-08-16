@@ -27,4 +27,6 @@ YEAR_OFFSET = _cfg['year_offset']
 if ADDRESS == None:
     ADDRESS = ''   
 
+LOBBY_UUID = _cfg['lobby_uuid']
+START_UUID = _cfg['start_uuid']
 

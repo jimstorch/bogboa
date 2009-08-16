@@ -12,15 +12,16 @@ SERVER_RUN = True
 
 ## Since so much of code needs to know the current time it seemed better
 ## to share the value instead a bajillion OS calls via time.time().
-## Note: THE_TIME gets updates each cycle by Scheduler.tick().
+## Note: THE_TIME gets updates each cycle by 
+## driver.scheduler.THE_SCHEDULER.tick().
 
 THE_TIME = 0.0      
 
 
 #--[ Client Connections ]------------------------------------------------------
 
-LOBBY_LIST = []
-PLAY_LIST = []
+LOBBY = []
+PLAYERS = []
 
 
 #--[ Reference Objects ]-------------------------------------------------------
@@ -30,19 +31,15 @@ GUILDS = {}         ## key is guild name
 HELPS = {}          ## key is help name
 RACES = {}          ## key is race name 
 ITEMS = {}          ## key is item UUID
-NPCs = {}           ## key is npc UUID
+SPAWNS = {}         ## key is npc UUID
 
 
 #--[ Objects in the game world ]-----------------------------------------------
 
-INDEX = 0
-
 OBJECTS = {}        ## key is object UUID
-PLAYERS = {}        ## key is player UUID
-SPAWNS = {}         ## key is spawn UUID
 ROOMS = {}          ## key is room UUID
-BODIES = {}         ## key is shared.INDEX
-
+BODIES = {}         ## key is body UUID
+BRAINS = []         ## List of AI's
 
 
     

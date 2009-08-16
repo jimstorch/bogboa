@@ -21,14 +21,16 @@ def test_connections():
 
     """Iterate through the clients and check for dead connections."""
 
-    for client in shared.LOBBY_LIST:
+    #print len(shared.LOBBY), len(shared.PLAYERS)
+
+    for client in shared.LOBBY:
         if client.conn.active == False:
             client.deactivate()
 
-    for client in shared.PLAY_LIST:
+    for client in shared.PLAYERS:
         if client.conn.active == False:
             client.deactivate()
-            broadcast('^y%s has gone offline.' % client.name)    
+            broadcast('%s has gone offline.\n' % client.name)    
 
 
 #-------------------------------------------------------------Kill Idle Clients
@@ -40,18 +42,18 @@ def kill_idle_clients():
     with test_connections().
     """
 
-    for client in shared.LOBBY_LIST:
+    for client in shared.LOBBY:
         if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('Kicking idle lobby client from %s' %  
+            THE_LOG.add('Kicking idle lobby client from %s' % 
                 client.conn.addrport())
             client.deactivate()
             
-    for client in shared.PLAY_LIST:
+    for client in shared.PLAYERS:
         if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('Kicking idle gameplay client %s from %s' % (
+            THE_LOG.add('Kicking idle %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
-            broadcast('^y%s has gone offline.' % client.name)
+            broadcast('%s has gone offline.\n' % client.name)
 
 
 #------------------------------------------------------------Purge Dead Clients
@@ -63,10 +65,10 @@ def purge_dead_clients():
     sockets when their Connections are garbage collected.
     """
 
-    shared.LOBBY_LIST = [ client for client in shared.LOBBY_LIST 
+    shared.LOBBY = [ client for client in shared.LOBBY 
         if client.active == True ]
         
-    shared.PLAY_LIST = [ client for client in shared.PLAY_LIST 
+    shared.PLAYERS = [ client for client in shared.PLAYERS 
         if client.active == True ]         
 
 
@@ -76,12 +78,12 @@ def process_client_commands():
 
     """Test clients for commands and process them."""
 
-    for client in shared.LOBBY_LIST:
+    for client in shared.LOBBY:
         if client.active and client.conn.active:
             if client.conn.cmd_ready:
                 client.process_command()
 
-    for client in shared.PLAY_LIST:
+    for client in shared.PLAYERS:
         if client.active and client.conn.active:
             if client.conn.cmd_ready:
                 client.process_command()

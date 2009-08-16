@@ -8,8 +8,6 @@
 File Loader
 
 Load configuration from YAML files in a module directory.
-Eventually this will be replaced with DB Loader that pulls configuration
-from a SQLite3 database.
 """
 
 import os
@@ -49,11 +47,11 @@ def load_module(module):
         room = configure_room(cfg)
         register_room(room)
 
-    ## Load Genders
-    from mudlib.gender import configure_gender, register_gender
-    for cfg in gender_cfg_iter(module):
-        gender = configure_gender(cfg)
-        register_gender(gender)
+#    ## Load Genders
+#    from mudlib.gender import configure_gender, register_gender
+#    for cfg in gender_cfg_iter(module):
+#        gender = configure_gender(cfg)
+#        register_gender(gender)
 
     ## Load Races
     from mudlib.race import configure_race, register_race
@@ -110,7 +108,7 @@ def cfg_iter(mask):
     """
 
     filenames = glob.glob(mask)
-    THE_LOG.add(">> %d found." % len(filenames))
+    THE_LOG.add("-- %d found" % len(filenames))
 
     for filename in filenames:
         cfg = parse_file(filename)
@@ -120,7 +118,7 @@ def cfg_iter(mask):
 
 def item_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Items")
+    THE_LOG.add("-- Loading Items")
 
     mask = os.path.join(module_dir, 'item/*.yml')
     for cfg in cfg_iter(mask):
@@ -131,7 +129,7 @@ def item_cfg_iter(module_dir):
 
 def race_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Races")
+    THE_LOG.add("-- Loading Races")
 
     mask = os.path.join(module_dir, 'race/*.yml')
     filenames = glob.glob(mask)
@@ -143,7 +141,7 @@ def race_cfg_iter(module_dir):
 
 def gender_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Genders")
+    THE_LOG.add("-- Loading Genders")
 
     mask = os.path.join(module_dir, 'gender/*.yml')
     for cfg in cfg_iter(mask):
@@ -154,7 +152,7 @@ def gender_cfg_iter(module_dir):
 
 def guild_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Guilds")
+    THE_LOG.add("-- Loading Guilds")
 
     mask = os.path.join(module_dir, 'guild/*.yml')
     for cfg in cfg_iter(mask):
@@ -165,7 +163,7 @@ def guild_cfg_iter(module_dir):
 
 def room_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Rooms")
+    THE_LOG.add("-- Loading Rooms")
 
     mask = os.path.join(module_dir, 'room/*.yml')
     for cfg in cfg_iter(mask):
@@ -176,7 +174,7 @@ def room_cfg_iter(module_dir):
 
 def help_cfg_iter(module_dir):
 
-    THE_LOG.add(">> Loading Help Pages")
+    THE_LOG.add("-- Loading Help Pages")
 
     mask = os.path.join(module_dir, 'help/*.yml')
     for cfg in cfg_iter(mask):

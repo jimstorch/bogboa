@@ -5,144 +5,82 @@
 #------------------------------------------------------------------------------
 
 from mudlib import shared
+from mudlib import lookup
 
-#---------------------------------------------------------------------
+
+#-------------------------------------------------------------------------North
 
 def north(client):
+
     """Move north, if able."""
 
-    if 'north' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['north']]
-        leaving.remove_player(client, ' to the North')
-        entering.add_player(client, ' from the South')
+    room = shared.ROOMS[client.body.room_uuid]
+   
+    if 'north' in room.exits:
+        leaving = room
+        entering = shared.ROOMS[room.exits['north']]
+        leaving.on_exit(client.body, 'North')
+        entering.on_enter(client.body, 'South')
     
     else:
-        client.send('^yThe way North is obstructed.')
-
-north.parser = None
+        client.send('The way North is obstructed.')
 
 
-#---[ North East]--------------------------------------------------------------
 
-def northeast(client):
-    """Move north-east, if able."""
-
-    if 'northeast' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['northeast']]
-        leaving.remove_player(client, ' to the Northeast')
-        entering.add_player(client, ' from the Southwest')
-    
-    else:
-        client.send('^yThe way Northeast is obstructed.')
-
-northeast.parser = None 
-
-
-#---[ East ]-------------------------------------------------------------------
-
-def east(client):
-    """Move east, if able."""
-
-    if 'east' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['east']]
-        leaving.remove_player(client, ' to the East')
-        entering.add_player(client, ' from the West')
-    
-    else:
-        client.send('^yThe way East is obstructed.')
-
-east.parser = None
-
-
-#---[ South East ]-------------------------------------------------------------
-
-def southeast(client):
-    """Move southeast, if able."""
-
-    if 'southeast' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['southeast']]
-        leaving.remove_player(client, ' to the Southeast')
-        entering.add_player(client, ' from the Northwest')
-    
-    else:
-        client.send('^yThe way Southeast is obstructed.')
-
-southeast.parser = None
-
-
-#---[ South ]------------------------------------------------------------------
+#-------------------------------------------------------------------------South
 
 def south(client):
-    """Move south, if able."""
 
-    if 'south' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['south']]
-        leaving.remove_player(client, ' to the South')
-        entering.add_player(client, ' from the North')
+    """Move north, if able."""
+
+    room = shared.ROOMS[client.body.room_uuid]
+   
+    if 'south' in room.exits:
+        leaving = room
+        entering = shared.ROOMS[room.exits['south']]
+        leaving.on_exit(client.body, 'South')
+        entering.on_enter(client.body, 'North')
     
     else:
-        client.send('^yThe way South is obstructed.')
-
-south.parser = None
+        client.send('The way South is obstructed.')
 
 
-#---[ South West ]-------------------------------------------------------------
+#--------------------------------------------------------------------------East
 
-def southwest(client):
-    """Move southwest, if able."""
+def east(client):
 
-    if 'southwest' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['southwest']]
-        leaving.remove_player(client, ' to the Southwest')
-        entering.add_player(client, ' from the Northeast')
+    """Move east, if able."""
+
+    room = shared.ROOMS[client.body.room_uuid]
+   
+    if 'east' in room.exits:
+        leaving = room
+        entering = shared.ROOMS[room.exits['east']]
+        leaving.on_exit(client.body, 'East')
+        entering.on_enter(client.body, 'West')
     
     else:
-        client.send('^yThe way Southwest is obstructed.')
-
-southwest.parser = None
+        client.send('The way East is obstructed.')
 
 
-#---[ West ]-------------------------------------------------------------------
+#--------------------------------------------------------------------------West
 
 def west(client):
+
     """Move west, if able."""
 
-    if 'west' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['west']]
-        leaving.remove_player(client, ' to the West')
-        entering.add_player(client, ' from the East')
+    room = shared.ROOMS[client.body.room_uuid]
+   
+    if 'west' in room.exits:
+        leaving = room
+        entering = shared.ROOMS[room.exits['west']]
+        leaving.on_exit(client.body, 'West')
+        entering.on_enter(client.body, 'East')
     
     else:
-        client.send('^yThe way West is obstructed.')
-    
-west.parser = None
+        client.send('The way West is obstructed.')
 
-
-#---[ North West ]-------------------------------------------------------------
-
-def northwest(client):
-    """Move northwest, if able."""
-
-    if 'northwest' in client.room.exits:
-        leaving = client.room
-        entering = shared.ROOM_DICT[client.room.exits['northwest']]
-        leaving.remove_player(client, ' to the Northwest')
-        entering.add_player(client, ' from the Southeast')
-    
-    else:
-        client.send('^yThe way Northwest is obstructed.')
-
-northwest.parser = None
-
-
-#---[ Up ]---------------------------------------------------------------------
+#----------------------------------------------------------------------------Up
 
 def up(client):
     """Move up, if able."""
@@ -156,9 +94,8 @@ def up(client):
     else:
         client.send('^yThere is no way up here.')
 
-up.parser = None
 
-#---[ Down ]-------------------------------------------------------------------
+#--------------------------------------------------------------------------Down
 
 def down(client):
     """Move down, if able."""
@@ -172,30 +109,22 @@ def down(client):
     else:
         client.send('^yThere is no way down here.')
 
-down.parser = None
 
-
-#---[ Enter ]------------------------------------------------------------------
+#-------------------------------------------------------------------------Enter
 
 def enter(client):
     pass
 
-enter.parser = None
 
-
-#---[ Exit ]-------------------------------------------------------------------
+#--------------------------------------------------------------------------Exit
 
 def exit(client):
     pass
 
-exit.parser = None
- 
 
-#---[ Recall ]-----------------------------------------------------------------
+#------------------------------------------------------------------------Recall
 
 def recall(client):
     pass
-
-recall.parser = None
 
 

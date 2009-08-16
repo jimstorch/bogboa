@@ -9,19 +9,19 @@ desc: Mysterious Shaper of Worlds
 ##  Skill modifiers for this guild 
 ##
 
-skills:
-    - wizardry:     1.00
-    ## Enforce the prime-directive
-    - healing:      0.00
-    - melee:        0.00
-    ## Make them un-killable
-    - armor:        1000.0
-    - heartiness:   1000.0
+#skills:
+#    - wizardry:     1.00
+#    ## Enforce the prime-directive
+#    - healing:      0.00
+#    - melee:        0.00
+#    ## Make them un-killable
+#    - armor:        1000.0
+#    - heartiness:   1000.0
 
 ##
 ##   Guild specific abilities 
 ##   
 
-abilties:
+#abilties:
 
 

@@ -7,7 +7,6 @@
 
 import datetime
 import hashlib
-import uuid
 import sys
 
 from driver.log import THE_LOG
@@ -21,12 +20,13 @@ def ban_ip(ip, gm, note):
     """Given an IP address, add it to the banned_ip table."""
 
     sql = """
-        INSERT INTO banned_ip
+        INSERT INTO banned_ip      
         VALUES (?, ?, ?, ?);
     """
-
     now = datetime.datetime.now()
     THE_CURSOR.execute(sql, (ip, now, gm, note))
+
+    THE_LOG.add("?? Banned IP %s by '%s' for '%s'" % (ip, gm, note))
 
 
 #----------------------------------------------------------------------Unban IP
@@ -83,9 +83,8 @@ def block_name(name, gm='', comment=''):
 
     sql = """
         INSERT INTO reject_name
-        VALUES (?,?,?,?);
+        VALUES (?, ?, ?, ?);
         """
-
     now = datetime.datetime.now()
     THE_CURSOR.execute(sql, (name.lower(), now, gm, comment))
 
@@ -121,9 +120,9 @@ def check_suspension(uuid):
     return 0 
 
 
-#----------------------------------------------------------------Check Password
+#-------------------------------------------------------------------Check Login
 
-def check_password(name, password):
+def check_login(name, password):
     
     """
     Returns True if the specified name and password match.
@@ -142,13 +141,46 @@ def check_password(name, password):
     result = THE_CURSOR.execute(sql, (name, hashed_password)).fetchone()[0]
     return bool(result)
 
+
+#------------------------------------------------------------------Record Visit
+
+def record_visit(name, ip):
+
+    sql = """
+        UPDATE body
+        SET play_count = play_count + 1, last_ip = ?, 
+            last_on = ?
+        WHERE name = ?;
+        """
+    now = datetime.datetime.now()
+    THE_CURSOR.execute(sql, (ip, now, name))
+
+
+#-----------------------------------------------------------------------Last On
+
+def last_on(name):
+
+    sql = """
+        SELECT last_on FROM body
+        WHERE name = ?;
+        """
+
+    result = THE_CURSOR.execute(sql, (name,)).fetchone()
+
+    if result:
+        last_on = result['last_on'] 
+        return last_on.strftime('%B %d, %Y %I:%M %p')
+
+    else:
+        return "not found."
+
+
 #-----------------------------------------------------------------Save New Body
 
 def save_new_body(body):
 
     sql = """
         INSERT INTO body
-        COLUMNS
             (
             name,
             uuid,
@@ -159,21 +191,22 @@ def save_new_body(body):
             level,
             last_on,
             last_ip,
-            play_count,
+            play_count
             )
         VALUES (?,?,?,?,?,?,?,?,?,?);
         """
 
     hashed_password = hashlib.sha256(body.password).hexdigest()
-    uuid = uuid.uuid4().__str__()
+    last_ip = body.mind.conn.addr
     now = datetime.datetime.now()
-    last_ip = body.brain.conn.addr
-    tup = (body.name, uuid, hashed_password, body.race, body.gender,
-        body.guild, body.level, now, last_ip, 1)
+    tup = (body.name, body.uuid, hashed_password, body.race,
+        body.gender, body.guild, body.level, now, last_ip, 1)
     THE_CURSOR.execute(sql, tup)  
 
+    THE_LOG.add('++ New Character created; %s the %s %s' % 
+        (body.name, body.race, body.guild))
     ## Add the name to the reject table so no one else can use it
-    block_name(name, now, 'map.py', 'Taken by player')
+    block_name(body.name, 'map.py', 'Taken by player')
 
 
 #---------------------------------------------------------------------Load Body
@@ -181,12 +214,12 @@ def save_new_body(body):
 def load_body(body, name):
     
     sql = """
-        SELECT name, uuid, race, gender, guild, level
+        SELECT name, uuid, race, gender, guild, level, room_uuid, bind_uuid
         FROM body
-        WHERE name_lower = ?;
+        WHERE name = ?;
         """
 
-    result = THE_CURSOR.execute(sql).selectone()
+    result = THE_CURSOR.execute(sql,(name,)).fetchone()
 
     if result:
         body.name = result['name']
@@ -195,10 +228,15 @@ def load_body(body, name):
         body.race = result['race']
         body.gender = result['gender']
         body.guild = result['guild']
-        body.level = result['level']    
+        body.level = result['level']
+        body.room_uuid = result['room_uuid']    
+        body.bind_uuid = result['bind_uuid'] 
+
+        THE_LOG.add('== Loaded %s the %s %s' % (body.name, body.race, 
+            body.guild))
 
     else:
-        THE_LOG.add("[dbms] Body not found for '%s'" % name)
+        THE_LOG.add("!! Database Error: Body not found for '%s'" % name)
         sys.exit(1)
 
 

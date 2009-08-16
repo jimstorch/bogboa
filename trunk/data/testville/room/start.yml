@@ -1,0 +1,24 @@
+#
+#   File:   testville/start.yml
+#
+
+uuid:   8611ad17d6be417a8d9027b628f52ce3
+module: Testville
+name:   Newcomer Landing
+desc:
+
+    This is a small plateau.  Its crown has been worn into a shallow, stony
+    bowl by the tread of many feet while the rest is covered in grass and wild
+    flowers.  Ocean waves tumble below and the air smells of saltwater.
+
+    To the North, a footpath leads down towards a small village.
+    A wooden sign with the words 'Visitor Center' points towards an official
+    looking stone building to the East.
+
+#north:   # South Testville
+east:    39760ba2180b486a83e69fdb6433c1e2 # Visitor's Center
+
+
+
+
+
