@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       driver/dbms/map.py
-#   Purpose:    Load and save object data to sqlite
-#   Author:     Jim Storch
+#   driver/dbms/map.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 import datetime

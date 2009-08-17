@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       mudlib/eggtimer.py
-#   Author:     Jim Storch
+#   mudlib/eggtimer.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 from shared import THE_TIME

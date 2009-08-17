@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       mudlib/item.py
-#   Author:     Jim Storch
+#   mudlib/item.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 import sys
@@ -90,7 +92,7 @@ class Item(object):
     def on_remove_trap(self, body):
         pass
 
-    #------------------------------------------------------------------On Enter    
+    #------------------------------------------------------------------On Enter
 
     def on_see(self, body):
         pass

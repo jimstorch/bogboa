@@ -1,8 +1,10 @@
 #!/bin/env python
-# File:		weapon_gen.py
-# Author:	Jim Storch
-# Modified:	Jul 1, 2006
-# Purpose:	Generate Random Weapon Names
+#------------------------------------------------------------------------------
+#   weapon_gen.py
+#   Copyright 2006 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
+#------------------------------------------------------------------------------
 
 import random
 
