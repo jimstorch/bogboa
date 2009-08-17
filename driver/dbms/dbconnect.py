@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       driver/dbms/dbconnect.py
-#   Purpose:    Establish a connection to an SQLite data file
-#   Author:     Jim Storch
+#   driver/dbms/dbconnect.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 import sys

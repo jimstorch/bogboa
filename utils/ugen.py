@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-##-----------------------------------------------------------------------------
-##  File:       ugen.py
-##  Author:     Jim Storch
-##-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#   ugen.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
+#------------------------------------------------------------------------------
 
 """
 Create a text file called 'uuid_list.txt' with 1000 randomly generated

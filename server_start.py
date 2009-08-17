@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #------------------------------------------------------------------------------
-#   File:       server_start.py
-#   Purpose:    loads and loops the server
-#   Author:     Jim Storch
+#   server_start.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 from mudlib import shared

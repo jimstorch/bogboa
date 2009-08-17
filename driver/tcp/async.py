@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   File:       driver/tcp/async.py
-#   Author:     Jim Storch
+#   driver/tcp/async.py
+#   Copyright 2009 Jim Storch
+#   Distributed under the terms of the GNU General Public License
+#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """Handle Asynchronous Telnet Connections."""
