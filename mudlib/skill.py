@@ -9,6 +9,9 @@
 import math
 import random
 
+import shared
+from driver.dbms.map import update_skill
+
 # 10 points of Deterity = 1% bonus to hit.
 # 10 points of Agility = 1% bonus to dodge.
 # 10 points of Strength = 1% bonus to damage.
@@ -18,24 +21,97 @@ import random
 # adeptness
 
 
-#-------------------------------------------------------------------------Skill
+"""
+Skills
 
-class Skill(object):
+Comprised of a name + two bonus stats
 
-    def __init__(self):
-
-        self.uuid = None
-        self.name = None
-
-
-
+skill cap = ( level * 10 ) * guild modifier 
+current = the current skill level, i.e. 0 - cap
+effective = current skill level * (1 + stat bonus)
+stat bonus = skill's relevent stat from race, items, buffs
 
 
-def skill_cap(skill_name, player):
-    pass
+Guild has a huge impact on skills.
+Race has either no impact or minor bonus via stat, never a penalty.
+
+
+stats
+
+str
+agi
+dex
+sta
+chr
+wis
+int
+luc
+
+"""
+
+
+SKILLS = {
+
+
+    ## Offense
+    'one handed blunt':('str', 'wis'),
+    'two handed blunt':('str','wis'),
+    'one handed swords':('str', 'dex'),
+    'two handed swords':('str', 'dex'),
+    'archery':('dex','int'),
+    'bare hand':('str','agi'),
+    
+ 
+    ## Magic
+    'fire damage':('agi', 'int'),
+    'cold damage':('sta', 'int'),
+    'charm' : ('int', 'chr'),
+
+    ## Movement
+    'sneak':('agi', 'luc'),
+
+
+    ## Defense & Saving Throws
+    'dodge':('agi', 'luc'),
+    'armor':('sta','agi'),
+    'mind control':('int','wis'),
+    'falling':('agi','luc'),
+    'death':('sta','luc'),
+    'poison':('sta','str'),
+    'freezing':('sta', 'int'),
+    'burning':('agi','int'),
+    'disease':('sta','wis'),    
+
+    } 
 
 
 
+#---------------------------------------------------------------------Skill Cap
+
+def skill_cap(skill, body)
+
+    """Give a skill name and a body, return that body's skill cap value."""
+
+    guild = shared.GUILD[body.guild]
+    modifier = guild.skills.get(skill, 0)
+    return = ( body.level * 10.0 ) * modifier
+
+    
+#----------------------------------------------------------------Skill Up Check
+
+def skillup_check(skill, body):
+
+    curr, cap = body.skills[skill]
+
+    if curr < cap:
+        chance = ( float(cap) / float(curr) ) / 100.00
+        if random.random() > chance:
+            curr += 1 
+            update_skill(body.name, skill, curr)
+            body,send('Your skill at %s has improved to %d\n' % (skill, curr))
+
+
+#-----------------------------------------------------------Diminishing Returns
 
 def diminishing_returns(val, scale):
 

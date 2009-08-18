@@ -4,16 +4,18 @@
 
 name: human
 desc: The race of man.
-   
-##
-##  Racial Skill Modifiers
-##
 
-#skills:
 
 ##
-##  Racial Abilities
+##  Racial Stats
 ##
 
-#abilities:
+str: 12
+dex: 10
+agi: 10
+int: 10
+wis: 10
+con: 12
+chr: 10
+
 
