@@ -1,10 +1,18 @@
-uuid: 33ef1808-6ccb-4b3f-beef-5ea19f3eec3f
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   data/config.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+
+uuid: 1e9960fb432243bca9323df22c8e790b
 name: Test Module Pirates
-module: test module
+module: base
 
 friends:
-    - [ 5eef27a0-fe9d-4b14-b319-e6bfbcb5e655, 0.8 ]
+    - [ b0a821f4f4994033ba8a1baeb29c4458, 0.8 ]
 
 foes:
-    - [ 967e498b-7a39-4311-a1f4-77331d518dab, 0.2 ] 
+    - [ e3769082fd2f48c19440c86883d0136d, 0.2 ] 
 
