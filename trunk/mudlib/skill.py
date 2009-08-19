@@ -10,7 +10,9 @@ import math
 import random
 
 import shared
+from mudlib.stat import stat_bonus
 from driver.dbms.map import update_skill
+
 
 # 10 points of Deterity = 1% bonus to hit.
 # 10 points of Agility = 1% bonus to dodge.
@@ -31,7 +33,6 @@ current = the current skill level, i.e. 0 - cap
 effective = current skill level * (1 + stat bonus)
 stat bonus = skill's relevent stat from race, items, buffs
 
-
 Guild has a huge impact on skills.
 Race has either no impact or minor bonus via stat, never a penalty.
 
@@ -50,26 +51,29 @@ luc
 """
 
 
-SKILLS = {
+RELATED_STATS = {
 
+    ## Generic
+    'health':('sta','luc'),
 
     ## Offense
-    'one handed blunt':('str', 'wis'),
-    'two handed blunt':('str','wis'),
-    'one handed swords':('str', 'dex'),
-    'two handed swords':('str', 'dex'),
     'archery':('dex','int'),
-    'bare hand':('str','agi'),
-    
- 
+    'cudgels':('str', 'wis'),
+    'daggers':('agi','dex'),
+    'fists':('str','agi'),
+    'greatswords':('str', 'dex'),
+    'staves':('str','int'),
+    'swords':('str', 'dex'),
+
     ## Magic
+    'magic items':('int', 'wis'),
     'fire damage':('agi', 'int'),
     'cold damage':('sta', 'int'),
     'charm' : ('int', 'chr'),
-
+    
     ## Movement
     'sneak':('agi', 'luc'),
-
+    'jump':('agi','luc'),
 
     ## Defense & Saving Throws
     'dodge':('agi', 'luc'),
@@ -85,6 +89,15 @@ SKILLS = {
     } 
 
 
+
+#---------------------------------------------------------------Effective Skill
+
+def effective_skill(skill, body):
+    curr = body.skill[skill]
+    stat1, stat2 = RELATED_STATS[skill]
+    bonus = stat_bonus(stat1 + stat2)
+    return int(curr * bonus)   
+        
 
 #---------------------------------------------------------------------Skill Cap
 

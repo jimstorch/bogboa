@@ -21,8 +21,7 @@ class Race(object):
         self.name = None
         self.module = None
 
-        self.stat = {}
-        self.skill_adj = {}
+        self.stats = {}
         self.ability = {}
         
 
@@ -59,6 +58,12 @@ def configure_race(cfg):
     else:
         race.module = None
 
+    if 'stats' in cfg:
+        race.stats = cfg.pop('stats')
+
+    ## For future use
+    if 'version' in cfg:
+        cfg.pop('version')
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:

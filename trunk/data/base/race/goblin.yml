@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   pirate.yml
+#   goblin.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 
-uuid: 1e9960fb432243bca9323df22c8e790b
-name: Test Module Pirates
-module: base
+name: goblin
+version: 1001
+desc: 
 
-friends:
-    - [ b0a821f4f4994033ba8a1baeb29c4458, 0.8 ]
 
-foes:
-    - [ e3769082fd2f48c19440c86883d0136d, 0.2 ] 
+###  Racial Stats
 
+    - agi: 15
+    - chr: 4
+    - dex: 15
+    - int: 15
+    - luc: 16
+    - sta: 10
+    - str: 10
+    - wis: 10

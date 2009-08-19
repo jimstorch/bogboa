@@ -1,21 +1,24 @@
-##
-##  File:   human.yml
-##
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   human.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
 
 name: human
+version: 1001
 desc: The race of man.
 
 
-##
-##  Racial Stats
-##
+###  Racial Stats
 
-str: 12
-dex: 10
-agi: 10
-int: 10
-wis: 10
-con: 12
-chr: 10
-
-
+stats:
+    - agi: 12
+    - chr: 12
+    - dex: 12
+    - int: 12
+    - luc: 16
+    - sta: 14
+    - str: 14
+    - wis: 12

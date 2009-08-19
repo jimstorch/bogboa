@@ -1,18 +1,28 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   pirate.yml
+#   monk.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 
-uuid: 1e9960fb432243bca9323df22c8e790b
-name: Test Module Pirates
-module: base
+name: monk
+version: 1001
+desc: 
 
-friends:
-    - [ b0a821f4f4994033ba8a1baeb29c4458, 0.8 ]
+#
+#   Skill modifiers for this guild
+#
 
-foes:
-    - [ e3769082fd2f48c19440c86883d0136d, 0.2 ] 
+skills:
+    - health:       .85
+    - dodge:        1.0
+    - swords:       .25
+    - greatswords   .15
+    - armor:        .6
+    - magic items:  .65
+    - fists:        1.0   
+    - archery:      .80
+    - daggers:      .50
+
 
