@@ -1,24 +1,31 @@
-##
-##  File:   fighter.yml
-##
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   fighter.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
 
 name: fighter
+version: 1001
 desc: Master of armed combat
 
-##
-##  Skill modifiers for this guild
-##
+#
+#   Skill modifiers for this guild
+#
 
-#skills:
-#    - defense:  0.20
-#    - attack:   0.10
+skills:
+    - health:       1.0
+    - dodge:        .65
+    - swords:       1.0
+    - greatswords   1.0
+    - armor:        1.0
+    - magic items:  .25
+    - fists:        .8   
+    - archery:      .7
+    - daggers:      .7
 
-##
-##  Guild specific abilities
-##
-    
-#abilities:
-#    - attack
+
 
 
 

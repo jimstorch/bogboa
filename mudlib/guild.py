@@ -21,16 +21,16 @@ class Guild(object):
         self.name = None
         self.module = None
 
-        self.skill_mod = {}     # Dictionary of Skill modifiers
+        self.skill_mods = {}    # Dictionary of Skill modifiers
         self.ability = {}       # List of guild abilities by name
 
-    #-------------------------------------------------------------Get Skill Mod        
+    #-------------------------------------------------------------Get Skill Mod
 
     def get_skill_mod(self, skill_name):
         """
         Return the guild skill modifier or zero if skill not found.
         """
-        return self.skill_mod(skill_name, 0.0)
+        return self.skill_mods(skill_name, 0.0)
 
     #---------------------------------------------------------------Has Ability
 
@@ -71,6 +71,14 @@ def configure_guild(cfg):
         guild.module = cfg.pop('module')
     else:
         guild.module = None
+
+    if 'skills' in cfg:
+        guild.skill_mods = cfg.pop('skills')
+
+    ## For future use
+    if 'version' in cfg:
+        cfg.pop('version')
+
 
 
     ## Complain if there are leftover keys -- probably a typo in the YAML

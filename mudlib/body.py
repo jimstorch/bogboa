@@ -27,10 +27,13 @@ class Body(object):
         self.gender = ''
         self.guild = ''
         self.level = 1
+        self.max_hp = 1
+        self.curr_hp = 1
+        self.stats = {}                 ## str, dex, int, etc
+        self.skills = {}                ## Sklls are persistent
         self.abilities = set()          ## Commands useable
-        self.skill = {}                 ## Sklls are persistent
-        self.flag = {}                  ## Flags are persistent
-        self.token = {}                 ## Tokens are non persistent
+        self.flags = {}                 ## Flags are persistent
+        self.tokens = {}                ## Tokens are non-persistent
 
         ## Inventory
 #        self.money = 0

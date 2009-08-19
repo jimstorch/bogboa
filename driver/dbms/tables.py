@@ -26,7 +26,7 @@ def check_database():
     ## Might use this value for automatic table conversion in future releases
     user_version = THE_CURSOR.execute("PRAGMA user_version").fetchone()[0]
     if user_version == 0:
-        THE_CURSOR.execute("PRAGMA user_version=10001;")
+        THE_CURSOR.execute("PRAGMA user_version=1001;")
         THE_LOG.add("?? Using new database file.")
     else:
         THE_LOG.add("-- DB version is %d" % user_version)    
@@ -46,6 +46,10 @@ def check_database():
     if not THE_CURSOR.execute(sql, ('skill',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'skill' table in database, creating it.")
         create_skill_table()
+
+    if not THE_CURSOR.execute(sql, ('faction',)).fetchone()[0]:
+        THE_LOG.add("?? Missing 'faction' table in database, creating it.")
+        create_faction_table()
 
     if not THE_CURSOR.execute(sql, ('flag',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'flag' table in database, creating it.")
@@ -137,6 +141,26 @@ def create_skill_table():
             (
             uuid TEXT PRIMARY KEY,
             skill TEXT,
+            value TEXT
+            );
+        """
+
+    THE_CURSOR.execute(sql)
+
+
+#----------------------------------------------------------Create Faction Table
+
+def create_faction_table():
+
+    sql = """DROP TABLE IF EXISTS faction;"""
+
+    THE_CURSOR.execute(sql)
+    
+    sql = """
+        CREATE TABLE IF NOT EXISTS flag
+            (
+            uuid TEXT PRIMARY KEY,
+            faction_uuid TEXT,
             value TEXT
             );
         """
