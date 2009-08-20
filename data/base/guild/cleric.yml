@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   help.yml
+#   cleric.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
+
+name: cleric
 module: base
+text:
 
-name: help
-text: |
+    The cleric is under construction.
 
-    Greetings, this is the help system. Try 'help topics' for a list of 
-    available help texts.  You may also use a '?' instead of typing the word
-    'help'.
+

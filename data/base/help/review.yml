@@ -1,9 +1,14 @@
-#
-#   File:   review.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   create.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: review
-module: base
 text: |
     The 'review' command is used during character creation to display
     the current selections.  It is entered as a single command with no

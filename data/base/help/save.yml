@@ -1,9 +1,14 @@
-#
-#   File:   save.yml   
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   save.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: save
-module: base
 text: |
     The 'save' command is used during character creation to tell the system
     you are finished selecting name, gender, race, guild, and password and

@@ -1,11 +1,15 @@
-#
-#   File:   guild.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   guild.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: guild
 aliases: [ guilds, class, classes, roles, role, sect ]
-module: base
-
 text: |
     The 'guild' command is used during the character creation process to 
     specify the guild your character will apprenticed to.  This is equivalent
@@ -18,8 +22,7 @@ text: |
     re-entering the guild command.  Depending on guild restrictions, selecting
     a guild may clear your race or gender selections.
 
-    Try the following help commands for more information:
+    Try the following help topics for more information:
 
-        help fighter
-        help priest
+        fighter, cleric, shaman, monk        
    

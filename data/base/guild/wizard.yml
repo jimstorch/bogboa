@@ -1,27 +1,22 @@
-##
-##  File:   wizard.yml
-##
-
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   wizard.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 name: wizard
-desc: Mysterious Shaper of Worlds
+
+text:
+    
+    Little is known about this mysterious, reclusive shaper of worlds.
 
 ##
 ##  Skill modifiers for this guild 
 ##
 
-#skills:
-#    - wizardry:     1.00
-#    ## Enforce the prime-directive
-#    - healing:      0.00
-#    - melee:        0.00
-#    ## Make them un-killable
-#    - armor:        1000.0
-#    - heartiness:   1000.0
 
-##
-##   Guild specific abilities 
-##   
-
-#abilties:
 
 

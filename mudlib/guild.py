@@ -62,10 +62,13 @@ def configure_guild(cfg):
 #            % guild.name)
 #        sys.exit(1)
 
-    if 'desc' in cfg:
-        guild.desc = cfg.pop('desc')
-    else:
-        guild.desc = None
+    ## Used by Help
+    if 'text' in cfg:
+        cfg.pop('text')
+
+    ## Used by Help
+    if 'aliases' in cfg:
+        cfg.pop('aliases')
 
     if 'module' in cfg:
         guild.module = cfg.pop('module')

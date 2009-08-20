@@ -157,7 +157,7 @@ def create_faction_table():
     THE_CURSOR.execute(sql)
     
     sql = """
-        CREATE TABLE IF NOT EXISTS flag
+        CREATE TABLE IF NOT EXISTS faction
             (
             uuid TEXT PRIMARY KEY,
             faction_uuid TEXT,

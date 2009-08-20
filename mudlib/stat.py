@@ -9,12 +9,19 @@
 """
 agi - Agility
 chr - Charisma
-dex - dexterity
+dex - Dexterity
 int - Intelligence
 luc - Luck
-sta - stamina
-str - strength
+sta - Stamina
+str - Strength
 wis - Wisdom
+
+Each Skill has two relevant Stats -- Stats enhance an Ability 1% per 10 points.
+Negative stats are ten times as detrimental, 1% loss per negative point.
+Each Ability utilizes one Skill.
+Each Guild has one Primary and two Secondary Stats, based on Abilities.
+Primary + Secondary A affects combat/damaging magic.
+Primary + Secondary B affects defense/support magic.
 
 """
 
