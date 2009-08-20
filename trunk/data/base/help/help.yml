@@ -9,8 +9,7 @@ version: 1001
 module: base
 
 name: help
-text: |
-
+text:
     Greetings, this is the help system. Try 'help topics' for a list of 
     available help texts.  You may also use a '?' instead of typing the word
     'help'.

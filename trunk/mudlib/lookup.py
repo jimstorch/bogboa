@@ -36,7 +36,7 @@ from mudlib import shared
 
 #---------------------------------------------------------------------Find Room
 
-def room(uuid):
+def find_room(uuid):
 
     """Given a uuid, return the Room object."""
 

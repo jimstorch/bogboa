@@ -44,6 +44,19 @@ BODIES = {}         ## key is body UUID
 BRAINS = []         ## List of AI's
 
 
-    
+#---------------------------------------------------------------Register Player
+
+def register_player(client):
+
+    pass
+
+#---------------------------------------------------------------------Is Online
+
+def is_online(name):    
+
+    """Return True is the given name matches an online player."""
+
+    pass
 
 
+   

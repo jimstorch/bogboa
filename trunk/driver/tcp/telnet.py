@@ -12,7 +12,7 @@ import socket
 
 from mudlib import shared
 from driver.log import THE_LOG
-
+from driver.decorate import colorize
 
 #---[ Telnet Notes ]-----------------------------------------------------------
 # (See RFC 854 for more information)
@@ -168,7 +168,8 @@ class Telnet(object):
     def send(self, text):
         """Queue text to be sent to the DE."""
         if len(text):
-            self.send_buffer += text
+            ## Send with colorization preference
+            self.send_buffer += colorize(text, self.use_ansi)
             self.send_pending = True
 
 
@@ -224,7 +225,9 @@ class Telnet(object):
     #----------------------------------------------------------Password Mode On
 
     def password_mode_on(self):
-        """Tell DE we will echo (but don't) so typed passwords don't show."""        
+        """
+        Tell DE we will echo (but don't) so typed passwords don't show.
+        """        
         self._iac_will(ECHO)
         self._note_reply_pending(ECHO, True)
 
@@ -340,7 +343,7 @@ class Telnet(object):
             self.send_buffer += byte 
 
 
-    #---------------------------------------------------------------IAC Sniffer        
+    #---------------------------------------------------------------IAC Sniffer
 
     def _iac_sniffer(self, byte):
         """Watches incomming data for Telnet IAC sequences. Passes the data,
@@ -466,11 +469,10 @@ class Telnet(object):
         cmd = self.telnet_got_cmd
         #print "got three byte cmd %d:%d" % (ord(cmd), ord(option))
 
-
         ## Incoming DO's and DONT's refer to the status of this end
         
-        #---[ DO ]-------------------------------------------------------------        
- 
+        #---[ DO ]-------------------------------------------------------------
+
         if cmd == DO:   
 
             if option == BINARY:
@@ -672,7 +674,8 @@ class Telnet(object):
                     print "Bad length on NAWS SB:", len(bloc)
                 else:
                     self.columns = (256 * ord(bloc[1])) + ord(bloc[2])
-                    self.rows = (256 * ord(bloc[3])) + ord(bloc[4])              
+                    self.rows = (256 * ord(bloc[3])) + ord(bloc[4])
+             
                 #print "Screen is %d x %d" % (self.columns, self.rows)
 
         self.telnet_sb_buffer = ''            

@@ -6,11 +6,12 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.shared import HELPS
-
+from mudlib import shared
+from mudlib import parsers
 
 #----------------------------------------------------------------------Commands
 
+@parsers.blank
 def commands(client):
 
     """List the player's granted command set."""
@@ -18,7 +19,7 @@ def commands(client):
     clist = list(client.commands)
     clist.sort()
     cmds = ', '.join(clist)
-    client.send('Your current commands are:\n%s' % cmds)
+    client.send_wrapped('Your current commands are: %s' % cmds)
 
 #--------------------------------------------------------------------------Look
 
@@ -26,7 +27,8 @@ def look(client):
 
     """Look at the current room."""
 
-    client.send('^C' + word_wrap(client.room.view, client.conn.columns))
+    room = shared.ROOMS[client.body.room_uuid]
+    client.send(room.desc)
 
 
 #--------------------------------------------------------------------------Help
@@ -38,13 +40,13 @@ def help(client):
     if client.verb_args:
 
         topic = client.verb_args[0].lower()
-        if topic in HELPS:
-            client.send(HELPS[topic].text)
+        if topic in shared.HELPS:
+            client.send_wrapped(shared.HELPS[topic].text)
         else:
             client.send("Help topic not found.")
 
     else:
-        client.send(HELPS['help'].text)
+        client.send_wrapped(shared.HELPS['help'].text)
     
 
 #-------------------------------------------------------------------------Score
@@ -57,7 +59,7 @@ def score(client):
 
 #--------------------------------------------------------------------------Time
 
-def time(body):
+def time(client):
 
     """Fix Me"""
 
@@ -65,7 +67,7 @@ def time(body):
 
 #---------------------------------------------------------------------Inventory
 
-def inventory(body):
+def inventory(client):
 
     """Fix Me"""
 

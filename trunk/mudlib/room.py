@@ -29,15 +29,26 @@ class Room(object):
         self.items = {}
         self.scripts = {}
 
-    #--------------------------------------------------------------Tell Players
+    #------------------------------------------------------------------Tell All
 
-    def tell_players(self, msg):
+    def tell_all(self, msg):
         
         """Send a message to every player in the room."""
 
         for body in self.bodies:
             if body.is_player:
                 body.send(msg)
+
+
+    #--------------------------------------------------------------Tell All But
+
+    def tell_all_but(self, body, msg):
+        
+        """Send a message to every player in the room except body."""
+
+        for a_body in self.bodies:
+            if a_body.is_player and a_body != body:
+                a_body.send(msg)
 
 
     #------------------------------------------------------------------On Enter
@@ -47,17 +58,17 @@ class Room(object):
         if body.is_visible:
 
             if direction:
-                self.tell_players('%s enters from the %s.\n' % 
+                self.tell_all('%s enters from the %s.\n' % 
                     (body.name, direction))          
             else:
-                self.tell_players("%s appears.\n" % body.name )       
+                self.tell_all("%s appears.\n" % body.name )       
   
         self.bodies.append(body)
         body.room_uuid = self.uuid
 
         if body.is_player:
             body.send('\nYou enter %s at %s.\n' % (self.name, time_msg()))
-            body.send(self.desc + '\n')
+            body.send_wrapped(self.desc)
 
         if 'on_enter' in self.scripts:
             exec self.scripts['on_enter']
@@ -71,10 +82,10 @@ class Room(object):
         if body.is_visible:
 
             if direction:
-                self.tell_players('%s exits to the %s.\n' % 
+                self.tell_all('%s exits to the %s.\n' % 
                     (body.name, direction))          
             else:
-                self.tell_players('%s vanishes.\n' % body.name)          
+                self.tell_all('%s vanishes.\n' % body.name)          
 
 
         if 'on_exit' in self.scripts:
