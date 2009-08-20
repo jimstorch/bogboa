@@ -5,10 +5,13 @@
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: ogre
-version: 1001
-desc: 
+text:
+
+    This space intentionally left blank. 
 
 
 ###  Racial Stats

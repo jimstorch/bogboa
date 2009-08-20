@@ -48,11 +48,6 @@ def configure_race(cfg):
 #        print "ERROR! Missing UUID in config for race '%s'." % race.name
 #        sys.exit(1)
 
-    if 'desc' in cfg:
-        race.desc = cfg.pop('desc')
-    else:
-        race.desc = None
-
     if 'module' in cfg:
         race.module = cfg.pop('module')
     else:
@@ -60,6 +55,14 @@ def configure_race(cfg):
 
     if 'stats' in cfg:
         race.stats = cfg.pop('stats')
+
+    ## Used by Help
+    if 'text' in cfg:
+        cfg.pop('text')
+
+    ## Used by Help
+    if 'aliases' in cfg:
+        cfg.pop('aliases')
 
     ## For future use
     if 'version' in cfg:

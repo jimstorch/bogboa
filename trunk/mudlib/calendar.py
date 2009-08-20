@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.shared import THE_TIME
+from mudlib import shared
 
 
 """
@@ -72,11 +72,11 @@ GAME_SECOND = GAME_MINUTE / 60.0
 #----------------------------------------------------------------------Date Msg
 
 
-def date_msg(self):
+def date_msg():
     """
     Return the julian date and the current house.
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = shared.THE_TIME - UNIX_ADJ
     julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
     phase = self.year % 12
     return ('day %d of the Year of the %s' %
@@ -85,11 +85,11 @@ def date_msg(self):
 
 #----------------------------------------------------------------------Time Msg
 
-def time_msg(self):
+def time_msg():
     """
     Return HH:MM and the period of day.
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = shared.THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR) 
     minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
 
@@ -114,7 +114,7 @@ def time_msg(self):
 
 #------------------------------------------------------------------Datetime Msg
 
-def datetime_msg(self):
+def datetime_msg():
     """
     Return the HH:MM, period of day, julian date, and house.
     """
@@ -123,13 +123,13 @@ def datetime_msg(self):
 
 #----------------------------------------------------------------------Sunlight
 
-def sunlight(self):
+def sunlight():
 
     """
     Calculate the current sunlight level.
     Return an integer value in the range of 0 (Midnight) to 12 (Noon).
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = shared.THE_TIME- UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))
         

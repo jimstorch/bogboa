@@ -5,10 +5,20 @@
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: monk
-version: 1001
-desc: 
+text:
+
+    The monk is a master of martial arts, unique in his ability to fight
+    effectively using only his own body for a weapon -- though he is also
+    effective using blunt weapons created in balance with nature.  
+
+    The primary stat for a monk is wisdom, representing his special 
+    comprehension and unity with the natural world.  Secondary stats are
+    strength for dealing powerful blows and agility for gracefully dodging
+    attacks.
 
 #
 #   Skill modifiers for this guild

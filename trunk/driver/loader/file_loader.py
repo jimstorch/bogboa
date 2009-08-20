@@ -110,7 +110,7 @@ def cfg_iter(mask):
     """
 
     filenames = glob.glob(mask)
-    THE_LOG.add("-- %d found" % len(filenames))
+    #THE_LOG.add("-- %d found" % len(filenames))
 
     for filename in filenames:
         cfg = parse_file(filename)
@@ -181,5 +181,16 @@ def help_cfg_iter(module_dir):
     mask = os.path.join(module_dir, 'help/*.yml')
     for cfg in cfg_iter(mask):
         yield(cfg)
+
+    ## Also load guilds as help files
+    mask = os.path.join(module_dir, 'guild/*.yml')
+    for cfg in cfg_iter(mask):
+        yield(cfg)
+
+    ## and races...
+    mask = os.path.join(module_dir, 'race/*.yml')
+    for cfg in cfg_iter(mask):
+        yield(cfg)
+
 
 

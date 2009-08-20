@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   stat.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
+
+name: stat
+aliases: [stats, attribute, attributes]
+text: |
+
+    There are eight character stats used by the game. 
+       
+        Agility - reflexes, speed, balance, and flexibility.
+        Charisma - good looks, persuasiveness, charm, and articulation.
+        Dexterity - where agility measures speed, dexterity represent precision
+            in movement and the ability to manipulate delicate objects.
+        Intelligence - memory, comprehension, and problem solving.
+        Luck - the favor of the gods. Always useful when things go awry.  
+        Stamina - heartiness, health, and resistance to tiring. 
+        Strength - the ability to perform acts of physical brawn.
+        Wisdom - attunement with the natural world and spiritual strength.
+
+    Every skill gains a bonus from the combination of two stats.  Each
+    guild will typically favor one primary and two secondary stats.
+

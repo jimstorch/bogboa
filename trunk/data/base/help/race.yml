@@ -1,11 +1,15 @@
-#
-#   File:   race.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   create.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: race
 aliases: [ races, ]
-module: base
-
 text: |
     The 'race' command is used during the character creation process to specify
     a race for your character.  The format is the word 'race' follow by a space
@@ -17,8 +21,7 @@ text: |
     entering the 'race' command.  Depending on race configuration, selecting a
     race may reset your guild or gender settings.
 
-    Try the following help commands for more information:
+    Try the following help topics for more information:
     
-        help human
-        help elf
+        human, elf, dwarf, goblin, ogre
 

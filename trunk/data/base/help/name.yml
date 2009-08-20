@@ -1,11 +1,15 @@
-#
-#   File:   name.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   name.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: name
 aliases: [names, ]
-module: base
-
 text: |
     The 'name' command is used during the character creation process to specify
     the name you would like for your character.  The format is the word 'name'
@@ -31,5 +35,4 @@ text: |
       orientation. 
 
     Do not interpret the computer's acceptance of your name as an indication
-    that it passes administrative review.  In other words, if you pick an 
-    idiotic handle, don't be surprised to find your character deleted.      
+    that it passes administrative review.

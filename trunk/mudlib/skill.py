@@ -13,16 +13,6 @@ import shared
 from mudlib.stat import stat_bonus
 from driver.dbms.map import update_skill
 
-
-# 10 points of Deterity = 1% bonus to hit.
-# 10 points of Agility = 1% bonus to dodge.
-# 10 points of Strength = 1% bonus to damage.
-
-# max_skill = ( level * 10 ) * ( 1.0 + class_mod + race_mod )
-# proficiency
-# adeptness
-
-
 """
 Skills
 
@@ -53,27 +43,38 @@ luc
 
 RELATED_STATS = {
 
-    ## Generic
+    ## Body
     'health':('sta','luc'),
+    'meditate':('wis', 'int'),
+    'first aid':('wis','luc'),
+    'jump':('agi','luc'),
+    'swimming':('sta', 'agi')
 
-    ## Offense
+    ## Armed Combat
     'archery':('dex','int'),
     'cudgels':('str', 'wis'),
     'daggers':('agi','dex'),
-    'fists':('str','agi'),
     'greatswords':('str', 'dex'),
     'staves':('str','int'),
     'swords':('str', 'dex'),
+
+    ## Unarmed Combat
+    'fists':('str','wis'),
+    'kicks':('str','wis'),
 
     ## Magic
     'magic items':('int', 'wis'),
     'fire damage':('agi', 'int'),
     'cold damage':('sta', 'int'),
     'charm' : ('int', 'chr'),
-    
-    ## Movement
+    'transmutation':('int','dex'),
+    'restoration':('wis','sta'),
+   
+    ## Clandestine
+    'hide':('agi', 'luc'),
     'sneak':('agi', 'luc'),
-    'jump':('agi','luc'),
+    'lock picking':('dex', 'luc'),
+    'filching':('dex', 'luc'),
 
     ## Defense & Saving Throws
     'dodge':('agi', 'luc'),

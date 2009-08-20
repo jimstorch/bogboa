@@ -69,6 +69,18 @@ def configure_help(cfg):
         THE_LOG.add("WARNING: Missing 'module' value for help '%s'." 
             % help.name)       
 
+    ## Ignore from Guild files
+    if 'skills' in cfg:
+        cfg.pop('skills')
+
+    ## Ignore from Race files
+    if 'stats' in cfg:
+        cfg.pop('stats')
+
+    ## Unused at this time
+    if 'version' in cfg:
+        cfg.pop('version')
+
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:

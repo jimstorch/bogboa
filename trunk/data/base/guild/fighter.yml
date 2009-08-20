@@ -5,10 +5,18 @@
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: fighter
-version: 1001
-desc: Master of armed combat
+text:
+
+    The fighter is a professional warrior, skilled in bladed combat.
+
+    The primary stat for a fighter is stamina for the heartiness needed to
+    prevail against the biggest foes.  Secondary stats are dexterity for
+    scoring accurate cuts with a blade and strength for wearing heavy armor
+    and absorbing brutal blows. 
 
 #
 #   Skill modifiers for this guild

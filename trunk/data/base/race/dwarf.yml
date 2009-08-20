@@ -5,10 +5,14 @@
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: dwarf
-version: 1001
-desc: 
+aliases: [dwarve, dwarves, dwarven, dorf, dorfs]
+text:
+
+    This space intentionally left blank. 
 
 
 ###  Racial Stats

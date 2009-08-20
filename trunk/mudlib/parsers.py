@@ -9,17 +9,17 @@
     
 #---------------------------------------------------------------------Monologue    
     
-def monologue(words):
+def monologue(client):
 
     """Parse text directed at no one in particular."""
 
-    return (' '.join(words),)
+    #return (client.' '.join(words),)
     
 
 
 #----------------------------------------------------------------------Dialogue
 
-def dialogue(words):
+def dialogue(client):
 
     """Parse text directed at a target."""
 
@@ -41,7 +41,7 @@ def dialogue(words):
 
 #----------------------------------------------------------------------Singular
 
-def singular(words):
+def singular(client):
 
     """Test that input was a single word"""
 

@@ -12,7 +12,7 @@ from mudlib.shared import ROOMS
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
-
+from mudlib.calendar import time_msg
 
 #--------------------------------------------------------------------------Room
 
@@ -56,7 +56,7 @@ class Room(object):
         body.room_uuid = self.uuid
 
         if body.is_player:
-            body.send('\nYou enter %s.\n' % self.name)
+            body.send('\nYou enter %s at %s.\n' % (self.name, time_msg()))
             body.send(self.desc + '\n')
 
         if 'on_enter' in self.scripts:

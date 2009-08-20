@@ -1,11 +1,15 @@
-#
-#   File:   load.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   load.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
 
 name: load
 aliases: [login, ]
-module: base
-
 text: |
     The 'load' command is used to play a previously created character.
     The format is 'load' followed by the name and password you provided
