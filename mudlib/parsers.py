@@ -6,51 +6,82 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-    
-#---------------------------------------------------------------------Monologue    
-    
-def monologue(client):
+"""
+Decorator functions to parse and error check arguments for player commands.
+"""    
 
-    """Parse text directed at no one in particular."""
 
-    #return (client.' '.join(words),)
+#-------------------------------------------------------------------------Blank
+
+def blank(cmd_func):
+
+    """Decorator to enforce zero arguments."""
+
+    def parse_func(client):
+        args = client.verb_args
+        if len(args):
+            client.send('That command should be a single word.\n')
+            return
+        else:
+            cmd_func(client)
+
+    return parse_func
+
+
+#----------------------------------------------------------------------Singular
+
+def singular(cmd_func):
+
+    """Decorator to enforce single argument commands."""
+
+    def parse_func(client):
+        args = client.verb_args
+        if len(args) != 1:
+            client.send('That command requires a subject.\n')
+            return
+        else:
+            cmd_func(client, args[0])
+
+    return parse_func
+
+
+#---------------------------------------------------------------------Monologue
+
+def monologue(cmd_func):
+
+    """Decorator to combine verb args into a single string."""
+
+    def parse_func(client):
+        args = client.verb_args
+        if not len(args):
+            client.send('Verb is missing who or what.\n')
+            return
+        else:
+            msg = ' '.join(args)
+            cmd_func(client, msg)
+    return parse_func        
     
 
 
 #----------------------------------------------------------------------Dialogue
 
-def dialogue(client):
+def dialogue(cmd_func):
 
-    """Parse text directed at a target."""
+    """Decorator to identify a target and combine remaining arguments."""
 
-    count = len(words)
+    def parse_func(client):
+        args = client.verb_args
+        if len(args) == 0:
+            client.send('Verb is missing a subject and message.\n')
+            return
+        elif len(args) == 1:
+            client.send('Verb is missing a message.\n')
+            return
+        else:
+            target = args.pop(0)
+            msg = ' '.join(args)
+            cmd_func(client, target, msg)
+        return parse_func 
 
-    if count == 0:
-        target = None
-        text = ''
-
-    elif count == 1:
-        target = words[0].lower()
-        text = ''
-
-    else:
-        target = words[0].lower()
-        text = ' '.join(words[1:])
-
-    return (target, text)
-
-#----------------------------------------------------------------------Singular
-
-def singular(client):
-
-    """Test that input was a single word"""
-
-    if len(words) == 0:
-        retval = True
-
-    else:
-        retval = False
-
-    return retval
-    
+  
 

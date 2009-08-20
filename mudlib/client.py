@@ -13,6 +13,8 @@ from mudlib.body import Body
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
+from driver.decorate import word_wrap
+
 
 #------------------------------------------------------------------------Client
 
@@ -40,6 +42,12 @@ class Client(object):
     def send(self, msg):
         """Transmit text to the distant end."""
         self.conn.send(msg)
+
+    #---------------------------------------------------------------Send Pretty
+
+    def send_wrapped(self, msg):
+        """Transmit text to the distant end."""
+        self.conn.send(word_wrap(msg))    
 
     #-----------------------------------------------------------Process Command
 

@@ -7,8 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib import shared
-from mudlib import lookup
-
+from mudlib import parsers
 
 #---------------------------------------------------------------------Broadcast
 
@@ -34,7 +33,8 @@ def broadcast_all(msg):
 
 #-------------------------------------------------------------------------Emote
 
-def emote(client):
+@parsers.monologue
+def emote(client, msg):
 
     """Displays an emote to everyone in the room."""
 
@@ -54,23 +54,24 @@ def tell(client):
     if target:
 
         if client == target:
-            target.send('^MYou tell yourself,^W %s' % message)
+            target.send('You tell yourself, %s' % message)
 
         else:
-            target.send('^M%s tells you,^W %s' % (client.name, message))
-            client.send('^wYou tell %s, %s' % (target.name, message))
+            target.send('%s tells you, %s' % (client.name, message))
+            client.send('You tell %s, %s' % (target.name, message))
         
         ## note the sender so that a reply works
         target.last_tell = client.handle   
 
     else:
 
-        client.send("^y%s is not in this world." % target_handle.capitalize())
+        client.send("%s is not in this world." % target_handle.capitalize())
 
 
 #-------------------------------------------------------------------------Reply
 
-def reply(client):
+@parsers.monologue
+def reply(client, msg):
 
     """Shortcut that tells to the last person who sent you one."""
 
@@ -84,42 +85,47 @@ def reply(client):
 
 #---------------------------------------------------------------------------OOC
 
-def ooc(client):
+@parsers.monologue
+def ooc(client, msg):
 
     """Sends 'message' to every players."""
 
-    for player in shared.PLAY_LIST:
+    for player in shared.PLAYERS:
 
         if player == client:
-            client.send('^wYou OOC; %s' % message)                
+            player.send('You OOC; %s\n' % msg)                
         
         else:
-            player.send('^R%s OOC; ^W %s' % (client.name, message))
+            player.send('%s OOC; %s\n' % (client.name, msg))
 
 
 #-------------------------------------------------------------------------Shout
 
-def shout(client):
+@parsers.monologue
+def shout(client, msg):
 
     """Sends 'message' to every players."""
 
-    for player in shared.PLAY_LIST:
+    for player in shared.PLAYERS:
 
         if player == client:
-            client.send('^wYou shout, %s' % message)                
+            player.send('You shout, %s\n' % msg)                
         
         else:
-            player.send('^R%s shouts,^W %s' % (client.name, message))
+            player.send('%s shouts, %s\n' % (client.name, msg))
 
 
 #---------------------------------------------------------------------------Say
 
-def say(client):
+@parsers.monologue
+def say(client, msg):
     
     """Sends message to every player in client's room."""
 
-    client.room.tell_all_but(client, '^w%s says,^W %s' % (client.name, 
-        message))
-    client.send('^wYou say, %s' % message)    
+    body = client.body
+    room = shared.ROOMS[body.room_uuid]
+
+    room.tell_all_but(body, '%s says, %s\n' % (body.name, msg))
+    client.send('You say, %s\n' % msg)    
 
 

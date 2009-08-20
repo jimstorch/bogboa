@@ -460,6 +460,13 @@ class Body(object):
         if self.is_player:
             self.mind.send(msg)
 
+    #----------------------------------------------------------------------Send
+
+    def send_wrapped(self, msg):
+        if self.is_player:
+            self.mind.send_wrapped(msg)
+
+
     #--------------------------------------------------------------------Prompt
 
     def prompt(self):

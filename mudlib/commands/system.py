@@ -7,9 +7,11 @@
 #------------------------------------------------------------------------------
 
 from driver.scheduler import THE_SCHEDULER
+from mudlib import parsers
 
 #--------------------------------------------------------------------------Quit
 
+@parsers.blank
 def quit(client):
 
     """Exit from the game."""

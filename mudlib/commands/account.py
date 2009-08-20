@@ -264,6 +264,37 @@ def load(client):
             client.deactivate()
      
 
+#------------------------------------------------------------Player Command Set
+
+def player_command_set(client):
+
+    """
+    Grant the player the normal set of user commands.
+    """
+
+    ## Start with a clean slate
+    client.clear_commands()
+    
+    ## Start Granting 
+    ## change these to grant_command_silect() if too spammy    
+    client.grant_command('north')
+    client.grant_command('south')
+    client.grant_command('east')
+    client.grant_command('west')    
+
+    client.grant_command('tell') 
+    client.grant_command('reply')   
+    client.grant_command('say')
+    client.grant_command('emote')  
+    client.grant_command('ooc')
+    client.grant_command('shout') 
+
+    client.grant_command('help')  
+    client.grant_command('commands')  
+    client.grant_command('quit')   
+
+
+
 #----------------------------------------------------------------Player Connect
 
 def player_connect(client):
@@ -273,20 +304,8 @@ def player_connect(client):
     to the game world.
     """
 
-    client.revoke_command_silent('load')
-    client.revoke_command_silent('create')
-    client.revoke_command_silent('name')
-    client.revoke_command_silent('gender')
-    client.revoke_command_silent('race')
-    client.revoke_command_silent('guild')
-    client.revoke_command_silent('password')
-    client.revoke_command_silent('review')
-    client.revoke_command_silent('save')
-
-    client.grant_command('north')
-    client.grant_command('south')
-    client.grant_command('east')
-    client.grant_command('west')    
+    ## Assing a normal set of player commands
+    player_command_set(client)
 
     ## Remove client from the lobby list and lobby room
     shared.ROOMS[LOBBY_UUID].on_exit(client.body)
