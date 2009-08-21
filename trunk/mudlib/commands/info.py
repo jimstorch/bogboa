@@ -8,6 +8,7 @@
 
 from mudlib import shared
 from mudlib import parsers
+from mudlib import calendar
 
 #----------------------------------------------------------------------Commands
 
@@ -58,12 +59,23 @@ def score(client):
     pass
 
 #--------------------------------------------------------------------------Time
-
+@parsers.blank
 def time(client):
 
-    """Fix Me"""
+    """Tell the client the current game time."""
+    
+    client.send('The time is %s.\n' % calendar.time_msg())
 
-    pass
+
+#--------------------------------------------------------------------------Date
+@parsers.blank
+def date(client):
+
+    """Tell the client the current game date."""
+    
+    client.send('The date is %s.\n' % calendar.date_msg())
+
+
 
 #---------------------------------------------------------------------Inventory
 

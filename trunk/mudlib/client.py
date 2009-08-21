@@ -33,6 +33,7 @@ class Client(object):
         self.body.mind = self
         self.commands = set()           ## Permitted commands   
         self.verb_args = None           ## arguments for the verb handlers
+        self.last_tell = None           ## used for replies
 
         ## Dictionary-like object used for string substitutions
         #self.stringsub = StringSub(self)    
@@ -90,7 +91,10 @@ class Client(object):
 
         if self.body and self.body.mind:
             self.body.mind = None        
-        self.body = None #TODO: remember to delete from BODIES too
+        self.body = None
+        ## Remove from the name lookup
+        if self.name.lower() in shared.BY_NAME:
+            del shared.BY_NAME[self.name.lower()]
         ## Schedule for cleanup via driver.monitor.test_connections()
         self.active = False
         self.conn.active = False

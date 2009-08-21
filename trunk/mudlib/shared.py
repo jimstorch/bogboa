@@ -23,12 +23,11 @@ THE_TIME = 0.0
 #--[ Client Connections ]------------------------------------------------------
 
 LOBBY = []
-PLAYERS = []
-
+PLAYERS = []        
+BY_NAME = {}          ## key is player name 
 
 #--[ Reference Objects ]-------------------------------------------------------
 
-GENDERS = {}        ## key is gender name
 GUILDS = {}         ## key is guild name
 HELPS = {}          ## key is help name
 RACES = {}          ## key is race name 
@@ -44,11 +43,14 @@ BODIES = {}         ## key is body UUID
 BRAINS = []         ## List of AI's
 
 
-#---------------------------------------------------------------Register Player
+#-------------------------------------------------------------------Find Player
 
-def register_player(client):
+def find_player(name):
 
-    pass
+    """Given a player's name, return the client or None."""
+
+    return BY_NAME.get(name.lower(), None)
+
 
 #---------------------------------------------------------------------Is Online
 

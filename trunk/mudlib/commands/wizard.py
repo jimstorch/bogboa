@@ -10,6 +10,7 @@
 from driver.scheduler import THE_SCHEDULER
 from mudlib.commands.speech import broadcast
 from mudlib import shared
+from mudlib import parsers
 
 #---------------------------------------------------------------------------Ban
 
@@ -24,9 +25,13 @@ def grant(client):
 
 
 #--------------------------------------------------------------------------Kick
+@parsers.online_player
+def kick(client, target):
 
-def kick(client):
-    pass
+    """Kick a miscreant player offline. They can come back."""
+
+    client.send('You kick %s offline.\n' % target.name)
+    target.deactivate()
 
 
 #------------------------------------------------------------------------Revoke

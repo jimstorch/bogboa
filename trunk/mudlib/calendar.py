@@ -30,7 +30,7 @@ Game Calendar:
 
 HOUSES = [   
     'War God', 'Rain God', 'Emerald Witch', 
-    'Gold Scarab', 'Fire Kings', 'Stone Emperor',
+    'Gold Scarab', 'Fire Kings', 'Stone Emperors',
     'Sapphire Goddess', 'Restless Dead', 'Long Shadows',
     'Frost Lords', 'Wolf', 'River Dragon',
     ]     
@@ -78,7 +78,8 @@ def date_msg():
     """
     tstamp = shared.THE_TIME - UNIX_ADJ
     julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
-    phase = self.year % 12
+    year = int(tstamp / GAME_YEAR) + CENTURY_OFFSET
+    phase = year % 12
     return ('day %d of the Year of the %s' %
         (julian, HOUSES[phase]))
 

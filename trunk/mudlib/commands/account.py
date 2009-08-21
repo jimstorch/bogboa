@@ -293,7 +293,9 @@ def player_command_set(client):
     client.grant_command('commands')  
     client.grant_command('quit')   
 
-
+    client.grant_command('kick')   
+    client.grant_command('time')   
+    client.grant_command('date')  
 
 #----------------------------------------------------------------Player Connect
 
@@ -315,6 +317,7 @@ def player_connect(client):
 
     ## Add client to the player's list
     shared.PLAYERS.append(client)
+    shared.BY_NAME[client.name.lower()] = client
 
     ## If the client has no room, place them at the start
     if client.body.room_uuid == LOBBY_UUID or client.body.room_uuid == None:
