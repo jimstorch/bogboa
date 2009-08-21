@@ -8,6 +8,33 @@
 
 from driver.scheduler import THE_SCHEDULER
 from mudlib import parsers
+from driver.dbms.map import set_ansi
+
+#--------------------------------------------------------------------------Ansi
+@parsers.set_or_show
+def ansi(client, setting):
+
+    """Turn on or off ANSI color.  No parameters means show current setting."""
+    
+    if setting == None:
+        curr = client.conn.use_ansi
+        if curr == True:
+            use = 'on'
+        else:
+            use = 'off'
+        client.send('^mANSI is currently set to %s.^d' % use)
+
+    elif setting == True:
+        client.conn.use_ansi = True
+        client.send('^mSetting ANSI to on.^d')
+        ## store preference in database
+        set_ansi(client.name, True)
+
+    else:
+        client.conn.use_ansi = False
+        client.send('Setting ANSI to off.')
+        ## store preference in database         
+        set_ansi(client.name, False)
 
 #--------------------------------------------------------------------------Quit
 

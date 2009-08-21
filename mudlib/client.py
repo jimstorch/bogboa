@@ -80,6 +80,20 @@ class Client(object):
             self.verb_args = None
             self.soft_prompt()
 
+
+    #------------------------------------------------------------------Get Room
+
+    def get_room(self):
+        
+        """Return the room object the client's body is in."""
+
+        if self.body and self.body.room_uuid:
+            return shared.ROOMS[self.body.room_uuid]
+
+        else:
+            return None
+
+
     #----------------------------------------------------------------Deactivate
 
     def deactivate(self):

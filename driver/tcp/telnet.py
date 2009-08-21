@@ -330,6 +330,11 @@ class Telnet(object):
                 self._echo_byte(byte)
             self.recv_buffer += byte
 
+        ## Check for flooding
+        if len(self.recv_buffer) > 512 and self.active:
+            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' % self.addr)
+            self.active = False
+
 
     #-----------------------------------------------------------------Echo Byte
     

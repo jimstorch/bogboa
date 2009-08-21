@@ -147,6 +147,8 @@ def check_login(name, password):
 
 def record_visit(name, ip):
 
+    """Notes a returning player's IP and timestamp."""
+
     sql = """
         UPDATE body
         SET play_count = play_count + 1, last_ip = ?, 
@@ -155,6 +157,25 @@ def record_visit(name, ip):
         """
     now = datetime.datetime.now()
     THE_CURSOR.execute(sql, (ip, now, name))
+
+
+#----------------------------------------------------------------------Set ANSI
+
+def set_ansi(name, setting):
+
+    """Record's a player's ANSI preference."""
+
+    ## Don't try to set for Lobby schmucks, no row
+    if name == 'Anonymous':
+        return
+
+    sql = """
+        UPDATE body
+        SET use_ansi = ?
+        WHERE name = ?;
+        """
+
+    THE_CURSOR.execute(sql, (setting, name))
 
 
 #-----------------------------------------------------------------------Last On
@@ -215,7 +236,8 @@ def save_new_body(body):
 def load_body(body, name):
     
     sql = """
-        SELECT name, uuid, race, gender, guild, level, room_uuid, bind_uuid
+        SELECT name, uuid, race, gender, guild, level, room_uuid, bind_uuid,
+            use_ansi
         FROM body
         WHERE name = ?;
         """
@@ -232,6 +254,8 @@ def load_body(body, name):
         body.level = result['level']
         body.room_uuid = result['room_uuid']    
         body.bind_uuid = result['bind_uuid'] 
+
+        body.mind.conn.use_ansi = result['use_ansi']
 
         THE_LOG.add('== Loaded %s the %s %s' % (body.name, body.race, 
             body.guild))

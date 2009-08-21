@@ -30,7 +30,7 @@ def kick(client, target):
 
     """Kick a miscreant player offline. They can come back."""
 
-    client.send('You kick %s offline.\n' % target.name)
+    client.send('You kick %s offline.' % target.name)
     target.deactivate()
 
 
@@ -42,6 +42,7 @@ def revoke(client):
 
 #----------------------------------------------------------------------Shutdown
 
+@parsers.blank
 def shutdown(client):
 
     """Shutdown the server with a ten second warning to users."""
@@ -51,14 +52,11 @@ def shutdown(client):
 
     def kill():
         shared.SERVER_RUN = False
+   
 
-    if client.verb_args:
-        client.send('\nShutdown command takes no arguments.')
-        
-    else:
-        broadcast("\n!! Server shutdown in 10 seconds.  Please log off.\n")
-        THE_SCHEDULER.add(5, second_warning)
-        THE_SCHEDULER.add(10, kill)
+    broadcast("\n!! Server shutdown in 10 seconds.  Please log off.\n")
+    THE_SCHEDULER.add(5, second_warning)
+    THE_SCHEDULER.add(10, kill)
 
 
 #------------------------------------------------------------------------Summon
@@ -71,6 +69,45 @@ def summon(client):
 
 def teleport(client):
     pass
+
+
+#------------------------------------------------------------------------Uptime
+
+@parsers.blank
+def uptime(client):
+
+    """Report the uptime of the server in days/hours/minutes."""
+
+    seconds = THE_SCHEDULER.age()
+
+    MINUTES = 60
+    HOURS = MINUTES * 60
+    DAYS = HOURS * 24
+
+    days = int(seconds / DAYS)
+    seconds = seconds % DAYS
+    hours = int(seconds / HOURS)
+    seconds = seconds % HOURS
+    minutes = int(seconds / MINUTES)
+
+    if days == 1:
+        s = '1 day, '
+    elif days:
+        s = '%d days, ' % days
+    else:
+        s = ''    
+
+    if hours == 1:
+        s += '1 hour, '
+    else:
+        s += '%d hours, ' % hours
+
+    if minutes == 1:
+        s += '1 min'
+    else:
+        s += '%d mins' % minutes
+
+    client.send(s)
 
 
 #---------------------------------------------------------------------------Zap
