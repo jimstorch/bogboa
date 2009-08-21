@@ -42,30 +42,23 @@ def emote(client, msg):
 
 
 #--------------------------------------------------------------------------Tell
-
-def tell(client):
+@parsers.dialogue
+def tell(client, target, msg):
 
     """
-    Send message from client to client's target.
+    Send message from client to client.
     """
 
-    target = lookup.find_player(target_handle)
 
-    if target:
-
-        if client == target:
-            target.send('You tell yourself, %s' % message)
-
-        else:
-            target.send('%s tells you, %s' % (client.name, message))
-            client.send('You tell %s, %s' % (target.name, message))
-        
-        ## note the sender so that a reply works
-        target.last_tell = client.handle   
+    if client == target:
+        target.send('You tell yourself, %s' % msg)
 
     else:
-
-        client.send("%s is not in this world." % target_handle.capitalize())
+        target.send('%s tells you, %s' % (client.name, msg))
+        client.send('You tell %s, %s' % (target.name, msg))
+        
+        ## note the sender so that a reply works
+        target.last_tell = client.name  
 
 
 #-------------------------------------------------------------------------Reply
@@ -76,11 +69,19 @@ def reply(client, msg):
     """Shortcut that tells to the last person who sent you one."""
 
     if client.last_tell:
-        target_handle = client.last_tell
-        tell(client, target_handle, message)
+        target = shared.find_player(client.last_tell)
+        if target:
+            target.send('%s replies, %s' % (client.name, msg))
+            client.send('You reply to %s, %s' % (target.name, msg))
+
+            ## note the sender so that a reply works
+            target.last_tell = client.name  
+
+        else:
+            client.send('%s is no longer online.\n' % client.last_tell)    
 
     else:
-        client.send('^yYou have not recieved any tells.')
+        client.send('You have not recieved anything to reply to.')
     
 
 #---------------------------------------------------------------------------OOC

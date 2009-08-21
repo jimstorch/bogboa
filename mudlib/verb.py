@@ -69,7 +69,8 @@ COMMAND_LIST = (
     (('help', '?', 'info'), info.help),
     (('commands','command', 'cmds', '??'), info.commands),
     (('score', 'played','stats'), info.score),
-    (('time', 'date', 'clock'), info.time),
+    (('time', 'clock'), info.time),
+    (('date', 'calendar', 'year'), info.date),
     (('inventory', 'i', 'inven'), info.inventory),
     (('look', 'l', '5','x','examine'), info.look),    
 

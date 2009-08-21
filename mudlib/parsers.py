@@ -6,6 +6,9 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from mudlib import shared
+
+
 """
 Decorator functions to parse and error check arguments for player commands.
 """    
@@ -72,16 +75,43 @@ def dialogue(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
-            client.send('Verb is missing a subject and message.\n')
+            client.send('Command is missing a subject and message.\n')
             return
         elif len(args) == 1:
-            client.send('Verb is missing a message.\n')
+            client.send('Command is missing a message.\n')
             return
         else:
-            target = args.pop(0)
+            name = args.pop(0)
+            target = shared.find_player(name)
+            if target == None:
+                client.send('%s is not online.\n' % name)
+                return
             msg = ' '.join(args)
             cmd_func(client, target, msg)
-        return parse_func 
+    return parse_func 
 
-  
+
+#-----------------------------------------------------------------Online Player
+
+def online_player(cmd_func):
+
+    """Decorator to target an online player."""
+
+    def parse_func(client):
+        args = client.verb_args
+        if len(args) != 1:
+            client.send('That command requires a player name.\n')
+            return
+        else:
+
+            name = args[0]
+            target = shared.find_player(name)
+            if target == None:
+                client.send('Player not found online.\n')
+                return
+
+            cmd_func(client, target)
+
+    return parse_func             
+
 
