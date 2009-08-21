@@ -57,7 +57,7 @@ COMMAND_LIST = (
     ## Communication
 
     (('broadcast', 'announce'), speech.broadcast),
-    (('emote', '/em', ':'), speech.emote),    
+    (('emote', '/em', ':', 'em'), speech.emote),    
     (('ooc',), speech.ooc),
     (('reply', 'r', '/r'), speech.reply),
     (('say', '/s'), speech.say),
@@ -69,7 +69,7 @@ COMMAND_LIST = (
     (('help', '?', 'info'), info.help),
     (('commands','command', 'cmds', '??'), info.commands),
     (('score', 'played','stats'), info.score),
-    (('time', 'clock'), info.time),
+    (('time', 'clock', 'hour'), info.time),
     (('date', 'calendar', 'year'), info.date),
     (('inventory', 'i', 'inven'), info.inventory),
     (('look', 'l', '5','x','examine'), info.look),    
@@ -89,6 +89,7 @@ COMMAND_LIST = (
 
     (('quit', 'exit', 'logoff'), system.quit),
     (('bug',), system.bug),
+    (('ansi','color'), system.ansi),
 
     ## Wizardry
     (('ban',), wizard.ban), 
@@ -99,6 +100,7 @@ COMMAND_LIST = (
     (('teleport', 'port'), wizard.teleport),
     (('zap',), wizard.zap),
     (('shutdown',), wizard.shutdown),
+    (('uptime',), wizard.uptime),
 
     ## Silly
 #    (('verbose',), silly.verbose),

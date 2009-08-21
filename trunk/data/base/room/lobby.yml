@@ -19,6 +19,7 @@ on_enter: |
         body.grant_command('help')
         body.grant_command('quit')
         body.grant_command('shutdown')
+        body.grant_command('ansi')
         body.grant_command('commands')
         body.prompt()
         }

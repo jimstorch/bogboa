@@ -33,14 +33,13 @@ def look(client):
 
 
 #--------------------------------------------------------------------------Help
-
-def help(client):
+@parsers.none_or_one
+def help(client, arg):
 
     """Display the selected help text."""
 
-    if client.verb_args:
-
-        topic = client.verb_args[0].lower()
+    if arg != None:
+        topic = arg.lower()
         if topic in shared.HELPS:
             client.send_wrapped(shared.HELPS[topic].text)
         else:
@@ -64,7 +63,7 @@ def time(client):
 
     """Tell the client the current game time."""
     
-    client.send('The time is %s.\n' % calendar.time_msg())
+    client.send('The time is %s.' % calendar.time_msg())
 
 
 #--------------------------------------------------------------------------Date
@@ -73,7 +72,7 @@ def date(client):
 
     """Tell the client the current game date."""
     
-    client.send('The date is %s.\n' % calendar.date_msg())
+    client.send('The date is %s.' % calendar.date_msg())
 
 
 

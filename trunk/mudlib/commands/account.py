@@ -296,6 +296,9 @@ def player_command_set(client):
     client.grant_command('kick')   
     client.grant_command('time')   
     client.grant_command('date')  
+    client.grant_command('uptime')  
+    client.grant_command('ansi')  
+
 
 #----------------------------------------------------------------Player Connect
 

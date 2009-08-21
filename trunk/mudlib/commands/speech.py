@@ -38,7 +38,11 @@ def emote(client, msg):
 
     """Displays an emote to everyone in the room."""
 
-    pass
+    room = client.get_room()
+    if room:
+        room.tell_all('... %s %s' % (client.name, msg))
+    else:
+        client.send('Oddness -- you are not in a room.')
 
 
 #--------------------------------------------------------------------------Tell
@@ -94,10 +98,10 @@ def ooc(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('You OOC; %s\n' % msg)                
+            player.send('You OOC; %s' % msg)                
         
         else:
-            player.send('%s OOC; %s\n' % (client.name, msg))
+            player.send('%s OOC; %s' % (client.name, msg))
 
 
 #-------------------------------------------------------------------------Shout
@@ -110,10 +114,10 @@ def shout(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('You shout, %s\n' % msg)                
+            player.send('You shout, %s' % msg)                
         
         else:
-            player.send('%s shouts, %s\n' % (client.name, msg))
+            player.send('%s shouts, %s' % (client.name, msg))
 
 
 #---------------------------------------------------------------------------Say
@@ -123,10 +127,11 @@ def say(client, msg):
     
     """Sends message to every player in client's room."""
 
+    room = client.get_room()
     body = client.body
-    room = shared.ROOMS[body.room_uuid]
 
-    room.tell_all_but(body, '%s says, %s\n' % (body.name, msg))
-    client.send('You say, %s\n' % msg)    
+    room.tell_all_but(body, '%s says, %s' % (body.name, msg))
+    client.send('You say, %s' % msg)    
+
 
 

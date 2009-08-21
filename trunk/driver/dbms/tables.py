@@ -100,6 +100,7 @@ def create_body_table():
             level INTEGER,            
             room_uuid TEXT,
             bind_uuid TEXT,
+            use_ansi BOOLEAN DEFAULT TRUE,
             last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             last_ip TEXT,
             play_count INTEGER
