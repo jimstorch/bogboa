@@ -23,11 +23,27 @@ class Room(object):
         self.uuid = None
         self.module = None
         self.name = None
+        self.is_outside = False
         self.exits = {}
         self.bodies = []
         self.npcs = {}
         self.items = {}
         self.scripts = {}
+
+
+    #-------------------------------------------------------------Body and Room
+
+    def body_and_room(method):
+
+        """
+        Decorator to pass self as 'room' for simpler scripting syntax.
+        """ 
+
+        def method_wrapper(self, body):
+            room = self
+            method(self, body, room)
+        return method_wrapper
+
 
     #------------------------------------------------------------------Tell All
 
@@ -58,17 +74,17 @@ class Room(object):
         if body.is_visible:
 
             if direction:
-                self.tell_all('%s enters from the %s.\n' % 
+                self.tell_all('%s enters from %s.' % 
                     (body.name, direction))          
             else:
-                self.tell_all("%s appears.\n" % body.name )       
+                self.tell_all("%s appears." % body.name )       
   
         self.bodies.append(body)
-        body.room_uuid = self.uuid
+        body.room = self
 
         if body.is_player:
-            body.send('\nYou enter %s at %s.\n' % (self.name, time_msg()))
-            body.send_wrapped(self.desc)
+            body.send('You enter %s at %s.' % (self.name, time_msg()))
+            body.send(self.text)
 
         if 'on_enter' in self.scripts:
             exec self.scripts['on_enter']
@@ -82,10 +98,10 @@ class Room(object):
         if body.is_visible:
 
             if direction:
-                self.tell_all('%s exits to the %s.\n' % 
+                self.tell_all('%s exits %s.' % 
                     (body.name, direction))          
             else:
-                self.tell_all('%s vanishes.\n' % body.name)          
+                self.tell_all('%s vanishes.' % body.name)          
 
 
         if 'on_exit' in self.scripts:
@@ -187,17 +203,20 @@ def configure_room(cfg):
         THE_LOG.add("!! Missing UUID in config for room '%s'." % room.name)
         sys.exit(1)
 
-    if 'desc' in cfg:
-        room.desc = cfg.pop('desc')
+    if 'text' in cfg:
+        room.text = cfg.pop('text')
     else:
-        room.desc = None
+        room.text = None
 
     if 'module' in cfg:
         room.module = cfg.pop('module')
     else:
         room.module = None
-        THE_LOG.add("!!: Missing 'module' value for room '%s'." % 
+        THE_LOG.add("?? Missing 'module' value for room '%s'." % 
             room.name)       
+
+    if 'is_outside' in cfg:
+        room.is_outside = cfg.pop('is_outside')
 
     ## Connect hard-coded exits
     if 'north' in cfg:
@@ -227,6 +246,11 @@ def configure_room(cfg):
     if 'd' in cfg:
         room.exits['down'] = cfg.pop('d')
 
+    ## For future use
+    if 'version' in cfg:
+        cfg.pop('version')
+
+
     ## Scripting
 
     keys = cfg.keys()
@@ -246,14 +270,14 @@ def configure_room(cfg):
             script = cfg.pop(event_name)
             (msg, code) = compile_script(script, event_name, room)
 
-        if msg == '':
-            ## Map the event name to the compiled bytecode
-            room.scripts[event_name] = code
+            if msg == '':
+                ## Map the event name to the compiled bytecode
+                room.scripts[event_name] = code
 
-        else:
-            ## Problem with a script
-            print msg
-            sys.exit(1)
+            else:
+                ## Problem with a script
+                print msg
+                sys.exit(1)
                
 
     ## Complain if there are leftover keys -- probably a typo in the YAML

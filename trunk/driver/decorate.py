@@ -6,6 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+import re
 
 #--[ Caret Code to ANSI TABLE ]------------------------------------------------
 
@@ -76,32 +77,57 @@ def strip_caret_codes(text):
 
 
 
-#--[ Word Wrap ]---------------------------------------------------------------
+##--[ Word Wrap ]---------------------------------------------------------------
 
-def word_wrap(text, columns=78, indent=2, padding=2):
-    """Wraps a block of text to a set column-width with paragraph indentation
-    and left padding.  Single newlines are not preserved, but double-newlines 
-    (paragraph breaks) are.  Designed to give text an easy to read, book-like
-    appearance.
-    Note: Caret Codes don't display so will cause some lines to shorten."""
-    # Initially, I wanted to split on '\n\n', but that would have missed lines
-    # that were only white space -- like '\n\t\t\n'.
-    paragraphs = text.split('\n')
-    wtext = ''
-    line = ' ' * padding + ' ' * indent
+#def word_wrap(text, columns=78, indent=2, padding=2):
+#    """Wraps a block of text to a set column-width with paragraph indentation
+#    and left padding.  Single newlines are not preserved, but double-newlines 
+#    (paragraph breaks) are.  Designed to give text an easy to read, book-like
+#    appearance.
+#    Note: Caret Codes don't display so will cause some lines to shorten."""
+#    # Initially, I wanted to split on '\n\n', but that would have missed lines
+#    # that were only white space -- like '\n\t\t\n'.
+#    paragraphs = text.split('\n')
+#    wtext = ''
+#    line = ' ' * padding + ' ' * indent
+#    for para in paragraphs:
+#        if len(para.strip()):
+#            words = para.split()
+#            for word in words:        
+#                if ( len(line) + len(word) + 1 ) < columns:
+#                    line += word + ' '
+#                else:
+#                    wtext += line + '\n'
+#                    line = ' ' * padding + word + ' '
+#        # So I check here        
+#        else:
+#            wtext += line + '\n\n'
+#            line = ' ' * padding + ' ' * indent
+#    wtext += line            
+#    return wtext
+
+
+#---------------------------------------------------------------------Wrap List
+      
+def wrap_list(text, columns=78, indent=2, padding=1):
+
+    """Given a block of text, breaks into a list of lines wrapped to
+    length.  Should be a bit more efficient with telnet sending lines.
+    """
+
+    para_break = re.compile(r"(\n\s*\n)", re.MULTILINE)
+    paragraphs = para_break.split(text)
+    lines = []
     for para in paragraphs:
-        if len(para.strip()):
-            words = para.split()
-            for word in words:        
-                if ( len(line) + len(word) + 1 ) < columns:
-                    line += word + ' '
-                else:
-                    wtext += line + '\n'
-                    line = ' ' * padding + word + ' '
-        # So I check here        
-        else:
-            wtext += line + '\n\n'
-            line = ' ' * padding + ' ' * indent
-    wtext += line            
-    return wtext
+        if para.isspace():
+            continue
+        line = ' ' * ( padding + indent )
+        for word in para.split():
+            if (len(line) + 1 + len(word)) > columns:
+                lines.append(line)
+                line = ' ' * padding
+            line += ' ' + word                      
+        lines.append(line)     
+    return lines    
+
 

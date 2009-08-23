@@ -1,11 +1,18 @@
-uuid: 11abdc0a-6e53-41b0-bb5d-3d4e082d8058
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   bag.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
+
+uuid: 2a0257e0cc5e4233a7b5d4ce127c9d2b
 name: bag
-desc:
+text: a simple bag woven from cheap, coarse burlap
 
-    a simple bag woven from cheap, coarse burlap
 
-sell: 2
-buy: 4
 
 
 

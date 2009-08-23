@@ -13,6 +13,7 @@ import socket
 from mudlib import shared
 from driver.log import THE_LOG
 from driver.decorate import colorize
+from driver.decorate import wrap_list
 
 #---[ Telnet Notes ]-----------------------------------------------------------
 # (See RFC 854 for more information)
@@ -122,7 +123,7 @@ class Telnet(object):
         self.fileno = sock.fileno() # The socket's file descriptor
         self.addr = addr_tup[0]     # The client's remote TCP/IP address
         self.port = addr_tup[1]     # The client's remote port
-        self.terminal_type = ''     # set via request_terminal_type()   
+        self.terminal_type = 'unknown client' # set via request_terminal_type()   
         self.use_ansi = True
         self.columns = 80
         self.rows = 24
@@ -162,15 +163,31 @@ class Telnet(object):
             self.cmd_ready = False
         return cmd
 
-
     #----------------------------------------------------------------------Send
 
     def send(self, text):
+        
+        if text:
+            lines = wrap_list(text, self.columns - 2)
+            for line in lines:
+                self.send_buffer += colorize(line, self.use_ansi) + '\r\n'  
+                self.send_pending = True                
+
+
+    #---------------------------------------------------------------Send Nowrap
+
+    def send_nowrap(self, text):
         """Queue text to be sent to the DE."""
-        if len(text):
-            ## Send with colorization preference
-            self.send_buffer += colorize(text, self.use_ansi)
-            self.send_pending = True
+
+        ## Needed to make some terminal programs happy
+        #text = text.replace('\n', '\r\n')       
+        
+        if text:
+            text = colorize(text, self.use_ansi)
+            lines = text.split('\n')
+            for line in lines:
+                self.send_buffer += colorize(line) + '\r\n'  
+                self.send_pending = True
 
 
     #-----------------------------------------------------------------Addr Port
@@ -265,7 +282,7 @@ class Telnet(object):
             try:
                 sent = self.sock.send(self.send_buffer)
             except socket.error, err:
-                THE_LOG.add("SEND error '%d:%s' from %s" % (err[0], err[1], 
+                THE_LOG.add("!! SEND error '%d:%s' from %s" % (err[0], err[1], 
                     self.addrport()))  
                 self.active = False
                 return
@@ -283,13 +300,13 @@ class Telnet(object):
         try:
             data = self.sock.recv(2048)
         except socket.error, err:
-            THE_LOG.add("RECV error '%d:%s' from %s" % (err[0], err[1],
+            THE_LOG.add("!! RECV error '%d:%s' from %s" % (err[0], err[1],
                 self.addrport()))  
             self.active = False
             return
         ## Did they close the connection?
         if len(data) == 0:
-            THE_LOG.add("Connection dropped by %s" % self.addrport())
+            THE_LOG.add("-- Connection dropped by %s" % self.addrport())
             self.active = False
             return
         else:
@@ -324,7 +341,6 @@ class Telnet(object):
         """Test a received character and only pass those that are printable to
         the recv_buffer. Echo back to client if needed."""
         ## Filter out non-printing characters
-        ## TODO: If we add UTF support this wont do
         if (byte >= ' ' and byte <= '~') or byte == '\n':
             if self.telnet_echo:
                 self._echo_byte(byte)
@@ -332,7 +348,8 @@ class Telnet(object):
 
         ## Check for flooding
         if len(self.recv_buffer) > 512 and self.active:
-            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' % self.addr)
+            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' % 
+                self.addrport())
             self.active = False
 
 
@@ -616,16 +633,16 @@ class Telnet(object):
                     self._note_reply_pending(TTYPE, False)
                     self._note_remote_option(TTYPE, True)
                     ## Tell them to send their terminal type
-                    self.send('%c%c%c%c%c%c' % (IAC, SB, TTYPE, SEND, IAC, SE))          
-                
+                    self.send('%c%c%c%c%c%c' % (IAC, SB, TTYPE, SEND, IAC, SE))
+               
                 elif (self._check_remote_option(TTYPE) == False or
                         self._check_remote_option(TTYPE) == UNKNOWN):
                     self._note_remote_option(TTYPE, True)
                     self._iac_do(TTYPE)        
  
                         
-        #---[ WONT ]-----------------------------------------------------------                   
-        
+        #---[ WONT ]-----------------------------------------------------------
+       
         elif cmd == WONT:
 
             if option == ECHO:

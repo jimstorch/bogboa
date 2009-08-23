@@ -11,7 +11,6 @@ from mudlib import parsers
 from mudlib import calendar
 
 #----------------------------------------------------------------------Commands
-
 @parsers.blank
 def commands(client):
 
@@ -20,7 +19,23 @@ def commands(client):
     clist = list(client.commands)
     clist.sort()
     cmds = ', '.join(clist)
-    client.send_wrapped('Your current commands are: %s' % cmds)
+    client.send('Your current commands are: %s' % cmds)
+
+
+#-------------------------------------------------------------------------Stats
+@parsers.blank
+def stats(client):
+
+    """List the player's stats."""
+    
+    body = client.get_body()
+    stats = body.stats.keys()
+    stats.sort()
+    s = ''
+    for stat in stats:
+        s += '%s=%s ' % (stat.upper(), body.stats[stat])
+    client.send('Your current stats: %s' % s)
+
 
 #--------------------------------------------------------------------------Look
 
@@ -41,12 +56,12 @@ def help(client, arg):
     if arg != None:
         topic = arg.lower()
         if topic in shared.HELPS:
-            client.send_wrapped(shared.HELPS[topic].text)
+            client.send(shared.HELPS[topic].text)
         else:
             client.send("Help topic not found.")
 
     else:
-        client.send_wrapped(shared.HELPS['help'].text)
+        client.send(shared.HELPS['help'].text)
     
 
 #-------------------------------------------------------------------------Score

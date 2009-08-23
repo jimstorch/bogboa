@@ -72,7 +72,8 @@ COMMAND_LIST = (
     (('time', 'clock', 'hour'), info.time),
     (('date', 'calendar', 'year'), info.date),
     (('inventory', 'i', 'inven'), info.inventory),
-    (('look', 'l', '5','x','examine'), info.look),    
+    (('look', 'l', '5','x','examine'), info.look),
+    (('stats', 'stat',), info.stats),    
 
     ## Interaction
 

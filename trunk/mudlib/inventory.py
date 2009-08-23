@@ -30,7 +30,7 @@
 
 from mudlib.shared import ITEMS
 
-MAX_STACK = 1000
+MAX_STACK = 100
 
 #---------------------------------------------------------------------Container
 

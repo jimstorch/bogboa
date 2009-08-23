@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   coinpurse.yml
+#   right_foot.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
@@ -8,8 +8,7 @@
 version: 1001
 module: base
 
-uuid: 1796a1c958d349be82b5715937638d97
-name: coin purse
-text: a small bag made from light leather
+## Used for martial combat
 
-
+uuid: 232e66f5fc604415a69c6debdcf8e82a 
+name: right foot

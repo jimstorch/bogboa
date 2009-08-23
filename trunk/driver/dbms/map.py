@@ -12,7 +12,7 @@ import sys
 
 from driver.log import THE_LOG
 from driver.dbms.dbconnect import THE_CURSOR
-
+from mudlib import shared
 
 #------------------------------------------------------------------------Ban IP
 
@@ -213,20 +213,22 @@ def save_new_body(body):
             level,
             last_on,
             last_ip,
+            use_ansi,
             play_count
             )
-        VALUES (?,?,?,?,?,?,?,?,?,?);
+        VALUES (?,?,?,?,?,?,?,?,?,?,?);
         """
 
     hashed_password = hashlib.sha256(body.password).hexdigest()
     last_ip = body.mind.conn.addr
     now = datetime.datetime.now()
+    use_ansi = body.mind.conn.use_ansi
     tup = (body.name, body.uuid, hashed_password, body.race,
-        body.gender, body.guild, body.level, now, last_ip, 1)
+        body.gender, body.guild, body.level, now, last_ip, use_ansi, 1)
     THE_CURSOR.execute(sql, tup)  
 
-    THE_LOG.add('++ New Character created; %s the %s %s' % 
-        (body.name, body.race, body.guild))
+    THE_LOG.add('++ New Character created; %s the %s %s by %s' % 
+        (body.name, body.race, body.guild,body.mind.origin()))
     ## Add the name to the reject table so no one else can use it
     block_name(body.name, 'map.py', 'Taken by player')
 
@@ -252,13 +254,12 @@ def load_body(body, name):
         body.gender = result['gender']
         body.guild = result['guild']
         body.level = result['level']
-        body.room_uuid = result['room_uuid']    
-        body.bind_uuid = result['bind_uuid'] 
-
+        body.room = shared.find_room(result['room_uuid'])    
+        body.bind = shared.find_room(result['bind_uuid']) 
         body.mind.conn.use_ansi = result['use_ansi']
 
-        THE_LOG.add('== Loaded %s the %s %s' % (body.name, body.race, 
-            body.guild))
+        THE_LOG.add('== Loaded %s the %s %s from %s' % (body.name, body.race, 
+            body.guild, body.mind.origin()))
 
     else:
         THE_LOG.add("!! Database Error: Body not found for '%s'" % name)

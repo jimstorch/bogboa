@@ -29,7 +29,7 @@ def check_database():
         THE_CURSOR.execute("PRAGMA user_version=1001;")
         THE_LOG.add("?? Using new database file.")
     else:
-        THE_LOG.add("-- DB version is %d" % user_version)    
+        THE_LOG.add(".. DB version is %d" % user_version)    
 
     sql = """
         SELECT COUNT(*) FROM sqlite_master WHERE NAME = ?;

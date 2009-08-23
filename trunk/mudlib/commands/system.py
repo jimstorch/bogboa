@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 
 from driver.scheduler import THE_SCHEDULER
+from driver.log import THE_LOG
 from mudlib import parsers
 from driver.dbms.map import set_ansi
 
@@ -18,15 +19,15 @@ def ansi(client, setting):
     
     if setting == None:
         curr = client.conn.use_ansi
-        if curr == True:
+        if curr:
             use = 'on'
         else:
             use = 'off'
-        client.send('^mANSI is currently set to %s.^d' % use)
+        client.send('^mANSI is currently set to %s.^w' % use)
 
     elif setting == True:
         client.conn.use_ansi = True
-        client.send('^mSetting ANSI to on.^d')
+        client.send('^mSetting ANSI to on.^w')
         ## store preference in database
         set_ansi(client.name, True)
 
@@ -44,6 +45,7 @@ def quit(client):
     """Exit from the game."""
 
     client.send('Logging you off -- take care.')
+    THE_LOG.add('.. %s quits from %s' % (client.name, client.origin()))
     THE_SCHEDULER.add(.10, client.deactivate)
 
 #---------------------------------------------------------------------------Bug

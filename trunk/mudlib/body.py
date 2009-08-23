@@ -6,6 +6,10 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+import copy
+
+from mudlib import shared
+
 #from lib.stringsub import StringSub
 
 class Body(object):
@@ -44,12 +48,40 @@ class Body(object):
 #        self.bank = None
 
         ## Details
-        self.room_uuid = None           ## Current location
-        self.bind_uuid = None           ## Return point
+        self.room = None                ## Current location
+        self.bind = None                ## Recall point
         self.target = None              ## Hostile target
         self.btarget = None             ## Beneficial target
         self.ctarget = None             ## Conversational target
 
+
+
+    #------------------------------------------------------------------Get Race
+
+    def get_race(self):
+
+        """Return the body's race object."""
+
+        return shared.RACES[self.race]
+
+
+    #-----------------------------------------------------------------Get Guild
+
+    def get_guild(self):
+
+        """Return the body's guild object."""
+
+        return shared.GUILDS[self.guild]
+
+
+    #---------------------------------------------------------------Reset Stats
+
+    def reset_stats(self):
+        
+        """Reset current stats based on race."""        
+
+        race = self.get_race()
+        self.stats = copy.copy(race.stats)
 
     #---------------------------------------------------------------Adj Faction
 
@@ -462,10 +494,9 @@ class Body(object):
 
     #----------------------------------------------------------------------Send
 
-    def send_wrapped(self, msg):
+    def send_nowrap(self, msg):
         if self.is_player:
-            self.mind.send_wrapped(msg)
-
+            self.mind.send_nowrap(msg)
 
     #--------------------------------------------------------------------Prompt
 

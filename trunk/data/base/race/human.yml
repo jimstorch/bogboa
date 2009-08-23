@@ -17,11 +17,11 @@ text:
 ###  Racial Stats
 
 stats:
-    - agi: 12
-    - chr: 12
-    - dex: 12
-    - int: 12
-    - luc: 16
-    - sta: 14
-    - str: 14
-    - wis: 12
+    agi: 12
+    chr: 12
+    dex: 12
+    int: 12
+    luc: 16
+    sta: 14
+    str: 14
+    wis: 12

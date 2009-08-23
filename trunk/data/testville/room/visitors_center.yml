@@ -1,11 +1,16 @@
-#
-#   File:   testville/visitors_center.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   visitors_center.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: testville
 
 uuid: 39760ba2180b486a83e69fdb6433c1e2
-module: Testville
 name: Visitor's Center
-desc:
+text:
 
     Nothing yet.
     
