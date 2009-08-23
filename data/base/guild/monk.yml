@@ -15,6 +15,7 @@ text:
     effectively using only his own body for a weapon -- though he is also
     effective using blunt weapons created in balance with nature.  
 
+
     The primary stat for a monk is wisdom, representing his special 
     comprehension and unity with the natural world.  Secondary stats are
     strength for dealing powerful blows and agility for gracefully dodging
@@ -25,14 +26,14 @@ text:
 #
 
 skills:
-    - health:       .85
-    - dodge:        1.0
-    - swords:       .25
-    - greatswords   .15
-    - armor:        .6
-    - magic items:  .65
-    - fists:        1.0   
-    - archery:      .80
-    - daggers:      .50
+    health:       .85
+    dodge:        1.0
+    swords:       .25
+    greatswords:  .15
+    armor:        .6
+    magic items:  .65
+    fists:        1.0   
+    archery:      .80
+    daggers:      .50
 
 

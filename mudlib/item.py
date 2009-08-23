@@ -10,6 +10,9 @@ import sys
 
 from mudlib.shared import ITEMS
 from driver.log import THE_LOG
+from driver.bogscript import check_event_name
+from driver.bogscript import compile_script
+
 
 #--------------------------------------------------------------------------Item
 
@@ -19,122 +22,201 @@ class Item(object):
 
         self.uuid = None
         self.name = None
+        self.text = None
         self.module = None
         self.weight = 0
+        self.scripts = {}    
     
+
+    #-------------------------------------------------------------Body and Item
+
+    def body_and_item(method):
+
+        """
+        Decorator to pass self as 'item' for simpler scripting syntax.
+        """ 
+
+        def method_wrapper(self, body):
+            item = self
+            method(self, body, item)
+        return method_wrapper
+
+
+    #--------------------------------------------------------Body Item and Room
+
+    def body_item_and_room(method):
+
+        """
+        Decorator to pass self as 'item' and body.room as 'room' for simpler 
+        scripting syntax.
+        """ 
+
+        def wrapped_method(self, body):
+            item = self
+            room = body.room
+            method(self, body, item, room)
+        return wrapped_method
+  
+
     #-----------------------------------------------------------------On Attack
 
     def on_attack(self, body):
+        item = self
+        room = body.room
         pass
 
     #------------------------------------------------------------------On Equip
 
     def on_equip(self, body):
+        item = self
+        room = body.room
         pass
 
     #-------------------------------------------------------------------On Exit
 
     def on_depart(self, body):
+        item = self
+        room = body.room
         pass
 
     #----------------------------------------------------------------On Destroy
 
-    def on_destroy(self):
+    def on_destroy(self, body):
+        item = self
+        room = body.room
         pass    
 
     #------------------------------------------------------------On Detect Aura
 
     def on_detect_aura(self, body):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------On Detect Magic
 
     def on_detect_magic(self, body):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------On Detect Traps
 
     def on_detect_trap(self, body):
+        item = self
+        room = body.room
         pass
 
     #-------------------------------------------------------------------On Hear
 
     def on_hear(self, body):
+        item = self
+        room = body.room
         pass
 
     #---------------------------------------------------------------On Identify
 
     def on_identify(self, body):
+        item = self
+        room = body.room
         pass
 
     #-------------------------------------------------------------------On Init
 
     def on_init(self):
+        item = self
+        room = body.room
         pass
 
     #----------------------------------------------------------------On Inspect
 
     def on_inspect(self, body):
+        item = self
+        room = body.room
         pass
 
     #-------------------------------------------------------------------On Look
 
     def on_look(self, body):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------On Remove
 
     def on_remove(self, body):
+        item = self
+        room = body.room
         pass
 
     #------------------------------------------------------------On Remove Trap
 
     def on_remove_trap(self, body):
+        item = self
+        room = body.room
         pass
 
     #------------------------------------------------------------------On Enter
 
     def on_see(self, body):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------On Signal
 
     def on_signal(self, signal):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------On Strike
 
     def on_strike(self, body):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------On Struck
 
     def on_struck(self, body):
+        item = self
+        room = body.room
         pass
 
     #--------------------------------------------------------------------On Use
 
     def on_use(self, body):
+        item = self
+        room = body.room
         pass
 
     #----------------------------------------------------------------------Poof
 
     def poof(self):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------Set Alias
 
     def set_alias(self, alias):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------Set Fixed
 
     def set_fixed(self, boolean):
+        item = self
+        room = body.room
         pass
 
     #-----------------------------------------------------------------Set Skill
 
     def set_skill(self, skill_uuid, value):
+        item = self
+        room = body.room
         pass
 
     #------------------------------------------------------------------Set Slot
@@ -166,10 +248,17 @@ def configure_item(cfg):
         THE_LOG.add("!! Missing UUID in config for item '%s'." % item.name)
         sys.exit(1)
 
-    if 'desc' in cfg:
-        item.desc = cfg.pop('desc')
+    if 'text' in cfg:
+        item.text = cfg.pop('text')
     else:
-        item.desc = None
+        item.text = None
+
+    if 'module' in cfg:
+        item.module = cfg.pop('module')
+    else:
+        item.module = None
+        THE_LOG.add("?? Missing 'module' value for item '%s'." % 
+            item.name)  
 
     if 'weight' in cfg:
         item.weight = cfg.pop('weight')
@@ -180,6 +269,39 @@ def configure_item(cfg):
         item.value = cfg.pop('value')
     else:
         item.value = 0        
+
+    ## For future use
+    if 'version' in cfg:
+        cfg.pop('version')
+
+    ## Scripting
+
+    keys = cfg.keys()
+    
+    #--------------------------------------------------------------------------
+    #   All remaining mappings should be bogscript snippets
+    #--------------------------------------------------------------------------
+
+    for key in keys:
+
+        ## Look for script snippets that begin with 'on_'
+
+        if key[:3] == 'on_':
+            event_name = key
+            ## Issue warnings for events that don't match class methods
+            check_event_name(event_name, item)
+            script = cfg.pop(event_name)
+            (msg, code) = compile_script(script, event_name, item)
+
+            if msg == '':
+                ## Map the event name to the compiled bytecode
+                item.scripts[event_name] = code
+
+            else:
+                ## Problem with a script
+                print msg
+                sys.exit(1)
+            
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:

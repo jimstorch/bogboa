@@ -13,7 +13,7 @@ from mudlib.body import Body
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
-from driver.decorate import word_wrap
+#from driver.decorate import word_wrap
 
 
 #------------------------------------------------------------------------Client
@@ -41,14 +41,21 @@ class Client(object):
     #----------------------------------------------------------------------Send
 
     def send(self, msg):
-        """Transmit text to the distant end."""
+        """Transmit text to the distant end with word wrapping."""
         self.conn.send(msg)
 
-    #---------------------------------------------------------------Send Pretty
+    #---------------------------------------------------------------Send Nowrap
 
-    def send_wrapped(self, msg):
-        """Transmit text to the distant end."""
-        self.conn.send(word_wrap(msg))    
+    def send_nowrap(self, msg):
+        """Transmit text to the distant end, without word wrapping."""
+        self.conn.send_nowrap(msg)   
+
+#    #---------------------------------------------------------------Send Pretty
+
+#    def send_wrapped(self, msg):
+#        """Transmit text to the distant end."""
+##        self.conn.send(word_wrap(msg, self.conn.columns))    
+#        self.conn.send(msg)
 
     #-----------------------------------------------------------Process Command
 
@@ -87,12 +94,23 @@ class Client(object):
         
         """Return the room object the client's body is in."""
 
-        if self.body and self.body.room_uuid:
-            return shared.ROOMS[self.body.room_uuid]
+        return self.body.room
 
-        else:
-            return None
+    #------------------------------------------------------------------Get Body
 
+    def get_body(self):
+
+        """Return the client's body."""
+
+        return self.body
+    
+    #--------------------------------------------------------------------Origin
+
+    def origin(self):
+        
+        """Return the client's IP address and Port Numnber."""
+
+        return self.conn.addrport()
 
     #----------------------------------------------------------------Deactivate
 
@@ -100,8 +118,8 @@ class Client(object):
         """Client disconnected or was kicked."""
         ## Unlink the player's body for garbage collecting
 
-        if self.body and self.body.room_uuid:
-            shared.ROOMS[self.body.room_uuid].on_exit(self.body)
+        if self.body and self.body.room:
+            self.body.room.on_exit(self.body)
 
         if self.body and self.body.mind:
             self.body.mind = None        
@@ -117,14 +135,14 @@ class Client(object):
 
     def prompt(self):
         """Transmit a newline and a prompt"""
-        self.send('\n')
-        self.soft_prompt()
+        #self.send('\n')
+        #self.soft_prompt()
 
     #---------------------------------------------------------------Soft Prompt
 
     def soft_prompt(self):
         """Called when a leading new-line is not desired"""
-        self.send('> ')
+        #self.send('> ', lf=False)
 
     #-------------------------------------------------------------------Verbing
 
@@ -164,9 +182,9 @@ class Client(object):
         """Authorize player to use an command and tell them."""
         if command_name not in self.commands:
             self.commands.add(command_name)
-            self.send('\nYou receive a new command: %s' % command_name)
+            self.send('You receive a new command: %s' % command_name)
         else:
-            self.send("\nOddness -- attempt to re-grant command '%s'." %
+            self.send("Oddness -- attempt to re-grant command '%s'." %
                 command_name)
 
     #------------------------------------------------------------Revoke Command
@@ -175,7 +193,7 @@ class Client(object):
         """De-authorize player to use an command and tell them."""
         if command_name in self.commands:
             self.commands.remove(command_name)
-            self.send("\nYou lose a command: %s" % command_name)
+            self.send("You lose a command: %s" % command_name)
 
     #-----------------------------------------------------Revoke Command Silent
 

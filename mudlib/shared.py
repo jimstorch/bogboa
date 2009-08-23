@@ -52,13 +52,30 @@ def find_player(name):
     return BY_NAME.get(name.lower(), None)
 
 
+#---------------------------------------------------------------------Find Room
+
+def find_room(uuid):
+
+    """Given a room UUID, return the room object or None."""
+
+    return ROOMS.get(uuid, None)
+
+
+#---------------------------------------------------------------------Find Item
+
+def find_item(uuid):
+
+    """Given an item UUID, return the item object or None."""
+
+    return ITEMS.get(uuid, None)
+
 #---------------------------------------------------------------------Is Online
 
 def is_online(name):    
 
     """Return True is the given name matches an online player."""
 
-    pass
+    return name in BY_NAME       
 
 
    

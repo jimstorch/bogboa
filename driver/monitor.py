@@ -32,7 +32,7 @@ def test_connections():
     for client in shared.PLAYERS:
         if client.conn.active == False:
             client.deactivate()
-            broadcast('%s has gone offline.\n' % client.name)    
+            broadcast('%s has gone offline.' % client.name)    
 
 
 #-------------------------------------------------------------Kill Idle Clients
@@ -46,16 +46,16 @@ def kill_idle_clients():
 
     for client in shared.LOBBY:
         if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('Kicking idle lobby client from %s' % 
+            THE_LOG.add('-- Kicking idle lobby client from %s' % 
                 client.conn.addrport())
             client.deactivate()
             
     for client in shared.PLAYERS:
         if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('Kicking idle %s from %s' % (
+            THE_LOG.add('.. Kicking idle %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
-            broadcast('%s has gone offline.\n' % client.name)
+            broadcast('%s has gone offline.' % client.name)
 
 
 #------------------------------------------------------------Purge Dead Clients

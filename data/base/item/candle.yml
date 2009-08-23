@@ -1,12 +1,20 @@
-uuid: 0f0ba2bd-76c1-42d4-9ab6-73d8775ab1ad
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   candle.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
+
+uuid: a493903fdc3a489ca6de5f1bf9208eae
 name: candle
-# trade, quest, junk, 
-slot: trade
-value: 3
+text: a crude candle made from tallow
 
 
-desc:
 
-    a crude candle made from tallow
+
+
 
 

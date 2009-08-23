@@ -67,7 +67,7 @@ def name(client):
     ###########################################################################
     ## OMG, I'm so sick of entering this
     ## TODO: remove this later.
-    client.send('Dev auto setting junk...\n')
+    client.send('Dev auto setting junk...')
     client.body.race = 'human'
     client.body.gender = 'male'
     client.body.guild = 'figher'
@@ -190,14 +190,14 @@ def password(client):
 
 def review(client):
 
-    client.send("\n\nCurrent character selections:\n")
+    client.send("\nCurrent character selections:\n")
     client.send("  name     %s\n" % client.body.name)
     client.send("  gender   %s\n" % client.body.gender)
     client.send("  race     %s\n" % client.body.race)
     client.send("  guild    %s\n" % client.body.guild)
     client.send("  password %s\n" % client.body.password)
     client.send(
-        "Try 'help create' for more information or 'save' if finished.\n")
+        "Try 'help create' for more information or 'save' if finished.")
 
 
 #--------------------------------------------------------------------------Save
@@ -205,19 +205,19 @@ def review(client):
 def save(client):
     
     if client.body.name == '':
-        client.send('You must select a name first.\n')
+        client.send('You must select a name first.')
   
     elif client.body.gender == '':
-        client.send('You must select a gender first.\n')
+        client.send('You must select a gender first.')
 
     elif client.body.race == '':
-        client.send('You must select a race first.\n')
+        client.send('You must select a race first.')
 
     elif client.body.guild == '':
-        client.send('You must select a guild first.\n')
+        client.send('You must select a guild first.')
 
     elif client.body.password == '':
-        client.send('You must select a password first.\n')    
+        client.send('You must select a password first.')    
  
     else:
         client.send('Saving your new character...')
@@ -241,13 +241,21 @@ def load(client):
     password = client.verb_args[1]
 
     if check_login(name, password):
-        client.send("Welcome back, %s. " % name)
-        client.send("Your last visit was %s.\n" % last_on(name))
-        load_body(client.body, name)
-        client.name = name
-        ## Start Playing
-        record_visit(name, client.conn.addr)
-        player_connect(client)
+       
+        if shared.is_online(name.lower()):
+            THE_LOG.add("?? Attempt to use active '%s' from %s" %
+                (name, client.origin())) 
+            client.send("That account is already in use.")
+            return
+
+        else:
+            client.send("Welcome back, %s. " % name)
+            client.send("Your last visit was %s." % last_on(name))
+            load_body(client.body, name)
+            client.name = name
+            ## Start Playing
+            record_visit(name, client.conn.addr)
+            player_connect(client)
 
     else:
         client.login_attempts += 1
@@ -255,7 +263,7 @@ def load(client):
 
         if client.login_attempts > 3:
             THE_LOG.add("?? Suspicious login guessing '%s'/'%s' from %s" % 
-                (name, password, client.conn.addr))
+                (name, password, client.origin()))
 
         ## Watch for excessive login guesses and if, so, ban them            
         if client.login_attempts > 30:
@@ -298,7 +306,7 @@ def player_command_set(client):
     client.grant_command('date')  
     client.grant_command('uptime')  
     client.grant_command('ansi')  
-
+    client.grant_command('stats') 
 
 #----------------------------------------------------------------Player Connect
 
@@ -309,26 +317,33 @@ def player_connect(client):
     to the game world.
     """
 
+    ## Log the terminal type for general info
+    THE_LOG.add('tt %s is using %s' % (client.name, 
+        client.conn.terminal_type))
+
     ## Assing a normal set of player commands
     player_command_set(client)
+
+    ## Calculate stats
+    client.body.reset_stats()
 
     ## Remove client from the lobby list and lobby room
     shared.ROOMS[LOBBY_UUID].on_exit(client.body)
     shared.LOBBY.remove(client)
 
-    broadcast('%s is now online.\n' % client.name)
+    broadcast('%s is now online.' % client.name)
 
     ## Add client to the player's list
     shared.PLAYERS.append(client)
     shared.BY_NAME[client.name.lower()] = client
 
     ## If the client has no room, place them at the start
-    if client.body.room_uuid == LOBBY_UUID or client.body.room_uuid == None:
-        client.body.room_uuid = START_UUID
+    if client.body.room == None or client.body.room.uuid == LOBBY_UUID:
+        client.body.room = shared.find_room(START_UUID)
 
     ## And walk in
     client.body.is_visible = True
-    shared.ROOMS[client.body.room_uuid].on_enter(client.body)
+    client.body.room.on_enter(client.body)
 
     
 

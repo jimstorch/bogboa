@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   coinpurse.yml
+#   noob_dagger.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
@@ -8,8 +8,15 @@
 version: 1001
 module: base
 
-uuid: 1796a1c958d349be82b5715937638d97
-name: coin purse
-text: a small bag made from light leather
+uuid: f8988e8f6b1a41cdb2f1d63dc313c58d
+name: apprentice dagger
+text: a short blade with a wound leather grip and brass pommel
+
+on_equip:
+    body.adj_stat('dex', 10)
+
+on_remove:
+    body.adj_stat('dex', -10)
+
 
 

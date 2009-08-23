@@ -1,12 +1,16 @@
-#
-#   File:   testville/start.yml
-#
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   start.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: testville
 
-uuid:   8611ad17d6be417a8d9027b628f52ce3
-module: Testville
-name:   Newcomer Landing
-desc:
-
+uuid: 8611ad17d6be417a8d9027b628f52ce3
+name: Newcomer Landing
+text:
     This is a small plateau.  Its crown has been worn into a shallow, stony
     bowl by the tread of many feet while the rest is covered in grass and wild
     flowers.  Ocean waves tumble below and the air smells of saltwater.
@@ -16,7 +20,7 @@ desc:
     looking stone building to the East.
 
 #north:   # South Testville
-east:    39760ba2180b486a83e69fdb6433c1e2 # Visitor's Center
+east: 39760ba2180b486a83e69fdb6433c1e2 # Visitor's Center
 
 
 
