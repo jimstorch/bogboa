@@ -13,11 +13,9 @@ from mudlib.client import Client
 from driver.config import LOBBY_UUID
 
 
-#lobby_uuid = "0c9997b9-5068-46d9-a245-12991bdf3f17"
-
 greeting = """^kb%s^s
      ____              ____              
-    |  _ \            |  _ \             
+    |  _ \  Amazingly |  _ \   Incomplete            
     | |_) | ___   __ _| |_) | ___   __ _ 
     |  _ < / _ \ / _` |  _ < / _ \ / _` |
     | |_) | (_) | (_| | |_) | (_) | (_| |
@@ -27,7 +25,8 @@ greeting = """^kb%s^s
                    
 
 
-BCOLORS = ['^R', '^B', '^C', '^M', '^W', '^G'] 
+BCOLORS = ['^R', '^B', '^C', '^M', '^G', '^Y',
+    '^r', '^b', '^c', '^m', '^g', '^y', ] 
 
 #-----------------------------------------------------------------Lobby Connect
 

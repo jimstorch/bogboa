@@ -10,6 +10,14 @@ module: base
 
 name: help
 text:
-    Greetings, this is the help system. Try 'help topics' for a list of 
-    available help texts.  You may also use a '?' instead of typing the word
-    'help'.
+    Greetings, this is the help system.
+
+    For a list of all the help topics enter 'topics'. To read a topic, enter
+    'help' followed by the topic name.  For your convenience, you can enter a
+     question mark '?' instead of typing the word 'help'.
+  
+
+    If you'd like a list of your current commands , simply type 'commands'
+    (or the shortcut '??').  You command set can change based on your location
+    or status.
+

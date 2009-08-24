@@ -14,7 +14,7 @@ text:
 
     Welcome.
   
-    You may 'load' an existing character or 'create' a new one.
+    You may '^Yload^w' an existing character or '^Ycreate'^w a new one.
 
 on_enter: |
 
@@ -26,8 +26,8 @@ on_enter: |
         body.grant_command('create')
         body.grant_command('help')
         body.grant_command('quit')
-        body.grant_command('shutdown')
+        body.grant_command('topics')
+        #body.grant_command('shutdown')
         body.grant_command('ansi')
         body.grant_command('commands')
-        body.prompt()
         }

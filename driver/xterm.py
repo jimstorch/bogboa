@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/decorate.py
+#   driver/xterm.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 import re
+
+"""Support for color and formatting for Xterm style clients."""
+
 
 #--[ Caret Code to ANSI TABLE ]------------------------------------------------
 
@@ -127,7 +130,7 @@ def wrap_list(text, columns=78, indent=2, padding=1):
                 lines.append(line)
                 line = ' ' * padding
             line += ' ' + word                      
-        lines.append(line)     
+        if not line.isspace(): 
+            lines.append(line)     
     return lines    
-
 

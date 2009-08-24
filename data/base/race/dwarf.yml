@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: dwarf
-aliases: [dwarve, dwarves, dwarven, dorf, dorfs]
+aliases: [dwarves, ]
 text:
 
     This space intentionally left blank. 

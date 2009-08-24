@@ -32,7 +32,7 @@ class Client(object):
         self.body.is_player = True
         self.body.mind = self
         self.commands = set()           ## Permitted commands   
-        self.verb_args = None           ## arguments for the verb handlers
+        self.verb_args = []             ## arguments for the verb handlers
         self.last_tell = None           ## used for replies
 
         ## Dictionary-like object used for string substitutions
@@ -49,6 +49,44 @@ class Client(object):
     def send_nowrap(self, msg):
         """Transmit text to the distant end, without word wrapping."""
         self.conn.send_nowrap(msg)   
+
+
+    #-------------------------------------------------------------------whisper
+
+    def whisper(self, msg):
+        """Transmit msg wrapped in whisper color (dark green)."""
+        self.conn.send('^g%s^w' % msg)
+
+    #---------------------------------------------------------------------Prose
+
+    def prose(self, msg):
+        """Transmit msg wrapped in reading color (dark white)."""
+        self.conn.send('^w%s^w' % msg)
+
+    #--------------------------------------------------------------------Inform
+
+    def inform(self, msg):
+        """Transmit msg wrapped in informing color (bright white)."""
+        self.conn.send('^W%s^w' % msg)
+
+    #---------------------------------------------------------------------Alert
+
+    def alert(self, msg):
+        """Transmit msg wrapped in alert color (dark yellow)."""
+        self.conn.send('^y%s^w' % msg)
+
+    #----------------------------------------------------------------------Warn
+
+    def warn(self, msg):
+        """Transmit msg wrapped in warn color (dark red)."""
+        self.conn.send('^r%s^w' % msg)
+
+    #----------------------------------------------------------------------Warn
+
+    def exclaim(self, msg):
+        """Transmit msg wrapped in exclaime color (bright red)."""
+        self.conn.send('^R%s^w' % msg)
+
 
 #    #---------------------------------------------------------------Send Pretty
 
@@ -79,13 +117,13 @@ class Client(object):
                 handler(self)
 
             else:
-                self.send("Unknown action.")
+                self.alert("Unknown action.")
                 
-            self.prompt()
+            #self.prompt()
 
         else:
             self.verb_args = None
-            self.soft_prompt()
+            #self.soft_prompt()
 
 
     #------------------------------------------------------------------Get Room
@@ -131,18 +169,18 @@ class Client(object):
         self.active = False
         self.conn.active = False
 
-    #--------------------------------------------------------------------Prompt
+#    #--------------------------------------------------------------------Prompt
 
-    def prompt(self):
-        """Transmit a newline and a prompt"""
-        #self.send('\n')
-        #self.soft_prompt()
+#    def prompt(self):
+#        """Transmit a newline and a prompt"""
+#        #self.send('\n')
+#        #self.soft_prompt()
 
-    #---------------------------------------------------------------Soft Prompt
+#    #---------------------------------------------------------------Soft Prompt
 
-    def soft_prompt(self):
-        """Called when a leading new-line is not desired"""
-        #self.send('> ', lf=False)
+#    def soft_prompt(self):
+#        """Called when a leading new-line is not desired"""
+#        #self.send('> ', lf=False)
 
     #-------------------------------------------------------------------Verbing
 
@@ -182,7 +220,7 @@ class Client(object):
         """Authorize player to use an command and tell them."""
         if command_name not in self.commands:
             self.commands.add(command_name)
-            self.send('You receive a new command: %s' % command_name)
+            self.send('You receive a new command: ^W%s^w' % command_name)
         else:
             self.send("Oddness -- attempt to re-grant command '%s'." %
                 command_name)
@@ -193,7 +231,7 @@ class Client(object):
         """De-authorize player to use an command and tell them."""
         if command_name in self.commands:
             self.commands.remove(command_name)
-            self.send("You lose a command: %s" % command_name)
+            self.send("You lose a command: ^y%s^w" % command_name)
 
     #-----------------------------------------------------Revoke Command Silent
 

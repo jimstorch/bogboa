@@ -11,6 +11,7 @@ from driver.scheduler import THE_SCHEDULER
 from mudlib.commands.speech import broadcast
 from mudlib import shared
 from mudlib import parsers
+from driver.log import THE_LOG
 
 #---------------------------------------------------------------------------Ban
 
@@ -30,7 +31,8 @@ def kick(client, target):
 
     """Kick a miscreant player offline. They can come back."""
 
-    client.send('You kick %s offline.' % target.name)
+    client.warn('You kick %s offline.' % target.name)
+    THE_LOG.add('?? %s kicked %s offline' % (client.name, target.name))
     target.deactivate()
 
 
@@ -48,13 +50,13 @@ def shutdown(client):
     """Shutdown the server with a ten second warning to users."""
 
     def second_warning():
-        broadcast("\n!! Server shutdown in 5 seconds. Please log off.\n")
+        broadcast("\n!! ^RServer shutdown in 5 seconds. Please log off.^w\n")
 
     def kill():
         shared.SERVER_RUN = False
    
-
-    broadcast("\n!! Server shutdown in 10 seconds.  Please log off.\n")
+    THE_LOG.add('?? %s requested server shutdown' % client.name)
+    broadcast("\n!! ^RServer shutdown in 10 seconds.  Please log off.^w\n")
     THE_SCHEDULER.add(5, second_warning)
     THE_SCHEDULER.add(10, kill)
 
@@ -107,7 +109,7 @@ def uptime(client):
     else:
         s += '%d mins' % minutes
 
-    client.send(s)
+    client.inform(s)
 
 
 #---------------------------------------------------------------------------Zap

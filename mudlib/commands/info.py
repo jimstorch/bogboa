@@ -19,7 +19,18 @@ def commands(client):
     clist = list(client.commands)
     clist.sort()
     cmds = ', '.join(clist)
-    client.send('Your current commands are: %s' % cmds)
+    client.send('Your current commands are: ^W%s^w' % cmds)
+
+#------------------------------------------------------------------------Topics
+@parsers.blank
+def topics(client):
+
+    """List the player's granted command set."""
+
+    tlist = list(shared.HELPS.keys())
+    tlist.sort()
+    topics = ', '.join(tlist)
+    client.send('Available help topics are: ^W%s^w' % topics)
 
 
 #-------------------------------------------------------------------------Stats
@@ -34,17 +45,17 @@ def stats(client):
     s = ''
     for stat in stats:
         s += '%s=%s ' % (stat.upper(), body.stats[stat])
-    client.send('Your current stats: %s' % s)
+    client.send('Your current stats: ^W%s^w' % s)
 
 
 #--------------------------------------------------------------------------Look
-
+@parsers.blank
 def look(client):
 
     """Look at the current room."""
 
-    room = shared.ROOMS[client.body.room_uuid]
-    client.send(room.desc)
+    room = client.body.room
+    room.client_see(client)
 
 
 #--------------------------------------------------------------------------Help
@@ -56,12 +67,12 @@ def help(client, arg):
     if arg != None:
         topic = arg.lower()
         if topic in shared.HELPS:
-            client.send(shared.HELPS[topic].text)
+            client.prose(shared.HELPS[topic].text)
         else:
-            client.send("Help topic not found.")
+            client.alert("Help topic not found.")
 
     else:
-        client.send(shared.HELPS['help'].text)
+        client.prose(shared.HELPS['help'].text)
     
 
 #-------------------------------------------------------------------------Score
@@ -78,7 +89,7 @@ def time(client):
 
     """Tell the client the current game time."""
     
-    client.send('The time is %s.' % calendar.time_msg())
+    client.inform('The time is %s.' % calendar.time_msg())
 
 
 #--------------------------------------------------------------------------Date
@@ -87,7 +98,7 @@ def date(client):
 
     """Tell the client the current game date."""
     
-    client.send('The date is %s.' % calendar.date_msg())
+    client.inform('The date is %s.' % calendar.date_msg())
 
 
 

@@ -21,6 +21,7 @@ from driver.config import LOBBY_UUID
 from driver.config import START_UUID
 from mudlib.commands.speech import broadcast
 
+
 """Functions for creating a new character."""
 
 
@@ -47,21 +48,21 @@ def create(client):
 def name(client):
     
     if len(client.verb_args) != 1:
-        client.send("Please use the format 'name Charactername'.")
+        client.alert("Please use the format 'name Charactername'.")
         return
 
     _name = client.verb_args[0]
    
     if len(_name) < 3:
-        client.send("That name is too short.")
+        client.alert("That name is too short.")
         return
 
     if len(_name) > 30:
-        client.send("That name is too long.")
+        client.alert("That name is too long.")
         return       
 
     if check_name(_name):
-        client.send("Sorry, that name is not available.")
+        client.alert("Sorry, that name is not available.")
         return
 
     ###########################################################################
@@ -75,7 +76,7 @@ def name(client):
     ###########################################################################
 
     client.body.name = _name
-    client.send("Your name is now %s." % _name)    
+    client.inform("Your name is now %s." % _name)    
     review(client)
 
 
@@ -83,17 +84,17 @@ def name(client):
 
 def gender(client):
     if len(client.verb_args) != 1:
-        client.send("Please use the format 'gender [male|female]'.")
+        client.alert("Please use the format 'gender [male|female]'.")
         return
 
     _gender = client.verb_args[0].lower()
 
     if _gender != 'male' and _gender != 'female':
-        client.send("Gender must be 'male' or 'female'.")
+        client.alert("Gender must be 'male' or 'female'.")
         return
 
     client.body.gender = _gender
-    client.send("Your gender is now %s." % _gender)
+    client.inform("Your gender is now %s." % _gender)
     review(client)
 
 
@@ -102,17 +103,17 @@ def gender(client):
 def race(client):
 
     if len(client.verb_args) != 1:
-        client.send("Please use the format 'race racename'.")
+        client.alert("Please use the format 'race racename'.")
         return
 
     _race = client.verb_args[0].lower()
 
     if _race not in shared.RACES:
-        client.send("That is not a playable race.")
+        client.alert("That is not a playable race.")
         return        
 
     client.body.race = _race
-    client.send("Your race is now %s." % _race)
+    client.inform("Your race is now %s." % _race)
     review(client)
 
 
@@ -121,22 +122,22 @@ def race(client):
 def guild(client):
 
     if len(client.verb_args) != 1:
-        client.send("Please use the format 'guild guildname'.")
+        client.alert("Please use the format 'guild guildname'.")
         return
 
     _guild = client.verb_args[0].lower()
 
     if _guild == 'wizard':
-        client.send(
+        client.warn(
             "You must first solve the riddle of 'Not just no...'")
         return
 
     if _guild not in shared.GUILDS:
-        client.send("That is not a playable guild.")
+        client.alert("That is not a playable guild.")
         return   
 
     client.body.guild = _guild
-    client.send("Your guild is now %s." % _guild)
+    client.inform("Your guild is now %s." % _guild)
     review(client)
 
 
@@ -145,21 +146,21 @@ def guild(client):
 def password(client):
 
     if len(client.verb_args) != 1:
-        client.send("Please use the format 'password yourpassword'.")
+        client.alert("Please use the format 'password yourpassword'.")
         return
 
     _password = client.verb_args[0]
    
     if len(_password) < 3:
-        client.send("That password is too short.")
+        client.alert("That password is too short.")
         return
 
     if len(_password) > 40:
-        client.send("That password is too long.")
+        client.alert("That password is too long.")
         return       
 
     client.body.password = _password
-    client.send("Your password is now %s." % _password)
+    client.inform("Your password is now %s." % _password)
     review(client)
 
 
@@ -205,22 +206,22 @@ def review(client):
 def save(client):
     
     if client.body.name == '':
-        client.send('You must select a name first.')
+        client.alert('You must select a name first.')
   
     elif client.body.gender == '':
-        client.send('You must select a gender first.')
+        client.alert('You must select a gender first.')
 
     elif client.body.race == '':
-        client.send('You must select a race first.')
+        client.alert('You must select a race first.')
 
     elif client.body.guild == '':
-        client.send('You must select a guild first.')
+        client.alert('You must select a guild first.')
 
     elif client.body.password == '':
-        client.send('You must select a password first.')    
+        client.alert('You must select a password first.')    
  
     else:
-        client.send('Saving your new character...')
+        client.inform('Saving your new character...')
         ## Assign a permanent UUID
         client.body.uuid = uuid.uuid4().get_hex()
         save_new_body(client.body)
@@ -234,7 +235,7 @@ def save(client):
 def load(client):
 
     if len(client.verb_args) != 2:
-        client.send("Please use the format 'load name password'.")
+        client.alert("Please use the format 'load name password'.")
         return        
     
     name = client.verb_args[0]
@@ -245,11 +246,11 @@ def load(client):
         if shared.is_online(name.lower()):
             THE_LOG.add("?? Attempt to use active '%s' from %s" %
                 (name, client.origin())) 
-            client.send("That account is already in use.")
+            client.warn("That account is already in use.")
             return
 
         else:
-            client.send("Welcome back, %s. " % name)
+            client.inform("Welcome back, %s. " % name)
             client.send("Your last visit was %s." % last_on(name))
             load_body(client.body, name)
             client.name = name
@@ -259,7 +260,7 @@ def load(client):
 
     else:
         client.login_attempts += 1
-        client.send("Character name or password error.")
+        client.alert("Character name or password error.")
 
         if client.login_attempts > 3:
             THE_LOG.add("?? Suspicious login guessing '%s'/'%s' from %s" % 
@@ -307,6 +308,9 @@ def player_command_set(client):
     client.grant_command('uptime')  
     client.grant_command('ansi')  
     client.grant_command('stats') 
+    client.grant_command('topics')
+    client.grant_command('look')
+    client.grant_command('shutdown')
 
 #----------------------------------------------------------------Player Connect
 
@@ -331,7 +335,7 @@ def player_connect(client):
     shared.ROOMS[LOBBY_UUID].on_exit(client.body)
     shared.LOBBY.remove(client)
 
-    broadcast('%s is now online.' % client.name)
+    broadcast('^g%s is now online.^w' % client.name)
 
     ## Add client to the player's list
     shared.PLAYERS.append(client)

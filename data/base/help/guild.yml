@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: guild
-aliases: [ guilds, class, classes, roles, role, sect ]
+#aliases: [ guilds, class, classes, roles, role, sect ]
 text: |
     The 'guild' command is used during the character creation process to 
     specify the guild your character will apprenticed to.  This is equivalent
