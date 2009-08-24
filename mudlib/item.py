@@ -26,6 +26,7 @@ class Item(object):
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
         self.weight = 0
+        self.max_stack = 1
         self.buy = 0
         self.self = 0
         self.scripts = {}    

@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   silver_coin.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
+
+uuid: d464f00d84534a3eb070ce906edb6c57
+name: silver coin
+text: a coin of the realm, stamped from bright silver
+weight: .01

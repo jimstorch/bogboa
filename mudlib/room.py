@@ -13,7 +13,7 @@ from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
-
+from inventory import Container
 
 #--------------------------------------------------------------------------Room
 
@@ -28,7 +28,7 @@ class Room(object):
         self.exits = {}
         self.scripts = {}
         self.bodies = []
-        self.items = []
+        self.contents = Container()
 
 
     #-------------------------------------------------------------Body and Room

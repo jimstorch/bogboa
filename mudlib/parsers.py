@@ -10,7 +10,8 @@ from mudlib import shared
 
 
 """
-Decorator functions to parse and error check arguments for player commands.
+Decorator functions to parse and error check arguments for player commands and
+general search functions.
 """    
 
 
@@ -178,5 +179,30 @@ def online_player(cmd_func):
             cmd_func(client, target)
 
     return parse_func             
+
+
+#------------------------------------------------------------------Item in Room
+
+def item_in_room(cmd_func):
+
+    def parse_func(client):
+        args = client.verb_args
+        if len(args) == 1:
+            pass
+    
+
+    pass
+
+
+#-------------------------------------------------------------Item in Inventory
+
+def item_in_inventory(cmd_func):
+
+    pass
+
+#------------------------------------------------------------------Body in Room
+
+def body_in_room(cmd_func):
+    pass
 
 
