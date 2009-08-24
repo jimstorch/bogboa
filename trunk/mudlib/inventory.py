@@ -17,22 +17,9 @@ from shared import find_item
 ## backpack     = everything else
 ## bank         = anything
 
-
-## Equipt items are a dictionary of slot names and the uuid of the item
-## in that slot, or None for empty slots
-## equipment = {}
-
-## Slots:
-##  head, face, ear1, ear2
-##  neck, shoulders, back, chest
-##  arms, wrists, hands, finger1, finger2
-##  waist, legs, feet
-##  primary_hand, off_hand
-
+## Max encumbrance = str * 100
 
 from mudlib.shared import ITEMS
-
-MAX_STACK = 100
 
 
 #----------------------------------------------------------------------Wardrobe
@@ -51,6 +38,17 @@ class Wardrobe(object):
 
         self.body = body
         self.slots = {}
+        self.encumbrance = 0
+
+
+    #----------------------------------------------------------------Equip UUID
+
+    def equip_uuid(self, uuid):
+
+        """Given a UUID, fill a slot with the corresponding item object."""        
+
+        item = find_item[uuid]
+        self.equip_item(item)
 
     #----------------------------------------------------------------Equip Item    
 
@@ -82,15 +80,7 @@ class Wardrobe(object):
         """Return the item in a given slotname, or None for empty."""
 
         return self.slots.get(slotname, None)
-        
-    #----------------------------------------------------------------Equip UUID
 
-    def equip_uuid(self, uuid):
-
-        """Given a UUID, fill a slot with the corresponding item object."""        
-
-        item = find_item[uuid]
-        self.equip_item(item)
 
     #-------------------------------------------------------------Cascade Event
 
@@ -112,103 +102,163 @@ class Wardrobe(object):
         
         pass   
 
+    #--------------------------------------------------------------------------
+
+    def describe(self)
+
+        pass
 
 
-#---------------------------------------------------------------------Container
 
 class Container(object):
 
-    def __init__(self, name, category, size):
-        self.name = name
-        self.category = category
-        self.size = size
-        self.contents = {}
-        self.encumbrance = 0
+    def __init__(self, max_stacks=20, max_height=2000):
+        
+        self.max_stacks = max_stacks    ## Maximum count of item stacks
+        self.max_height = max_height    ## Maximum items in each stack
+        self.items = {}
 
-    #----------------------------------------------------------------------Show
+    def can_hold(self, item, qty=1):
 
-    def peruse(self, item_uuid=None):
-        pass
+        """Test if container can hold qty number of item."""
 
-    #----------------------------------------------------------------------Stow
-
-    def stow(self, item_uuid, count=1):
-        """Add one or more of the same items to a container."""
-        current = self.contents.get(item_uuid, 0)
-        self.contents[item_uuid] = current + count
-        weight = ITEMS[item_uuid].weight * count
-        self.ecumbrance += weight
-
-    #--------------------------------------------------------------------Remove
-
-    def remove(self, item_uuid, count=1)
-        """Withdraw one or more of the same items from a container.""" 
-        current = self.contents.get(item_uuid, 0)
-        if count < current:
-            self.contents[item_uuid] = current - count
-            weight = ITEMS[item_uuid].weight * count
-            self.ecumbrance -= weight
-
-        else:
-            print("Oddness -- attempt to remove more items than exist in bag")
-
-    #------------------------------------------------------------------Can Stow
-
-    def can_stow(self, item_uuid):
-        """Boolean test whether item can go into this container."""        
-        item = ITEMS[item_uuid]
-        if self.category = 'any' or item.category == self.category:
+        curr= self.count(item)
+        ## Do we have a stack begun and can it hold more?
+        if curr > 0 and (curr + qty) < self.max_height:
+            return = True
+        ## Do we have room for a new item stack?
+        elif len(self.items) < self.max_stacks and qty < self.max_height:
             return True
         else:
-            return False
+            return False   
 
-    #------------------------------------------------------------------Too Many
+    def count(self, item):
 
-    def too_many(self, item_uuid, count=1):
-        """Boolean test whether too many of this item already held."""
-        return ( self.count_item(item_uuid) + count ) >  MAX_STACK
-           
-    #----------------------------------------------------------------Count Item
+        """Return the quantity item.  Qty 0 = no stack yet."""
 
-    def count_item(self, item_uuid, count=1):
-        """Returns the number of a given item in a bag."""
-        return self.contents.get(item_uuid, 0)
+        foo, curr = self.items.get(item.uuid,0)
+        return curr        
+
+    def has(self, item, qty=1):
+
+        """Check it container has qty number of item."""
+
+        curr = self.count(item)
+        return bool(qty <= curr)    
+
+    def add(self, item, qty=1):
+
+        """Add qty number of item to container."""
+
+        curr = self.count(item)
+        self.items[item.uuid] = (item, curr + count)
+
+                        
+
+    def subtract(self, item, qty=1):
+        curr = self.count(item)
+        ## if we take all, delete the stack.
+        ## Otherwise, it will count against max_items even with a count of 0
+        if curr = qty:
+            del self.items[item.uuid]
+        else:
+            self.items[item.uuid] = (item, qty - curr)
+
+
+    #----------------------------------------------------------------Get Weight
+
+    def Get Weight(self):
+        wt = 0.0
+        for uuid in self.items.keys():
+            item, qty = self.items[uuid]
+            wt += (item.weight * qty)
+        return wt     
 
 
 
-#---------------------------------------------------------------------Equipment
-
-class Equipment(object):
-
-    def __init__(self):
-        self.encumbrance = 0                
-
-    def inspect(self, item_uuid=None):
-        pass
-    
-    def wear(self, item_uuid):
-        pass
-
-    def remove(self, item_uuid):
-        pass
 
 
 
-#--------------------------------------------------------------------------Bank
 
-class Bank(object):
-    
-    def __init__(self):
-        pass
 
-    def inquire(self, item_uuid=None):
-        pass
 
-    def deposit(self, item_uuid, count=1):
-        pass
+##---------------------------------------------------------------------Container
 
-    def withdraw(self, item_uuid, count=1):
-        pass
+#class Container(object):
+
+#    def __init__(self, name, category, size):
+#        self.name = name
+#        self.category = category
+#        self.size = size
+#        self.contents = {}
+#        self.encumbrance = 0
+
+#    #----------------------------------------------------------------------Show
+
+#    def peruse(self, item_uuid=None):
+#        pass
+
+#    #----------------------------------------------------------------------Stow
+
+#    def stow(self, item_uuid, count=1):
+#        """Add one or more of the same items to a container."""
+#        current = self.contents.get(item_uuid, 0)
+#        self.contents[item_uuid] = current + count
+#        weight = ITEMS[item_uuid].weight * count
+#        self.ecumbrance += weight
+
+#    #--------------------------------------------------------------------Remove
+
+#    def remove(self, item_uuid, count=1)
+#        """Withdraw one or more of the same items from a container.""" 
+#        current = self.contents.get(item_uuid, 0)
+#        if count < current:
+#            self.contents[item_uuid] = current - count
+#            weight = ITEMS[item_uuid].weight * count
+#            self.ecumbrance -= weight
+
+#        else:
+#            print("Oddness -- attempt to remove more items than exist in bag")
+
+#    #------------------------------------------------------------------Can Stow
+
+#    def can_stow(self, item_uuid):
+#        """Boolean test whether item can go into this container."""        
+#        item = ITEMS[item_uuid]
+#        if self.category = 'any' or item.category == self.category:
+#            return True
+#        else:
+#            return False
+
+#    #------------------------------------------------------------------Too Many
+
+#    def too_many(self, item_uuid, count=1):
+#        """Boolean test whether too many of this item already held."""
+#        return ( self.count_item(item_uuid) + count ) >  MAX_STACK
+#           
+#    #----------------------------------------------------------------Count Item
+
+#    def count_item(self, item_uuid, count=1):
+#        """Returns the number of a given item in a bag."""
+#        return self.contents.get(item_uuid, 0)
+
+
+
+##--------------------------------------------------------------------------Bank
+
+#class Bank(object):
+#    
+#    def __init__(self):
+#        pass
+
+#    def inquire(self, item_uuid=None):
+#        pass
+
+#    def deposit(self, item_uuid, count=1):
+#        pass
+
+#    def withdraw(self, item_uuid, count=1):
+#        pass
 
 
 

@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   copper_coin.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+module: base
+
+uuid: 0af7e976791d4d9ba58d91178fcfc8f2
+name: copper coin
+text: a coin of the realm, crudely stamped from copper and well circulated
+weight: .01
