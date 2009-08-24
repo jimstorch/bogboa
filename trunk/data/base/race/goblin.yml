@@ -9,6 +9,7 @@ version: 1001
 module: base
 
 name: goblin
+aliases: [goblins]
 text:
  
     This space intentionally left blank.

@@ -14,6 +14,7 @@ from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
 
+
 #--------------------------------------------------------------------------Room
 
 class Room(object):
@@ -25,10 +26,9 @@ class Room(object):
         self.name = None
         self.is_outside = False
         self.exits = {}
-        self.bodies = []
-        self.npcs = {}
-        self.items = {}
         self.scripts = {}
+        self.bodies = []
+        self.items = []
 
 
     #-------------------------------------------------------------Body and Room
@@ -53,7 +53,7 @@ class Room(object):
 
         for body in self.bodies:
             if body.is_player:
-                body.send(msg)
+                body.mind.send(msg)
 
 
     #--------------------------------------------------------------Tell All But
@@ -66,25 +66,40 @@ class Room(object):
             if a_body.is_player and a_body != body:
                 a_body.send(msg)
 
+    #----------------------------------------------------------------Client See
+
+    def client_see(self, client):
+
+        """Look at the current room. Also used by info.look()"""
+
+        room = client.body.room
+        client.send('^c== ^C%s^c, %s ==^w' % (room.name, time_msg()))
+        client.send(room.text)
+        bodies = room.bodies
+        if len(bodies) > 1:
+            client.send('Here with you are;')
+            for body in room.bodies:
+                if body != client.body:
+                    client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
 
     #------------------------------------------------------------------On Enter
 
     def on_enter(self, body, direction=None):
 
-        if body.is_visible:
-
-            if direction:
-                self.tell_all('%s enters from %s.' % 
-                    (body.name, direction))          
-            else:
-                self.tell_all("%s appears." % body.name )       
-  
-        self.bodies.append(body)
         body.room = self
 
-        if body.is_player:
-            body.send('You enter %s at %s.' % (self.name, time_msg()))
-            body.send(self.text)
+        if body.uuid: 
+
+            if direction:
+                self.tell_all('^g%s enters from %s.^w' % 
+                    (body.name, direction))          
+            else:
+                self.tell_all("^g%s appears.^w" % body.name )       
+            
+            if body.is_player:
+                self.client_see(body.mind)
+
+        self.bodies.append(body)
 
         if 'on_enter' in self.scripts:
             exec self.scripts['on_enter']
@@ -95,14 +110,13 @@ class Room(object):
 
         self.bodies.remove(body)             
 
-        if body.is_visible:
+        if body.uuid:
 
             if direction:
-                self.tell_all('%s exits %s.' % 
+                self.tell_all('^g%s exits %s.^w' % 
                     (body.name, direction))          
             else:
-                self.tell_all('%s vanishes.' % body.name)          
-
+                self.tell_all('^g%s vanishes.^w' % body.name)          
 
         if 'on_exit' in self.scripts:
             exec self.scripts['on_exit']

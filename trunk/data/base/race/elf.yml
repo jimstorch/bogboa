@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: elf
-aliases: [elves, elven]
+aliases: [elves, ]
 text:
  
     This space intentionally left blank.

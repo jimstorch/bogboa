@@ -21,10 +21,13 @@ class Item(object):
     def __init__(self):
 
         self.uuid = None
-        self.name = None
-        self.text = None
+        self.name = None        
         self.module = None
+        self.text = None        # description
+        self.slot = None        # which wardrobe slot, if any, the item fits
         self.weight = 0
+        self.buy = 0
+        self.self = 0
         self.scripts = {}    
     
 
@@ -252,6 +255,11 @@ def configure_item(cfg):
         item.text = cfg.pop('text')
     else:
         item.text = None
+
+    if 'slot' in cfg:
+        item.slot = cfg.pop('slot')
+    else:
+        item.slot = None
 
     if 'module' in cfg:
         item.module = cfg.pop('module')

@@ -25,7 +25,7 @@ def north(client):
         entering.on_enter(client.body, 'the South')
     
     else:
-        client.send('The way North is obstructed.')
+        client.alert('The way North is obstructed.')
 
 
 
@@ -44,7 +44,7 @@ def south(client):
         entering.on_enter(client.body, 'the North')
     
     else:
-        client.send('The way South is obstructed.')
+        client.alert('The way South is obstructed.')
 
 
 #--------------------------------------------------------------------------East
@@ -62,7 +62,7 @@ def east(client):
         entering.on_enter(client.body, 'the West')
     
     else:
-        client.send('The way East is obstructed.')
+        client.alert('The way East is obstructed.')
 
 
 #--------------------------------------------------------------------------West
@@ -80,7 +80,7 @@ def west(client):
         entering.on_enter(client.body, 'the East')
     
     else:
-        client.send('The way West is obstructed.')
+        client.alert('The way West is obstructed.')
 
 #----------------------------------------------------------------------------Up
 @parsers.blank
@@ -97,7 +97,7 @@ def up(client):
         entering.on_enter(client.body, 'below')
     
     else:
-        client.send('The way up is obstructed.')
+        client.alert('The way up is obstructed.')
 
 
 #--------------------------------------------------------------------------Down
@@ -115,7 +115,7 @@ def down(client):
         entering.on_enter(client.body, 'above')
     
     else:
-        client.send('The way down is obstructed.')
+        client.alert('The way down is obstructed.')
 
 #-------------------------------------------------------------------------Enter
 

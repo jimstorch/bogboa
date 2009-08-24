@@ -12,8 +12,8 @@ import socket
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.decorate import colorize
-from driver.decorate import wrap_list
+from driver.xterm import colorize
+from driver.xterm import wrap_list
 
 #---[ Telnet Notes ]-----------------------------------------------------------
 # (See RFC 854 for more information)

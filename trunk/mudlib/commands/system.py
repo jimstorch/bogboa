@@ -23,11 +23,11 @@ def ansi(client, setting):
             use = 'on'
         else:
             use = 'off'
-        client.send('^mANSI is currently set to %s.^w' % use)
+        client.send('^YANSI^W is currently set to %s.^w' % use)
 
     elif setting == True:
         client.conn.use_ansi = True
-        client.send('^mSetting ANSI to on.^w')
+        client.send('^WSetting ^YANSI^W to on.^w')
         ## store preference in database
         set_ansi(client.name, True)
 

@@ -13,25 +13,29 @@ aliases: [names, ]
 text: |
     The 'name' command is used during the character creation process to specify
     the name you would like for your character.  The format is the word 'name'
-    followed by a space and the name your like (as a single word):
+    followed by a space and the name your like (as a single word); '^!name
+    Shadowcleave^1'.
 
-        name Shadowcleave
-
-    Prior to saving your preferences with the 'done' command, you may change
-    your choice by using the 'name' command again.
+    Prior to saving your preferences with the '^!save^1' command, you may
+    change your choice by using the '^!name^1' command again.
 
     Use proper capitalization as you wish it to appear; 'McCloud' vs 'mccloud'.
 
     Naming Policy:
     
     * Should fit in a fantasy setting.
-    * Must not be derived from trademarks, celebrities, or famous fictonal
+
+    * Must not be derived from products, celebrities, or famous fictonal
       characters.
+
     * Must not imply rank, title, or authority.
+
     * Must not mimic a game NPC or another player.
-    * Must not be derived from lewd, profane, or politically or emotionally
+
+    * Must not be derived from lewd, profane, political, or emotionally
       charged terms.
-    * Must not reflect intolerance towards culture, race, sex, or sexual
+
+    * Must not reflect intolerance towards a culture, race, sex, or sexual
       orientation. 
 
     Do not interpret the computer's acceptance of your name as an indication

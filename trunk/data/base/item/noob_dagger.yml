@@ -12,11 +12,12 @@ uuid: f8988e8f6b1a41cdb2f1d63dc313c58d
 name: apprentice dagger
 text: a short blade with a wound leather grip and brass pommel
 
+slot: primary
+
 on_equip:
     body.adj_stat('dex', 10)
 
 on_remove:
     body.adj_stat('dex', -10)
-
 
 

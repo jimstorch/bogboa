@@ -39,11 +39,7 @@ def emote(client, msg):
     """Displays an emote to everyone in the room."""
 
     room = client.get_room()
-    if room:
-        room.tell_all('... %s %s' % (client.name, msg))
-    else:
-        client.send('Oddness -- you are not in a room.')
-
+    room.tell_all('^G... %s %s^w' % (client.name, msg))
 
 #--------------------------------------------------------------------------Tell
 @parsers.dialogue
@@ -55,11 +51,11 @@ def tell(client, target, msg):
 
 
     if client == target:
-        target.send('You tell yourself, %s' % msg)
+        target.send('^mYou tell yourself^w, %s' % msg)
 
     else:
-        target.send('%s tells you, %s' % (client.name, msg))
-        client.send('You tell %s, %s' % (target.name, msg))
+        target.send('^M%s tells you^w, %s' % (client.name, msg))
+        client.send('^mYou tell %s^w, %s' % (target.name, msg))
         
         ## note the sender so that a reply works
         target.last_tell = client.name  
@@ -75,17 +71,17 @@ def reply(client, msg):
     if client.last_tell:
         target = shared.find_player(client.last_tell)
         if target:
-            target.send('%s replies, %s' % (client.name, msg))
-            client.send('You reply to %s, %s' % (target.name, msg))
+            target.send('^M%s replies^w, %s' % (client.name, msg))
+            client.send('^mYou reply to %s^w, %s' % (target.name, msg))
 
             ## note the sender so that a reply works
             target.last_tell = client.name  
 
         else:
-            client.send('%s is no longer online.\n' % client.last_tell)    
+            client.alert('%s is no longer online.\n' % client.last_tell)    
 
     else:
-        client.send('You have not recieved anything to reply to.')
+        client.alert('You have not recieved anything to reply to.')
     
 
 #---------------------------------------------------------------------------OOC
@@ -98,10 +94,10 @@ def ooc(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('You OOC; %s' % msg)                
+            player.send('^gYou OOC^w, %s' % msg)                
         
         else:
-            player.send('%s OOC; %s' % (client.name, msg))
+            player.send('^G%s OOCs^w, %s' % (client.name, msg))
 
 
 #-------------------------------------------------------------------------Shout
@@ -114,10 +110,10 @@ def shout(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('You shout, %s' % msg)                
+            player.send('^rYou shout^w, %s' % msg)                
         
         else:
-            player.send('%s shouts, %s' % (client.name, msg))
+            player.send('^R%s shouts^w, %s' % (client.name, msg))
 
 
 #---------------------------------------------------------------------------Say
@@ -130,8 +126,8 @@ def say(client, msg):
     room = client.get_room()
     body = client.body
 
-    room.tell_all_but(body, '%s says, %s' % (body.name, msg))
-    client.send('You say, %s' % msg)    
+    room.tell_all_but(body, '^W%s says^w, %s' % (body.name, msg))
+    client.send('^WYou say^w, %s' % msg)    
 
 
 

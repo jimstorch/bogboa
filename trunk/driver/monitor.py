@@ -32,7 +32,7 @@ def test_connections():
     for client in shared.PLAYERS:
         if client.conn.active == False:
             client.deactivate()
-            broadcast('%s has gone offline.' % client.name)    
+            broadcast('^g%s has gone offline.^w' % client.name)    
 
 
 #-------------------------------------------------------------Kill Idle Clients
@@ -55,7 +55,7 @@ def kill_idle_clients():
             THE_LOG.add('.. Kicking idle %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
-            broadcast('%s has gone offline.' % client.name)
+            broadcast('^g%s has gone offline.^w' % client.name)
 
 
 #------------------------------------------------------------Purge Dead Clients

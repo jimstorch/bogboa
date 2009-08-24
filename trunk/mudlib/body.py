@@ -25,6 +25,7 @@ class Body(object):
         self.is_visible = False         ## Actions shown to others or not
         self.index = None               ## numerical index
         self.mind = None                ## Brain or Client object
+        self.wardrobe = None            ## Worn Gear Manager
 
         ## Stats
         self.race = ''
@@ -498,19 +499,19 @@ class Body(object):
         if self.is_player:
             self.mind.send_nowrap(msg)
 
-    #--------------------------------------------------------------------Prompt
+#    #--------------------------------------------------------------------Prompt
 
-    def prompt(self):
-        """Transmit a newline and a prompt"""
-        if self.is_player:
-            self.mind.prompt()
+#    def prompt(self):
+#        """Transmit a newline and a prompt"""
+#        if self.is_player:
+#            self.mind.prompt()
 
-    #---------------------------------------------------------------Soft Prompt
+#    #---------------------------------------------------------------Soft Prompt
 
-    def soft_prompt(self):
-        """Called when a leading new-line is not desired"""
-        if self.is_player:
-            self.mind.soft_prompt()
+#    def soft_prompt(self):
+#        """Called when a leading new-line is not desired"""
+#        if self.is_player:
+#            self.mind.soft_prompt()
 
 
 

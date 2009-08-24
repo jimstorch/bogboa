@@ -6,6 +6,8 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from shared import find_item
+
 ## Each container is a dictionary with the item uuid as key and the
 ## item quantity as value. 
 
@@ -31,6 +33,86 @@
 from mudlib.shared import ITEMS
 
 MAX_STACK = 100
+
+
+#----------------------------------------------------------------------Wardrobe
+
+class Wardrobe(object):
+
+    """Paper Doll Class to manage worn items."""    
+
+    ## What slots do we want to manage?
+    slot_names = set('head', 'ears', 'neck', 'shoulders', 'back', 'chest',
+        'arms', 'wrists', 'hands', 'fingers', 'primary', 'secondary', 'waist',
+        'legs', 'feet')
+
+
+    def __init__(self, body):
+
+        self.body = body
+        self.slots = {}
+
+    #----------------------------------------------------------------Equip Item    
+
+    def equip_item(self, item):
+    
+        """
+        Given an item object, equip it in the proper slot.
+        Also fires the on_equipt script.
+
+        Returns None is slot is empty, the item replaced, or
+        the origin item if not equipable.        
+        """
+        
+        slot = item.slot
+        if slot in self.slot_names:
+                  
+            replace = self.get_item(slot)
+            self.slots[slot] = item
+            ## TODO: dbms record
+            return replace
+
+        else:
+            return item
+
+    #------------------------------------------------------------------Get Item
+
+    def get_item(self, slotname):
+        
+        """Return the item in a given slotname, or None for empty."""
+
+        return self.slots.get(slotname, None)
+        
+    #----------------------------------------------------------------Equip UUID
+
+    def equip_uuid(self, uuid):
+
+        """Given a UUID, fill a slot with the corresponding item object."""        
+
+        item = find_item[uuid]
+        self.equip_item(item)
+
+    #-------------------------------------------------------------Cascade Event
+
+    def cascade_event(self, event, body):
+
+        """Apply an event to all worn items to fire custom scripts."""
+        
+        pass
+
+    #---------------------------------------------------------------Remove Item
+
+    def remove_item(self, slot):
+
+        pass
+
+    #---------------------------------------------------------------Remove UUID
+
+    def remove_uuid(self, uuid):
+        
+        pass   
+
+
 
 #---------------------------------------------------------------------Container
 

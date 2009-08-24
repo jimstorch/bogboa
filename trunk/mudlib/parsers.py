@@ -23,7 +23,7 @@ def blank(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args):
-            client.send('That command does not use parameters.')
+            client.alert('That command does not use parameters.')
             return
         else:
             cmd_func(client)
@@ -40,10 +40,10 @@ def singular(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
-            client.send('That command requires a parameter.')
+            client.alert('That command requires a parameter.')
             return
         elif len(args) > 1:
-            client.send('Too many parameters -- use one.')
+            client.alert('Too many parameters -- use one.')
             return                
         else:
             cmd_func(client, args[0])
@@ -61,7 +61,7 @@ def none_or_one(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
-            client.send('Too many parameters -- use one.')
+            client.alert('Too many parameters -- use one.')
             return
         elif len(args) == 1:
             arg = args[0]
@@ -82,7 +82,7 @@ def monologue(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if not len(args):
-            client.send('Missing parameters.')
+            client.alert('Missing parameters.')
             return
         else:
             msg = ' '.join(args)
@@ -100,16 +100,16 @@ def dialogue(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
-            client.send('Command is missing a subject and message.')
+            client.alert('Command is missing a subject and message.')
             return
         elif len(args) == 1:
-            client.send('Command is missing a message.')
+            client.alert('Command is missing a message.')
             return
         else:
             name = args.pop(0)
             target = shared.find_player(name)
             if target == None:
-                client.send('%s is not online.' % name)
+                client.alert('%s is not online.' % name)
                 return
             msg = ' '.join(args)
             cmd_func(client, target, msg)
@@ -132,7 +132,7 @@ def set_or_show(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
-            client.send('Too many parameters.')
+            client.alert('Too many parameters.')
             return        
  
         if len(args) == 0:
@@ -148,7 +148,7 @@ def set_or_show(cmd_func):
                 setting = False
 
             else:
-                client.send('Please use a yes/no or on/off parameter.')
+                client.alert('Please use a yes/no or on/off parameter.')
                 return
 
         cmd_func(client, setting)
@@ -165,14 +165,14 @@ def online_player(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) != 1:
-            client.send('That command requires a player name.')
+            client.alert('That command requires a player name.')
             return
         else:
 
             name = args[0]
             target = shared.find_player(name)
             if target == None:
-                client.send('Player not found online.')
+                client.alert('Player not found online.')
                 return
 
             cmd_func(client, target)
