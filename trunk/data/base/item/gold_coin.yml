@@ -11,6 +11,6 @@ module: base
 uuid: ffbefc071b3647999068bf402289625b
 name: gold coin
 text: a coin of the realm, expertly milled from lustrous gold
-mass: .01
+burden: .01
 
 

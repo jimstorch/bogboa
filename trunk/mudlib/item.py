@@ -25,8 +25,8 @@ class Item(object):
         self.module = None
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
-        self.mass = 0.0
-        self.value = None
+        self.burden = 0.0       # the mass/weight for tracking encumbrance
+        self.value = None       # What a vendor will pay for it
         self.scripts = {}    
     
 
@@ -252,13 +252,9 @@ def configure_item(cfg):
 
     if 'text' in cfg:
         item.text = cfg.pop('text')
-    else:
-        item.text = None
 
     if 'slot' in cfg:
         item.slot = cfg.pop('slot')
-    else:
-        item.slot = None
 
     if 'module' in cfg:
         item.module = cfg.pop('module')
@@ -267,15 +263,11 @@ def configure_item(cfg):
         THE_LOG.add("?? Missing 'module' value for item '%s'." % 
             item.name)  
 
-    if 'mass' in cfg:
-        item.mass = cfg.pop('mass')
-    else:
-        item.mass = 0.0
+    if 'burden' in cfg:
+        item.burden = cfg.pop('burden')
 
     if 'value' in cfg:
         item.value = cfg.pop('value')
-    else:
-        item.value = None        
 
     ## For future use
     if 'version' in cfg:

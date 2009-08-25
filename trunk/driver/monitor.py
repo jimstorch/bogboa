@@ -90,3 +90,13 @@ def process_client_commands():
             if client.conn.cmd_ready:
                 client.process_command()
 
+#-------------------------------------------------------------------Sweep Rooms
+
+def sweep_rooms():
+
+    """Remove rotted items from the floors."""
+
+    for uuid in shared.ROOMS.keys():
+        shared.ROOMS[uuid].sweep()
+
+

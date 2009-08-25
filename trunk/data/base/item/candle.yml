@@ -11,7 +11,7 @@ module: base
 uuid: a493903fdc3a489ca6de5f1bf9208eae
 name: candle
 text: a crude candle made from tallow
-mass: .05
+burden: .05
 
 
 

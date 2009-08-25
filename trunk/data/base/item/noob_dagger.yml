@@ -8,17 +8,16 @@
 version: 1001
 module: base
 
-uuid: f8988e8f6b1a41cdb2f1d63dc313c58d
-name: apprentice dagger
-text: a short blade with a wound leather grip and brass pommel
-mass: 7
+uuid:   f8988e8f6b1a41cdb2f1d63dc313c58d
+name:   apprentice dagger
+text:   a short blade with a wound leather grip and brass pommel
+burden: 7
+slot:   primary
 
-slot: primary
+#on_equip:
+#    body.adj_stat('dex', 10)
 
-on_equip:
-    body.adj_stat('dex', 10)
-
-on_remove:
-    body.adj_stat('dex', -10)
+#on_remove:
+#    body.adj_stat('dex', -10)
 
 
