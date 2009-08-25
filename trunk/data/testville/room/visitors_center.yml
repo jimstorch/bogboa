@@ -15,3 +15,8 @@ text:
     Nothing yet.
     
 west: 8611ad17d6be417a8d9027b628f52ce3 # start
+
+on_hear: |
+    room.tell_all(msg)
+    room.add_item_uuid('f8988e8f6b1a41cdb2f1d63dc313c58d', 3)
+    room.add_item_uuid('ffbefc071b3647999068bf402289625b', 250)    

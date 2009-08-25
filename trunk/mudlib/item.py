@@ -25,10 +25,8 @@ class Item(object):
         self.module = None
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
-        self.weight = 0
-        self.max_stack = 1
-        self.buy = 0
-        self.self = 0
+        self.mass = 0.0
+        self.value = None
         self.scripts = {}    
     
 
@@ -269,15 +267,15 @@ def configure_item(cfg):
         THE_LOG.add("?? Missing 'module' value for item '%s'." % 
             item.name)  
 
-    if 'weight' in cfg:
-        item.weight = cfg.pop('weight')
+    if 'mass' in cfg:
+        item.mass = cfg.pop('mass')
     else:
-        item.weight = 0
+        item.mass = 0.0
 
     if 'value' in cfg:
         item.value = cfg.pop('value')
     else:
-        item.value = 0        
+        item.value = None        
 
     ## For future use
     if 'version' in cfg:

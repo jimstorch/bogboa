@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from shared import find_item
+from mudlib import shared
 
 ## Each container is a dictionary with the item uuid as key and the
 ## item quantity as value. 
@@ -19,7 +19,8 @@ from shared import find_item
 
 ## Max encumbrance = str * 100
 
-from mudlib.shared import ITEMS
+## Time for dropped items to vanish from floors
+ITEM_DECAY = 30
 
 
 #----------------------------------------------------------------------Wardrobe
@@ -29,9 +30,9 @@ class Wardrobe(object):
     """Paper Doll Class to manage worn items."""    
 
     ## What slots do we want to manage?
-    slot_names = set('head', 'ears', 'neck', 'shoulders', 'back', 'chest',
+    slot_names = set(['head', 'ears', 'neck', 'shoulders', 'back', 'chest',
         'arms', 'wrists', 'hands', 'fingers', 'primary', 'secondary', 'waist',
-        'legs', 'feet')
+        'legs', 'feet'])
 
 
     def __init__(self, body):
@@ -104,40 +105,57 @@ class Wardrobe(object):
 
     #--------------------------------------------------------------------------
 
-    def describe(self)
+    def describe(self):
 
         pass
 
 
+#---------------------------------------------------------------------Container
+
 
 class Container(object):
 
-    def __init__(self, max_stacks=20, max_height=2000):
+    """
+    Then it occured to me, why am I worrying about stack sizes in a MUD?
+    I should be counting mass.
+    """    
+
+    def __init__(self, name=None, limit= 500.0):
         
-        self.max_stacks = max_stacks    ## Maximum count of item stacks
-        self.max_height = max_height    ## Maximum items in each stack
+        self.name = name
+        self.mass = 0.0
+        self.limit = limit
         self.items = {}
+
+    #------------------------------------------------------------------Contents
+
+    def contents(self):
+        s = ''
+        for key in self.items.keys():
+            item, qty = self.items[key]
+            s+='%-40s,%d\n\n' % (item.name, qty)
+        return s 
+
+
+    #------------------------------------------------------------------Can Hold
 
     def can_hold(self, item, qty=1):
 
         """Test if container can hold qty number of item."""
 
-        curr= self.count(item)
-        ## Do we have a stack begun and can it hold more?
-        if curr > 0 and (curr + qty) < self.max_height:
-            return = True
-        ## Do we have room for a new item stack?
-        elif len(self.items) < self.max_stacks and qty < self.max_height:
-            return True
-        else:
-            return False   
+        total = self.mass + (item.mass * qty)
+        return bool( total <= self.limit )
+
+    #---------------------------------------------------------------------Count
 
     def count(self, item):
 
-        """Return the quantity item.  Qty 0 = no stack yet."""
+        """Return the quantity item."""
 
-        foo, curr = self.items.get(item.uuid,0)
-        return curr        
+        foo, qty = self.items.get(item.uuid, (None,0))
+        return qty    
+
+    #-----------------------------------------------------------------------Has    
 
     def has(self, item, qty=1):
 
@@ -146,103 +164,104 @@ class Container(object):
         curr = self.count(item)
         return bool(qty <= curr)    
 
+    #-----------------------------------------------------------------------Add
+
     def add(self, item, qty=1):
 
-        """Add qty number of item to container."""
+        """Add qty number of item to container and adjust mass."""
 
         curr = self.count(item)
-        self.items[item.uuid] = (item, curr + count)
+        self.items[item.uuid] = (item, curr + qty)
+        self.mass += ( item.mass * qty )
 
+    #------------------------------------------------------------------Subtract
                         
-
     def subtract(self, item, qty=1):
+
+        """Remove qty number of item from container and adjust mass."""
+
         curr = self.count(item)
-        ## if we take all, delete the stack.
-        ## Otherwise, it will count against max_items even with a count of 0
-        if curr = qty:
+        if curr == qty:
             del self.items[item.uuid]
         else:
-            self.items[item.uuid] = (item, qty - curr)
+            left = curr - qty
+            self.items[item.uuid] = (item, left)
 
 
-    #----------------------------------------------------------------Get Weight
+#----------------------------------------------------------------TimedContainer   
 
-    def Get Weight(self):
-        wt = 0.0
-        for uuid in self.items.keys():
-            item, qty = self.items[uuid]
-            wt += (item.weight * qty)
-        return wt     
+class TimedContainer(Container):
 
+    """Child Object of Container that has timed item decay, for rooms."""
 
+    def init(self, name=None, limit=500.0):
 
+        self.name = name
+        self.mass = 0.0
+        self.limit = limit
+        self.items = {}           
 
+    #---------------------------------------------------------------------Clean
 
+    def clean(self):
 
+        """Housekeeping.  Housekeeping.  I come in?"""
 
-
-
-##---------------------------------------------------------------------Container
-
-#class Container(object):
-
-#    def __init__(self, name, category, size):
-#        self.name = name
-#        self.category = category
-#        self.size = size
-#        self.contents = {}
-#        self.encumbrance = 0
-
-#    #----------------------------------------------------------------------Show
-
-#    def peruse(self, item_uuid=None):
-#        pass
-
-#    #----------------------------------------------------------------------Stow
-
-#    def stow(self, item_uuid, count=1):
-#        """Add one or more of the same items to a container."""
-#        current = self.contents.get(item_uuid, 0)
-#        self.contents[item_uuid] = current + count
-#        weight = ITEMS[item_uuid].weight * count
-#        self.ecumbrance += weight
-
-#    #--------------------------------------------------------------------Remove
-
-#    def remove(self, item_uuid, count=1)
-#        """Withdraw one or more of the same items from a container.""" 
-#        current = self.contents.get(item_uuid, 0)
-#        if count < current:
-#            self.contents[item_uuid] = current - count
-#            weight = ITEMS[item_uuid].weight * count
-#            self.ecumbrance -= weight
-
-#        else:
-#            print("Oddness -- attempt to remove more items than exist in bag")
-
-#    #------------------------------------------------------------------Can Stow
-
-#    def can_stow(self, item_uuid):
-#        """Boolean test whether item can go into this container."""        
-#        item = ITEMS[item_uuid]
-#        if self.category = 'any' or item.category == self.category:
-#            return True
-#        else:
-#            return False
-
-#    #------------------------------------------------------------------Too Many
-
-#    def too_many(self, item_uuid, count=1):
-#        """Boolean test whether too many of this item already held."""
-#        return ( self.count_item(item_uuid) + count ) >  MAX_STACK
-#           
-#    #----------------------------------------------------------------Count Item
-
-#    def count_item(self, item_uuid, count=1):
-#        """Returns the number of a given item in a bag."""
-#        return self.contents.get(item_uuid, 0)
+        uuids = self.items.keys()
+        now = shared.THE_TIME
+        for uuid in uuids:
+            item, qty, age = self.items[uuid]
+            ## Is the item tuple older than decay time?
+            if ( now - age ) > ITEM_DECAY:
+                self.subtract(item, qty)
 
 
+    #------------------------------------------------------------------Contents
+
+    def contents(self):
+        self.clean()        
+        s = ''
+        for key in self.items.keys():
+            item, qty, foo = self.items[key]
+            s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
+        return s 
+
+    #---------------------------------------------------------------------Count
+
+    def count(self, item):
+
+        """Return the quantity item."""
+
+        foo, qty, bar = self.items.get(item.uuid, (None,0,None))
+        return qty 
+
+    #-----------------------------------------------------------------------Add
+
+
+    def add(self, item, qty=1):
+
+        """Add qty number of item to container and adjust mass."""
+
+        curr = self.count(item)
+        self.items[item.uuid] = (item, curr + qty, shared.THE_TIME)
+        self.mass += ( item.mass * qty )
+        print self.mass
+
+
+    #------------------------------------------------------------------Subtract
+                        
+    def subtract(self, item, qty=1):
+
+        """Remove qty number of item from container and adjust mass."""
+
+        curr = self.count(item)
+        if curr == qty:
+            del self.items[item.uuid]
+        else:
+            left = curr - qty
+            self.items[item.uuid] = (item, left, shared.THE_TIME)
+        self.mass -= (item.mass * qty)
+        print self.mass  
 
 ##--------------------------------------------------------------------------Bank
 

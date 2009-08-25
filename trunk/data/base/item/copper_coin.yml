@@ -11,4 +11,4 @@ module: base
 uuid: 0af7e976791d4d9ba58d91178fcfc8f2
 name: copper coin
 text: a coin of the realm, crudely stamped from copper and well circulated
-weight: .01
+mass: .01
