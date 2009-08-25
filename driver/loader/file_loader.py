@@ -22,19 +22,9 @@ from driver.loader.from_yaml import parse_markup
 
 
 ##   Order of Precedence:
+##      Items
+##      Rooms
 
-#       Prototypes
-#           Items
-#           Races
-#           Genders
-#           Guilds
-#           Bots
-#
-#       Reals
-#           Rooms
-#           Objects
-#           NPCs
-#           Players
 
 
 #-------------------------------------------------------------------Load Module
@@ -43,17 +33,17 @@ def load_module(module):
 
     THE_LOG.add(">> Loading Module: '%s'"  % module)
 
-    ## Load Rooms    
-    from mudlib.room import configure_room, register_room
-    for cfg in room_cfg_iter(module):
-        room = configure_room(cfg)
-        register_room(room)
-
     ## Load Items    
     from mudlib.item import configure_item, register_item
     for cfg in item_cfg_iter(module):
         item = configure_item(cfg)
         register_item(item)
+
+    ## Load Rooms    
+    from mudlib.room import configure_room, register_room
+    for cfg in room_cfg_iter(module):
+        room = configure_room(cfg)
+        register_room(room)
 
     ## Load Races
     from mudlib.race import configure_race, register_race

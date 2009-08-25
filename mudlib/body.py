@@ -9,7 +9,7 @@
 import copy
 
 from mudlib import shared
-
+from mudlib.inventory import Container
 #from lib.stringsub import StringSub
 
 class Body(object):
@@ -26,6 +26,7 @@ class Body(object):
         self.index = None               ## numerical index
         self.mind = None                ## Brain or Client object
         self.wardrobe = None            ## Worn Gear Manager
+        self.stuff = None               ## Carried Gear Manager    
 
         ## Stats
         self.race = ''
@@ -39,14 +40,6 @@ class Body(object):
         self.abilities = set()          ## Commands useable
         self.flags = {}                 ## Flags are persistent
         self.tokens = {}                ## Tokens are non-persistent
-
-        ## Inventory
-#        self.money = 0
-#        self.pouch = None
-#        self.satchel = None
-#        self.kit = None
-#        self.backpack = None
-#        self.bank = None
 
         ## Details
         self.room = None                ## Current location
@@ -499,19 +492,7 @@ class Body(object):
         if self.is_player:
             self.mind.send_nowrap(msg)
 
-#    #--------------------------------------------------------------------Prompt
 
-#    def prompt(self):
-#        """Transmit a newline and a prompt"""
-#        if self.is_player:
-#            self.mind.prompt()
-
-#    #---------------------------------------------------------------Soft Prompt
-
-#    def soft_prompt(self):
-#        """Called when a leading new-line is not desired"""
-#        if self.is_player:
-#            self.mind.soft_prompt()
 
 
 

@@ -129,5 +129,6 @@ def say(client, msg):
     room.tell_all_but(body, '^W%s says^w, %s' % (body.name, msg))
     client.send('^WYou say^w, %s' % msg)    
 
-
+    ## Fire the on hear event
+    room.on_hear(client.body, msg)
 

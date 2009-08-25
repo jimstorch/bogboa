@@ -8,12 +8,14 @@
 
 import sys
 
-from mudlib.shared import ROOMS
+from mudlib import shared
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
-from inventory import Container
+from inventory import TimedContainer
+from mudlib.lang import numerate
+
 
 #--------------------------------------------------------------------------Room
 
@@ -28,7 +30,7 @@ class Room(object):
         self.exits = {}
         self.scripts = {}
         self.bodies = []
-        self.contents = Container()
+        self.stuff = TimedContainer()
 
 
     #-------------------------------------------------------------Body and Room
@@ -43,6 +45,33 @@ class Room(object):
             room = self
             method(self, body, room)
         return method_wrapper
+
+
+    #-------------------------------------------------------------Add Item UUID
+
+    def add_item_uuid(self, uuid, qty=1):
+
+
+        item = shared.ITEMS[uuid]
+        self.add_item(item, qty)
+
+    #------------------------------------------------------------------Add Item
+
+    def add_item(self, item, qty=1):
+
+        if self.stuff.can_hold(item, qty):
+
+            prefix, noun = numerate(item.name, qty)
+            if qty == 1:
+                verb = 'falls'
+            else:
+                verb = 'fall'
+
+            self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix, noun, verb))
+            self.stuff.add(item, qty)
+        else:
+            THE_LOG.add('%s had no room to add %s x %d' % ( self.name,
+                item.name, qty))
 
 
     #------------------------------------------------------------------Tell All
@@ -81,6 +110,12 @@ class Room(object):
             for body in room.bodies:
                 if body != client.body:
                     client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
+        ## anything laying here?        
+        contents = self.stuff.contents()
+        if contents:
+            client.send('Laying here you find;')
+            client.send(contents)
+
 
     #------------------------------------------------------------------On Enter
 
@@ -159,8 +194,11 @@ class Room(object):
 
     #-------------------------------------------------------------------On Hear
 
-    def on_hear(self, body):
+    def on_hear(self, body, msg):
+        
+        print "on_hear fired"
         if 'on_hear' in self.scripts:
+            room = self
             exec self.scripts['on_hear'] 
 
     #--------------------------------------------------------------On Indentify
@@ -310,11 +348,11 @@ def register_room(room):
     Given a configured room, register it with the shared ROOM dictionary.
     """
 
-    if room.uuid in ROOMS:
+    if room.uuid in shared.ROOMS:
         THE_LOG.add("!! Duplicate UUID (%s) found while registering "
             "room '%s' in module '%s'."  %
             (room.uuid, room.name, room.module))
         sys.exit(1)
     else:
-        ROOMS[room.uuid] = room
+        shared.ROOMS[room.uuid] = room
 
