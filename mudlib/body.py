@@ -9,7 +9,7 @@
 import copy
 
 from mudlib import shared
-from mudlib.inventory import Container
+from mudlib.inventory import Bag
 #from lib.stringsub import StringSub
 
 class Body(object):
@@ -26,7 +26,7 @@ class Body(object):
         self.index = None               ## numerical index
         self.mind = None                ## Brain or Client object
         self.wardrobe = None            ## Worn Gear Manager
-        self.stuff = None               ## Carried Gear Manager    
+        self.bag = None                 ## Carried Gear Manager    
 
         ## Stats
         self.race = ''

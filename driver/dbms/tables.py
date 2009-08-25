@@ -55,9 +55,13 @@ def check_database():
         THE_LOG.add("?? Missing 'flag' table in database, creating it.")
         create_flag_table()
 
-    if not THE_CURSOR.execute(sql, ('inventory',)).fetchone()[0]:
-        THE_LOG.add("?? Missing 'inventory' table in database, creating it.")
-        create_inventory_table()
+    if not THE_CURSOR.execute(sql, ('worn_item',)).fetchone()[0]:
+        THE_LOG.add("?? Missing 'worn_item' table in database, creating it.")
+        create_worn_item_table()
+
+    if not THE_CURSOR.execute(sql, ('carried_item',)).fetchone()[0]:
+        THE_LOG.add("?? Missing 'carried_item' table in database, creating it.")
+        create_carried_item_table()
             
     if not THE_CURSOR.execute(sql, ('reject_name',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'reject_name' table in database, creating it.")    
@@ -100,6 +104,9 @@ def create_body_table():
             level INTEGER,            
             room_uuid TEXT,
             bind_uuid TEXT,
+            bag_name TEXT,
+            bag_limit REAL,
+            bag_reduction REAL,
             use_ansi BOOLEAN DEFAULT TRUE,
             last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             last_ip TEXT,
@@ -189,25 +196,44 @@ def create_flag_table():
     THE_CURSOR.execute(sql)
 
 
-#--------------------------------------------------------Create Inventory Table
+#--------------------------------------------------------Create Worn Item Table
 
-def create_inventory_table():
+def create_worn_item_table():
     
-    sql = """DROP TABLE IF EXISTS inventory;"""
+    sql = """DROP TABLE IF EXISTS worn_item;"""
 
     THE_CURSOR.execute(sql)
 
     sql = """
-    CREATE TABLE IF NOT EXISTS inventory
+    CREATE TABLE IF NOT EXISTS worn_item
         (
         uuid TEXT PRIMARY KEY,
         slot TEXT,
-        item_uuid TEXT,
-        item_count INTEGER
+        item_uuid TEXT
         );
     """
 
     THE_CURSOR.execute(sql)       
+
+
+#-----------------------------------------------------Create Carried Item Table
+
+def create_carried_item_table():
+    
+    sql = """DROP TABLE IF EXISTS carried_item;"""
+
+    THE_CURSOR.execute(sql)
+
+    sql = """
+    CREATE TABLE IF NOT EXISTS carried_item
+        (
+        uuid TEXT PRIMARY KEY,
+        item_uuid TEXT,
+        qty INTEGER
+        );
+    """
+
+    THE_CURSOR.execute(sql)
 
 
 #------------------------------------------------------Create Reject Name Table

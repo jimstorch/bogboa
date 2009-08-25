@@ -19,6 +19,8 @@ from driver.monitor import test_connections
 from driver.monitor import kill_idle_clients
 from driver.monitor import purge_dead_clients
 from driver.monitor import process_client_commands
+from driver.monitor import sweep_rooms
+
 from driver.loader.file_loader import load_module
 from driver.dbms.tables import check_database
 
@@ -52,6 +54,7 @@ load_module(module)
 Cycle(2, test_connections)
 Cycle(2, kill_idle_clients)
 Cycle(2, purge_dead_clients)
+Cycle(10, sweep_rooms)
 
 
 #------------------------------------------------------------------------------

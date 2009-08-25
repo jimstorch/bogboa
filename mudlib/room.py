@@ -7,15 +7,34 @@
 #------------------------------------------------------------------------------
 
 import sys
+import random
 
 from mudlib import shared
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
-from inventory import TimedContainer
+from inventory import Floor
 from mudlib.lang import numerate
 
+
+CLEANERS = [
+    'thieving mice scurry past',
+    'a hole opens in time and space',
+    'Ferengi flash mob',
+    'oh look, magpies',
+    'you gonna eat that?',
+    'a grue fills his pockets',
+    'this really belongs in Lost-n-Found',
+    'these bits are needed elsewhere',
+    'can I have your stuff?',
+    'the world gets slightly lighter',
+    "I'm not cleaning that up",
+    'finders keepers',
+    'is that Winona Ryder?',
+    'lift your feet a sec',
+    ]
+    
 
 #--------------------------------------------------------------------------Room
 
@@ -30,21 +49,21 @@ class Room(object):
         self.exits = {}
         self.scripts = {}
         self.bodies = []
-        self.stuff = TimedContainer()
+        self.floor = Floor()
 
 
-    #-------------------------------------------------------------Body and Room
+#    #-------------------------------------------------------------Body and Room
 
-    def body_and_room(method):
+#    def body_and_room(method):
 
-        """
-        Decorator to pass self as 'room' for simpler scripting syntax.
-        """ 
+#        """
+#        Decorator to pass self as 'room' for simpler scripting syntax.
+#        """ 
 
-        def method_wrapper(self, body):
-            room = self
-            method(self, body, room)
-        return method_wrapper
+#        def method_wrapper(self, body):
+#            room = self
+#            method(self, body, room)
+#        return method_wrapper
 
 
     #-------------------------------------------------------------Add Item UUID
@@ -59,7 +78,7 @@ class Room(object):
 
     def add_item(self, item, qty=1):
 
-        if self.stuff.can_hold(item, qty):
+        if self.floor.can_hold(item, qty):
 
             prefix, noun = numerate(item.name, qty)
             if qty == 1:
@@ -68,11 +87,17 @@ class Room(object):
                 verb = 'fall'
 
             self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix, noun, verb))
-            self.stuff.add(item, qty)
+            self.floor.add(item, qty)
         else:
             THE_LOG.add('%s had no room to add %s x %d' % ( self.name,
                 item.name, qty))
 
+    #---------------------------------------------------------------------Sweep
+
+    def sweep(self):
+        """Remove decayed items from the floor, if any."""
+        if self.floor.clean():
+            self.tell_all('^g... %s^w' % random.choice(CLEANERS))
 
     #------------------------------------------------------------------Tell All
 
@@ -83,7 +108,6 @@ class Room(object):
         for body in self.bodies:
             if body.is_player:
                 body.mind.send(msg)
-
 
     #--------------------------------------------------------------Tell All But
 
@@ -111,7 +135,7 @@ class Room(object):
                 if body != client.body:
                     client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
         ## anything laying here?        
-        contents = self.stuff.contents()
+        contents = self.floor.contents()
         if contents:
             client.send('Laying here you find;')
             client.send(contents)

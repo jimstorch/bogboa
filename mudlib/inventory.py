@@ -8,9 +8,7 @@
 
 from mudlib import shared
 
-## Each container is a dictionary with the item uuid as key and the
-## item quantity as value. 
-
+## Old notes:
 ## pouch        = consumables and reagents
 ## satchel      = quest items 
 ## kit          = tradeskill items
@@ -20,7 +18,7 @@ from mudlib import shared
 ## Max encumbrance = str * 100
 
 ## Time for dropped items to vanish from floors
-ITEM_DECAY = 30
+ITEM_DECAY = 10
 
 
 #----------------------------------------------------------------------Wardrobe
@@ -110,158 +108,167 @@ class Wardrobe(object):
         pass
 
 
-#---------------------------------------------------------------------Container
+
+#---------------------------------------------------------------------------Bag
 
 
-class Container(object):
+class Bag(object):
 
     """
-    Then it occured to me, why am I worrying about stack sizes in a MUD?
-    I should be counting mass.
+    Class for managing player carried items.
     """    
 
-    def __init__(self, name=None, limit= 500.0):
+    def __init__(self):
         
-        self.name = name
-        self.mass = 0.0
-        self.limit = limit
-        self.items = {}
+        ## Start out with some beginner settings
+        ## A 'new bag' simply improves on these values
+        self.name = 'Apprentice Sack'       ## Displayed name
+        self.burden = 0.0                   ## Current weight/mass
+        self.limit = 50.0                   ## maxium allowed
+        self.reduction = 0.0                ## magical burden reduction %
+        ## Dict of Contents
+        ##   key = item, value = count
+        self.items = {}                     
+
+    #--------------------------------------------------------------------Reduce
+
+    def _reduce(self, burden):
+        """Apply the reduction percent to a value"""
+        return burden - ( burden * self.reduction )
 
     #------------------------------------------------------------------Contents
 
     def contents(self):
+        """Return a string listing the contents."""
         s = ''
-        for key in self.items.keys():
-            item, qty = self.items[key]
+        for items in self.items.keys():
+            qty = self.items[item]
             s+='%-40s,%d\n\n' % (item.name, qty)
         return s 
-
 
     #------------------------------------------------------------------Can Hold
 
     def can_hold(self, item, qty=1):
-
         """Test if container can hold qty number of item."""
-
-        total = self.mass + (item.mass * qty)
-        return bool( total <= self.limit )
+        total = self.burden + self._reduce(item.burden * qty)
+        if total > 32000:
+            return False
+        else:
+            return bool( total <= self.limit )
 
     #---------------------------------------------------------------------Count
 
     def count(self, item):
-
-        """Return the quantity item."""
-
-        foo, qty = self.items.get(item.uuid, (None,0))
-        return qty    
-
+        """Return the quantity of Item."""
+        return self.items.get(item, 0)
+   
     #-----------------------------------------------------------------------Has    
 
     def has(self, item, qty=1):
-
-        """Check it container has qty number of item."""
-
+        """Test if container has given quantity of Item."""
         curr = self.count(item)
         return bool(qty <= curr)    
 
     #-----------------------------------------------------------------------Add
 
     def add(self, item, qty=1):
-
-        """Add qty number of item to container and adjust mass."""
-
+        """Add given quantity of Item to container and increase burden."""
         curr = self.count(item)
-        self.items[item.uuid] = (item, curr + qty)
-        self.mass += ( item.mass * qty )
+        self.items[item] = curr + qty
+        self.burden += _self.reduce( item.burden * qty )
 
     #------------------------------------------------------------------Subtract
                         
     def subtract(self, item, qty=1):
-
-        """Remove qty number of item from container and adjust mass."""
-
+        """Remove given quantity of Item from container and reduce burden."""
         curr = self.count(item)
         if curr == qty:
-            del self.items[item.uuid]
+            ## Don't maintain empty mappings
+            del self.items[item]
         else:
-            left = curr - qty
-            self.items[item.uuid] = (item, left)
+            remaining = curr - qty
+            self.items[item] = remaining
+            self.burden -= _self.reduce( item.burden * qty)
 
 
-#----------------------------------------------------------------TimedContainer   
+#-------------------------------------------------------------------------Floor
 
-class TimedContainer(Container):
+class Floor(object):
 
-    """Child Object of Container that has timed item decay, for rooms."""
+    """Container where items vanish after DECAY_TIME seconds."""
 
-    def init(self, name=None, limit=500.0):
+    def __init__(self):
+        self.burden = 0.0                   ## Current weight/mass        
+        self.limit = 1000.0                 ## Maximum weight/mass
 
-        self.name = name
-        self.mass = 0.0
-        self.limit = limit
+        ## Dictionary of contents
+        ##  key = item, 
+        ##  value = tuple(count, timestamp)
         self.items = {}           
+
+    #------------------------------------------------------------------Can Hold
+
+    def can_hold(self, item, qty=1):
+        """Test if container can hold qty number of item."""
+        total = self.burden + (item.burden * qty)
+        return bool( total <= self.limit )
+
 
     #---------------------------------------------------------------------Clean
 
     def clean(self):
-
-        """Housekeeping.  Housekeeping.  I come in?"""
-
-        uuids = self.items.keys()
+        """Housekeeping. Sweep away items older than ITEM_DECAY"""
         now = shared.THE_TIME
-        for uuid in uuids:
-            item, qty, age = self.items[uuid]
+        is_cleaner = False
+        for item in self.items.keys():
+            qty, age = self.items[item]
             ## Is the item tuple older than decay time?
             if ( now - age ) > ITEM_DECAY:
                 self.subtract(item, qty)
-
+                is_cleaner = True
+        return is_cleaner
 
     #------------------------------------------------------------------Contents
 
     def contents(self):
-        self.clean()        
+        """Return a string describing the contents."""
         s = ''
-        for key in self.items.keys():
-            item, qty, foo = self.items[key]
+        for item in self.items.keys():
+            qty, foo = self.items[item]
             s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
         return s 
 
     #---------------------------------------------------------------------Count
 
     def count(self, item):
-
         """Return the quantity item."""
-
-        foo, qty, bar = self.items.get(item.uuid, (None,0,None))
+        if item in self.items:
+            qty, foo = self.items[item]
+        else:
+            qty = 0
         return qty 
 
     #-----------------------------------------------------------------------Add
 
-
     def add(self, item, qty=1):
-
-        """Add qty number of item to container and adjust mass."""
-
+        """Add qty number of item to container and increase burden."""
         curr = self.count(item)
-        self.items[item.uuid] = (item, curr + qty, shared.THE_TIME)
-        self.mass += ( item.mass * qty )
-        print self.mass
-
+        ## Note that adding an existing item resets the timer for all
+        self.items[item] = (curr + qty, shared.THE_TIME)
+        self.burden += ( item.burden * qty )
 
     #------------------------------------------------------------------Subtract
                         
     def subtract(self, item, qty=1):
-
-        """Remove qty number of item from container and adjust mass."""
-
+        """Remove qty number of item from container and decrease burden."""
         curr = self.count(item)
         if curr == qty:
-            del self.items[item.uuid]
+            del self.items[item]
         else:
             left = curr - qty
-            self.items[item.uuid] = (item, left, shared.THE_TIME)
-        self.mass -= (item.mass * qty)
-        print self.mass  
+            self.items[item] = (left, shared.THE_TIME)
+        self.burden -= (item.burden * qty)
+
 
 ##--------------------------------------------------------------------------Bank
 
