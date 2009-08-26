@@ -19,7 +19,7 @@ except ImportError:
 ## Also, having it external like this lets me call it from an OLC-style tool 
 
 
-#------------------------------------------------------------------Parse Script
+#------------------------------------------------------------------Parse Markup
 
 def parse_markup(markup):
 
