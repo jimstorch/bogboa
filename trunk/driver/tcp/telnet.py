@@ -673,7 +673,7 @@ class Telnet(object):
                     self._iac_dont(TTYPE) 
 
         else:
-            print "3BC: Should not be here."      
+            print "3BC: Should not be here."
 
         self.telnet_got_iac = False
         self.telnet_got_cmd = None

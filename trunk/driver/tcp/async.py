@@ -20,6 +20,13 @@ from driver.connect import lobby_connect
 from driver.dbms.map import check_banned_ip
 from mudlib import shared
 
+## Cap sockets to 512 on Windows because winsock can only process 512 at time
+if sys.platform == 'win32':
+    MAX_CONNECTIONS = 512
+## Cap sockets to 1000 on Linux because you can only have 1024 file descriptors
+else:
+    MAX_CONNECTIONS = 1000
+
 #--[ Open the Server's Socket ]------------------------------------------------
 
 THE_SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -97,15 +104,23 @@ class PortAuthority(object):
                     sock, addr_tup = self.server_socket.accept()
                     
                 except socket.error, err:
-                    THE_LOG.add("!! ACCEPT error '%d:%s'." % (err[0], err[1]))  
+                    THE_LOG.add("!! ACCEPT error '%d:%s'." % (err[0], 
+                        err[1]))  
                     continue          
 
                 ## Check for banned IP's
                 if check_banned_ip(addr_tup[0]):
-                    THE_LOG.add("?? BANNED IP connection refused from %s:%s." 
+                    THE_LOG.add("?? BANNED IP rejected from %s:%s." 
                         % (addr_tup[0], addr_tup[1]))
+                    sock.close()
                     continue                     
-              
+
+                ## Check for maximum connections
+                if self.connection_count() >= ( MAX_CONNECTIONS ):
+                    THE_LOG.add('?? Refusing new connection; maximum in use.') 
+                    sock.close()
+                    continue
+                
                 conn = Telnet(sock, addr_tup)
                 THE_LOG.add("++ Opened connection to %s" % conn.addrport())
                 ## Add the connection to our dictionary
