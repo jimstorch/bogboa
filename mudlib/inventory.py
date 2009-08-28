@@ -18,7 +18,13 @@ from mudlib import shared
 ## Max encumbrance = str * 100
 
 ## Time for dropped items to vanish from floors
-ITEM_DECAY = 10
+ITEM_DECAY = 300
+
+
+
+
+
+
 
 
 #----------------------------------------------------------------------Wardrobe
@@ -139,7 +145,9 @@ class Bag(object):
     #------------------------------------------------------------------Contents
 
     def contents(self):
-        """Return a string listing the contents."""
+        """
+        Return a string listing the contents.
+        """
         s = ''
         for items in self.items.keys():
             qty = self.items[item]
@@ -162,7 +170,7 @@ class Bag(object):
         """Return the quantity of Item."""
         return self.items.get(item, 0)
    
-    #-----------------------------------------------------------------------Has    
+    #-----------------------------------------------------------------------Has
 
     def has(self, item, qty=1):
         """Test if container has given quantity of Item."""
@@ -231,11 +239,15 @@ class Floor(object):
     #------------------------------------------------------------------Contents
 
     def contents(self):
-        """Return a string describing the contents."""
+        """
+        Return a string describing the contents.
+        Unlike bags, we're going to list the shorter nicks instead of full
+        names.
+        """
         s = ''
         for item in self.items.keys():
             qty, foo = self.items[item]
-            s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
+            s+='^Y%s^w (x%d)\n\n' % (item.nick, qty)
         return s 
 
     #---------------------------------------------------------------------Count

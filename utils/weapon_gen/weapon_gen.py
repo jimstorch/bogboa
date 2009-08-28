@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 #------------------------------------------------------------------------------
 #   weapon_gen.py
 #   Copyright 2006 Jim Storch

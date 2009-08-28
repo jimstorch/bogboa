@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: create
-#aliases: [creating, new]
+#keywords: [creating, new]
 text: |
     Creating a new character is a simple matter of specifying six values;
     name, gender, race, guild, and password. You select each one using a 

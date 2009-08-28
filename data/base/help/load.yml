@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: load
-aliases: [login, ]
+keywords: [login, ]
 text: |
     The 'load' command is used to play a previously created character.
     The format is 'load' followed by the name and password you provided

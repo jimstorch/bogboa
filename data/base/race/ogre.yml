@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: ogre
-aliases: [ogres]
+keywords: [ogres]
 text:
 
     This space intentionally left blank. 

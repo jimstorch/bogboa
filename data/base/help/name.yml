@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: name
-aliases: [names, ]
+keywords: [names, ]
 text: |
     The 'name' command is used during the character creation process to specify
     the name you would like for your character.  The format is the word 'name'

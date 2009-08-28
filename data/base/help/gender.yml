@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: gender
-#aliases: [genders, ]
+#keywords: [genders, ]
 text: |
     The 'gender' command is used during character creation to specify the
     gender for your character.  The format is the word 'gender' follow by a

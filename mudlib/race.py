@@ -61,8 +61,8 @@ def configure_race(cfg):
         cfg.pop('text')
 
     ## Used by Help
-    if 'aliases' in cfg:
-        cfg.pop('aliases')
+    if 'keywords' in cfg:
+        cfg.pop('keywords')
 
     ## For future use
     if 'version' in cfg:

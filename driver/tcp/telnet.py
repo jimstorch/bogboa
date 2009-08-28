@@ -130,6 +130,8 @@ class Telnet(object):
         self.send_pending = False
         self.send_buffer = ''
         self.recv_buffer = ''
+        self.bytes_sent = 0
+        self.bytes_received = 0
         self.cmd_ready = False
         self.command_list = []
         self.connect_time = shared.THE_TIME
@@ -212,7 +214,7 @@ class Telnet(object):
         return shared.THE_TIME - self.connect_time
 
 
-    #------------------------------------------------------------Request Do SGA 
+    #------------------------------------------------------------Request Do SGA
 
     def request_do_sga(self):
         """Request DE to Suppress Go-Ahead.  See RFC 858."""
@@ -286,7 +288,7 @@ class Telnet(object):
                     self.addrport()))  
                 self.active = False
                 return
-
+            self.bytes_sent += sent
             #show_bytes(self.send_buffer[:sent], "<--")                
             self.send_buffer = self.send_buffer[sent:]
         else:
@@ -304,14 +306,18 @@ class Telnet(object):
                 self.addrport()))  
             self.active = False
             return
+
         ## Did they close the connection?
-        if len(data) == 0:
+        size = len(data)
+        if size == 0:
             THE_LOG.add("-- Connection dropped by %s" % self.addrport())
             self.active = False
             return
-        else:
-            self.last_input_time = shared.THE_TIME
 
+        ## Update some trackers
+        self.last_input_time = shared.THE_TIME
+        self.bytes_received += size
+        
         ## Test for telnet commands
         #show_bytes(data, '-->')
         for byte in data:

@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: race
-#aliases: [ races, ]
+#keywords: [ races, ]
 text: |
     The 'race' command is used during the character creation process to specify
     a race for your character.  The format is the word 'race' follow by a space
