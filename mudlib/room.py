@@ -15,7 +15,7 @@ from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
 from inventory import Floor
-from mudlib.lang import numerate
+from mudlib.lang import guestimate
 
 
 CLEANERS = [
@@ -80,7 +80,7 @@ class Room(object):
 
         if self.floor.can_hold(item, qty):
 
-            prefix, noun = numerate(item.name, qty)
+            prefix, noun = guestimate(item.name, qty)
             if qty == 1:
                 verb = 'falls'
             else:
