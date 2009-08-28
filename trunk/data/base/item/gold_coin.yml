@@ -9,7 +9,8 @@ version: 1001
 module: base
 
 uuid: ffbefc071b3647999068bf402289625b
-name: gold coin
+name: gold piece
+nick: gold
 text: a coin of the realm, expertly milled from lustrous gold
 burden: .01
 

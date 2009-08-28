@@ -86,7 +86,8 @@ class Room(object):
             else:
                 verb = 'fall'
 
-            self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix, noun, verb))
+            self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix, 
+                noun, verb))
             self.floor.add(item, qty)
         else:
             THE_LOG.add('%s had no room to add %s x %d' % ( self.name,

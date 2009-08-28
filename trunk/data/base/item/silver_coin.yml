@@ -9,6 +9,7 @@ version: 1001
 module: base
 
 uuid: d464f00d84534a3eb070ce906edb6c57
-name: silver coin
+name: silver piece
+nick: silver
 text: a coin of the realm, stamped from bright silver
-mass: .01
+burden: .01

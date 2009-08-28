@@ -9,10 +9,39 @@
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvw'
 
+import re
 
+OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to', 'at', 'in',
+    'is', 'my', 'that', 's']) 
+
+#-----------------------------------------------------------------------Lockset
+
+def lockset(name, nick=None, keywords=None):
+    if not keywords:
+        keywords = []
+    locks = set(keywords)
+    if nick:
+        locks = locks | keyset(nick)
+    locks = locks | keyset(name)
+    return locks
+
+#------------------------------------------------------------------------keyset
+
+def keyset(phrase):
+    non_alpha = re.compile("[^a-zA-Z]+")
+    words = non_alpha.split(phrase.lower())
+    keys = set(words) - OMIT
+    return keys
+
+#------------------------------------------------------------------------unlock
+
+def unlock(phrase, lockset):
+    keys = keyset(phrase)
+    return bool( keys and keys <= lockset )
+       
 #---------------------------------------------------------------------Pluralize
 
-def pluralize(noun):
+def plural(noun):
 
     """
     Roughly apply the rules of pluralization.
@@ -61,6 +90,8 @@ def pluralize(noun):
 
 def article(noun):
 
+    """Return 'a' or 'an' depending on subject."""
+
     nl = noun.lower()
 
     if nl.startswith('uni'):
@@ -79,9 +110,11 @@ def article(noun):
     return art
       
 
-#----------------------------------------------------------------------Numerate
+#--------------------------------------------------------------------Guestimate
 
-def numerate(noun, num):
+def guestimate(noun, num):
+
+    """Give a general impression of quantity."""
 
     if num == 1:
         prefix = article(noun)

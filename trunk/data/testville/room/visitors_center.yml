@@ -11,11 +11,11 @@ module: testville
 uuid: 39760ba2180b486a83e69fdb6433c1e2
 name: Visitor's Center
 text:
-
-    Nothing yet.
+    
+    A sign on the wall bears the question, "What say you?"
     
 west: 8611ad17d6be417a8d9027b628f52ce3 # start
 
 on_hear: |
-    room.add_item_uuid('f8988e8f6b1a41cdb2f1d63dc313c58d', 3)
-    room.add_item_uuid('ffbefc071b3647999068bf402289625b', 250)    
+    room.add_item_uuid('f8988e8f6b1a41cdb2f1d63dc313c58d', 1)
+    room.add_item_uuid('ffbefc071b3647999068bf402289625b', 50)    

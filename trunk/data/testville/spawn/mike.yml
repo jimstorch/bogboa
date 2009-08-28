@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   goblin.yml
+#   mike.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
+module: testville
 
-name: goblin
-keywords: [goblins]
-text:
- 
-    This space intentionally left blank.
+uuid: 95d95f7d8aa24ed49d782614dabb6766
+name: Mike
+room: 39760ba2180b486a83e69fdb6433c1e2      # Visitor's Center
+race: human
+guild: Wal*Mud Greeter
+level: 10
 
-###  Racial Stats
+on_see:
+    room.say('Welcome %s' % body.name)
 
-stats:
-    agi: 15
-    chr: 4
-    dex: 15
-    int: 15
-    luc: 16
-    sta: 10
-    str: 10
-    wis: 10
+

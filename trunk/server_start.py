@@ -55,6 +55,7 @@ Cycle(2, test_connections)
 Cycle(2, kill_idle_clients)
 Cycle(2, purge_dead_clients)
 Cycle(10, sweep_rooms)
+Cycle(.25, process_client_commands)
 
 
 #------------------------------------------------------------------------------
@@ -66,7 +67,6 @@ THE_LOG.add(">> Listening for connections on port %d" % PORT)
 while shared.SERVER_RUN == True:
     THE_SCHEDULER.tick()
     THE_PORT_AUTHORITY.poll()
-    process_client_commands()
 
 ## All done   
 THE_LOG.add('?? Administrative shutdown')

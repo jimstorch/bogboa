@@ -21,7 +21,7 @@ class Help(object):
 #        self.uuid = None
         self.module = None
         self.name = None
-        self.aliases = None
+        self.keywords = None
         self.text = None
 
     def on_read(self, client):
@@ -46,8 +46,8 @@ def configure_help(cfg):
         THE_LOG.add("!! Missing name in help config.")
         sys.exit(1)
 
-    if 'aliases' in cfg:
-        help.aliases = cfg.pop('aliases')
+    if 'keywords' in cfg:
+        help.aliases = cfg.pop('keywords')
 
 #    if 'uuid' in cfg:
 #        help.uuid = cfg.pop('uuid')
@@ -106,13 +106,13 @@ def register_help(help):
         HELPS[help.name] = help
 
     ## Also map any aliases for this text
-    if help.aliases:
-        for alias in help.aliases:
-            if alias in HELPS:
-                THE_LOG.add("!! Duplicate alias found while registering "
+    if help.keywords:
+        for keyword in help.keywords:
+            if keyword in HELPS:
+                THE_LOG.add("!! Duplicate keyword found while registering "
                     "help text '%s' in module '%s'."  %  
                     (help.name, help.module))
                 sys.exit(1)        
             else:
-                HELPS[alias] = help
+                HELPS[keyword] = help
 

@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: human
-aliases: [humans]
+keywords: [humans]
 text:
     
     The race of man.

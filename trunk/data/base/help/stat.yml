@@ -9,7 +9,7 @@ version: 1001
 module: base
 
 name: stats
-#aliases: [stats, attribute, attributes]
+#keywords: [stats, attribute, attributes]
 text: |
 
     There are eight character stats used by the game:

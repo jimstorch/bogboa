@@ -21,8 +21,10 @@ class Item(object):
     def __init__(self):
 
         self.uuid = None
-        self.name = None        
         self.module = None
+        self.name = None        # Full Item Name
+        self.nick = None        # short nickname
+        self.keywords = set()   # hints/synonyms for take parsers       
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
         self.burden = 0.0       # the mass/weight for tracking encumbrance
@@ -238,30 +240,38 @@ def configure_item(cfg):
 
     item = Item()
 
-    if 'name' in cfg:
-        item.name = cfg.pop('name')
-    else:
-        THE_LOG.add("!! Missing name in item config.")
-        sys.exit(1)
-
     if 'uuid' in cfg:
         item.uuid = cfg.pop('uuid')
     else:
         THE_LOG.add("!! Missing UUID in config for item '%s'." % item.name)
         sys.exit(1)
 
-    if 'text' in cfg:
-        item.text = cfg.pop('text')
-
-    if 'slot' in cfg:
-        item.slot = cfg.pop('slot')
-
     if 'module' in cfg:
         item.module = cfg.pop('module')
     else:
         item.module = None
         THE_LOG.add("?? Missing 'module' value for item '%s'." % 
-            item.name)  
+            item.name) 
+
+    if 'name' in cfg:
+        item.name = cfg.pop('name')
+    else:
+        THE_LOG.add("!! Missing name in item config.")
+        sys.exit(1)
+
+    if 'nick' in cfg:
+        item.nick = cfg.pop('nick')
+    else:
+        item.nick = item.name
+
+    if 'keywords' in cfg:
+        item.keywords = cfg.pop('keywords')    
+
+    if 'text' in cfg:
+        item.text = cfg.pop('text')
+
+    if 'slot' in cfg:
+        item.slot = cfg.pop('slot')
 
     if 'burden' in cfg:
         item.burden = cfg.pop('burden')
