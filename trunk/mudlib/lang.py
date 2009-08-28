@@ -39,7 +39,7 @@ def unlock(phrase, lockset):
     keys = keyset(phrase)
     return bool( keys and keys <= lockset )
        
-#---------------------------------------------------------------------Pluralize
+#------------------------------------------------------------------------Plural
 
 def plural(noun):
 
@@ -51,8 +51,9 @@ def plural(noun):
  
     nl = noun.lower()
 
+    ## is it too short to juggle?
     if len(nl) < 2:
-        return 'short input into pluralize!'
+        return noun + 's'
 
     elif nl.endswith('ss'):
         suffix = 'es'
@@ -92,6 +93,9 @@ def article(noun):
 
     """Return 'a' or 'an' depending on subject."""
 
+    if not noun:
+        return ''
+
     nl = noun.lower()
 
     if nl.startswith('uni'):
@@ -121,22 +125,22 @@ def guestimate(noun, num):
 
     elif num < 4:
         prefix = 'several'
-        noun = pluralize(noun)
+        noun = plural(noun)
 
     elif num < 12:
         prefix = 'some'
-        noun = pluralize(noun)
+        noun = plural(noun)
 
     elif num < 24:
         prefix = 'many'
-        noun = pluralize(noun)
+        noun = plural(noun)
 
     elif num < 60:
         prefix = 'dozens of'
-        noun = pluralize(noun)
+        noun = plural(noun)
 
     else:
         prefix = 'countless'         
-        noun = pluralize(noun) 
+        noun = plural(noun) 
 
     return prefix, noun
