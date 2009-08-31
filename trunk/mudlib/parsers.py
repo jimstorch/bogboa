@@ -181,17 +181,69 @@ def online_player(cmd_func):
     return parse_func             
 
 
-#------------------------------------------------------------------Item in Room
+#------------------------------------------------------------------Name and Qty
 
-def item_in_room(cmd_func):
+
+def name_and_qty(cmd_func):
+
+    """
+    Decorator to parse quantity and name of item(s) to select.
+    Qty == -1 for all.    
+    """
 
     def parse_func(client):
         args = client.verb_args
-        if len(args) == 1:
-            pass
+        count = len(args)
+
+        if count == 0:
+            client.alert('That command needs a subject.')
+            return
+
+        elif count == 1:
+
+            arg = args[0].lower()
+
+            if arg.isdigit():
+                client.alert("%s of what?" % arg)
+                return
+
+            if arg in ('all', 'everything', 'stuff', 'loot'):
+                args = ['all',]
+                qty = -1
+            else:
+                qty = 1
+
+        else:
+            arg = args[0].lower()
+
+            ## Is the first argument a number?
+            if arg.isdigit():
+
+                if len(arg) > 9:
+                    client.alert("That's a bit much.")
+                    return
+
+                qty = int(arg)
+                args = args[1:]
+            
+            elif arg in ('a', 'an', 'one'):
+                qty = 1
+                args = args[1:]
+  
+            elif arg in ('all', 'every'):
+                qty = -1
+                args = args[1:]
+
+            else:
+                qty = 1
+
+
+        phrase = ' '.join(args)
+        cmd_func(client, phrase, qty)   
+
+    return parse_func        
     
 
-    pass
 
 
 #-------------------------------------------------------------Item in Inventory

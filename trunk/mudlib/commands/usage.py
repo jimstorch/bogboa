@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib import parsers
+from mudlib.lang import keyset
 
 #----------------------------------------------------------------------------Do
 
@@ -16,7 +17,7 @@ def do(client):
 
 #--------------------------------------------------------------------------Drop
 
-def drop(client):
+def drop(client, keyset, qty=0, idx=0):
     pass
 
 #------------------------------------------------------------------------Remove
@@ -27,13 +28,15 @@ def remove(client):
 
     pass
 
+@parsers.name_and_qty
 #--------------------------------------------------------------------------Take
 
-def take(client, item, qty=1, idx=0):
-
-    pass
-
-
+def take(client, phrase, qty=1):
+    print phrase, qty
+    room = client.get_room()
+    ks = keyset(phrase)
+    room.item_search(client, ks, qty)
+    
 
 #--------------------------------------------------------------------------Wear
 

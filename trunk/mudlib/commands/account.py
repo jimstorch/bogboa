@@ -311,6 +311,7 @@ def player_command_set(client):
     client.grant_command('topics')
     client.grant_command('look')
     client.grant_command('shutdown')
+    client.grant_command('take')
 
 #----------------------------------------------------------------Player Connect
 

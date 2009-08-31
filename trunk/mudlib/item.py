@@ -9,9 +9,11 @@
 import sys
 
 from mudlib.shared import ITEMS
+from mudlib.lang import NameTrie
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
+
 
 
 #--------------------------------------------------------------------------Item
@@ -24,7 +26,7 @@ class Item(object):
         self.module = None
         self.name = None        # Full Item Name
         self.nick = None        # short nickname
-        self.keywords = set()   # hints/synonyms for take parsers       
+        self.trie = NameTrie()  # string matching object
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
         self.burden = 0.0       # the mass/weight for tracking encumbrance
@@ -255,17 +257,20 @@ def configure_item(cfg):
 
     if 'name' in cfg:
         item.name = cfg.pop('name')
+        item.trie.feed(item.name)
     else:
         THE_LOG.add("!! Missing name in item config.")
         sys.exit(1)
 
     if 'nick' in cfg:
         item.nick = cfg.pop('nick')
+#        item.trie.feed(item.nick)
     else:
         item.nick = item.name
 
-    if 'keywords' in cfg:
-        item.keywords = cfg.pop('keywords')    
+    if 'hint' in cfg:
+        hint = cfg.pop('hint')
+        item.trie.feed(hint)    
 
     if 'text' in cfg:
         item.text = cfg.pop('text')
