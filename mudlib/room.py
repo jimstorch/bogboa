@@ -16,7 +16,7 @@ from driver.bogscript import compile_script
 from mudlib.calendar import time_msg
 from inventory import Floor
 from mudlib.lang import guestimate
-
+from mudlib.lang import keyset
 
 CLEANERS = [
     'thieving mice scurry past',
@@ -66,10 +66,22 @@ class Room(object):
 #        return method_wrapper
 
 
+    #--------------------------------------------------------------------Search
+
+    def item_search(self, client, ks, qty=1):
+
+        found = self.floor.search(ks, qty)
+        if found:
+            for item in found:
+                client.send('Matched item: %s' % item.name)
+        else:
+            client.alert('Not found.')
+
+
     #-------------------------------------------------------------Add Item UUID
 
     def add_item_uuid(self, uuid, qty=1):
-
+        """Adds the given item UUID and qty to the room's floor."""
 
         item = shared.ITEMS[uuid]
         self.add_item(item, qty)
@@ -77,6 +89,7 @@ class Room(object):
     #------------------------------------------------------------------Add Item
 
     def add_item(self, item, qty=1):
+        """Adds the given item and qty to the room's floor."""
 
         if self.floor.can_hold(item, qty):
 

@@ -11,6 +11,7 @@ module: base
 uuid:   f8988e8f6b1a41cdb2f1d63dc313c58d
 nick:   dagger
 name:   Apprentice Dagger
+hint:   weapon
 text:   a short blade with a wound leather grip and brass pommel
 burden: 7
 slot:   primary

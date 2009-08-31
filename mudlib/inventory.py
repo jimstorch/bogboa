@@ -214,6 +214,16 @@ class Floor(object):
         ##  value = tuple(count, timestamp)
         self.items = {}           
 
+    #--------------------------------------------------------------------Search
+
+    def search(self, keyset, qty=1):
+        found = []
+        for item in self.items:
+            if item.trie.match(keyset):
+                if self.has(item, qty):
+                    found.append(item)
+        return found 
+
     #------------------------------------------------------------------Can Hold
 
     def can_hold(self, item, qty=1):
@@ -247,8 +257,14 @@ class Floor(object):
         s = ''
         for item in self.items.keys():
             qty, foo = self.items[item]
-            s+='^Y%s^w (x%d)\n\n' % (item.nick, qty)
+            s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
         return s 
+
+    #---------------------------------------------------------------------Count
+
+    def has(self, item, qty=1):
+        """Return True if we have quantity of item."""
+        return bool(self.count(item) >= qty)
 
     #---------------------------------------------------------------------Count
 
