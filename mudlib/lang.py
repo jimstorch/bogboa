@@ -10,7 +10,6 @@ import re
 
 
 VOWELS = 'aeiou'
-CONSONANTS = 'bcdfghjklmnpqrstvw'
 
 ## Articles and short words to omit from comparison
 OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to',
@@ -67,6 +66,7 @@ class NameTrie(object):
         self.root = NameTrie._Node()
 
     def _add_word(self, word):
+        #print word
         node = self.root
         for char in word:
             node = node.add(char)
@@ -86,6 +86,8 @@ class NameTrie(object):
         words = keyset(phrase)
         for word in words:
             self._add_word(word)
+            ## Also add the plural of each
+            self._add_word(plural(word))
 
     def match_phrase(self, phrase):
         """
@@ -109,49 +111,46 @@ class NameTrie(object):
 
 def plural(noun):
 
-    """
-    Roughly apply the rules of pluralization.
-    There are many exceptions in English that would require the overhead of
-    a dictionary.
-    """
- 
+    """Roughly apply the rules of pluralization."""
+
+    irregular = {
+        'child':'children',
+        'foot':'feet',
+        'fungus':'fungi',
+        'goose':'geece',
+        'louse':'lice',
+        'man':'men',
+        'mouse':'mice',
+        'ox':'oxen',
+        'person':'people',
+        'tooth':'teeth',
+        'woman':'women',
+        }
+
     nl = noun.lower()
 
     ## is it too short to juggle?
     if len(nl) < 2:
         return noun + 's'
 
-    elif nl.endswith('ss'):
-        suffix = 'es'
-    elif nl.endswith('sh'):
-        suffix = 'es'        
-    elif nl.endswith('ch'):
-        suffix = 'es'
-    elif nl.endswith('x'):
-        suffix = 'es'
-    elif nl.endswith('z'):
+    ## Check for an irregular noun
+    if nl in irregular:
+        return irregular[nl]
+
+    suffix = 's'
+    if nl[-2:] in ('ss', 'sh', 'ch') or  nl[-1:] in ('x','z'):
         suffix = 'es'
     elif nl.endswith('y'):
-        if nl[-2] in CONSONANTS:
+        if nl[-2] not in VOWELS:
             noun = noun[:-1]
             suffix = 'ies'
-        else:
-            suffix = 's'
     elif nl.endswith('f'):
         noun = noun[:-1]
         suffix = 'ves'
-    elif nl.endswith('y'):
-        suffix = 's'
     elif nl.endswith('o'):
-        if nl[-2] in CONSONANTS:
+        if nl[-2] not in VOWELS:
             suffix = 'es'
-        else:
-            suffix = 's'
-    else:
-        suffix = 's'
-
-    return noun + suffix    
-
+    return noun + suffix 
 
 #-----------------------------------------------------------------------Article
 

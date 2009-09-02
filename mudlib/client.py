@@ -9,6 +9,7 @@
 # connection --> client <-- body
 
 import shared
+from mudlib.error import CmdError
 from mudlib.body import Body
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
@@ -72,8 +73,8 @@ class Client(object):
     #---------------------------------------------------------------------Alert
 
     def alert(self, msg):
-        """Transmit msg wrapped in alert color (dark yellow)."""
-        self.conn.send('^y%s^w' % msg)
+        """Transmit msg wrapped in alert color (bright yellow)."""
+        self.conn.send('^Y%s^w' % msg)
 
     #----------------------------------------------------------------------Warn
 
@@ -114,7 +115,11 @@ class Client(object):
                 ## Find the function mapped to this verb
                 handler = VERB_HANDLER[verb]
                 ## and call it, passing it the client
-                handler(self)
+
+                try:
+                    handler(self)
+                except CmdError, e:
+                    self.alert(e.value)
 
             else:
                 self.alert("Unknown action.")
