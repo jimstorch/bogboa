@@ -18,7 +18,7 @@ SYMBOLS = '={}(),;*/'
 CONDITIONALS = ['if', 'elif', 'else',]
 KEYWORDS = ['and', 'or', 'not',]
 
-
+z
 #-------------------------------------------------------------------------Token
 
 class Token(object):

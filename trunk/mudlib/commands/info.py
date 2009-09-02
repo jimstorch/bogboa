@@ -9,6 +9,7 @@
 from mudlib import shared
 from mudlib import parsers
 from mudlib import calendar
+from mudlib.error import CmdError
 
 #----------------------------------------------------------------------Commands
 @parsers.blank
@@ -69,7 +70,7 @@ def help(client, arg):
         if topic in shared.HELPS:
             client.prose(shared.HELPS[topic].text)
         else:
-            client.alert("Help topic not found.")
+            raise CmdError('Help topic not found')
 
     else:
         client.prose(shared.HELPS['help'].text)
