@@ -8,6 +8,7 @@
 
 import re
 
+from driver.error import BogCmdError
 
 VOWELS = 'aeiou'
 
@@ -209,3 +210,111 @@ def guestimate(noun, num):
         noun = plural(noun) 
 
     return prefix, noun
+
+
+
+#--------------------------------------------------------------------Arg to Int
+
+def arg_to_int(arg):
+
+    """
+    Given a string, attempts to convert it into an integer value.
+    Converts digits and simple one-word values.
+    Returns integer value or None for non-numeric arguments.
+
+    Note: raises BogCmdError() 
+    """
+
+    ##TODO: add support for hyphenated word values maybe?
+
+    written = { 
+        'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 
+        'seven':7, 'eight':8, 'nine':9, 'ten':10, 'eleven':11,  
+        'twelve':12, 'thirteen':13, 'fourteen':14, 'fifteen':15,
+        'sixteen':16, 'seventeen':17, 'eighteen':18, 'nineteen': 19,
+        'twenty':20, 'thirty':30, 'forty':40, 'fifty':50, 'sixty':60,
+        'seventy':70, 'eighty':80, 'ninety':90, 'a':1, 'an':1, 
+        }
+
+    arg = arg.lower()
+
+    if arg.isdigit():
+        ## Test for numeric abuse so we don't crash on ridiculous input
+        if len(arg) > 9:
+            raise BogCmdError('Too many digits in number.')
+        else:
+            return int(arg)
+
+    elif arg in written:
+        return written[arg]
+
+    else:
+        return None
+
+
+#-----------------------------------------------------------------Args to Parms
+
+def args_to_parms(args):
+
+    # Start right to left ...
+
+    count = None
+    subject = None
+    ex_count = None
+    ex_subject = None
+    target = None
+   
+    if len(args) > 0:
+
+        if 'from' in args:
+            i = args.index('from') + 1
+            if len(args) == i:
+                raise BogCmdError('from where?')
+
+            else:
+                target = ' '.join(args[i:])
+                args = args[:i - 1]
+
+        if 'but' in args:
+
+            i = args.index('but') + 1
+            if len(args) == i:
+                raise BogCmdError('but what?')
+
+            else:
+                sub = args[i:]
+                if sub > 1:
+                    arg = sub[0]
+                    num = arg_to_int(arg)
+                    if num != None:
+                        ex_count = num
+                        sub = sub[1:]
+
+                ex_subject = ' '.join(sub)
+                args = args[:i - 1]
+
+
+    # Now left to right ...
+
+    if len(args) > 0:
+
+        arg = args[0]
+
+        num = arg_to_int(arg)
+        if num != None:
+            count = num
+            args = args[1:]
+            if not subject:
+                subject = ' '.join(args)
+ 
+        elif arg == 'all' or arg == 'everything' or arg == 'every':
+            args = args[1:]
+            if not subject:
+                subject = ' '.join(args)
+            
+        else:
+            subject = ' '.join(args)                        
+
+    return (count, subject, ex_count, ex_subject, target)
+
+

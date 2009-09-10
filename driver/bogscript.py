@@ -6,6 +6,12 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from driver.scripting.token import Tokenizer
+from driver.scripting.pygen import PyGen
+from driver.scripting.bytecode import ByteCompiler
+from driver.log import THE_LOG
+
+
 """
 The Problem
 ===========
@@ -88,10 +94,7 @@ handpump.
 Audit scripts and only work with builders you trust.
 """
 
-from driver.scripting.token import Tokenizer
-from driver.scripting.pygen import PyGen
-from driver.scripting.bytecode import ByteCompiler
-from driver.log import THE_LOG
+
 
 #----------------------------------------------------------------Compile Script
 
@@ -105,29 +108,18 @@ def compile_script(bogscript, event_name, source_obj):
 
     ## Step 1: Convert source script into tokens
     tk = Tokenizer(bogscript)
-    msg = tk.tokenize()
-    if msg != '':
-        return (msg, None)
 
     #for token in tk.tokens:
     #    print token
 
     ## Step 2: Convert tokens into Python Source
     pg = PyGen(tk.tokens)
-    msg = pg.generate()
-    if msg != '':
-        return (msg, None)
-
     #print pg.pycode
 
     ## Step 3: Compile Python Source into bytecode
     bc = ByteCompiler(pg.pycode)
-    msg = bc.encode()
-    if msg != '':
-        return (msg, None)
 
-    ## Return 
-    return ('', bc.bytecode)
+    return bc.bytecode
 
 
 #--------------------------------------------------------------Check Event Name

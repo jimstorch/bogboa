@@ -9,7 +9,7 @@
 # connection --> client <-- body
 
 import shared
-from mudlib.error import CmdError
+from driver.error import BogCmdError
 from mudlib.body import Body
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
@@ -118,8 +118,8 @@ class Client(object):
 
                 try:
                     handler(self)
-                except CmdError, e:
-                    self.alert(e.value)
+                except BogCmdError, error:
+                    self.alert(error)
 
             else:
                 self.alert("Unknown action.")

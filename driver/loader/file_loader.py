@@ -18,6 +18,7 @@ import glob
 
 from mudlib import shared
 from driver.log import THE_LOG
+from driver.error import BogYAMLError
 from driver.loader.from_yaml import parse_markup
 
 
@@ -182,9 +183,10 @@ def parse_file(filename):
         THE_LOG.add("Error opening file '%s'" % filename)
         sys.exit(1)
 
-    cfg, error = parse_markup(markup)
+    try:
+        cfg = parse_markup(markup)
 
-    if error:
+    except BogYAMLError, error:
         THE_LOG.add("Error parsing YAML from file '%s':" % filename)
         THE_LOG.add(error)
         sys.exit(1)

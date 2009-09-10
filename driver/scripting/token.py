@@ -6,6 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from driver.error import BogScriptError
 from driver.scripting.source_iter import CharIter
 from driver.scripting.security import WHITELIST
 
@@ -18,7 +19,7 @@ SYMBOLS = '={}(),;*/'
 CONDITIONALS = ['if', 'elif', 'else',]
 KEYWORDS = ['and', 'or', 'not',]
 
-z
+
 #-------------------------------------------------------------------------Token
 
 class Token(object):
@@ -79,6 +80,7 @@ class Tokenizer(object):
     def __init__(self, bogscript):
         self.char_iter = CharIter(bogscript)
         self.tokens = []
+        self._tokenize()
 
     def create_token(self, category, value):
         token = Token(category, value, 
@@ -86,7 +88,7 @@ class Tokenizer(object):
             self.char_iter.current_char_number())
         return token
 
-    def tokenize(self):
+    def _tokenize(self):
 
         ## "Everyone writes a crummy parser/tokenizer by hand at least once"
         lex = ''
@@ -173,7 +175,8 @@ class Tokenizer(object):
                     continue
 
                 ## Ran into something unknown
-                return ('Tokenizer encountered a syntax error near:\n%s' %
+                raise BogScriptError(
+                    'Tokenizer encountered a syntax error near:\n%s' %
                     self.char_iter.trace() )          
 
             elif state == 'comment':
@@ -255,7 +258,7 @@ class Tokenizer(object):
                 if char.isspace() or char in SYMBOLS:
                     
                     if len(lex) > 12:
-                        return ('Tokenizer Error: '
+                        raise BogScriptError('Tokenizer Error: '
                             'oversized number.\n%s' %
                             self.char_iter.trace() )                          
 
@@ -270,9 +273,10 @@ class Tokenizer(object):
                     continue
 
                 elif char not in NUMBER_MORE:
-                    return ('Tokenizer Error: '
+                    raise BogScriptError('Tokenizer Error: '
                         'illegal character in numeric value.\n%s' %
-                        self.char_iter.trace() )                                             
+                        self.char_iter.trace() )
+
                 else:
                     lex += char
                     continue
@@ -286,7 +290,7 @@ class Tokenizer(object):
                         ## Legal function name?
                         ## TODO: Re-enable this check
 #                        if lex not in WHITELIST:
-#                            return ("Security Error: "
+#                            raise BogScriptError("Security Error: "
 #                            "Function call '%s' is not in whitelist\n%s" %
 #                            (lex, self.char_iter.trace() ) )                              
 
@@ -322,17 +326,16 @@ class Tokenizer(object):
                         continue
 
                 elif char not in ID_MORE:
-                    return ('Tokenizer Error:, '
+                    raise BogScriptError('Tokenizer Error: '
                         'illegal character in keyword/identifier.\n%s' %
-                        self.char_iter.trace() )                                             
+                        self.char_iter.trace() )
+
                 else:
                     lex += char
                     continue
         
         if state == 'quoting':
-            return ('Tokenizer Error: '
+            raise BogScriptError('Tokenizer Error: '
                 'Quoted string was never closed.\n%s' %
                 self.char_iter.trace() )              
-                   
-        ## Tokenizer was able to tokenize the entire text
-        return ''                 
+              

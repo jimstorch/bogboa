@@ -85,12 +85,10 @@ class CharIter(object):
     def next(self):
 
         if self.column > self.last_column:
-            try:
-                self.line = self.line_iter.next() + '\n'
-                self.last_column = len(self.line) - 1
-                self.column = 0
-            except StopIteration:
-                raise StopIteration     ## Yes, that does look odd
+            self.line = self.line_iter.next() + '\n'
+            self.last_column = len(self.line) - 1
+            self.column = 0
+
         retval = self.current_char()
         self.column += 1
         return retval

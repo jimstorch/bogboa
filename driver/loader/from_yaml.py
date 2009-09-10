@@ -29,14 +29,11 @@ def parse_markup(markup):
         ## note the use of 'safe_load' to prevent arbitrary object creation
         cfg = yaml.safe_load(markup)
 
-    except yaml.YAMLError, exc:
-        cfg = None
-        error = str(exc)
+    except yaml.YAMLError, error:
+        error = str(error)
+        raise BogYAMLError('Error parsing YAML: %s' % error)
 
-    else:
-        if cfg == None:
-            error = 'Source contains no data.'
-        else:
-            error = ''
+    if cfg == None:
+        raise BogYAMLError('YAML Source contains no data.')
 
-    return (cfg, error)
+    return cfg

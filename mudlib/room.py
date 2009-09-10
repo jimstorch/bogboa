@@ -13,10 +13,12 @@ from mudlib import shared
 from driver.log import THE_LOG
 from driver.bogscript import check_event_name
 from driver.bogscript import compile_script
+from driver.error import BogScriptError
 from mudlib.calendar import time_msg
 from inventory import Floor
 from mudlib.lang import guestimate
 from mudlib.lang import keyset
+
 
 CLEANERS = [
     'thieving mice scurry past',
@@ -358,17 +360,18 @@ def configure_room(cfg):
             ## Issue warnings for events that don't match class methods
             check_event_name(event_name, room)
             script = cfg.pop(event_name)
-            (msg, code) = compile_script(script, event_name, room)
 
-            if msg == '':
-                ## Map the event name to the compiled bytecode
-                room.scripts[event_name] = code
+            try:
+                code = compile_script(script, event_name, room)
 
-            else:
+            except BogScriptError, error:
                 ## Problem with a script
-                print msg
+                THE_LOG.add('!! Script Error: %s' % error)
                 sys.exit(1)
-               
+
+            ## Map the event name to the compiled bytecode               
+            room.scripts[event_name] = code
+
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
