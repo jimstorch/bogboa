@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib import shared
-from mudlib.error import CmdError
+from driver.error import BogCmdError
 
 
 """
@@ -25,7 +25,7 @@ def blank(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args):
-            raise CmdError('That command does not use parameters.')
+            raise BogCmdError('That command does not use parameters.')
         else:
             cmd_func(client)
 
@@ -41,9 +41,9 @@ def singular(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
-            raise CmdError('That command requires a parameter.')
+            raise BogCmdError('That command requires a parameter.')
         elif len(args) > 1:
-            raise CmdError('Too many parameters -- use one.')
+            raise BogCmdError('Too many parameters -- use one.')
         else:
             cmd_func(client, args[0])
 
@@ -60,7 +60,7 @@ def none_or_one(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
-            raise CmdError('Too many parameters -- use one.')
+            raise BogCmdError('Too many parameters -- use one.')
         elif len(args) == 1:
             arg = args[0]
         else:
@@ -80,7 +80,7 @@ def monologue(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if not len(args):
-            raise CmdError('Missing subject.')
+            raise BogCmdError('Missing subject.')
         else:
             msg = ' '.join(args)
             cmd_func(client, msg)
@@ -97,14 +97,14 @@ def dialogue(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
-            raise CmdError('Command is missing a subject and message.')
+            raise BogCmdError('Command is missing a subject and message.')
         elif len(args) == 1:
-            raise CmdError('Command is missing a message.')
+            raise BogCmdError('Command is missing a message.')
         else:
             name = args.pop(0)
             target = shared.find_player(name)
             if target == None:
-                raise CmdError('%s is not online.' % name)
+                raise BogCmdError('%s is not online.' % name)
             msg = ' '.join(args)
             cmd_func(client, target, msg)
     return parse_func 
@@ -126,7 +126,7 @@ def set_or_show(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
-            raise CmdError('Too many parameters.')
+            raise BogCmdError('Too many parameters.')
 
         if len(args) == 0:
             setting = None
@@ -141,7 +141,7 @@ def set_or_show(cmd_func):
                 setting = False
 
             else:
-                raise CmdError('Please use a yes/no or on/off parameter.')
+                raise BogCmdError('Please use a yes/no or on/off parameter.')
 
         cmd_func(client, setting)
 
@@ -233,6 +233,7 @@ def name_and_qty(cmd_func):
         cmd_func(client, phrase, qty)   
 
     return parse_func        
+
 
 
 #-------------------------------------------------------------Item in Inventory

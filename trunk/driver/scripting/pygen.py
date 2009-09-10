@@ -8,6 +8,7 @@
 
 import sys
 
+from driver.error import BogScriptError
 from driver.scripting.token import TokenIter
 
 
@@ -25,6 +26,7 @@ class PyGen(object):
         self.indent = 0
         self.parens = 0
         self.is_conditional = False
+        self._generate()
 
     def add_line(self):
 
@@ -38,7 +40,7 @@ class PyGen(object):
         ## Indent the next line 4 spaces per indent level
         self.line = ' ' * (self.indent * 4)         
 
-    def generate(self):
+    def _generate(self):
 
         for token in self.token_iter:
            
@@ -90,7 +92,8 @@ class PyGen(object):
                     continue
 
                 else:
-                    return "PyGen Error: Unhandled symbol '%s'" % val 
+                    raise BogScriptErrorr(
+                        "PyGen Error: Unhandled symbol '%s'" % val) 
 
             elif cat == 'call':
                 self.line += val
@@ -119,21 +122,22 @@ class PyGen(object):
                 self.line += val + ' '
             
             else:
-                return "PyGen Error: Unhandled category '%s'" % cat 
+                raise BogScriptErrorr("PyGen Error: Unhandled category '%s'"
+                    % cat) 
 
         if self.indent > 0:
-            return 'PyGen Error:  Unmatched opening brace in source.'
+            raise BogScriptError(
+                'PyGen Error:  Unmatched opening brace in source.')
 
         if self.indent < 0:
-            return 'PyGen Error:  Unmatched closing braces in source.'        
+            raise BogScriptError(
+                'PyGen Error:  Unmatched closing braces in source.')        
         
         if self.parens > 0:
-            return 'PyGen Error:  Unmatched opening parenthesis in source.'
+            raise BogScriptError(
+                'PyGen Error:  Unmatched opening parenthesis in source.')
 
         if self.parens < 0:
-            return 'PyGen Error:  Unmatched closing parenthesis in source.'
-                
-        #print self.pycode
-        return ''    
-
+            raise BogScriptError(
+                'PyGen Error:  Unmatched closing parenthesis in source.')
 

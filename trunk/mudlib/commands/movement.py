@@ -9,7 +9,7 @@
 from mudlib import shared
 from mudlib import lookup
 from mudlib import parsers
-from mudlib.error import CmdError
+from driver.error import BogCmdError
 
 #-------------------------------------------------------------------------North
 @parsers.blank
@@ -26,7 +26,7 @@ def north(client):
         entering.on_enter(client.body, 'the South')
     
     else:
-        raise CmdError('The way North is obstructed.')
+        raise BogCmdError('The way North is obstructed.')
 
 
 
@@ -45,7 +45,7 @@ def south(client):
         entering.on_enter(client.body, 'the North')
     
     else:
-        raise CmdError('The way South is obstructed.')
+        raise BogCmdError('The way South is obstructed.')
 
 
 #--------------------------------------------------------------------------East
@@ -63,7 +63,7 @@ def east(client):
         entering.on_enter(client.body, 'the West')
     
     else:
-        raise CmdError('The way East is obstructed.')
+        raise BogCmdError('The way East is obstructed.')
 
 
 #--------------------------------------------------------------------------West
@@ -81,7 +81,7 @@ def west(client):
         entering.on_enter(client.body, 'the East')
     
     else:
-        raise CmdError('The way West is obstructed.')
+        raise BogCmdError('The way West is obstructed.')
 
 #----------------------------------------------------------------------------Up
 @parsers.blank
@@ -98,7 +98,7 @@ def up(client):
         entering.on_enter(client.body, 'below')
     
     else:
-        raise CmdError('The way up is obstructed.')
+        raise BogCmdError('The way up is obstructed.')
 
 
 #--------------------------------------------------------------------------Down
@@ -116,7 +116,7 @@ def down(client):
         entering.on_enter(client.body, 'above')
     
     else:
-        raise CmdError('The way down is obstructed.')
+        raise BogCmdError('The way down is obstructed.')
 
 #-------------------------------------------------------------------------Enter
 

@@ -6,6 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from driver.error import BogScriptError
 
 class ByteCompiler(object):
 
@@ -17,6 +18,7 @@ class ByteCompiler(object):
       
         self.pycode = pycode
         self.bytecode = None
+        self._encode()
 
     def dump(self):
         
@@ -26,16 +28,13 @@ class ByteCompiler(object):
             lst += '|%.2d|%s\n' % (number + 1, line) 
         return lst
 
-    def encode(self):
+    def _encode(self):
 
         try:
             self.bytecode = compile(self.pycode, 'parsed_script', 'exec')
 
-        except SyntaxError, detail:
-            return "Bytecode Compile Error: %s\n" % detail
-
-        else:
-            return ''
+        except SyntaxError, error:
+            raise BogScriptError("Bytecode Compile Error: %s\n" % error)
 
 
 
