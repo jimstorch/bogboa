@@ -258,8 +258,7 @@ class Tokenizer(object):
                 if char.isspace() or char in SYMBOLS:
                     
                     if len(lex) > 12:
-                        raise BogScriptError('Tokenizer Error: '
-                            'oversized number.\n%s' %
+                        raise BogScriptError('Oversized number.\n%s' %
                             self.char_iter.trace() )                          
 
                     if '.' in lex:
@@ -273,8 +272,8 @@ class Tokenizer(object):
                     continue
 
                 elif char not in NUMBER_MORE:
-                    raise BogScriptError('Tokenizer Error: '
-                        'illegal character in numeric value.\n%s' %
+                    raise BogScriptError(
+                        'Illegal character in numeric value.\n%s' %
                         self.char_iter.trace() )
 
                 else:

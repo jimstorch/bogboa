@@ -9,6 +9,7 @@
 from driver.scripting.token import Tokenizer
 from driver.scripting.pygen import PyGen
 from driver.scripting.bytecode import ByteCompiler
+from driver.error import BogScriptError
 from driver.log import THE_LOG
 
 
@@ -134,5 +135,11 @@ def check_event_name(event_name, source_obj):
         THE_LOG.add ( "WARNING! Unknown event '%s' given for "
             "room '%s' in module '%s'." % 
             (event_name, source_obj.name, source_obj.module) )
+
+
+
+
+
+
 
 
