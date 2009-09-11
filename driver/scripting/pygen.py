@@ -93,7 +93,7 @@ class PyGen(object):
 
                 else:
                     raise BogScriptErrorr(
-                        "PyGen Error: Unhandled symbol '%s'" % val) 
+                        "Unhandled symbol '%s'" % val) 
 
             elif cat == 'call':
                 self.line += val
@@ -122,22 +122,22 @@ class PyGen(object):
                 self.line += val + ' '
             
             else:
-                raise BogScriptErrorr("PyGen Error: Unhandled category '%s'"
+                raise BogScriptErrorr("Unhandled category '%s'"
                     % cat) 
 
         if self.indent > 0:
             raise BogScriptError(
-                'PyGen Error:  Unmatched opening brace in source.')
+                'Unmatched opening brace in source.')
 
         if self.indent < 0:
             raise BogScriptError(
-                'PyGen Error:  Unmatched closing braces in source.')        
+                'Unmatched closing braces in source.')        
         
         if self.parens > 0:
             raise BogScriptError(
-                'PyGen Error:  Unmatched opening parenthesis in source.')
+                'Unmatched opening parenthesis in source.')
 
         if self.parens < 0:
             raise BogScriptError(
-                'PyGen Error:  Unmatched closing parenthesis in source.')
+                'Unmatched closing parenthesis in source.')
 
