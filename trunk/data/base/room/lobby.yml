@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
 
 uuid: 0c9997b9-5068-46d9-a245-12991bdf3f17
 name: The Lobby

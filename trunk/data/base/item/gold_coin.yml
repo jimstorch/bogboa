@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
 
 uuid: ffbefc071b3647999068bf402289625b
 name: gold piece

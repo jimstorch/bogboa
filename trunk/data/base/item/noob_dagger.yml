@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
 
 uuid:   f8988e8f6b1a41cdb2f1d63dc313c58d
 nick:   dagger

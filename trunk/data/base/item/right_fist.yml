@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
 
 ## Default weapon for unarmed combat, mainhand
 

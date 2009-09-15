@@ -23,7 +23,7 @@ class Item(object):
     def __init__(self):
 
         self.uuid = None
-        self.module = None
+        self.filename = None
         self.name = None        # Full Item Name
         self.nick = None        # short nickname
         self.trie = NameTrie()  # string matching object
@@ -242,18 +242,20 @@ def configure_item(cfg):
 
     item = Item()
 
+    item.filename = cfg.pop('filename')
+
     if 'uuid' in cfg:
         item.uuid = cfg.pop('uuid')
     else:
         THE_LOG.add("!! Missing UUID in config for item '%s'." % item.name)
         sys.exit(1)
 
-    if 'module' in cfg:
-        item.module = cfg.pop('module')
-    else:
-        item.module = None
-        THE_LOG.add("?? Missing 'module' value for item '%s'." % 
-            item.name) 
+#    if 'module' in cfg:
+#        item.module = cfg.pop('module')
+#    else:
+#        item.module = None
+#        THE_LOG.add("?? Missing 'module' value for item '%s'." % 
+#            item.name) 
 
     if 'name' in cfg:
         item.name = cfg.pop('name')

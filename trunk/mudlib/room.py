@@ -11,8 +11,8 @@ import random
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.bogscript import check_event_name
-from driver.bogscript import compile_script
+from driver.scripting2.bogscript import check_event_name
+from driver.scripting2.bogscript import compile_script
 from driver.error import BogScriptError
 from mudlib.calendar import time_msg
 from inventory import Floor
@@ -45,7 +45,7 @@ class Room(object):
     def __init__(self):
 
         self.uuid = None
-        self.module = None
+        self.filename = None
         self.name = None
         self.is_outside = False
         self.exits = {}
@@ -283,6 +283,8 @@ def configure_room(cfg):
 
     room = Room()
 
+    room.filename = cfg.pop('filename')
+
     if 'name' in cfg:
         room.name = cfg.pop('name')
     else:
@@ -300,12 +302,12 @@ def configure_room(cfg):
     else:
         room.text = None
 
-    if 'module' in cfg:
-        room.module = cfg.pop('module')
-    else:
-        room.module = None
-        THE_LOG.add("?? Missing 'module' value for room '%s'." % 
-            room.name)       
+#    if 'module' in cfg:
+#        room.module = cfg.pop('module')
+#    else:
+#        room.module = None
+#        THE_LOG.add("?? Missing 'module' value for room '%s'." % 
+#            room.name)       
 
     if 'is_outside' in cfg:
         room.is_outside = cfg.pop('is_outside')
@@ -342,6 +344,7 @@ def configure_room(cfg):
     if 'version' in cfg:
         cfg.pop('version')
 
+    
 
     ## Scripting
 
@@ -362,11 +365,13 @@ def configure_room(cfg):
             script = cfg.pop(event_name)
 
             try:
-                code = compile_script(script, event_name, room)
+                #code = compile_script(script, event_name, room)
+                code = compile_script(script)
 
             except BogScriptError, error:
                 ## Problem with a script
-                THE_LOG.add('!! Script Error: %s' % error)
+                THE_LOG.add('!! Script Error in file %s' % room.filename)
+                THE_LOG.add('!! %s' % error)
                 sys.exit(1)
 
             ## Map the event name to the compiled bytecode               
