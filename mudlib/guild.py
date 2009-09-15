@@ -19,7 +19,7 @@ class Guild(object):
    
 #        self.uuid = None
         self.name = None
-        self.module = None
+        self.filename = None
 
         self.skill_mods = {}    # Dictionary of Skill modifiers
         self.ability = {}       # List of guild abilities by name
@@ -48,6 +48,8 @@ def configure_guild(cfg):
     """
 
     guild = Guild()
+
+    guild.filename = cfg.pop('filename')
 
     if 'name' in cfg:
         guild.name = cfg.pop('name')

@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: testville
 
 uuid: 8611ad17d6be417a8d9027b628f52ce3
 name: Newcomer Landing

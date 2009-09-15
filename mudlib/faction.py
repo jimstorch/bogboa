@@ -19,7 +19,7 @@ class Faction(object):
     
         self.uuid = None
         self.name = None
-        self.module = None
+        self.filename = None
 
         self.related = {}
 
@@ -56,6 +56,8 @@ def configure_faction(cfg):
 
     faction = Faction()
 
+    faction.filename = cfg.pop('filename')
+
     if 'name' in cfg:
         faction.name = cfg.pop('name')
     else:
@@ -74,10 +76,10 @@ def configure_faction(cfg):
     else:
         faction.desc = None
 
-    if 'module' in cfg:
-        faction.module = cfg.pop('module')
-    else:
-        faction.module = None
+#    if 'module' in cfg:
+#        faction.module = cfg.pop('module')
+#    else:
+#        faction.module = None
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:

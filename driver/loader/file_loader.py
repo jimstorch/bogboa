@@ -191,6 +191,8 @@ def parse_file(filename):
         THE_LOG.add(error)
         sys.exit(1)
 
+    ## Add the filename to the cfg dictionary
+    cfg['filename'] = filename
     return cfg
 
 

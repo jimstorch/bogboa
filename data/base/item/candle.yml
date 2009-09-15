@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: base
 
 uuid: a493903fdc3a489ca6de5f1bf9208eae
 name: candle

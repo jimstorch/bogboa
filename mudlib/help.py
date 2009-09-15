@@ -40,6 +40,8 @@ def configure_help(cfg):
 
     help = Help()
 
+    help.filename = cfg.pop('filename')
+
     if 'name' in cfg:
         help.name = cfg.pop('name')
     else:
@@ -62,12 +64,12 @@ def configure_help(cfg):
         sys.exit(1)
 
 
-    if 'module' in cfg:
-        help.module = cfg.pop('module')
-    else:
-        help.module = None
-        THE_LOG.add("WARNING: Missing 'module' value for help '%s'." 
-            % help.name)       
+#    if 'module' in cfg:
+#        help.module = cfg.pop('module')
+#    else:
+#        help.module = None
+#        THE_LOG.add("WARNING: Missing 'module' value for help '%s'." 
+#            % help.name)       
 
     ## Ignore from Guild files
     if 'skills' in cfg:

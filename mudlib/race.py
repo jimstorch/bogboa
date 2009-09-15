@@ -19,7 +19,7 @@ class Race(object):
     
 #        self.uuid = None
         self.name = None
-        self.module = None
+        self.filename = None
 
         self.stats = {}
         self.ability = {}
@@ -35,6 +35,8 @@ def configure_race(cfg):
     """
 
     race = Race()
+
+    race.filename = cfg.pop('filename')
 
     if 'name' in cfg:
         race.name = cfg.pop('name')

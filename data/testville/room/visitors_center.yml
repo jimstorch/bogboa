@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: testville
 
 uuid: 39760ba2180b486a83e69fdb6433c1e2
 name: Visitor's Center

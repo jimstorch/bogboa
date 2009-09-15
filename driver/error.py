@@ -6,35 +6,29 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+class BogError(Exception):
 
-class BogCmdError(Exception):
+    """Base class for errors in BogBoa."""
+
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
+
+
+class BogCmdError(BogError):
 
     """Custom exception to notify client of failed commands."""    
 
-    def __init__(self, value):
-        self.value = value
 
-    def __str__(self):
-        return repr(self.value)
-
-
-class BogScriptError(Exception):
+class BogScriptError(BogError):
 
     """Custom exception to raise scripting errors."""    
 
-    def __init__(self, value):
-        self.value = value
 
-    def __str__(self):
-        return repr(self.value)
-
-
-class BogYAMLError(Exception):
+class BogYAMLError(BogError):
 
     """Custom exception to raise YAML parsing errors."""    
 
-    def __init__(self, value):
-        self.value = value
 
-    def __str__(self):
-        return repr(self.value)

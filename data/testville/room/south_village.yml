@@ -6,7 +6,6 @@
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
 version: 1001
-module: testville
 
 uuid: 51c44e119f094f7da38dca9be7e53c1f
 name: Southern Testville
