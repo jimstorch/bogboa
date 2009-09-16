@@ -11,9 +11,7 @@ import random
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.scripting2.bogscript import check_event_name
-from driver.scripting2.bogscript import compile_script
-from driver.error import BogScriptError
+from driver.scripting.bogscript import process_scripts
 from mudlib.calendar import time_msg
 from inventory import Floor
 from mudlib.lang import guestimate
@@ -343,43 +341,15 @@ def configure_room(cfg):
     ## For future use
     if 'version' in cfg:
         cfg.pop('version')
-
-    
-
-    ## Scripting
-
-    keys = cfg.keys()
-    
+   
     #--------------------------------------------------------------------------
     #   All remaining mappings should be bogscript snippets
     #--------------------------------------------------------------------------
 
-    for key in keys:
-
-        ## Look for script snippets that begin with 'on_'
-
-        if key[:3] == 'on_':
-            event_name = key
-            ## Issue warnings for events that don't match class methods
-            check_event_name(event_name, room)
-            script = cfg.pop(event_name)
-
-            try:
-                #code = compile_script(script, event_name, room)
-                code = compile_script(script)
-
-            except BogScriptError, error:
-                ## Problem with a script
-                THE_LOG.add('!! Script Error in file %s' % room.filename)
-                THE_LOG.add('!! %s' % error)
-                sys.exit(1)
-
-            ## Map the event name to the compiled bytecode               
-            room.scripts[event_name] = code
-
+    remain = process_scripts(cfg, room)
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
-    if cfg:
+    if remain:
         THE_LOG.add("!! Unrecognized key(s) in config for room '%s': %s" 
             % ( room.name, cfg.keys()) ) 
 
