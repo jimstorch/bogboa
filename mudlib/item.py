@@ -11,9 +11,7 @@ import sys
 from mudlib.shared import ITEMS
 from mudlib.lang import NameTrie
 from driver.log import THE_LOG
-from driver.bogscript import check_event_name
-from driver.bogscript import compile_script
-
+from driver.scripting.bogscript import process_scripts
 
 
 #--------------------------------------------------------------------------Item
@@ -31,37 +29,37 @@ class Item(object):
         self.slot = None        # which wardrobe slot, if any, the item fits
         self.burden = 0.0       # the mass/weight for tracking encumbrance
         self.value = None       # What a vendor will pay for it
-        self.scripts = {}    
+        self.scripts = {}       # Builder defined event scripts
     
 
-    #-------------------------------------------------------------Body and Item
+#    #-------------------------------------------------------------Body and Item
 
-    def body_and_item(method):
+#    def body_and_item(method):
 
-        """
-        Decorator to pass self as 'item' for simpler scripting syntax.
-        """ 
+#        """
+#        Decorator to pass self as 'item' for simpler scripting syntax.
+#        """ 
 
-        def method_wrapper(self, body):
-            item = self
-            method(self, body, item)
-        return method_wrapper
+#        def method_wrapper(self, body):
+#            item = self
+#            method(self, body, item)
+#        return method_wrapper
 
 
-    #--------------------------------------------------------Body Item and Room
+#    #--------------------------------------------------------Body Item and Room
 
-    def body_item_and_room(method):
+#    def body_item_and_room(method):
 
-        """
-        Decorator to pass self as 'item' and body.room as 'room' for simpler 
-        scripting syntax.
-        """ 
+#        """
+#        Decorator to pass self as 'item' and body.room as 'room' for simpler 
+#        scripting syntax.
+#        """ 
 
-        def wrapped_method(self, body):
-            item = self
-            room = body.room
-            method(self, body, item, room)
-        return wrapped_method
+#        def wrapped_method(self, body):
+#            item = self
+#            room = body.room
+#            method(self, body, item, room)
+#        return wrapped_method
   
 
     #-----------------------------------------------------------------On Attack
@@ -290,37 +288,14 @@ def configure_item(cfg):
     if 'version' in cfg:
         cfg.pop('version')
 
-    ## Scripting
-
-    keys = cfg.keys()
-    
     #--------------------------------------------------------------------------
     #   All remaining mappings should be bogscript snippets
     #--------------------------------------------------------------------------
 
-    for key in keys:
-
-        ## Look for script snippets that begin with 'on_'
-
-        if key[:3] == 'on_':
-            event_name = key
-            ## Issue warnings for events that don't match class methods
-            check_event_name(event_name, item)
-            script = cfg.pop(event_name)
-            (msg, code) = compile_script(script, event_name, item)
-
-            if msg == '':
-                ## Map the event name to the compiled bytecode
-                item.scripts[event_name] = code
-
-            else:
-                ## Problem with a script
-                print msg
-                sys.exit(1)
-            
+    remain = process_scripts(cfg, item)
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
-    if cfg:
+    if remain:
         THE_LOG.add("!! Unrecognized key(s) in config for item '%s': %s" 
             % ( item.name, cfg.keys()) )
 

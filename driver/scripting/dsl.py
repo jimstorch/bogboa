@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/scripting2/dsl.py
+#   driver/scripting/dsl.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -17,9 +17,6 @@ from driver.error import BogScriptError
 ##  http://www.gooli.org/blog/a-simple-lexer-in-python/
 ##  http://effbot.org/zone/xml-scanner.htm
 
-
-#def group_re(items): 
-#    return '(' + '|'.join(items) + ')'
 
 def group_re(items):
     bounded = [ item + r'\b' for item in items ]
@@ -64,7 +61,6 @@ for name, part in __DEFINITIONS:
     __PARTS.append("(?P<%s>%s)" % (name, part))
 __REGEX_STRING = "|".join(__PARTS)
 __REGEX = re.compile(__REGEX_STRING, re.MULTILINE)
-#print __REGEX_STRING
 
 
 def lexer(source):
