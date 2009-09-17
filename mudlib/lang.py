@@ -10,25 +10,32 @@ import re
 
 from driver.error import BogCmdError
 
-VOWELS = 'aeiou'
+__VOWELS = 'aeiou'
 
-## Articles and short words to omit from comparison
-OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to',
-    'at', 'in', 'is', 'my', 'that',])
 
-## Regex to split sentences at non-alpha characters
-NON_ALPHA = re.compile("[^a-zA-Z]+")
+#-------------------------------------------------------------------------found
+
+def found(regex, msg):
+    return bool(re.search(regex, msg))
 
 
 #------------------------------------------------------------------------Keyset
+
+## Regex to split sentences at non-alpha characters
+__NON_ALPHA = re.compile("[^a-zA-Z]+")
+
+## Articles and short words to omit from comparison
+__OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to',
+    'at', 'in', 'is', 'my', 'that',])
+
 
 def keyset(phrase):
     """
     Generate a set of key words for use with a NameTrie's match() method.
     """
     phrase = phrase.replace("\'", "")   ## guard's == guards
-    words = set(NON_ALPHA.split(phrase.lower()))
-    words = words - OMIT
+    words = set(__NON_ALPHA.split(phrase.lower()))
+    words = words - __OMIT
     return words
 
 
@@ -37,7 +44,7 @@ def keyset(phrase):
 class NameTrie(object):
 
     """
-    Trie object for matching of one-or-more word keys 
+    Trie object for matching of one-or-more word keys
     against one-or-more word values.
 
     Allows for multiple, partial, and out-of-order matches.
@@ -49,11 +56,11 @@ class NameTrie(object):
         Nested Node Class that maps a character value to the next Node.
         """
         def __init__(self):
-            self.nodes = {}         
+            self.nodes = {}
 
         def has(self, char):
             return self.nodes.get(char, False)
-           
+
         def add(self, char):
             if char in self.nodes:
                 node = self.nodes[char]
@@ -78,8 +85,8 @@ class NameTrie(object):
             node = node.has(char)
             if not node:
                 return False
-        return bool(word and True)        
-             
+        return bool(word and True)
+
     def feed(self, phrase):
         """
         Adds the given name to the Trie.  Duplicates are overwritten.
@@ -93,7 +100,7 @@ class NameTrie(object):
     def match_phrase(self, phrase):
         """
         Tests a text string of zero or more words against the Trie.
-        If you are going to be matching against multiple NameTries, create 
+        If you are going to be matching against multiple NameTries, create
         one keyset and call test_keys() on each.
         """
         return self.test_keys(keyset(phrase))
@@ -105,7 +112,7 @@ class NameTrie(object):
         for word in keyset:
             if not self._has_word(word):
                 return False
-        return bool(keyset and True)                
+        return bool(keyset and True)
 
 
 #------------------------------------------------------------------------Plural
@@ -142,16 +149,16 @@ def plural(noun):
     if nl[-2:] in ('ss', 'sh', 'ch') or  nl[-1:] in ('x','z'):
         suffix = 'es'
     elif nl.endswith('y'):
-        if nl[-2] not in VOWELS:
+        if nl[-2] not in __VOWELS:
             noun = noun[:-1]
             suffix = 'ies'
     elif nl.endswith('f'):
         noun = noun[:-1]
         suffix = 'ves'
     elif nl.endswith('o'):
-        if nl[-2] not in VOWELS:
+        if nl[-2] not in __VOWELS:
             suffix = 'es'
-    return noun + suffix 
+    return noun + suffix
 
 #-----------------------------------------------------------------------Article
 
@@ -171,14 +178,14 @@ def article(noun):
     elif nl.startswith('use'):
         art = 'a'
     elif nl.startswith('hon'):
-        art = 'a'        
-    elif nl[0] in VOWELS:
+        art = 'a'
+    elif nl[0] in __VOWELS:
         art = 'an'
     else:
         art = 'a'
 
     return art
-      
+
 
 #--------------------------------------------------------------------Guestimate
 
@@ -206,14 +213,22 @@ def guestimate(noun, num):
         noun = plural(noun)
 
     else:
-        prefix = 'countless'         
-        noun = plural(noun) 
+        prefix = 'countless'
+        noun = plural(noun)
 
     return prefix, noun
 
 
-
 #--------------------------------------------------------------------Arg to Int
+
+__WRITTEN = {
+    'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6,
+    'seven':7, 'eight':8, 'nine':9, 'ten':10, 'eleven':11,
+    'twelve':12, 'thirteen':13, 'fourteen':14, 'fifteen':15,
+    'sixteen':16, 'seventeen':17, 'eighteen':18, 'nineteen': 19,
+    'twenty':20, 'thirty':30, 'forty':40, 'fifty':50, 'sixty':60,
+    'seventy':70, 'eighty':80, 'ninety':90, 'a':1, 'an':1,
+    }
 
 def arg_to_int(arg):
 
@@ -222,19 +237,10 @@ def arg_to_int(arg):
     Converts digits and simple one-word values.
     Returns integer value or None for non-numeric arguments.
 
-    Note: raises BogCmdError() 
+    Note: raises BogCmdError()
     """
 
     ##TODO: add support for hyphenated word values maybe?
-
-    written = { 
-        'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 
-        'seven':7, 'eight':8, 'nine':9, 'ten':10, 'eleven':11,  
-        'twelve':12, 'thirteen':13, 'fourteen':14, 'fifteen':15,
-        'sixteen':16, 'seventeen':17, 'eighteen':18, 'nineteen': 19,
-        'twenty':20, 'thirty':30, 'forty':40, 'fifty':50, 'sixty':60,
-        'seventy':70, 'eighty':80, 'ninety':90, 'a':1, 'an':1, 
-        }
 
     arg = arg.lower()
 
@@ -245,8 +251,8 @@ def arg_to_int(arg):
         else:
             return int(arg)
 
-    elif arg in written:
-        return written[arg]
+    elif arg in __WRITTEN:
+        return __WRITTEN[arg]
 
     else:
         return None
@@ -263,7 +269,7 @@ def args_to_parms(args):
     ex_count = None
     ex_subject = None
     target = None
-   
+
     if len(args) > 0:
 
         if 'from' in args:
@@ -306,15 +312,13 @@ def args_to_parms(args):
             args = args[1:]
             if not subject:
                 subject = ' '.join(args)
- 
+
         elif arg == 'all' or arg == 'everything' or arg == 'every':
             args = args[1:]
             if not subject:
                 subject = ' '.join(args)
-            
+
         else:
-            subject = ' '.join(args)                        
+            subject = ' '.join(args)
 
     return (count, subject, ex_count, ex_subject, target)
-
-

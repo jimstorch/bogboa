@@ -11,14 +11,16 @@ import random
 
 from mudlib import shared
 from driver.log import THE_LOG
-from driver.scripting.bogscript import process_scripts
+from driver.bogscript import process_scripts
 from mudlib.calendar import time_msg
 from inventory import Floor
 from mudlib.lang import guestimate
 from mudlib.lang import keyset
 
+from mudlib.scripting import SCRIPT_ENV
 
-CLEANERS = [
+
+__CLEANERS = [
     'thieving mice scurry past',
     'a hole opens in time and space',
     'Ferengi flash mob',
@@ -34,7 +36,7 @@ CLEANERS = [
     'is that Winona Ryder?',
     'lift your feet a sec',
     ]
-    
+
 
 #--------------------------------------------------------------------------Room
 
@@ -58,7 +60,7 @@ class Room(object):
 
 #        """
 #        Decorator to pass self as 'room' for simpler scripting syntax.
-#        """ 
+#        """
 
 #        def method_wrapper(self, body):
 #            room = self
@@ -99,7 +101,7 @@ class Room(object):
             else:
                 verb = 'fall'
 
-            self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix, 
+            self.tell_all('^g%s ^y%s^g %s to the ground.^w' % (prefix,
                 noun, verb))
             self.floor.add(item, qty)
         else:
@@ -111,12 +113,12 @@ class Room(object):
     def sweep(self):
         """Remove decayed items from the floor, if any."""
         if self.floor.clean():
-            self.tell_all('^g... %s^w' % random.choice(CLEANERS))
+            self.tell_all('^g... %s^w' % random.choice(__CLEANERS))
 
     #------------------------------------------------------------------Tell All
 
     def tell_all(self, msg):
-        
+
         """Send a message to every player in the room."""
 
         for body in self.bodies:
@@ -126,7 +128,7 @@ class Room(object):
     #--------------------------------------------------------------Tell All But
 
     def tell_all_but(self, body, msg):
-        
+
         """Send a message to every player in the room except body."""
 
         for a_body in self.bodies:
@@ -148,7 +150,7 @@ class Room(object):
             for body in room.bodies:
                 if body != client.body:
                     client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
-        ## anything laying here?        
+        ## anything laying here?
         contents = self.floor.contents()
         if contents:
             client.send('Laying here you find;')
@@ -161,14 +163,14 @@ class Room(object):
 
         body.room = self
 
-        if body.uuid: 
+        if body.uuid:
 
             if direction:
-                self.tell_all('^g%s enters from %s.^w' % 
-                    (body.name, direction))          
+                self.tell_all('^g%s enters from %s.^w' %
+                    (body.name, direction))
             else:
-                self.tell_all("^g%s appears.^w" % body.name )       
-            
+                self.tell_all("^g%s appears.^w" % body.name )
+
             if body.is_player:
                 self.client_see(body.mind)
 
@@ -181,15 +183,15 @@ class Room(object):
 
     def on_exit(self, body, direction=None):
 
-        self.bodies.remove(body)             
+        self.bodies.remove(body)
 
         if body.uuid:
 
             if direction:
-                self.tell_all('^g%s exits %s.^w' % 
-                    (body.name, direction))          
+                self.tell_all('^g%s exits %s.^w' %
+                    (body.name, direction))
             else:
-                self.tell_all('^g%s vanishes.^w' % body.name)          
+                self.tell_all('^g%s vanishes.^w' % body.name)
 
         if 'on_exit' in self.scripts:
             exec self.scripts['on_exit']
@@ -198,76 +200,83 @@ class Room(object):
 
     def on_death(self, body):
         if 'on_death' in self.scripts:
-            exec self.scripts['on_death'] 
+            exec self.scripts['on_death']
 
     #----------------------------------------------------------------On Destroy
 
     def on_destroy(self):
         if 'on_destroy' in self.scripts:
-            exec self.scripts['on_destroy'] 
+            exec self.scripts['on_destroy']
 
     #------------------------------------------------------------On Detect Aura
 
     def on_detect_aura(self, body):
         if 'on_detect_aura' in self.scripts:
-            exec self.scripts['on_detect_aura'] 
+            exec self.scripts['on_detect_aura']
 
     #-----------------------------------------------------------On Detect Magic
 
     def on_detect_magic(self, body):
         if 'on_detect_magic' in self.scripts:
-            exec self.scripts['on_detech_magic'] 
+            exec self.scripts['on_detech_magic']
 
     #------------------------------------------------------------On Detect Trap
 
     def on_detect_traps(self, body):
         if 'on_detect_traps' in self.scripts:
-            exec self.scripts['on_detect_traps'] 
+            exec self.scripts['on_detect_traps']
 
     #-------------------------------------------------------------------On Drop
 
     def on_drop(self, item):
         if 'on_drop' in self.scripts:
-            exec self.scripts['on_drop'] 
+            exec self.scripts['on_drop']
 
     #-------------------------------------------------------------------On Hear
 
     def on_hear(self, body, msg):
-        
+
         print "on_hear fired"
         if 'on_hear' in self.scripts:
+
+            _local = {
+                'room':self,
+                'player':body,
+                'message':msg,
+                }
+
             room = self
-            exec self.scripts['on_hear'] 
+            exec self.scripts['on_hear'] in SCRIPT_ENV, _local
 
     #--------------------------------------------------------------On Indentify
-    
+
     def on_identify(self, body):
         if 'on_identify' in self.scripts:
-            exec self.scripts['on_identify'] 
+            exec self.scripts['on_identify']
 
     #-------------------------------------------------------------------On Init
 
     def on_init(self):
         if 'on_init' in self.scripts:
-            exec self.scripts['on_init'] 
+            exec self.scripts['on_init']
 
     #----------------------------------------------------------------On Inspect
 
     def on_inspect(self, body):
         if 'on_inspect' in self.scripts:
-            exec self.scripts['on_inspect'] 
+            exec self.scripts['on_inspect']
 
     #------------------------------------------------------------------On Look
 
     def on_look(self, body):
         if 'on_look' in self.scripts:
-            exec self.scripts['on_look'] 
+            exec self.scripts['on_look']
 
     #-----------------------------------------------------------------On Signal
 
     def on_signal(self, signal):
         if 'on_signal' in self.scripts:
-            exec self.scripts['on_signal'] 
+            exec self.scripts['on_signal']
 
 
 #----------------------------------------------------------------Configure Room
@@ -304,8 +313,8 @@ def configure_room(cfg):
 #        room.module = cfg.pop('module')
 #    else:
 #        room.module = None
-#        THE_LOG.add("?? Missing 'module' value for room '%s'." % 
-#            room.name)       
+#        THE_LOG.add("?? Missing 'module' value for room '%s'." %
+#            room.name)
 
     if 'is_outside' in cfg:
         room.is_outside = cfg.pop('is_outside')
@@ -341,7 +350,7 @@ def configure_room(cfg):
     ## For future use
     if 'version' in cfg:
         cfg.pop('version')
-   
+
     #--------------------------------------------------------------------------
     #   All remaining mappings should be bogscript snippets
     #--------------------------------------------------------------------------
@@ -350,10 +359,10 @@ def configure_room(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if remain:
-        THE_LOG.add("!! Unrecognized key(s) in config for room '%s': %s" 
-            % ( room.name, cfg.keys()) ) 
+        THE_LOG.add("!! Unrecognized key(s) in config for room '%s': %s"
+            % ( room.name, cfg.keys()) )
 
-    return room    
+    return room
 
 
 #-----------------------------------------------------------------Register Room
@@ -371,4 +380,3 @@ def register_room(room):
         sys.exit(1)
     else:
         shared.ROOMS[room.uuid] = room
-
