@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/scripting/dsl.py
+#   driver/dsl.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -30,9 +30,8 @@ __RESTRICTED = [
     'class', 'compile', 'continue', 'def', 'del', 'delattr', 'dict',
     'dir', 'eval', 'except', 'exec', 'execfile', 'exit', 'file', 'finally',
     'for', 'from', 'getattr', 'global', 'import', 'input', 'lambda', 'locals',
-    'object', 'object', 'open', 'open', 'property', 'raise', 'raw_input',
-    'reload', 'return', 'setattr', 'staticmethod', 'try', 'while', 'with',
-    'yield',
+    'object', 'open', 'property', 'raise', 'raw_input', 'reload', 'return',
+    'setattr', 'staticmethod', 'try', 'while', 'with', 'yield',
     ]
 
 __CONDITIONALS = ['if', 'elif', 'else',]
@@ -52,7 +51,7 @@ __DEFINITIONS = [
     ("identifier", r"[A-Za-z_][A-Za-z0-9_]*"),
     ("integer", r"[0-9]+"),
     ("float", r"[0-9.]+"),
-    ("whitespace", r"[ \t\r]+"),    
+    ("whitespace", r"[ \t\r]+"),
     ("unknown", r".+"),
     ]
 
@@ -86,10 +85,10 @@ def lexer(source):
             pos = match.end()
         else:
             ## This should never occur since 'unknown' matches anything.
-            raise ValueError("Unmatched script segment on line %d." % 
+            raise ValueError("Unmatched script segment on line %d." %
                 line_number)
 
-    return tokens   
+    return tokens
 
 
 #-------------------------------------------------------------------------PyGen
@@ -111,7 +110,7 @@ def pygen(tokens):
     line = ''
 
     for token, value, line_number in tokens:
-        
+
         if token == 'eol':
             if is_conditional:
                 line += ':'
@@ -120,22 +119,19 @@ def pygen(tokens):
                 pycode += line + '\n'
             line = __INDENT * indent_level
 
-        elif token == 'whitespace':
-            continue
-
-        elif token == 'comment':
+        elif token == 'whitespace' or token == 'comment':
             continue
 
         elif token == 'blockstart':
             indent_level += 1
-    
+
         elif token == 'blockend':
             indent_level -= 1
 
         elif token == 'conditional':
             line += value + chr(32)
             is_conditional = True
-        
+
         elif token in ['identifier', 'string', 'keyword', 'integer', 'float']:
             line += value
 
@@ -145,25 +141,25 @@ def pygen(tokens):
             if value == '(':
                 parens += 1
             if value == ')':
-                parens -= 1            
+                parens -= 1
 
         elif token == 'restricted':
             raise BogScriptError("Use of restricted keyword '%s' on line %d."
                 % (value, line_number))
 
         elif token == 'unknown':
-            raise BogScriptError("Unknown instruction '%s:%s' on line %d." 
-                % (token, value, line_number))      
+            raise BogScriptError("Unknown instruction '%s:%s' on line %d."
+                % (token, value, line_number))
 
         else:
             ## This should never occur since 'unknown' matches anything.
-            raise ValueError("Unmatched script token '%s:%s' on line %d." 
-                % (token, value, line_number))            
+            raise ValueError("Unmatched script token '%s:%s' on line %d."
+                % (token, value, line_number))
 
     if indent_level > 0:
         raise BogScriptError('Unmatched opening brace in source.')
     if indent_level < 0:
-        raise BogScriptError('Unmatched closing brace in source.')        
+        raise BogScriptError('Unmatched closing brace in source.')
     if parens > 0:
         raise BogScriptError('Unmatched opening parenthesis in source.')
     if parens < 0:
@@ -171,11 +167,11 @@ def pygen(tokens):
 
     return pycode
 
-   
+
 #-----------------------------------------------------------------------ByteGen
 
 def bytegen(pycode):
-    
+
     """
     Given a string of generated Python source from pygen(),
     attempts to compile it into Python byte Code.
@@ -188,4 +184,3 @@ def bytegen(pycode):
         raise BogScriptError("ByteGen Compile Error: %s\n" % error)
 
     return bytecode
-

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/scripting/bogscript.py
+#   driver/bogscript.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,16 +8,16 @@
 
 import sys
 
-from driver.scripting.dsl import lexer
-from driver.scripting.dsl import pygen
-from driver.scripting.dsl import bytegen
+from driver.dsl import lexer
+from driver.dsl import pygen
+from driver.dsl import bytegen
 from driver.error import BogScriptError
 
 
 #----------------------------------------------------------------Compile Script
 
 def compile_script(bogscript):
-    
+
     """
     Take a snippet of bogscript and compile it into python bytecode.
     """
@@ -69,8 +69,7 @@ def process_scripts(cfg, obj):
                     THE_LOG.add('!!   %s' % error)
                     sys.exit(1)
 
-                ## Map the event name to the compiled bytecode               
+                ## Map the event name to the compiled bytecode
                 obj.scripts[event_name] = code
 
     return cfg
-

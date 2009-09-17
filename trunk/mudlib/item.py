@@ -11,7 +11,7 @@ import sys
 from mudlib.shared import ITEMS
 from mudlib.lang import NameTrie
 from driver.log import THE_LOG
-from driver.scripting.bogscript import process_scripts
+from driver.bogscript import process_scripts
 
 
 #--------------------------------------------------------------------------Item
@@ -30,7 +30,7 @@ class Item(object):
         self.burden = 0.0       # the mass/weight for tracking encumbrance
         self.value = None       # What a vendor will pay for it
         self.scripts = {}       # Builder defined event scripts
-    
+
 
 #    #-------------------------------------------------------------Body and Item
 
@@ -38,7 +38,7 @@ class Item(object):
 
 #        """
 #        Decorator to pass self as 'item' for simpler scripting syntax.
-#        """ 
+#        """
 
 #        def method_wrapper(self, body):
 #            item = self
@@ -51,16 +51,16 @@ class Item(object):
 #    def body_item_and_room(method):
 
 #        """
-#        Decorator to pass self as 'item' and body.room as 'room' for simpler 
+#        Decorator to pass self as 'item' and body.room as 'room' for simpler
 #        scripting syntax.
-#        """ 
+#        """
 
 #        def wrapped_method(self, body):
 #            item = self
 #            room = body.room
 #            method(self, body, item, room)
 #        return wrapped_method
-  
+
 
     #-----------------------------------------------------------------On Attack
 
@@ -88,7 +88,7 @@ class Item(object):
     def on_destroy(self, body):
         item = self
         room = body.room
-        pass    
+        pass
 
     #------------------------------------------------------------On Detect Aura
 
@@ -252,8 +252,8 @@ def configure_item(cfg):
 #        item.module = cfg.pop('module')
 #    else:
 #        item.module = None
-#        THE_LOG.add("?? Missing 'module' value for item '%s'." % 
-#            item.name) 
+#        THE_LOG.add("?? Missing 'module' value for item '%s'." %
+#            item.name)
 
     if 'name' in cfg:
         item.name = cfg.pop('name')
@@ -270,7 +270,7 @@ def configure_item(cfg):
 
     if 'hint' in cfg:
         hint = cfg.pop('hint')
-        item.trie.feed(hint)    
+        item.trie.feed(hint)
 
     if 'text' in cfg:
         item.text = cfg.pop('text')
@@ -296,10 +296,10 @@ def configure_item(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if remain:
-        THE_LOG.add("!! Unrecognized key(s) in config for item '%s': %s" 
+        THE_LOG.add("!! Unrecognized key(s) in config for item '%s': %s"
             % ( item.name, cfg.keys()) )
 
-    return item    
+    return item
 
 
 #-----------------------------------------------------------------Register Item
@@ -316,4 +316,3 @@ def register_item(item):
         sys.exit(1)
     else:
         ITEMS[item.uuid] = item
-
