@@ -9,6 +9,26 @@
 from mudlib import shared
 
 
+"""
+${name}
+
+${nom}      # Nominative form; he, she, it, they
+${obj}      # Objective form; him, her, it, them
+${pos}      # Possessive form; his, her, its, their
+${npos}     # Noun possessive; his, hers, its, theirs
+${refl}     # Reflexive form; himself, herself, itself, themselves
+
+${guild}
+${race}
+${race_plur}
+
+${target}
+${target_race}
+${target_guild}
+
+"""
+
+
 class StringSub(object):
 
     """
@@ -31,22 +51,22 @@ class StringSub(object):
         ## Avatar Attributes
 
         elif key == 'name':
-            if client.avatar:            
+            if client.avatar:
                 retval = client.avatar.name
             else:
                 retval = '{name: no avatar}'
 
         elif key == 'race':
-            if client.avatar:            
+            if client.avatar:
                 retval = client.avatar.race
             else:
                 retval = '{race: no avatar}'
 
         elif key == 'level':
-            if client.avatar:            
+            if client.avatar:
                 retval = client.avatar.level
             else:
-                retval = '{level: no avatar}'    
+                retval = '{level: no avatar}'
 
         ## Hostile Target Attributes
 
@@ -63,7 +83,7 @@ class StringSub(object):
                 retval = client.btarget.name
             else:
                 retval = '{no beneficial target}'
-        
+
         ## Conversational Target Attributes
 
         elif key == 'ct':
@@ -87,15 +107,15 @@ class StringSub(object):
                 retval = '{module: no room}'
 
         ## World Attributes
-        
+
         elif key == 'realm':
-            retval = shared.SERVER_NAME     
+            retval = shared.SERVER_NAME
 
         elif key == 'time':
             retval = 'FIXME: time'
-        
+
         elif key == 'tod':
-            retval = 'FIXME; tod' 
+            retval = 'FIXME; tod'
 
 
         ## Else, bad key request
@@ -104,5 +124,3 @@ class StringSub(object):
             retval = '{UNKNOWN KEY:%s}' % key
 
         return retval
-
-    

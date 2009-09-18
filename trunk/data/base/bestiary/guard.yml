@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   guard.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+
+name: guard
+
+on_aggro:
+    emote("${name} draws a weapon charges.")
+
+on_combat:
+    slash(6)
+    stab(8)
+
+on_hurt:
+    emote_random([
+        "${name} gasps in pain.",
+        "${name} winces in agony.",
+        ])
+
+on_death:
+    emote("${name} groans faintly and falls the ground.")
