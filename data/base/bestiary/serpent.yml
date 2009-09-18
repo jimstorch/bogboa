@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   serpent.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+
+name: serpent
+
+on_aggro:
+    emote("${name} flicks it tongue and slithers forward.")
+
+on_combat:
+    constrict(8)
+    strike(6)
+
+on_hit:
+    chance(.2, venom())
+
+on_hurt:
+    emote("${name} hisses in pain at ${target}.")
+
+on_death:
+    emote("${name} shake violently and then lays still.")

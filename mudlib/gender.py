@@ -48,7 +48,7 @@ class Group(Neutral):
     possessive_noun = 'their'
     noun_possessive = 'theirs'
     reflexive = 'themselves'
-    kinship = 'Friends'    
+    kinship = 'Friends'
 
 
 
@@ -66,11 +66,11 @@ class Group(Neutral):
 #class Gender(object):
 
 #    def __init__(self):
-#    
+#
 ##        self.uuid = None
 #        self.name = None
 #        self.module = None
-#        
+#
 #        self.nominative = None
 #        self.objective = None
 #        self.possessive_noun = None
@@ -115,7 +115,7 @@ class Group(Neutral):
 #        gender.nominative = cfg.pop('nominative')
 #    else:
 #        gender.nominative = None
-#    
+#
 #    if 'objective' in cfg:
 #        gender.objective = cfg.pop('objective')
 #    else:
@@ -143,8 +143,8 @@ class Group(Neutral):
 
 #    ## Complain if there are leftover keys -- probably a typo in the YAML
 #    if cfg:
-#        print ( "WARNING! Unrecognized key(s) in config for gender '%s': %s" 
-#            % ( gender.name, cfg.keys()) ) 
+#        print ( "WARNING! Unrecognized key(s) in config for gender '%s': %s"
+#            % ( gender.name, cfg.keys()) )
 
 #    return gender
 
@@ -163,4 +163,4 @@ class Group(Neutral):
 #            gender.uuid, gender.name, gender.module) )
 #        sys.exit(1)
 #    else:
-#        GENDERS[gender.name] = gender         
+#        GENDERS[gender.name] = gender

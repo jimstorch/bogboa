@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+#------------------------------------------------------------------------------
+#   canine.yml
+#   Copyright 2009 Jim Storch
+#   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
+#   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
+#------------------------------------------------------------------------------
+version: 1001
+
+name: canine
+
+on_aggro:
+    emote("${name} bares its fangs and snarls at ${target}.")
+
+on_combat:
+    bite(4)
+
+on_hit:
+    chance(.02, rabies())
+
+on_hurt:
+    emote_random([
+        "${name} yipes in pain.",
+        "${name} snarls in fury.",
+        ])
+
+on_death:
+    emote("${name} howls faintly and crumples to the ground.")

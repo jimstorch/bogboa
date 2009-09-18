@@ -18,7 +18,7 @@ class Body(object):
 
         ## Identity
         self.name = ''                  ## True name
-        self.uuid = None                
+        self.uuid = None
         self.alias = ''                 ## Displayed name
         self.password = ''
         self.is_player = False
@@ -26,11 +26,11 @@ class Body(object):
         self.index = None               ## numerical index
         self.mind = None                ## Brain or Client object
         self.wardrobe = None            ## Worn Gear Manager
-        self.bag = None                 ## Carried Gear Manager    
+        self.bag = None                 ## Carried Gear Manager
 
         ## Stats
         self.race = ''
-        self.gender = ''
+        self.gender = 'neutral'
         self.guild = ''
         self.level = 1
         self.max_hp = 1
@@ -47,7 +47,6 @@ class Body(object):
         self.target = None              ## Hostile target
         self.btarget = None             ## Beneficial target
         self.ctarget = None             ## Conversational target
-
 
 
     #------------------------------------------------------------------Get Race
@@ -71,8 +70,8 @@ class Body(object):
     #---------------------------------------------------------------Reset Stats
 
     def reset_stats(self):
-        
-        """Reset current stats based on race."""        
+
+        """Reset current stats based on race."""
 
         race = self.get_race()
         self.stats = copy.copy(race.stats)
@@ -211,12 +210,12 @@ class Body(object):
     #-----------------------------------------------------------------On Strike
 
     def on_strike():
-        pass 
+        pass
 
     #-----------------------------------------------------------------On Struck
- 
+
     def on_struck():
-        pass    
+        pass
 
     #----------------------------------------------------------------------Pain
 
@@ -491,10 +490,3 @@ class Body(object):
     def send_nowrap(self, msg):
         if self.is_player:
             self.mind.send_nowrap(msg)
-
-
-
-
-
-
-
