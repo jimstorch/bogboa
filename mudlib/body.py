@@ -10,7 +10,17 @@ import copy
 
 from mudlib import shared
 from mudlib.inventory import Bag
-#from lib.stringsub import StringSub
+from mudlib import calendar
+
+
+## Pronouns by Gender
+__NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
+__OBJECTIVE = {'male':'him', 'female':'her', 'neutral':'it', 'group':'them'}
+__POSSESSIVE = {'male':'his', 'female':'her', 'neutral':'its', 'group':'their'}
+__POS_NOUN = {'male':'his', 'female':'hers', 'neutral':'its', 'group':'theirs'}
+__REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
+    'group':'themselves'}
+
 
 class Body(object):
 
@@ -48,23 +58,69 @@ class Body(object):
         self.btarget = None             ## Beneficial target
         self.ctarget = None             ## Conversational target
 
+        ## Keywords for String Templates
+        self.keywords = {
+            'name':self.get_name,
+            'alias':self.get_alias,
+            'race':self.get_race,
+            'guild':self.get_guild,
+            'gender':self.get_gender,
+            'level':self.get_level,
+            'nom':self.get_nominative,
+            'obj':self.get_objective,
+            'pos':self.get_possessive,
+            'posn':self.get_possessive_noun,
+            'reflx':self.get_reflexive,
+            'tar_name':self.get_tar_name,
+            'tar_race':self.get_tar_race,
+            'tar_guild':self.get_tar_guild,
+            'tar_level':self.get_tar_level,
+            'tar_nom':self.get_tar_nominative,
+            'tar_obj':self.get_tar_objective,
+            'tar_pos':self.get_tar_possessive,
+            'tar_posn':self.get_tar_possessive_noun,
+            'tar_reflx':self.get_tar_reflexive,
+            'room_name':self.get_room_name,
+            'time':calendar.time_msg,
+            'date':calendar.date_msg,
+            }
 
-    #------------------------------------------------------------------Get Race
+    ##--[ Methods to support String Templates ]--------------------------------
 
-    def get_race(self):
+    def __getitem__(self, key): return self.keywords[key]()
 
-        """Return the body's race object."""
-
-        return shared.RACES[self.race]
-
-
-    #-----------------------------------------------------------------Get Guild
-
-    def get_guild(self):
-
-        """Return the body's guild object."""
-
-        return shared.GUILDS[self.guild]
+    def get_name(self): return self.name
+    def get_alias(self): return self.alias
+    def get_race(self): return self.race
+    def get_guild(self): return self.guild
+    def get_level(self): return self.level
+    def get_gender(self): return self.gender
+    def get_nominative(self): return __NOMINATIVE[self.gender]
+    def get_objective(self): return __OBJECTIVE[self.gender]
+    def get_possessive(self): return __POSSESSIVE[self.gender]
+    def get_possessive_noun(self): return __POSSESSIVE_NOUN[self.gender]
+    def get_reflexive(self): return __REFLEXIVE[self.gender]
+    def get_tar_name(self):
+        return self.target.name if self.target else '<notar name>'
+    def get_tar_race(self):
+        return self.target.race if self.target else '<notar race>'
+    def get_tar_guild(self):
+        return self.target.guild if self.target else '<notar guild>'
+    def get_tar_gender(self):
+        return self.target.gender if self.target else '<notar gender>'
+    def get_tar_level(self):
+        return self.target.level if self.target else '<notar level>'
+    def get_tar_nominative(self):
+        return __NOMINATIVE[target.gender] if self.target else '<notar nom>'
+    def get_tar_objective(self):
+        return __OBJECTIVE[target.gender] if self.target else '<notar obj>'
+    def get_tar_possessive(self):
+        return __POSSESSIVE[target.gender] if self.target else '<notar pos>'
+    def get_tar_possessive_noun(self):
+        return __POS_NOUN[target.gender] if self.target else '<notar posn>'
+    def get_tar_reflexive(self):
+        return __REFLEXIVE[target.gender] if self.target else '<notar reflx>'
+    def get_room_name(self): return self.room.name
 
 
     #---------------------------------------------------------------Reset Stats
@@ -73,7 +129,7 @@ class Body(object):
 
         """Reset current stats based on race."""
 
-        race = self.get_race()
+        race = shared.RACES[self.race]
         self.stats = copy.copy(race.stats)
 
     #---------------------------------------------------------------Adj Faction
