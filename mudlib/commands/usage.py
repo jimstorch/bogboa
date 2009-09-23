@@ -9,10 +9,11 @@
 from mudlib import parsers
 from mudlib.lang import keyset
 
-#----------------------------------------------------------------------------Do
 
-def do(client):
-    pass
+
+
+
+
 
 
 #--------------------------------------------------------------------------Drop
@@ -31,12 +32,12 @@ def remove(client):
 @parsers.name_and_qty
 #--------------------------------------------------------------------------Take
 
-def take(client, phrase, qty=1):
+def take(client, phrase, qty):
     print phrase, qty
     room = client.get_room()
     ks = keyset(phrase)
     room.item_search(client, ks, qty)
-    
+
 
 #--------------------------------------------------------------------------Wear
 

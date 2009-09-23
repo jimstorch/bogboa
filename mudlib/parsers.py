@@ -13,7 +13,7 @@ from driver.error import BogCmdError
 """
 Decorator functions to parse and error check arguments for player commands and
 general search functions.
-"""    
+"""
 
 
 #-------------------------------------------------------------------------Blank
@@ -65,7 +65,7 @@ def none_or_one(cmd_func):
             arg = args[0]
         else:
             arg = None
-     
+
         cmd_func(client, arg)
 
     return parse_func
@@ -84,8 +84,8 @@ def monologue(cmd_func):
         else:
             msg = ' '.join(args)
             cmd_func(client, msg)
-    return parse_func        
-    
+    return parse_func
+
 
 
 #----------------------------------------------------------------------Dialogue
@@ -107,7 +107,7 @@ def dialogue(cmd_func):
                 raise BogCmdError('%s is not online.' % name)
             msg = ' '.join(args)
             cmd_func(client, target, msg)
-    return parse_func 
+    return parse_func
 
 
 
@@ -122,7 +122,7 @@ def set_or_show(cmd_func):
     True for yes-like args -- turn it on.
     False for no-like args -- turn it off.
     """
-    
+
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
@@ -136,7 +136,7 @@ def set_or_show(cmd_func):
 
             if arg in ['yes', 'true', '1', 'on']:
                 setting = True
-            
+
             elif arg in ['no', 'false', '0', 'off']:
                 setting = False
 
@@ -169,17 +169,16 @@ def online_player(cmd_func):
 
             cmd_func(client, target)
 
-    return parse_func             
+    return parse_func
 
 
 #------------------------------------------------------------------Name and Qty
-
 
 def name_and_qty(cmd_func):
 
     """
     Decorator to parse quantity and name of item(s) to select.
-    Qty == -1 for all.    
+    Qty == -1 for all.
     """
 
     def parse_func(client):
@@ -216,11 +215,11 @@ def name_and_qty(cmd_func):
 
                 qty = int(arg)
                 args = args[1:]
-            
+
             elif arg in ('a', 'an', 'one'):
                 qty = 1
                 args = args[1:]
-  
+
             elif arg in ('all', 'every'):
                 qty = -1
                 args = args[1:]
@@ -230,21 +229,12 @@ def name_and_qty(cmd_func):
 
 
         phrase = ' '.join(args)
-        cmd_func(client, phrase, qty)   
+        cmd_func(client, phrase, qty)
 
-    return parse_func        
+    return parse_func
 
+#---------------------------------------------------------------------Item Pick
 
-
-#-------------------------------------------------------------Item in Inventory
-
-def item_in_inventory(cmd_func):
+def item_pick(cmd_func):
 
     pass
-
-#------------------------------------------------------------------Body in Room
-
-def body_in_room(cmd_func):
-    pass
-
-
