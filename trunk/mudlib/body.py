@@ -14,11 +14,11 @@ from mudlib import calendar
 
 
 ## Pronouns by Gender
-__NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
-__OBJECTIVE = {'male':'him', 'female':'her', 'neutral':'it', 'group':'them'}
-__POSSESSIVE = {'male':'his', 'female':'her', 'neutral':'its', 'group':'their'}
-__POS_NOUN = {'male':'his', 'female':'hers', 'neutral':'its', 'group':'theirs'}
-__REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
+_NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
+_OBJECTIVE = {'male':'him', 'female':'her', 'neutral':'it', 'group':'them'}
+_POSSESSIVE = {'male':'his', 'female':'her', 'neutral':'its', 'group':'their'}
+_POS_NOUN = {'male':'his', 'female':'hers', 'neutral':'its', 'group':'theirs'}
+_REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
     'group':'themselves'}
 
 
@@ -95,11 +95,11 @@ class Body(object):
     def get_guild(self): return self.guild
     def get_level(self): return self.level
     def get_gender(self): return self.gender
-    def get_nominative(self): return __NOMINATIVE[self.gender]
-    def get_objective(self): return __OBJECTIVE[self.gender]
-    def get_possessive(self): return __POSSESSIVE[self.gender]
-    def get_possessive_noun(self): return __POSSESSIVE_NOUN[self.gender]
-    def get_reflexive(self): return __REFLEXIVE[self.gender]
+    def get_nominative(self): return _NOMINATIVE[self.gender]
+    def get_objective(self): return _OBJECTIVE[self.gender]
+    def get_possessive(self): return _POSSESSIVE[self.gender]
+    def get_possessive_noun(self): return _POSSESSIVE_NOUN[self.gender]
+    def get_reflexive(self): return _REFLEXIVE[self.gender]
     def get_tar_name(self):
         return self.target.name if self.target else '<notar name>'
     def get_tar_race(self):

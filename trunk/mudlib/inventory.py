@@ -6,126 +6,86 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+from driver.error import BogCmdError
 from mudlib import shared
 
 ## Old notes:
 ## pouch        = consumables and reagents
-## satchel      = quest items 
+## satchel      = quest items
 ## kit          = tradeskill items
 ## backpack     = everything else
 ## bank         = anything
 
-## Max encumbrance = str * 100
 
 ## Time for dropped items to vanish from floors
-ITEM_DECAY = 300
+_ITEM_DECAY = 300
+
+## Maximum permitted stack size for any item, including coins.
+_MAX_STACK_SIZE = 99999999
+
+## Defined wear slots for equipable weapons, armor, and jewelry.
+_WEAR_SLOTS = set(['head', 'face', 'ears', 'neck', 'shoulders', 'back',
+        'chest', 'arms', 'wrists', 'hands', 'fingers', 'primary', 'secondary',
+        'waist', 'legs', 'feet'])
 
 
-
-
-
-
-
-
-#----------------------------------------------------------------------Wardrobe
+#======================================================================Wardrobe
 
 class Wardrobe(object):
 
-    """Paper Doll Class to manage worn items."""    
+    """Paper-doll Class to manage worn items."""
 
-    ## What slots do we want to manage?
-    slot_names = set(['head', 'ears', 'neck', 'shoulders', 'back', 'chest',
-        'arms', 'wrists', 'hands', 'fingers', 'primary', 'secondary', 'waist',
-        'legs', 'feet'])
-
-
-    def __init__(self, body):
-
-        self.body = body
+    def __init__(self):
         self.slots = {}
-        self.encumbrance = 0
+        self.burden = 0.0
 
+    def can_equip_uuid(self, uuid):
+        item = find_item[uuid]
+        return self.can_equip_item(item)
 
-    #----------------------------------------------------------------Equip UUID
+    def can_equip_item(self, item):
+        return bool(item.slot in _WEAR_SLOTS)
 
     def equip_uuid(self, uuid):
-
-        """Given a UUID, fill a slot with the corresponding item object."""        
-
+        """Given a UUID, fill a slot with the corresponding item object."""
         item = find_item[uuid]
         self.equip_item(item)
 
-    #----------------------------------------------------------------Equip Item    
+    def equip_item(self, item, body):
+        self.slots[slot] = item
+        ## TODO: dbms update
+        item.on_equip(body)
+        self.burden += item.burden
 
-    def equip_item(self, item):
-    
-        """
-        Given an item object, equip it in the proper slot.
-        Also fires the on_equipt script.
-
-        Returns None is slot is empty, the item replaced, or
-        the origin item if not equipable.        
-        """
-        
-        slot = item.slot
-        if slot in self.slot_names:
-                  
-            replace = self.get_item(slot)
-            self.slots[slot] = item
-            ## TODO: dbms record
-            return replace
-
-        else:
-            return item
-
-    #------------------------------------------------------------------Get Item
-
-    def get_item(self, slotname):
-        
+    def in_slot(self, slotname):
         """Return the item in a given slotname, or None for empty."""
-
         return self.slots.get(slotname, None)
 
-
-    #-------------------------------------------------------------Cascade Event
-
-    def cascade_event(self, event, body):
-
-        """Apply an event to all worn items to fire custom scripts."""
-        
-        pass
-
-    #---------------------------------------------------------------Remove Item
+    def remove_uuid(self, uuid):
+        item = find_item(uuid)
+        self.remove_item(item)
 
     def remove_item(self, slot):
+        self.slots[item.slot] = None
+        ## Todo: dbms update
+        item.on_remove(body)
+        self.burden -= item.burden
 
+    def cascade_event(self, event, body):
+        """Apply an event to all worn items to fire custom scripts."""
         pass
-
-    #---------------------------------------------------------------Remove UUID
-
-    def remove_uuid(self, uuid):
-        
-        pass   
-
-    #--------------------------------------------------------------------------
 
     def describe(self):
-
         pass
-
 
 
 #---------------------------------------------------------------------------Bag
 
-
 class Bag(object):
 
-    """
-    Class for managing player carried items.
-    """    
+    """Class for managing player carried items."""
 
     def __init__(self):
-        
         ## Start out with some beginner settings
         ## A 'new bag' simply improves on these values
         self.name = 'Apprentice Sack'       ## Displayed name
@@ -134,50 +94,45 @@ class Bag(object):
         self.reduction = 0.0                ## magical burden reduction %
         ## Dict of Contents
         ##   key = item, value = count
-        self.items = {}                     
-
-    #--------------------------------------------------------------------Reduce
+        self.items = {}
 
     def _reduce(self, burden):
         """Apply the reduction percent to a value"""
         return burden - ( burden * self.reduction )
 
-    #------------------------------------------------------------------Contents
-
     def contents(self):
-        """
-        Return a string listing the contents.
-        """
+        """Return a string listing the contents."""
         s = ''
         for items in self.items.keys():
             qty = self.items[item]
             s+='%-40s,%d\n\n' % (item.name, qty)
-        return s 
+        return s
 
-    #------------------------------------------------------------------Can Hold
+    def search(self, keyset, qty=1):
+        found = []
+        for item in self.items:
+            if item.trie.match(keyset):
+                if self.has(item, qty):
+                    found.append(item)
+        return found
+
+    def can_stack(self, item, qty=1):
+        """Test if we're exceeding the maximum stack size for item."""
+        return bool((self.count(item) + qty) > _MAX_STACK_SIZE)
 
     def can_hold(self, item, qty=1):
-        """Test if container can hold qty number of item."""
+        """Test if we're exceeding the maximum burden for the bag."""
         total = self.burden + self._reduce(item.burden * qty)
-        if total > 32000:
-            return False
-        else:
-            return bool( total <= self.limit )
-
-    #---------------------------------------------------------------------Count
+        return bool( total <= self.limit )
 
     def count(self, item):
         """Return the quantity of Item."""
         return self.items.get(item, 0)
-   
-    #-----------------------------------------------------------------------Has
 
     def has(self, item, qty=1):
         """Test if container has given quantity of Item."""
         curr = self.count(item)
-        return bool(qty <= curr)    
-
-    #-----------------------------------------------------------------------Add
+        return bool(qty <= curr)
 
     def add(self, item, qty=1):
         """Add given quantity of Item to container and increase burden."""
@@ -185,8 +140,6 @@ class Bag(object):
         self.items[item] = curr + qty
         self.burden += _self.reduce( item.burden * qty )
 
-    #------------------------------------------------------------------Subtract
-                        
     def subtract(self, item, qty=1):
         """Remove given quantity of Item from container and reduce burden."""
         curr = self.count(item)
@@ -206,15 +159,12 @@ class Floor(object):
     """Container where items vanish after DECAY_TIME seconds."""
 
     def __init__(self):
-        self.burden = 0.0                   ## Current weight/mass        
+        self.burden = 0.0                   ## Current weight/mass
         self.limit = 1000.0                 ## Maximum weight/mass
-
         ## Dictionary of contents
-        ##  key = item, 
+        ##  key = item,
         ##  value = tuple(count, timestamp)
-        self.items = {}           
-
-    #--------------------------------------------------------------------Search
+        self.items = {}
 
     def search(self, keyset, qty=1):
         found = []
@@ -222,17 +172,16 @@ class Floor(object):
             if item.trie.match(keyset):
                 if self.has(item, qty):
                     found.append(item)
-        return found 
+        return found
 
-    #------------------------------------------------------------------Can Hold
+    def can_stack(self, item, qty=1):
+        """Test if we're exceeding the maximum stack size for item."""
+        return bool((self.count(item) + qty) > _MAX_STACK_SIZE)
 
     def can_hold(self, item, qty=1):
         """Test if container can hold qty number of item."""
         total = self.burden + (item.burden * qty)
         return bool( total <= self.limit )
-
-
-    #---------------------------------------------------------------------Clean
 
     def clean(self):
         """Housekeeping. Sweep away items older than ITEM_DECAY"""
@@ -241,12 +190,10 @@ class Floor(object):
         for item in self.items.keys():
             qty, age = self.items[item]
             ## Is the item tuple older than decay time?
-            if ( now - age ) > ITEM_DECAY:
+            if ( now - age ) > _ITEM_DECAY:
                 self.subtract(item, qty)
                 is_cleaner = True
         return is_cleaner
-
-    #------------------------------------------------------------------Contents
 
     def contents(self):
         """
@@ -258,15 +205,11 @@ class Floor(object):
         for item in self.items.keys():
             qty, foo = self.items[item]
             s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
-        return s 
-
-    #---------------------------------------------------------------------Count
+        return s
 
     def has(self, item, qty=1):
         """Return True if we have quantity of item."""
         return bool(self.count(item) >= qty)
-
-    #---------------------------------------------------------------------Count
 
     def count(self, item):
         """Return the quantity item."""
@@ -274,9 +217,7 @@ class Floor(object):
             qty, foo = self.items[item]
         else:
             qty = 0
-        return qty 
-
-    #-----------------------------------------------------------------------Add
+        return qty
 
     def add(self, item, qty=1):
         """Add qty number of item to container and increase burden."""
@@ -285,8 +226,6 @@ class Floor(object):
         self.items[item] = (curr + qty, shared.THE_TIME)
         self.burden += ( item.burden * qty )
 
-    #------------------------------------------------------------------Subtract
-                        
     def subtract(self, item, qty=1):
         """Remove qty number of item from container and decrease burden."""
         curr = self.count(item)
@@ -298,10 +237,10 @@ class Floor(object):
         self.burden -= (item.burden * qty)
 
 
-##--------------------------------------------------------------------------Bank
+#--------------------------------------------------------------------------Bank
 
 #class Bank(object):
-#    
+#
 #    def __init__(self):
 #        pass
 
@@ -313,6 +252,3 @@ class Floor(object):
 
 #    def withdraw(self, item_uuid, count=1):
 #        pass
-
-
-

@@ -10,7 +10,7 @@ import re
 
 from driver.error import BogCmdError
 
-__VOWELS = 'aeiou'
+_VOWELS = 'aeiou'
 
 
 #-------------------------------------------------------------------------found
@@ -22,10 +22,10 @@ def found(regex, msg):
 #------------------------------------------------------------------------Keyset
 
 ## Regex to split sentences at non-alpha characters
-__NON_ALPHA = re.compile("[^a-zA-Z]+")
+_NON_ALPHA = re.compile("[^a-zA-Z]+")
 
 ## Articles and short words to omit from comparison
-__OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to',
+_OMIT = set(['a', 'an', 'of', 'the', 'for', 'with', 'on', 'to',
     'at', 'in', 'is', 'my', 'that',])
 
 
@@ -34,8 +34,8 @@ def keyset(phrase):
     Generate a set of key words for use with a NameTrie's match() method.
     """
     phrase = phrase.replace("\'", "")   ## guard's == guards
-    words = set(__NON_ALPHA.split(phrase.lower()))
-    words = words - __OMIT
+    words = set(_NON_ALPHA.split(phrase.lower()))
+    words = words - _OMIT
     return words
 
 
@@ -117,23 +117,24 @@ class NameTrie(object):
 
 #------------------------------------------------------------------------Plural
 
+_IRREGULAR = {
+    'child':'children',
+    'foot':'feet',
+    'fungus':'fungi',
+    'goose':'geece',
+    'louse':'lice',
+    'man':'men',
+    'mouse':'mice',
+    'ox':'oxen',
+    'person':'people',
+    'tooth':'teeth',
+    'woman':'women',
+    }
+
+
 def plural(noun):
 
     """Roughly apply the rules of pluralization."""
-
-    irregular = {
-        'child':'children',
-        'foot':'feet',
-        'fungus':'fungi',
-        'goose':'geece',
-        'louse':'lice',
-        'man':'men',
-        'mouse':'mice',
-        'ox':'oxen',
-        'person':'people',
-        'tooth':'teeth',
-        'woman':'women',
-        }
 
     nl = noun.lower()
 
@@ -142,21 +143,21 @@ def plural(noun):
         return noun + 's'
 
     ## Check for an irregular noun
-    if nl in irregular:
-        return irregular[nl]
+    if nl in _IRREGULAR:
+        return _IRREGULAR[nl]
 
     suffix = 's'
     if nl[-2:] in ('ss', 'sh', 'ch') or  nl[-1:] in ('x','z'):
         suffix = 'es'
     elif nl.endswith('y'):
-        if nl[-2] not in __VOWELS:
+        if nl[-2] not in _VOWELS:
             noun = noun[:-1]
             suffix = 'ies'
     elif nl.endswith('f'):
         noun = noun[:-1]
         suffix = 'ves'
     elif nl.endswith('o'):
-        if nl[-2] not in __VOWELS:
+        if nl[-2] not in _VOWELS:
             suffix = 'es'
     return noun + suffix
 
@@ -179,7 +180,7 @@ def article(noun):
         art = 'a'
     elif nl.startswith('hon'):
         art = 'a'
-    elif nl[0] in __VOWELS:
+    elif nl[0] in _VOWELS:
         art = 'an'
     else:
         art = 'a'
@@ -221,7 +222,7 @@ def guestimate(noun, num):
 
 #--------------------------------------------------------------------Arg to Int
 
-__WRITTEN = {
+_WRITTEN = {
     'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6,
     'seven':7, 'eight':8, 'nine':9, 'ten':10, 'eleven':11,
     'twelve':12, 'thirteen':13, 'fourteen':14, 'fifteen':15,
@@ -251,16 +252,16 @@ def arg_to_int(arg):
         else:
             return int(arg)
 
-    elif arg in __WRITTEN:
-        return __WRITTEN[arg]
+    elif arg in _WRITTEN:
+        return _WRITTEN[arg]
 
     else:
         return None
 
 
-#-----------------------------------------------------------------Args to Parms
+#---------------------------------------------------------------Parse Item Pick
 
-def args_to_parms(args):
+def parse_item_pick(args):
 
     # Start right to left ...
 

@@ -25,7 +25,7 @@ VERB_HANDLER = {}
 ## Commands take the following format:
 ##      [0] = tuple of aliases with tuple[0] == One True Verb(tm)
 ##      [1] = handler function to call with those arguments
- 
+
 
 COMMAND_LIST = (
 
@@ -53,18 +53,18 @@ COMMAND_LIST = (
 #    (('recall', 'home'), movement.recall),
 #    (('enter',), movement.enter),
 #    (('exit',), movement.exit),
-    
+
     ## Communication
 
     (('broadcast', 'announce'), speech.broadcast),
-    (('emote', '/em', ':', 'em'), speech.emote),    
+    (('emote', '/em', ':', 'em'), speech.emote),
     (('ooc',), speech.ooc),
     (('reply', 'r', '/r'), speech.reply),
     (('say', '/s'), speech.say),
     (('shout', 'yell', '/y'), speech.shout),
     (('tell', 'whisper', '/t', '/w'), speech.tell),
 
-    ## Information 
+    ## Information
 
     (('help', '?', 'info'), info.help),
     (('topics',), info.topics),
@@ -74,15 +74,15 @@ COMMAND_LIST = (
     (('date', 'calendar', 'year'), info.date),
     (('inventory', 'i', 'inven'), info.inventory),
     (('look', 'l',), info.look),
-    (('stats', 'stat',), info.stats),    
+    (('stats', 'stat',), info.stats),
 
     ## Interaction
 
     (('wear', 'don', 'equip'), usage.wear),
     (('remove', 'unequip'), usage.remove),
     (('take', 'get', 'pickup', 'grab'), usage.take),
-    (('drop', 'discard', 'toss', 'throw'), usage.drop), 
-    (('do', 'cast', 'doability', 'spell'), usage.do),
+    (('drop', 'discard', 'toss', 'throw'), usage.drop),
+#    (('do', 'cast', 'doability', 'spell'), usage.do),
 #    (('attack', 'kill', 'atk', 'slay'), usage.attack),
 #    (('target', 'tar'), usage.target),
 #    (('search',), usage.search),
@@ -94,7 +94,7 @@ COMMAND_LIST = (
     (('ansi','color'), system.ansi),
 
     ## Wizardry
-    (('ban',), wizard.ban), 
+    (('ban',), wizard.ban),
     (('grant',), wizard.grant),
     (('kick', 'punt'), wizard.kick),
     (('revoke',), wizard.revoke),
@@ -124,7 +124,6 @@ for command in COMMAND_LIST:
     one_true_verb = aliases[0]
     for alias in aliases:
         VERB_ALIAS[alias] = one_true_verb
-   
+
     ## Specify the function to use with this verb
     VERB_HANDLER[one_true_verb] = command[1]
-

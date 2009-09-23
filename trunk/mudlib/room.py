@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 import sys
-import random
+from random import choice
 
 from mudlib import shared
 from driver.log import THE_LOG
@@ -19,8 +19,7 @@ from mudlib.lang import keyset
 
 from mudlib.scripting import SCRIPT_ENV
 
-
-__CLEANERS = [
+_CLEANERS = [
     'thieving mice scurry past',
     'a hole opens in time and space',
     'Ferengi flash mob',
@@ -36,7 +35,6 @@ __CLEANERS = [
     'is that Winona Ryder?',
     'lift your feet a sec',
     ]
-
 
 #--------------------------------------------------------------------------Room
 
@@ -113,7 +111,7 @@ class Room(object):
     def sweep(self):
         """Remove decayed items from the floor, if any."""
         if self.floor.clean():
-            self.tell_all('^g... %s^w' % random.choice(__CLEANERS))
+            self.tell_all('^g... %s^w' % choice(_CLEANERS))
 
     #------------------------------------------------------------------Tell All
 

@@ -24,7 +24,7 @@ def group_re(items):
 
 
 ## The following keywords are not permitted within scripts.  Expand as needed.
-__RESTRICTED = [
+_RESTRICTED = [
     'Exception', '__builtin__', '__class__', '__debug__', '__dict__',
     '__init__', '__local__', '__subclasses__', 'as', 'assert', 'break',
     'class', 'compile', 'continue', 'def', 'del', 'delattr', 'dict',
@@ -34,16 +34,16 @@ __RESTRICTED = [
     'setattr', 'staticmethod', 'try', 'while', 'with', 'yield',
     ]
 
-__CONDITIONALS = ['if', 'elif', 'else',]
-__KEYWORDS = ['and', 'in', 'is', 'not', 'or', 'print',]
+_CONDITIONALS = ['if', 'elif', 'else',]
+_KEYWORDS = ['and', 'in', 'is', 'not', 'or', 'print',]
 
 ## Regular expressions to parse script tokens.  Order matters!
-__DEFINITIONS = [
+_DEFINITIONS = [
     ("comment", r"#[^\r\n]*"),
     ("string", r"""[ru]?(\"([^\"\\]|(\\.))*\")|('([^\'\\]|(\\.))*')"""),
-    ("restricted", group_re(__RESTRICTED)),
-    ("conditional", group_re(__CONDITIONALS)),
-    ("keyword", group_re(__KEYWORDS)),
+    ("restricted", group_re(_RESTRICTED)),
+    ("conditional", group_re(_CONDITIONALS)),
+    ("keyword", group_re(_KEYWORDS)),
     ("blockstart", r"{"),
     ("blockend", r"}"),
     ("eol", r"[\n]"),
@@ -55,11 +55,11 @@ __DEFINITIONS = [
     ("unknown", r".+"),
     ]
 
-__PARTS = []
-for name, part in __DEFINITIONS:
-    __PARTS.append("(?P<%s>%s)" % (name, part))
-__REGEX_STRING = "|".join(__PARTS)
-__REGEX = re.compile(__REGEX_STRING, re.MULTILINE)
+_PARTS = []
+for name, part in _DEFINITIONS:
+    _PARTS.append("(?P<%s>%s)" % (name, part))
+_REGEX_STRING = "|".join(_PARTS)
+_REGEX = re.compile(_REGEX_STRING, re.MULTILINE)
 
 
 def lexer(source):
@@ -75,7 +75,7 @@ def lexer(source):
     tokens = []
 
     while pos < end:
-        match = __REGEX.match(source, pos)
+        match = _REGEX.match(source, pos)
         if match:
             name = match.lastgroup
             value = match.group(0)
