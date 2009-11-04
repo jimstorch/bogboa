@@ -9,8 +9,9 @@
 import copy
 
 from mudlib import shared
-from mudlib.inventory import Bag
 from mudlib import calendar
+from mudlib.inventory import Bag
+from mudlib.resource import ResourceManager
 
 
 ## Pronouns by Gender
@@ -43,8 +44,7 @@ class Body(object):
         self.gender = 'neutral'
         self.guild = ''
         self.level = 1
-        self.max_hp = 1
-        self.curr_hp = 1
+        self.resman = ResourceManager() ## Manages resources like hp, mana, xp
         self.stats = {}                 ## str, dex, int, etc
         self.skills = {}                ## Sklls are persistent
         self.abilities = set()          ## Commands useable
@@ -111,17 +111,23 @@ class Body(object):
     def get_tar_level(self):
         return self.target.level if self.target else '<notar level>'
     def get_tar_nominative(self):
-        return __NOMINATIVE[target.gender] if self.target else '<notar nom>'
+        return _NOMINATIVE[target.gender] if self.target else '<notar nom>'
     def get_tar_objective(self):
-        return __OBJECTIVE[target.gender] if self.target else '<notar obj>'
+        return _OBJECTIVE[target.gender] if self.target else '<notar obj>'
     def get_tar_possessive(self):
-        return __POSSESSIVE[target.gender] if self.target else '<notar pos>'
+        return _POSSESSIVE[target.gender] if self.target else '<notar pos>'
     def get_tar_possessive_noun(self):
-        return __POS_NOUN[target.gender] if self.target else '<notar posn>'
+        return _POS_NOUN[target.gender] if self.target else '<notar posn>'
     def get_tar_reflexive(self):
-        return __REFLEXIVE[target.gender] if self.target else '<notar reflx>'
+        return _REFLEXIVE[target.gender] if self.target else '<notar reflx>'
     def get_room_name(self): return self.room.name
 
+
+    def db_save(self, uuid):
+        pass
+
+    def db_load(self, uuid):
+        pass
 
     #---------------------------------------------------------------Reset Stats
 
@@ -413,9 +419,9 @@ class Body(object):
     def save(self):
         pass
 
-    #---------------------------------------------------------------Set Calling
+    #-----------------------------------------------------------------Set Guild
 
-    def set_clas(self, clas_uuid):
+    def set_guild(self, guild_name):
         pass
 
     #----------------------------------------------------------------Set Gender

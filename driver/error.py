@@ -19,16 +19,24 @@ class BogError(Exception):
 
 class BogCmdError(BogError):
 
-    """Custom exception to notify client of failed commands."""    
+    """Exception to notify client of failed commands."""
+
+
+class BogDepleteCond(BogError):
+
+    """Exception to signal a depleted resource."""
+
+
+class BogExceedCond(BogError):
+
+    """Exception to signal a depleted resource."""
 
 
 class BogScriptError(BogError):
 
-    """Custom exception to raise scripting errors."""    
+    """Exception to raise scripting errors."""
 
 
 class BogYAMLError(BogError):
 
-    """Custom exception to raise YAML parsing errors."""    
-
-
+    """Exception to raise YAML parsing errors."""
