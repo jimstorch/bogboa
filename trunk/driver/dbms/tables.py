@@ -15,7 +15,7 @@ from driver.dbms.dbconnect import THE_CURSOR
 #----------------------------------------------------------------Check Database
 
 def check_database():
-    
+
     """
     Verifies the existence of SQLite3 tables and creates any that are missing.
     """
@@ -29,7 +29,7 @@ def check_database():
         THE_CURSOR.execute("PRAGMA user_version=1001;")
         THE_LOG.add("?? Using new database file.")
     else:
-        THE_LOG.add(".. DB version is %d" % user_version)    
+        THE_LOG.add(".. DB version is %d" % user_version)
 
     sql = """
         SELECT COUNT(*) FROM sqlite_master WHERE NAME = ?;
@@ -38,6 +38,10 @@ def check_database():
     if not THE_CURSOR.execute(sql, ('body',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'body' table in database, creating it.")
         create_body_table()
+
+    if not THE_CURSOR.execute(sql, ('resource',)).fetchone()[0]:
+        THE_LOG.add("?? Missing 'resource' table in database, creating it.")
+        create_resource_table()
 
     if not THE_CURSOR.execute(sql, ('ability',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'ability' table in database, creating it.")
@@ -62,9 +66,9 @@ def check_database():
     if not THE_CURSOR.execute(sql, ('carried_item',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'carried_item' table in database, creating it.")
         create_carried_item_table()
-            
+
     if not THE_CURSOR.execute(sql, ('reject_name',)).fetchone()[0]:
-        THE_LOG.add("?? Missing 'reject_name' table in database, creating it.")    
+        THE_LOG.add("?? Missing 'reject_name' table in database, creating it.")
         create_reject_name_table()
         pre_reject_names()
 
@@ -79,7 +83,7 @@ def check_database():
 
     ## Lastly, vacuum the database
     sql = """VACUUM;"""
-    
+
     THE_CURSOR.execute(sql)
 
 
@@ -89,10 +93,10 @@ def create_body_table():
 
     sql = """DROP TABLE IF EXISTS body;"""
 
-    THE_CURSOR.execute(sql)    
+    THE_CURSOR.execute(sql)
 
     sql = """
-        CREATE TABLE IF NOT EXISTS body 
+        CREATE TABLE IF NOT EXISTS body
             (
             name TEXT PRIMARY KEY,
             uuid TEXT KEY,
@@ -101,7 +105,7 @@ def create_body_table():
             race TEXT,
             gender TEXT,
             guild TEXT,
-            level INTEGER,            
+            level INTEGER,
             room_uuid TEXT,
             bind_uuid TEXT,
             bag_name TEXT,
@@ -117,6 +121,26 @@ def create_body_table():
     THE_CURSOR.execute(sql)
 
 
+#---------------------------------------------------------Create Resource Table
+
+def create_resource_table():
+
+    sql = """DROP TABLE IF EXISTS resource;"""
+
+    THE_CURSOR.execute(sql)
+
+    sql = """
+        CREATE TABLE IF NOT EXISTS resource
+            (
+            uuid TEXT PRIMARY KEY,
+            resource TEXT,
+            value TEXT
+            );
+        """
+
+    THE_CURSOR.execute(sql)
+
+
 #----------------------------------------------------------Create Ability Table
 
 def create_ability_table():
@@ -124,7 +148,7 @@ def create_ability_table():
     sql = """DROP TABLE IF EXISTS ability;"""
 
     THE_CURSOR.execute(sql)
-    
+
     sql = """
         CREATE TABLE IF NOT EXISTS ability
             (
@@ -143,7 +167,7 @@ def create_skill_table():
     sql = """DROP TABLE IF EXISTS skill;"""
 
     THE_CURSOR.execute(sql)
-    
+
     sql = """
         CREATE TABLE IF NOT EXISTS skill
             (
@@ -163,7 +187,7 @@ def create_faction_table():
     sql = """DROP TABLE IF EXISTS faction;"""
 
     THE_CURSOR.execute(sql)
-    
+
     sql = """
         CREATE TABLE IF NOT EXISTS faction
             (
@@ -183,7 +207,7 @@ def create_flag_table():
     sql = """DROP TABLE IF EXISTS flag;"""
 
     THE_CURSOR.execute(sql)
-    
+
     sql = """
         CREATE TABLE IF NOT EXISTS flag
             (
@@ -199,7 +223,7 @@ def create_flag_table():
 #--------------------------------------------------------Create Worn Item Table
 
 def create_worn_item_table():
-    
+
     sql = """DROP TABLE IF EXISTS worn_item;"""
 
     THE_CURSOR.execute(sql)
@@ -213,13 +237,13 @@ def create_worn_item_table():
         );
     """
 
-    THE_CURSOR.execute(sql)       
+    THE_CURSOR.execute(sql)
 
 
 #-----------------------------------------------------Create Carried Item Table
 
 def create_carried_item_table():
-    
+
     sql = """DROP TABLE IF EXISTS carried_item;"""
 
     THE_CURSOR.execute(sql)
@@ -254,7 +278,7 @@ def create_reject_name_table():
             );
         """
 
-    THE_CURSOR.execute(sql)                
+    THE_CURSOR.execute(sql)
 
 
 #--------------------------------------------------------------Pre-Reject Names
@@ -267,13 +291,14 @@ def pre_reject_names():
         """
 
     bad_names = ['bogboa', 'gm', 'admin', 'sysop', 'anonymous', 'anon',
-        'test', 'nobody', 'noone',         
+        'test', 'nobody', 'noone',
         ]
     now = datetime.datetime.now()
 
     for name in bad_names:
-        THE_CURSOR.execute(sql, (name.lower(), now, 
-            'tables.py', 'pre-rejected name'))    
+        THE_CURSOR.execute(sql, (name.lower(), now,
+            'tables.py', 'pre-rejected name'))
+
 
 #--------------------------------------------------------Create Banned IP Table
 
@@ -315,7 +340,4 @@ def create_suspension_table():
             );
         """
 
-    THE_CURSOR.execute(sql)    
-
-
-
+    THE_CURSOR.execute(sql)
