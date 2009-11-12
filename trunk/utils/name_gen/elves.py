@@ -10,12 +10,10 @@ import random
 
 _LEADS =  ['f', 'm', 'c', 'g', 't', 'en', 'amr', 'd', 'l', 'n', 'or', 'el',
     'im', 'er', 'ingl', 'ingw', 'p']
-
 _INNERS =  ['el', 'al', 'ind', 'ot', 'or', 'in', 'eg', 'ar', 'ebr', 'ing',
     'ell', 'ol', 'ald', 'ir', 'uil', 'oph', 'aer', 'od', 'un', 'at']
-
-_TAILS =  ['or', 'in', 'e', 'el', 'as', 'il', 'ion', 'on', 'ir', 'od', 'iel',
-    'an', 'ie', 'is', 'ye', 'os']
+_TAILS =  ['or', 'in', 'el', 'as', 'il', 'ion', 'on', 'ir', 'od', 'iel',
+    'an', 'is', 'oth', 'os']
 
 
 def namegen():
@@ -33,4 +31,3 @@ if __name__ == '__main__':
 
     for x in range(100):
         print namegen(),
-
