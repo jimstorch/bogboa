@@ -7,19 +7,18 @@
 #------------------------------------------------------------------------------
 
 import re
-import random
 import operator
 
 
-_FILENAME = 'data/female2.txt'
-_CULL = 7
+_FILENAME = 'data/elves2.txt'
+_CULL = 1
 
 ## Match 0 or more vowels + 1 or more consonants at the start of the word
-_LEAD = re.compile(r'^[aeiouy]*[bcdfghjklmnprstvwxz]+')
+_LEAD = re.compile(r'^[aeiouy]*(?:qu|[bcdfghjklmnpqrstvwxz])+')
 ## Match 1 or more vowels + 1 or more consonants inside a word (not start/end)
-_INNER = re.compile(r'\B[aeiouy]+[bcdfghjklmnprstvwxz]+\B')
+_INNER = re.compile(r'\B[aeiouy]+(?:qu|[bcdfghjklmnpqrstvwxz])+\B')
 # Match 1 or more vowels + 0 or more consonats at the end of a word
-_TRAIL = re.compile(r'[aeiouy]+[bcdfghjklmnprstvwxzy]?$')
+_TRAIL = re.compile(r'[aeiouy]+(?:qu|[bcdfghjklmnpqrstvwxz])+$')
 
 
 def token_lists(names):
@@ -37,6 +36,7 @@ def token_lists(names):
 
         matches = re.findall(_INNER, name)
         for pat in matches:
+            print pat,
             count = inner.get(pat,0)
             inner[pat] = count +1
 
@@ -45,6 +45,7 @@ def token_lists(names):
             pat = match.group(0)
             count = tail.get(pat,0)
             tail[pat] = count +1
+
 
     ## Convert dicts to a list of tuples in the format (pattern, frequency)
     lead_srt  = sorted(lead.items(),key=operator.itemgetter(1),reverse=True)
