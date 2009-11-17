@@ -1,19 +1,30 @@
-# -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mike.yml
+#   dummy_quest.yml
 #   Copyright 2009 Jim Storch
 #   Distributed under the (CC) Attribution-Share Alike 3.0 Unported License
 #   See: http://creativecommons.org/licenses/by-sa/3.0/ for details
 #------------------------------------------------------------------------------
+
+type:   header
 version: 1001
 module: testville
 
-uuid: 95d95f7d8aa24ed49d782614dabb6766
-name: Mike
-room: 39760ba2180b486a83e69fdb6433c1e2      # Visitor's Center
-race: human
-guild: Wal*Mud Greeter
-level: 10
+---
 
-on_see:
-    room.say('Welcome %s' % body.name)
+type:   define
+tom:    bac5ea117ec7433090b4bbc5b8f4b87e
+fred:   794c53e8b3c44fb3a50e057aab7f0375
+wolf_pelt:   a2e17d5f0e8141bcab53ac5a4b0af7b4
+
+---
+
+type:   spawn
+name:   Tom
+uuid:   tom
+
+---
+
+type:   item
+uuid:   wolf_pelt
+
+---
