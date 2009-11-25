@@ -105,7 +105,7 @@ class NameTrie(object):
         """
         return self.test_keys(keyset(phrase))
 
-    def match(self, keyset):
+    def match_keyset(self, keyset):
         """
         Given a keyset, return True if it matches the Trie.
         """
