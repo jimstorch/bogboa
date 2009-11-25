@@ -169,7 +169,7 @@ class Floor(object):
     def search(self, keyset, qty=1):
         found = []
         for item in self.items:
-            if item.trie.match(keyset):
+            if item.trie.match_keyset(keyset):
                 if self.has(item, qty):
                     found.append(item)
         return found
