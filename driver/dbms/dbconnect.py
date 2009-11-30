@@ -20,11 +20,11 @@ except ImportError:
         sys.exit(1)
 
 ## Open the database with autocommit on and auto-convert dates and timestamps
-DBCONN = sqlite.connect('data/mud.sqlite', isolation_level=None, 
+DBCONN = sqlite.connect('data/mud.sqlite', isolation_level=None,
     detect_types=sqlite.PARSE_DECLTYPES)
 
 ## Assign a row factory so we can access columns by name
-DBCONN.row_factory = sqlite.Row
+#DBCONN.row_factory = sqlite.Row
 
 
 #--[ Global Instance ]---------------------------------------------------------
@@ -32,5 +32,3 @@ DBCONN.row_factory = sqlite.Row
 THE_CURSOR = DBCONN.cursor()
 
 #------------------------------------------------------------------------------
-
-
