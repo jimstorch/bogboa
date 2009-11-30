@@ -14,6 +14,63 @@ from driver.log import THE_LOG
 from driver.dbms.dbconnect import THE_CURSOR
 from mudlib import shared
 
+
+#------------------------------------------------------------------Fetch KV Set
+
+def fetch_kvset(uuid, set_name):
+
+    """
+    Given a UUID and set_name, select matching rows and convert them to a
+    dictionary.
+    """
+
+    sql = """
+        SELECT key, value
+        FROM key_value
+        WHERE uuid = ? AND set_name = ?;
+        """
+
+    d = {}
+    THE_CURSOR.execute(sql, (uuid, set_name))
+    for row in THE_CURSOR:
+        d[row[0]] = row[1]
+    return d
+
+
+#------------------------------------------------------------------Store KV Set
+
+def store_kvset(uuid, set_name, d):
+
+    """
+    Given a UUID, set name, and dictionary, write them to the database.
+    """
+
+    sql = """
+        INSERT OR REPLACE INTO key_value (uuid, set_name, key, value)
+        VALUES (?, ?, ?, ?');
+        """
+
+    ## build a list comprehensive of arguments for executemany()
+    rows = [ uuid, set_name, k, v) for k, v in d.items() ]
+    THE_CURSOR.executemany(sql, rows)
+
+
+#----------------------------------------------------------------------Store KV
+
+def store_kv(uuid, set_name, key, value):
+
+    """
+    Given a UUID, set name, and dictionary, write them to the database.
+    """
+
+    sql = """
+        INSERT OR REPLACE INTO key_value (uuid, set_name, key, value)
+        VALUES (?, ?, ?, ?');
+        """
+
+    THE_CURSOR.execute(sql, (uuid, set_name, key, value))
+
+
 #------------------------------------------------------------------------Ban IP
 
 def ban_ip(ip, gm, note):
@@ -296,17 +353,3 @@ def update_skill(uuid, skill, value):
         """
 
     THE_CURSOR.execute(sql, (value, uuid, skill))
-
-
-
-def set_property(uuid, category, name, value):
-    pass
-
-def update_property(uuid, category, name, value):
-    pass
-
-def get_property(uuid, category, name):
-    pass
-
-def get_properties(uuid, category):
-    pass

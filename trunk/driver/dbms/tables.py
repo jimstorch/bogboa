@@ -39,13 +39,9 @@ def check_database():
         THE_LOG.add("?? Missing 'account' table in database, creating it.")
         create_account_table()
 
-    if not THE_CURSOR.execute(sql, ('property',)).fetchone()[0]:
-        THE_LOG.add("?? Missing 'property' table in database, creating it.")
-        create_property_table()
-
-    if not THE_CURSOR.execute(sql, ('flag',)).fetchone()[0]:
-        THE_LOG.add("?? Missing 'flag' table in database, creating it.")
-        create_flag_table()
+    if not THE_CURSOR.execute(sql, ('key_value',)).fetchone()[0]:
+        THE_LOG.add("?? Missing 'key_value' table in database, creating it.")
+        create_key_value_table()
 
     if not THE_CURSOR.execute(sql, ('reject_name',)).fetchone()[0]:
         THE_LOG.add("?? Missing 'reject_name' table in database, creating it.")
@@ -69,7 +65,7 @@ def check_database():
 
 #----------------------------------------------------------Create Account Table
 
-def create_body_table():
+def create_account_table():
 
     sql = """DROP TABLE IF EXISTS account;"""
 
@@ -101,52 +97,41 @@ def create_body_table():
     THE_CURSOR.execute(sql)
 
 
-#---------------------------------------------------------Create Property Table
+#--------------------------------------------------------Create Key-Value Table
 
-# Property types:
-#   attribute
-#   preference
-#   resource
-#   skill
-#   faction
-#   worn
-#   inventory
-#   bank
+def create_key_value_table():
 
-def create_property_table():
-
-    sql = """DROPT TABLE IF EXISTS property;"""
+    sql = """DROPT TABLE IF EXISTS key_value;"""
 
     THE_CURSOR.execture(sql)
 
     sql = """
-        CREATE TABLE IF NOT EXISTS property
+        CREATE TABLE IF NOT EXISTS key_value
             (
-            uuid TEXT PRIMARY KEY,
-            type TEXT,
-            name TEXT,
-            value TEXT
+            uuid TEXT,
+            set_name TEXT,
+            key TEXT,
+            value TEXT,
+            PRIMARY KEY(uuid, set_name, key),
             );
         """
 
-#-------------------------------------------------------------Create Flag Table
 
-def create_flag_table():
+#------------------------------------------------------Create Reject Name Table
 
-# Flag types:
-#   ability
-#   quest
+def create_reject_name_table():
 
-    sql = """DROPT TABLE IF EXISTS flag;"""
+    sql = """DROP TABLE IF EXISTS reject_name;"""
 
-    THE_CURSOR.execture(sql)
+    THE_CURSOR.execute(sql)
 
     sql = """
-        CREATE TABLE IF NOT EXISTS flag
-           (
-            uuid TEXT PRIMARY KEY,
-            type TEXT,
-            name TEXT
+        CREATE TABLE IF NOT EXISTS reject_name
+            (
+            name_lower TEXT PRIMARY KEY,
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            gm_name TEXT,
+            gm_note TEXT
             );
         """
 
@@ -206,7 +191,7 @@ def create_suspension_table():
     sql = """
         CREATE TABLE IF NOT EXISTS suspension
             (
-            uuid TEXT PRIMARY KEY,
+            uuid TEXT KEY,
             active INT,
             days INTEGER,
             gm_name TEXT,
