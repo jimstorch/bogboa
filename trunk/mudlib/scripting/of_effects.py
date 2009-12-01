@@ -6,9 +6,10 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-## Effects are responsible for computing mitigation via resistances and
-## immunities, adjusting health levels, and sending combat messages to
-## origin and origin->target.  Return the mitigated value.
+# Locals passed to script:
+#   body
+#   room
+#   item
 
 
 ## Beneficial
@@ -19,140 +20,140 @@ def heal(value):
 
 ## Unarmed
 
-def bite(value):
+def bite(delay, amount=1.0):
     pass
 
-def claw(value):
+def claw(delay, amount=1.0):
     pass
 
-def constrict(value):
+def constrict(delay, amount=1.0):
     pass
 
-def elbow(value):
+def elbow(delay, amount=1.0):
     pass
 
-def flip(value):
+def flip(delay, amount=1.0):
     pass
 
-def flyingkick(value):
+def flyingkick(delay, amount=1.0):
     pass
 
-def gnaw(value):
+def gnaw(delay, amount=1.0):
     pass
 
-def gore(value):
+def gore(delay, amount=1.0):
     pass
 
-def grapple(value):
+def grapple(delay, amount=1.0):
     pass
 
-def jab(value):
+def jab(delay, amount=1.0):
     pass
 
-def kick(value):
+def kick(delay, amount=1.0):
     pass
 
-def knee(value):
+def knee(delay, amount=1.0):
     pass
 
-def maw(value):
+def maw(delay, amount=1.0):
     pass
 
-def poke(value):
+def poke(delay, amount=1.0):
     pass
 
-def punch(value):
+def punch(delay, amount=1.0):
     pass
 
-def scratch(value):
+def scratch(delay, amount=1.0):
     pass
 
-def sting(value):
+def sting(delay, amount=1.0):
     pass
 
-def throw(value):
+def throw(delay, amount=1.0):
     pass
 
-def tumble(value):
+def tumble(delay, amount=1.0):
     pass
 
-def uppercut(value):
+def uppercut(delay, amount=1.0):
     pass
 
 
 ## Weapon
 
-def bash(value):
+def bash(delay, amount=1.0):
     pass
 
-def blast(value):
+def blast(delay, amount=1.0):
     pass
 
-def bludgeon(value):
+def bludgeon(delay, amount=1.0):
     pass
 
-def hack(value):
+def hack(delay, amount=1.0):
     pass
 
-def lash(value):
+def lash(delay, amount=1.0):
     pass
 
-def pierce(value):
+def pierce(delay, amount=1.0):
     pass
 
-def shoot(value):
+def shoot(delay, amount=1.0):
     pass
 
-def slash(value):
+def slash(delay, amount=1.0):
     pass
 
-def stab(value):
+def stab(delay, amount=1.0):
     pass
 
 
 ## Area of Effect
 
-def acid(value):
+def acid(delay, amount=1.0):
     pass
 
-def arcane(value):
+def arcane(delay, amount=1.0):
     pass
 
-def burn(value):
+def burn(delay, amount=1.0):
     pass
 
-def choke(value):
+def choke(delay, amount=1.0):
     pass
 
-def crush(value):
+def crush(delay, amount=1.0):
     pass
 
-def disease(value):
+def disease(delay, amount=1.0):
     pass
 
-def drain(value):
+def drain(delay, amount=1.0):
     pass
 
-def drown(value):
+def drown(delay, amount=1.0):
     pass
 
-def freeze(value):
+def freeze(delay, amount=1.0):
     pass
 
-def holy(value):
+def holy(delay, amount=1.0):
     pass
 
-def infect(value):
+def infect(delay, amount=1.0):
     pass
 
-def poison(value):
+def poison(delay, amount=1.0):
     pass
 
-def irradiate(value):
+def irradiate(delay, amount=1.0):
     pass
 
-def shock(value):
+def shock(delay, amount=1.0):
     pass
 
-def smite(value):
+def smite(delay, amount=1.0):
     pass
