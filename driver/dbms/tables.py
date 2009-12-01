@@ -76,7 +76,7 @@ def create_account_table():
             (
             name TEXT PRIMARY KEY,
             uuid TEXT KEY,
-            -- hashed_password TEXT,
+            hashed_password TEXT,
             -- email TEXT,
             -- race TEXT,
             -- gender TEXT,
@@ -88,9 +88,9 @@ def create_account_table():
             -- bag_limit REAL,
             -- bag_reduction REAL,
             -- use_ansi BOOLEAN DEFAULT TRUE,
-            last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            last_ip TEXT,
-            play_count INTEGER
+            -- last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            -- last_ip TEXT,
+            -- play_count INTEGER
             );
         """
 
@@ -109,10 +109,10 @@ def create_key_value_table():
         CREATE TABLE IF NOT EXISTS key_value
             (
             uuid TEXT,
-            set_name TEXT,
+            category TEXT,
             key TEXT,
             value TEXT,
-            PRIMARY KEY(uuid, set_name, key),
+            PRIMARY KEY(uuid, category, key),
             );
         """
 

@@ -79,6 +79,12 @@ class Wardrobe(object):
         pass
 
 
+    def db_save(self, uuid):
+        pass
+
+    def db_load(self, uuid):
+        pass
+
 #---------------------------------------------------------------------------Bag
 
 class Bag(object):
@@ -150,6 +156,12 @@ class Bag(object):
             remaining = curr - qty
             self.items[item] = remaining
             self.burden -= _self.reduce( item.burden * qty)
+
+    def db_save(self, uuid):
+        pass
+
+    def db_load(self, uuid):
+        pass
 
 
 #-------------------------------------------------------------------------Floor

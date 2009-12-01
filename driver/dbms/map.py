@@ -15,81 +15,6 @@ from driver.dbms.dbconnect import THE_CURSOR
 from mudlib import shared
 
 
-#----------------------------------------------------------------------Fetch KV
-
-def fetch_kv(uuid, set_name, key):
-
-    """
-    Given a UUID, set name, and key, retrieves the value from the database.
-    """
-
-    sql = """
-        SELECT value
-        FROM key_value
-        WHERE uuid = ? AND set_name = ? AND key = ?;
-        """
-
-    THE_CURSOR.execute(sql, (uuid, set_name, key))
-    return THE_CURSOR.fetchone()[0]
-
-
-#----------------------------------------------------------------------Store KV
-
-def store_kv(uuid, set_name, key, value):
-
-    """
-    Given a UUID, set name, and dictionary, write them to the database.
-    """
-
-    sql = """
-        INSERT OR REPLACE INTO key_value (uuid, set_name, key, value)
-        VALUES (?, ?, ?, ?');
-        """
-
-    THE_CURSOR.execute(sql,(uuid, set_name, key, value))
-
-
-
-#------------------------------------------------------------------Fetch KV Set
-
-def fetch_kvset(uuid, set_name):
-
-    """
-    Given a UUID and set_name, select matching rows and convert them to a
-    dictionary.
-    """
-
-    sql = """
-        SELECT key, value
-        FROM key_value
-        WHERE uuid = ? AND set_name = ?;
-        """
-
-    dct = {}
-    THE_CURSOR.execute(sql, (uuid, set_name))
-    for row in THE_CURSOR:
-        dct[row[0]] = row[1]
-    return dct
-
-
-#------------------------------------------------------------------Store KV Set
-
-def store_kvset(uuid, set_name, dct):
-
-    """
-    Given a UUID, set name, and dictionary, write them to the database.
-    """
-
-    sql = """
-        INSERT OR REPLACE INTO key_value (uuid, set_name, key, value)
-        VALUES (?, ?, ?, ?');
-        """
-
-    ## build a list comprehension of arguments for executemany()
-    rows = [ uuid, set_name, k, v) for k, v in dct.items() ]
-    THE_CURSOR.executemany(sql, rows)
-
-
 #------------------------------------------------------------------------Ban IP
 
 def ban_ip(ip, gm, note):
@@ -221,154 +146,134 @@ def check_login(name, password):
 
 #------------------------------------------------------------------Record Visit
 
-def record_visit(name, ip):
+def record_visit(uuid, ip):
 
-    """Notes a returning player's IP and timestamp."""
+        """Notes a returning player's IP and timestamp."""
 
-    sql = """
-        UPDATE acount
-        SET play_count = play_count + 1, last_ip = ?,
-            last_on = ?
-        WHERE name = ?;
-        """
-    now = datetime.datetime.now()
-    THE_CURSOR.execute(sql, (ip, now, name))
+        now = datetime.datetime.now()
+        pass
 
 
 #----------------------------------------------------------------------Set ANSI
 
-def set_ansi(name, setting):
+#def set_ansi(name, setting):
 
-    """Record's a player's ANSI preference."""
+#    """Record's a player's ANSI preference."""
 
-    ## Don't try to set for Lobby schmucks, no row
-    if name == 'Anonymous':
-        return
+#    ## Don't try to set for Lobby schmucks, no row
+#    if name == 'Anonymous':
+#        return
 
-    sql = """
-        UPDATE body
-        SET use_ansi = ?
-        WHERE name = ?;
-        """
+#    sql = """
+#        UPDATE body
+#        SET use_ansi = ?
+#        WHERE name = ?;
+#        """
 
-    THE_CURSOR.execute(sql, (setting, name))
+#    THE_CURSOR.execute(sql, (setting, name))
 
 
 #-----------------------------------------------------------------------Last On
 
-def last_on(name):
+#def last_on(name):
 
-    sql = """
-        SELECT last_on FROM body
-        WHERE name = ?;
-        """
+#    sql = """
+#        SELECT last_on FROM body
+#        WHERE name = ?;
+#        """
 
-    result = THE_CURSOR.execute(sql, (name,)).fetchone()
+#    result = THE_CURSOR.execute(sql, (name,)).fetchone()
 
-    if result:
-        last_on = result['last_on']
-        return last_on.strftime('%B %d, %Y %I:%M %p')
+#    if result:
+#        last_on = result['last_on']
+#        return last_on.strftime('%B %d, %Y %I:%M %p')
 
-    else:
-        return "not found."
+#    else:
+#        return "not found."
 
 
 #-----------------------------------------------------------------Save New Body
 
-def save_new_body(body):
+#def save_new_body(body):
 
-    sql = """
-        INSERT INTO body
-            (
-            name,
-            uuid,
-            hashed_password,
-            race,
-            gender,
-            guild,
-            level,
-            last_on,
-            last_ip,
-            use_ansi,
-            play_count
-            )
-        VALUES (?,?,?,?,?,?,?,?,?,?,?);
-        """
+#    sql = """
+#        INSERT INTO body
+#            (
+#            name,
+#            uuid,
+#            hashed_password,
+#            race,
+#            gender,
+#            guild,
+#            level,
+#            last_on,
+#            last_ip,
+#            use_ansi,
+#            play_count
+#            )
+#        VALUES (?,?,?,?,?,?,?,?,?,?,?);
+#        """
 
-    hashed_password = hashlib.sha256(body.password).hexdigest()
-    last_ip = body.mind.conn.addr
-    now = datetime.datetime.now()
-    use_ansi = body.mind.conn.use_ansi
-    tup = (body.name, body.uuid, hashed_password, body.race,
-        body.gender, body.guild, body.level, now, last_ip, use_ansi, 1)
-    THE_CURSOR.execute(sql, tup)
+#    hashed_password = hashlib.sha256(body.password).hexdigest()
+#    last_ip = body.mind.conn.addr
+#    now = datetime.datetime.now()
+#    use_ansi = body.mind.conn.use_ansi
+#    tup = (body.name, body.uuid, hashed_password, body.race,
+#        body.gender, body.guild, body.level, now, last_ip, use_ansi, 1)
+#    THE_CURSOR.execute(sql, tup)
 
-    THE_LOG.add('++ New Character created; %s the %s %s by %s' %
-        (body.name, body.race, body.guild,body.mind.origin()))
-    ## Add the name to the reject table so no one else can use it
-    block_name(body.name, 'map.py', 'Taken by player')
+#    THE_LOG.add('++ New Character created; %s the %s %s by %s' %
+#        (body.name, body.race, body.guild,body.mind.origin()))
+#    ## Add the name to the reject table so no one else can use it
+#    block_name(body.name, 'map.py', 'Taken by player')
 
 
 #---------------------------------------------------------------------Load Body
 
-def load_body(body, name):
+#def load_body(body, name):
 
-    sql = """
-        SELECT name, uuid, race, gender, guild, level, room_uuid, bind_uuid,
-            use_ansi
-        FROM body
-        WHERE name = ?;
-        """
+#    sql = """
+#        SELECT name, uuid, race, gender, guild, level, room_uuid, bind_uuid,
+#            use_ansi
+#        FROM body
+#        WHERE name = ?;
+#        """
 
-    result = THE_CURSOR.execute(sql,(name,)).fetchone()
+#    result = THE_CURSOR.execute(sql,(name,)).fetchone()
 
-    if result:
-        body.name = result['name']
-        body.alias = body.name
-        body.uuid = result['uuid']
-        body.race = result['race']
-        body.gender = result['gender']
-        body.guild = result['guild']
-        body.level = result['level']
-        body.room = shared.find_room(result['room_uuid'])
-        body.bind = shared.find_room(result['bind_uuid'])
-        body.mind.conn.use_ansi = result['use_ansi']
+#    if result:
+#        body.name = result['name']
+#        body.alias = body.name
+#        body.uuid = result['uuid']
+#        body.race = result['race']
+#        body.gender = result['gender']
+#        body.guild = result['guild']
+#        body.level = result['level']
+#        body.room = shared.find_room(result['room_uuid'])
+#        body.bind = shared.find_room(result['bind_uuid'])
+#        body.mind.conn.use_ansi = result['use_ansi']
 
-        THE_LOG.add('== Loaded %s the %s %s from %s' % (body.name, body.race,
-            body.guild, body.mind.origin()))
+#        THE_LOG.add('== Loaded %s the %s %s from %s' % (body.name, body.race,
+#            body.guild, body.mind.origin()))
 
-    else:
-        THE_LOG.add("!! Database Error: Body not found for '%s'" % name)
-        sys.exit(1)
+#    else:
+#        THE_LOG.add("!! Database Error: Body not found for '%s'" % name)
+#        sys.exit(1)
 
 
 #-------------------------------------------------------------------Update Body
 
 def update_body(body):
-
     pass
 
 
 #---------------------------------------------------------------------Add Skill
 
 def add_skill(uuid, skill, value):
-
-    sql = """
-        INSERT into skill
-        VALUES (?,?,?);
-        """
-
-    THE_CURSOR.execute(sql, (uuid, skill, value))
+    pass
 
 
 #------------------------------------------------------------------Update Skill
 
 def update_skill(uuid, skill, value):
-
-    sql = """
-        UPDATE skill
-        SET value = ?
-        WHERE uuid = ? AND skill = ?;
-        """
-
-    THE_CURSOR.execute(sql, (value, uuid, skill))
+    pass
