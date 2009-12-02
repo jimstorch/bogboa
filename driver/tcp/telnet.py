@@ -11,9 +11,10 @@
 import socket
 
 from mudlib import shared
-from driver.log import THE_LOG
+#from driver.log import THE_LOG
 from driver.xterm import colorize
 from driver.xterm import wrap_list
+from driver.error import BogClientError
 
 #---[ Telnet Notes ]-----------------------------------------------------------
 # (See RFC 854 for more information)
@@ -302,17 +303,19 @@ class Telnet(object):
         try:
             data = self.sock.recv(2048)
         except socket.error, err:
-            THE_LOG.add("!! RECV error '%d:%s' from %s" % (err[0], err[1],
-                self.addrport()))
+            error = ("RECV error '%d:%s' from %s" % (err[0], err[1],
+#                self.addrport()))
             self.active = False
-            return
+            raise BogClientError(error)
 
         ## Did they close the connection?
         size = len(data)
         if size == 0:
-            THE_LOG.add("-- Connection dropped by %s" % self.addrport())
             self.active = False
-            return
+            raise BogClientError('%s disconnected' % self.addrport())
+#            THE_LOG.add("-- Connection dropped by %s" % self.addrport())
+#            self.active = False
+#            return
 
         ## Update some trackers
         self.last_input_time = shared.THE_TIME
@@ -352,11 +355,11 @@ class Telnet(object):
                 self._echo_byte(byte)
             self.recv_buffer += byte
 
-        ## Check for flooding
-        if len(self.recv_buffer) > 512 and self.active:
-            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' %
-                self.addrport())
-            self.active = False
+#        ## Check for flooding
+#        if len(self.recv_buffer) > 512 and self.active:
+#            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' %
+#                self.addrport())
+#            self.active = False
 
 
     #-----------------------------------------------------------------Echo Byte
