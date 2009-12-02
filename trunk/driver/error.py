@@ -22,6 +22,11 @@ class BogCmdError(BogError):
     """Exception to notify client of failed commands."""
 
 
+class BogClientError(BogError):
+
+    """Exception to signal lost connection."""
+
+
 class BogDepleteCond(BogError):
 
     """Exception to signal a depleted resource."""

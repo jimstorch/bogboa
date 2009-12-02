@@ -12,6 +12,7 @@ import socket
 import select
 import sys
 
+from driver.error import BogClientError
 from driver.log import THE_LOG
 from driver.tcp.telnet import Telnet
 from driver.config import ADDRESS
@@ -45,7 +46,7 @@ except socket.error, e:
 
 class PortAuthority(object):
 
-    """Poll sockets for new connections and sending/receiving data from 
+    """Poll sockets for new connections and sending/receiving data from
     clients."""
 
     def __init__(self, server_socket):
@@ -53,19 +54,19 @@ class PortAuthority(object):
         self.server_socket = server_socket
         self.server_fd = server_socket.fileno()
 
-        ## Dictionary of active connections 
+        ## Dictionary of active connections
         self.fdconn = {}
 
     def connection_count(self):
         """Returns the number of active connections."""
         return len(self.fdconn)
-    
+
 
     def poll(self):
         """Perform a non-blocking scan of recv and send states on the server
         and client connection sockets.  Process new connection requests,
         read incomming data, and send outgoing data.  Sends and receives may
-        be partial.   
+        be partial.
         """
 
         ## Build a list of connections to test for receive data pending
@@ -75,7 +76,7 @@ class PortAuthority(object):
                 recv_list.append(conn.fileno)
             ## Delete inactive connections from the dictionary
             else:
-                THE_LOG.add('-- Closed connection to %s' % conn.addrport()) 
+                THE_LOG.add('-- Closed connection to %s' % conn.addrport())
                 del self.fdconn[conn.fileno]
 
         ## Build a list of connections that need to send data
@@ -87,10 +88,10 @@ class PortAuthority(object):
         ## Get active socket file descriptors from select.select()
         try:
             rlist, slist, elist = select.select(recv_list, send_list, [], 0)
-        
+
         except select.error, err:
             ## If we can't even use select(), game over man, game over
-            THE_LOG.add("!! FATAL SELECT error '%d:%s'!" % (err[0], err[1])) 
+            THE_LOG.add("!! FATAL SELECT error '%d:%s'!" % (err[0], err[1]))
             sys.exit(1)
 
         ## Process socket file descriptors with data to recieve
@@ -99,28 +100,28 @@ class PortAuthority(object):
             ## If it's coming from the server's socket then this is a new
             ## connection request.
             if sockfd == self.server_fd:
-            
+
                 try:
                     sock, addr_tup = self.server_socket.accept()
-                    
+
                 except socket.error, err:
-                    THE_LOG.add("!! ACCEPT error '%d:%s'." % (err[0], 
-                        err[1]))  
-                    continue          
+                    THE_LOG.add("!! ACCEPT error '%d:%s'." % (err[0],
+                        err[1]))
+                    continue
 
                 ## Check for banned IP's
                 if check_banned_ip(addr_tup[0]):
-                    THE_LOG.add("?? BANNED IP rejected from %s:%s." 
+                    THE_LOG.add("?? BANNED IP rejected from %s:%s."
                         % (addr_tup[0], addr_tup[1]))
                     sock.close()
-                    continue                     
+                    continue
 
                 ## Check for maximum connections
                 if self.connection_count() >= ( MAX_CONNECTIONS ):
-                    THE_LOG.add('?? Refusing new connection; maximum in use.') 
+                    THE_LOG.add('?? Refusing new connection; maximum in use.')
                     sock.close()
                     continue
-                
+
                 conn = Telnet(sock, addr_tup)
                 THE_LOG.add("++ Opened connection to %s" % conn.addrport())
                 ## Add the connection to our dictionary
@@ -131,11 +132,14 @@ class PortAuthority(object):
 
             else:
                 ## Call the connection's recieve method
-                self.fdconn[sockfd].socket_recv()
-         
+                try:
+                    self.fdconn[sockfd].socket_recv()
+                except BogClientError, err:
+                    THE_LOG.add("-- %s" % err)
+
         ## Process sockets with data to send
         for sockfd in slist:
-            ## Call the connection's send method            
+            ## Call the connection's send method
             self.fdconn[sockfd].socket_send()
 
 
@@ -144,4 +148,3 @@ class PortAuthority(object):
 THE_PORT_AUTHORITY = PortAuthority(THE_SERVER_SOCKET)
 
 #------------------------------------------------------------------------------
-

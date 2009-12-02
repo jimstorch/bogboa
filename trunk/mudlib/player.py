@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/client.py
+#   mudlib/player.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-# connection --> client <-- body
+# Client --> Player <-- Character
 
 import shared
 from driver.error import BogCmdError
-from mudlib.body import Body
+from mudlib.character import Character
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
@@ -19,82 +19,82 @@ from mudlib.verb import VERB_HANDLER
 
 #------------------------------------------------------------------------Client
 
-class Client(object):
+class Player(object):
 
     def __init__(self):
 
-        self.conn = None                ## Network connection 
+        self.client = None              ## Network connection
         self.active = False             ## Delete during housekeeping?
-        self.login_attempts=0
-        self.name = 'Anonymous'         ## Changed to body name later     
+        self.login_attempts = 0
+        self.name = 'Anonymous'         ## Changed to body name later
 
         ## Create and link a fresh body
         self.body = Body()              ## Player's character in the world
         self.body.is_player = True
         self.body.mind = self
-        self.commands = set()           ## Permitted commands   
+        self.commands = set()           ## Permitted commands
         self.verb_args = []             ## arguments for the verb handlers
         self.last_tell = None           ## used for replies
 
         ## Dictionary-like object used for string substitutions
-        #self.stringsub = StringSub(self)    
+        #self.stringsub = StringSub(self)
 
     #----------------------------------------------------------------------Send
 
     def send(self, msg):
         """Transmit text to the distant end with word wrapping."""
-        self.conn.send(msg)
+        self.client.send(msg)
 
     #---------------------------------------------------------------Send Nowrap
 
     def send_nowrap(self, msg):
         """Transmit text to the distant end, without word wrapping."""
-        self.conn.send_nowrap(msg)   
+        self.client.send_nowrap(msg)
 
 
     #-------------------------------------------------------------------whisper
 
     def whisper(self, msg):
         """Transmit msg wrapped in whisper color (dark green)."""
-        self.conn.send('^g%s^w' % msg)
+        self.client.send('^g%s^w' % msg)
 
     #---------------------------------------------------------------------Prose
 
     def prose(self, msg):
         """Transmit msg wrapped in reading color (dark white)."""
-        self.conn.send('^w%s^w' % msg)
+        self.client.send('^w%s^w' % msg)
 
     #--------------------------------------------------------------------Inform
 
     def inform(self, msg):
         """Transmit msg wrapped in informing color (bright white)."""
-        self.conn.send('^W%s^w' % msg)
+        self.client.send('^W%s^w' % msg)
 
     #---------------------------------------------------------------------Alert
 
     def alert(self, msg):
         """Transmit msg wrapped in alert color (bright yellow)."""
-        self.conn.send('^Y%s^w' % msg)
+        self.client.send('^Y%s^w' % msg)
 
     #----------------------------------------------------------------------Warn
 
     def warn(self, msg):
         """Transmit msg wrapped in warn color (dark red)."""
-        self.conn.send('^r%s^w' % msg)
+        self.client.send('^r%s^w' % msg)
 
     #----------------------------------------------------------------------Warn
 
     def exclaim(self, msg):
         """Transmit msg wrapped in exclaime color (bright red)."""
-        self.conn.send('^R%s^w' % msg)
+        self.client.send('^R%s^w' % msg)
 
 
 #    #---------------------------------------------------------------Send Pretty
 
 #    def send_wrapped(self, msg):
 #        """Transmit text to the distant end."""
-##        self.conn.send(word_wrap(msg, self.conn.columns))    
-#        self.conn.send(msg)
+##        self.client.send(word_wrap(msg, self.client.columns))
+#        self.client.send(msg)
 
     #-----------------------------------------------------------Process Command
 
@@ -103,9 +103,9 @@ class Client(object):
         """
         Retrieve a line of text sent from the distant end and attempt to
         execute as a game command, with or without additional arguments.
-        """         
+        """
 
-        cmd = self.conn.get_command()
+        cmd = self.client.get_command()
 
         if cmd:
             verb, args = self._verbing(cmd)
@@ -123,7 +123,7 @@ class Client(object):
 
             else:
                 self.alert("Unknown action.")
-                
+
             #self.prompt()
 
         else:
@@ -134,7 +134,7 @@ class Client(object):
     #------------------------------------------------------------------Get Room
 
     def get_room(self):
-        
+
         """Return the room object the client's body is in."""
 
         return self.body.room
@@ -146,14 +146,14 @@ class Client(object):
         """Return the client's body."""
 
         return self.body
-    
+
     #--------------------------------------------------------------------Origin
 
     def origin(self):
-        
+
         """Return the client's IP address and Port Numnber."""
 
-        return self.conn.addrport()
+        return self.client.addrport()
 
     #----------------------------------------------------------------Deactivate
 
@@ -165,14 +165,14 @@ class Client(object):
             self.body.room.on_exit(self.body)
 
         if self.body and self.body.mind:
-            self.body.mind = None        
+            self.body.mind = None
         self.body = None
         ## Remove from the name lookup
         if self.name.lower() in shared.BY_NAME:
             del shared.BY_NAME[self.name.lower()]
         ## Schedule for cleanup via driver.monitor.test_connections()
         self.active = False
-        self.conn.active = False
+        self.client.active = False
 
 #    #--------------------------------------------------------------------Prompt
 
@@ -190,7 +190,7 @@ class Client(object):
     #-------------------------------------------------------------------Verbing
 
     def _verbing(self, cmd):
-        
+
         """
         'Verbing weirds language'
         -- Calvin and Hobbes
@@ -204,7 +204,7 @@ class Client(object):
 
         if count == 0:
             verb = None
-            args = []        
+            args = []
 
         elif count == 1:
             verb = words[0].lower()
@@ -212,11 +212,11 @@ class Client(object):
 
         else:
             verb = words[0].lower()
-            args = words[1:] 
-       
+            args = words[1:]
+
         one_true_verb = VERB_ALIAS.get(verb, None)
 
-        return (one_true_verb, args)    
+        return (one_true_verb, args)
 
 
     #-------------------------------------------------------------Grant Command
@@ -243,13 +243,13 @@ class Client(object):
     def revoke_command_silent(self, command_name):
         """Silently de-authorize a player to use an command."""
         if command_name in self.commands:
-            self.commands.remove(command_name)  
+            self.commands.remove(command_name)
 
     #------------------------------------------------------Grant Command Silent
 
     def grant_command_silent(self, ability_name):
         """Silently authorize a player to use an command."""
-        self.command.add(command_name)        
+        self.command.add(command_name)
 
     #-------------------------------------------------------------Clear Command
 
@@ -262,5 +262,3 @@ class Client(object):
     def has_command(self, command_name):
         """Return True if client has access to the given command."""
         return command_name in self.commands
-
-
