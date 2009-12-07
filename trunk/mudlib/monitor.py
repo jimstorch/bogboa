@@ -32,12 +32,12 @@ from mudlib.commands.speech import broadcast
 #    for client in shared.PLAYERS:
 #        if client.conn.active == False:
 #            client.deactivate()
-#            #broadcast('^g%s has gone offline.^w' % client.name)    
+#            #broadcast('^g%s has gone offline.^w' % client.name)
 
 
 #-------------------------------------------------------------Kill Idle Clients
-                
-def kill_idle_clients():
+
+def kick_idle_clients():
 
     """
     Test for and drop clients who aren't doing anything.  I might merge this
@@ -46,16 +46,16 @@ def kill_idle_clients():
 
     for client in shared.LOBBY:
         if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('-- Kicking idle lobby client from %s' % 
+            THE_LOG.add('-- Kicking idle lobby client from %s' %
                 client.conn.addrport())
             client.deactivate()
-            
+
     for client in shared.PLAYERS:
         if client.conn.idle() > IDLE_TIMEOUT:
             THE_LOG.add('.. Kicking idle %s from %s' % (
                 client.name, client.conn.addrport()))
             client.deactivate()
-            broadcast('^g%s has gone offline.^w' % client.name)
+#            broadcast('^g%s has gone offline.^w' % client.name)
 
 
 ##------------------------------------------------------------Purge Dead Clients
@@ -67,15 +67,15 @@ def kill_idle_clients():
 #    sockets when their Connections are garbage collected.
 #    """
 
-#    shared.LOBBY = [ client for client in shared.LOBBY 
+#    shared.LOBBY = [ client for client in shared.LOBBY
 #        if client.active == True ]
-#        
-#    shared.PLAYERS = [ client for client in shared.PLAYERS 
-#        if client.active == True ]         
+#
+#    shared.PLAYERS = [ client for client in shared.PLAYERS
+#        if client.active == True ]
 
 
 #----------------------------------------------------------Process Client Input
-        
+
 def process_client_commands():
 
     """Test clients for commands and process them."""
@@ -98,5 +98,3 @@ def sweep_rooms():
 
     for uuid in shared.ROOMS.keys():
         shared.ROOMS[uuid].sweep()
-
-

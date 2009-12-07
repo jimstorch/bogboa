@@ -19,7 +19,7 @@ from driver.scheduler import Cycle
 from driver.scheduler import Series
 
 #from driver.monitor import test_connections
-from driver.monitor import kill_idle_clients
+from driver.monitor import kick_idle_clients
 #from driver.monitor import purge_dead_clients
 from driver.monitor import process_client_commands
 from driver.monitor import sweep_rooms
@@ -31,7 +31,7 @@ from driver.dbms.tables import check_database
 
 THE_LOG.add(">> **************")
 THE_LOG.add(">> server started")
-THE_LOG.add(">> **************") 
+THE_LOG.add(">> **************")
 
 
 #------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ load_module(module)
 #------------------------------------------------------------------------------
 
 #Cycle(2, test_connections)
-Cycle(2, kill_idle_clients)
+Cycle(2, kick_idle_clients)
 #Cycle(2, purge_dead_clients)
 Cycle(10, sweep_rooms)
 Cycle(.25, process_client_commands)
@@ -82,6 +82,5 @@ while shared.SERVER_RUN == True:
     THE_SCHEDULER.tick()
 
 
-## All done   
+## All done
 THE_LOG.add('?? Administrative shutdown')
-
