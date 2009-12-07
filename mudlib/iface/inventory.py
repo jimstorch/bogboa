@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from driver.error import BogCmdError
+from mudlib.error import BogCmdError
 from mudlib import shared
 
 ## Old notes:

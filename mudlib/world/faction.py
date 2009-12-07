@@ -9,14 +9,14 @@
 import sys
 
 from mudlib.shared import FACTIONS
-from driver.log import THE_LOG
+from mudlib.log import THE_LOG
 
 #------------------------------------------------------------------------Gender
 
 class Faction(object):
 
     def __init__(self):
-    
+
         self.uuid = None
         self.name = None
         self.filename = None
@@ -39,7 +39,7 @@ def cascade_faction(faction, amount, body):
 def adj_faction(faction, amount, body):
 
     """
-    Modify a single faction, ingnoring related ones.    
+    Modify a single faction, ingnoring related ones.
     """
 
     pass
@@ -67,7 +67,7 @@ def configure_faction(cfg):
     if 'uuid' in cfg:
         faction.uuid = cfg.pop('uuid')
     else:
-        THE_LOG.add("!! Missing UUID in config for faction '%s'." % 
+        THE_LOG.add("!! Missing UUID in config for faction '%s'." %
             faction.name)
         sys.exit(1)
 
@@ -84,7 +84,7 @@ def configure_faction(cfg):
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
         THE_LOG.add("!! Unrecognized key(s) in config for faction"
-            " '%s': %s" % ( faction.name, cfg.keys()) ) 
+            " '%s': %s" % ( faction.name, cfg.keys()) )
 
     return faction
 
@@ -104,5 +104,3 @@ def register_faction(faction):
         sys.exit(1)
     else:
         FACTIONS[faction.uuid] = faction
-
-

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/dbms/tables.py
+#   mudlib/dbfs/tables.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,8 +8,8 @@
 
 import datetime
 
-from driver.log import THE_LOG
-from driver.dbms.dbconnect import THE_CURSOR
+from mudlib.log import THE_LOG
+from mudlib.dbfs.dbconnect import THE_CURSOR
 
 
 #----------------------------------------------------------------Check Database
@@ -67,32 +67,43 @@ def check_database():
 
 def create_account_table():
 
+
     sql = """DROP TABLE IF EXISTS account;"""
 
     THE_CURSOR.execute(sql)
+
+#    sql = """
+#        CREATE TABLE IF NOT EXISTS account
+#            (
+#            name TEXT PRIMARY KEY,
+#            uuid TEXT KEY,
+#            hashed_password TEXT,
+#            email TEXT,
+#            race TEXT,
+#            gender TEXT,
+#            guild TEXT,
+#            level INTEGER,
+#            room_uuid TEXT,
+#            bind_uuid TEXT,
+#            bag_name TEXT,
+#            bag_limit REAL,
+#            bag_reduction REAL,
+#            use_ansi BOOLEAN DEFAULT TRUE,
+#            last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+#            last_ip TEXT,
+#            play_count INTEGER
+#            );
+#        """
 
     sql = """
         CREATE TABLE IF NOT EXISTS account
             (
             name TEXT PRIMARY KEY,
             uuid TEXT KEY,
-            hashed_password TEXT,
-            -- email TEXT,
-            -- race TEXT,
-            -- gender TEXT,
-            -- guild TEXT,
-            -- level INTEGER,
-            -- room_uuid TEXT,
-            -- bind_uuid TEXT,
-            -- bag_name TEXT,
-            -- bag_limit REAL,
-            -- bag_reduction REAL,
-            -- use_ansi BOOLEAN DEFAULT TRUE,
-            -- last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            -- last_ip TEXT,
-            -- play_count INTEGER
+            hashed_password TEXT
             );
         """
+
 
     THE_CURSOR.execute(sql)
 
@@ -101,9 +112,9 @@ def create_account_table():
 
 def create_key_value_table():
 
-    sql = """DROPT TABLE IF EXISTS key_value;"""
+    sql = """DROP TABLE IF EXISTS key_value;"""
 
-    THE_CURSOR.execture(sql)
+    THE_CURSOR.execute(sql)
 
     sql = """
         CREATE TABLE IF NOT EXISTS key_value

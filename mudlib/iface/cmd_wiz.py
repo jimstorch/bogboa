@@ -7,11 +7,12 @@
 #------------------------------------------------------------------------------
 
 #from mudlib import parsers
-from driver.scheduler import THE_SCHEDULER
-from mudlib.commands.speech import broadcast
 from mudlib import shared
-from mudlib import parsers
-from driver.log import THE_LOG
+from mudlib.log import THE_LOG
+from mudlib.scheduler import THE_SCHEDULER
+from mudlib.iface import parsers
+from mudlib.iface.cmd_speech import broadcast
+
 
 #---------------------------------------------------------------------------Ban
 
@@ -54,7 +55,7 @@ def shutdown(client):
 
     def kill():
         shared.SERVER_RUN = False
-   
+
     THE_LOG.add('?? %s requested server shutdown' % client.name)
     broadcast("\n!! ^RServer shutdown in 10 seconds.  Please log off.^w\n")
     THE_SCHEDULER.add(5, second_warning)
@@ -97,7 +98,7 @@ def uptime(client):
     elif days:
         s = '%d days, ' % days
     else:
-        s = ''    
+        s = ''
 
     if hours == 1:
         s += '1 hour, '
@@ -116,5 +117,3 @@ def uptime(client):
 
 def zap(client):
     pass
-
-

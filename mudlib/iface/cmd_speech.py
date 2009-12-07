@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib import shared
-from mudlib import parsers
+from mudlib.iface import parsers
 
 #---------------------------------------------------------------------Broadcast
 
@@ -56,9 +56,9 @@ def tell(client, target, msg):
     else:
         target.send('^M%s tells you^w, %s' % (client.name, msg))
         client.send('^mYou tell %s^w, %s' % (target.name, msg))
-        
+
         ## note the sender so that a reply works
-        target.last_tell = client.name  
+        target.last_tell = client.name
 
 
 #-------------------------------------------------------------------------Reply
@@ -75,14 +75,14 @@ def reply(client, msg):
             client.send('^mYou reply to %s^w, %s' % (target.name, msg))
 
             ## note the sender so that a reply works
-            target.last_tell = client.name  
+            target.last_tell = client.name
 
         else:
-            client.alert('%s is no longer online.\n' % client.last_tell)    
+            client.alert('%s is no longer online.\n' % client.last_tell)
 
     else:
         client.alert('You have not recieved anything to reply to.')
-    
+
 
 #---------------------------------------------------------------------------OOC
 
@@ -94,8 +94,8 @@ def ooc(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('^gYou OOC^w, %s' % msg)                
-        
+            player.send('^gYou OOC^w, %s' % msg)
+
         else:
             player.send('^G%s OOCs^w, %s' % (client.name, msg))
 
@@ -110,8 +110,8 @@ def shout(client, msg):
     for player in shared.PLAYERS:
 
         if player == client:
-            player.send('^rYou shout^w, %s' % msg)                
-        
+            player.send('^rYou shout^w, %s' % msg)
+
         else:
             player.send('^R%s shouts^w, %s' % (client.name, msg))
 
@@ -120,15 +120,14 @@ def shout(client, msg):
 
 @parsers.monologue
 def say(client, msg):
-    
+
     """Sends message to every player in client's room."""
 
     room = client.get_room()
     body = client.body
 
     room.tell_all_but(body, '^W%s says^w, %s' % (body.name, msg))
-    client.send('^WYou say^w, %s' % msg)    
+    client.send('^WYou say^w, %s' % msg)
 
     ## Fire the on hear event
     room.on_hear(client.body, msg)
-

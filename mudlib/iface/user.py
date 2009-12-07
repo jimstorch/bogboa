@@ -1,43 +1,29 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/iface.player.py
+#   mudlib/iface/user.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
-#------------------------------------------------------------------------------
-
-# Client --> Player <-- Character
+#------------------------------------------------------------------------------# Client --> Player <-- Character
 
 from mudlib import shared
 from mudlib.error import BogCmdError
 from mudlib.world.entity import Entity
 from mudlib.iface.verb import VERB_ALIAS
 from mudlib.iface.verb import VERB_HANDLER
-
-#from driver.decorate import word_wrap
+from mudlib.iface.xterm import word_wrap
 
 
 #------------------------------------------------------------------------Client
 
-class Player(object):
+class User(object):
 
-    def __init__(self):
+    def __init__(self, client):
 
-        self.client = None              ## Network connection
-        self.active = False             ## Delete during housekeeping?
-        #self.login_attempts = 0
-        #self.name = 'Anonymous'         ## Changed to body name later
-
-        ## Create and link a fresh body
-        self.body = Body()              ## Player's character in the world
-        self.body.is_player = True
-        self.body.mind = self
+        self.client = client            ## Network connection
+        self.active = True
         self.commands = set()           ## Permitted commands
         self.verb_args = []             ## arguments for the verb handlers
-        self.last_tell = None           ## used for replies
-
-        ## Dictionary-like object used for string substitutions
-        #self.stringsub = StringSub(self)
 
     #----------------------------------------------------------------------Send
 
@@ -130,23 +116,6 @@ class Player(object):
             self.verb_args = None
             #self.soft_prompt()
 
-
-    #------------------------------------------------------------------Get Room
-
-    def get_room(self):
-
-        """Return the room object the client's body is in."""
-
-        return self.body.room
-
-    #------------------------------------------------------------------Get Body
-
-    def get_body(self):
-
-        """Return the client's body."""
-
-        return self.body
-
     #--------------------------------------------------------------------Origin
 
     def origin(self):
@@ -159,33 +128,10 @@ class Player(object):
 
     def deactivate(self):
         """Client disconnected or was kicked."""
-        ## Unlink the player's body for garbage collecting
 
-        if self.body and self.body.room:
-            self.body.room.on_exit(self.body)
-
-        if self.body and self.body.mind:
-            self.body.mind = None
-        self.body = None
-        ## Remove from the name lookup
-        if self.name.lower() in shared.BY_NAME:
-            del shared.BY_NAME[self.name.lower()]
         ## Schedule for cleanup via driver.monitor.test_connections()
         self.active = False
         self.client.active = False
-
-#    #--------------------------------------------------------------------Prompt
-
-#    def prompt(self):
-#        """Transmit a newline and a prompt"""
-#        #self.send('\n')
-#        #self.soft_prompt()
-
-#    #---------------------------------------------------------------Soft Prompt
-
-#    def soft_prompt(self):
-#        """Called when a leading new-line is not desired"""
-#        #self.send('> ', lf=False)
 
     #-------------------------------------------------------------------Verbing
 
@@ -217,7 +163,6 @@ class Player(object):
         one_true_verb = VERB_ALIAS.get(verb, None)
 
         return (one_true_verb, args)
-
 
     #-------------------------------------------------------------Grant Command
 

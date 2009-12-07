@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/calendar.py
+#   mudlib/world/calendar.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -28,25 +28,25 @@ Game Calendar:
 ## Houses are the names for each annum in the 12 year cycle.
 ## They roughly correspond to real-time months (each are ~30 days long).
 
-HOUSES = [   
-    'War God', 'Rain God', 'Emerald Witch', 
+HOUSES = [
+    'War God', 'Rain God', 'Emerald Witch',
     'Gold Scarab', 'Fire Kings', 'Stone Emperors',
     'Sapphire Goddess', 'Restless Dead', 'Long Shadows',
     'Frost Lords', 'Wolf', 'River Dragon',
-    ]     
+    ]
 
 ## UNIX_ADJ is used to align the start of game time with Jan 1, 2009 00:00 GMT.
 UNIX_ADJ = 1230768000.0
 
 ## Change this value to adjust what century the game displays.
-CENTURY_OFFSET = 0  
-             
+CENTURY_OFFSET = 0
+
 ## Basing time of a SOLAR_YEAR let's us forget about leap days.
-SOLAR_YEAR = 31556925.215999998     
+SOLAR_YEAR = 31556925.215999998
 
 ## GAME_CYCLE describes the relation twelve game years to one real year.
 ## If you want to speed up or slow down time change the divisor.
-GAME_CYCLE = SOLAR_YEAR / 1.0       
+GAME_CYCLE = SOLAR_YEAR / 1.0
 
 ## Shouldn't need to change these.
 GAME_YEAR = GAME_CYCLE / 12.0
@@ -56,12 +56,12 @@ GAME_JULIAN = GAME_YEAR / 360.0
 GAME_HOUR = GAME_DAY / 24.0
 GAME_MINUTE = GAME_HOUR / 60.0
 GAME_SECOND = GAME_MINUTE / 60.0
-                
+
 
 #-------------------------------------------------------------------------Notes
 
 #    minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
-#    hour = int((tstamp % GAME_DAY) / GAME_HOUR) 
+#    hour = int((tstamp % GAME_DAY) / GAME_HOUR)
 #    day = int((tstamp % GAME_MONTH) / GAME_DAY)
 #    julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
 #    month = int((tstamp % GAME_YEAR) / GAME_MONTH)
@@ -91,12 +91,12 @@ def time_msg():
     Return HH:MM and the period of day.
     """
     tstamp = shared.THE_TIME - UNIX_ADJ
-    hour = int((tstamp % GAME_DAY) / GAME_HOUR) 
+    hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
 
     if hour < 1:
         clock = '12:%.2d' % minute
-    elif hour >= 1 and hour < 13:     
+    elif hour >= 1 and hour < 13:
         clock = '%d:%.2d' % (hour, minute)
     else:
         clock = '%d:%.2d' % (hour - 12, minute)
@@ -133,5 +133,3 @@ def sunlight():
     tstamp = shared.THE_TIME- UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))
-        
-

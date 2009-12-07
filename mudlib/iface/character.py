@@ -9,10 +9,10 @@
 import copy
 
 from mudlib import shared
-from mudlib import calendar
-from mudlib.inventory import Bag
+from mudlib.world import calendar
+from mudlib.iface.inventory import Bag
 from mudlib.resource import ResourceManager
-from mublib.entity import Entity
+from mublib.world.entity import Entity
 
 
 class Character(Entity):

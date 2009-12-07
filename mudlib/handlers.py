@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/connect.py
+#   mudlib/hanlders.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -9,8 +9,9 @@
 import random
 
 from mudlib import shared
-from mudlib.player import Player
-from driver.config import LOBBY_UUID
+from mudlib.iface.entrant import Entrant
+from mudlib.iface.player import Player
+from mudlib.config import LOBBY_UUID
 
 
 greeting = """^kb%s^s
@@ -32,6 +33,10 @@ BCOLORS = ['^R', '^B', '^C', '^M', '^G', '^Y',
 
 def on_connect(client):
 
+    """
+    Handler for new client connections, called by miniboa server.
+    """
+
     player = Player()
     player.client = client
     client.send_nowrap(greeting % random.choice(BCOLORS))
@@ -46,4 +51,16 @@ def on_connect(client):
 #-----------------------------------------------------------------On Disconnect
 
 def on_disconnect(client):
+
+    """
+    Handler for lost client connections, called by miniboa server.
+    """
+
+    pass
+
+
+#-----------------------------------------------------------------------On Play
+
+def begin_play(entrant, character_name):
+
     pass

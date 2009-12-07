@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/loader/file_loader.py
+#   mudlib/dbfs/file_loader.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -17,13 +17,13 @@ import sys
 import glob
 
 from mudlib import shared
-from driver.log import THE_LOG
-from driver.error import BogYAMLError
-from driver.loader.from_yaml import parse_markup
+from mudlib.log import THE_LOG
+from mudlib.error import BogYAMLError
+from mudlib.dbfs.from_yaml import parse_markup
 
 
 ##  Order of Precedence:
-##  Races, Guilds, Items, Spawns, Rooms, Helps 
+##  Races, Guilds, Items, Spawns, Rooms, Helps
 
 #-------------------------------------------------------------------Load Module
 
@@ -32,37 +32,37 @@ def load_module(module):
     THE_LOG.add(">> Loading Module: '%s'"  % module)
 
     ## Load Races
-    from mudlib.race import configure_race, register_race
+    from mudlib.world.race import configure_race, register_race
     for cfg in race_directory(module):
         race = configure_race(cfg)
         register_race(race)
 
     ## Load Guilds
-    from mudlib.guild import configure_guild, register_guild
+    from mudlib.world.guild import configure_guild, register_guild
     for cfg in guild_directory(module):
         guild = configure_guild(cfg)
         register_guild(guild)
 
-    ## Load Items    
-    from mudlib.item import configure_item, register_item
+    ## Load Items
+    from mudlib.world.item import configure_item, register_item
     for cfg in item_directory(module):
         item = configure_item(cfg)
         register_item(item)
 
-    ## Load Spawns    
-#    from mudlib.item import configure_spawn, register_spawn
+    ## Load Spawns
+#    from mudlib.world.spawn import configure_spawn, register_spawn
 #    for cfg in spawn_directory(module):
 #        spawn = configure_spawn(cfg)
 #        register_spawn(spawn)
 
-    ## Load Rooms    
-    from mudlib.room import configure_room, register_room
+    ## Load Rooms
+    from mudlib.world.room import configure_room, register_room
     for cfg in room_directory(module):
         room = configure_room(cfg)
         register_room(room)
 
     ## Load Help
-    from mudlib.help import configure_help, register_help
+    from mudlib.iface.help import configure_help, register_help
     for cfg in help_directory(module):
         help = configure_help(cfg)
         register_help(help)
@@ -194,5 +194,3 @@ def parse_file(filename):
     ## Add the filename to the cfg dictionary
     cfg['filename'] = filename
     return cfg
-
-

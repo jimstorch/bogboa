@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/race.py
+#   mudlib/world/race.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -9,21 +9,21 @@
 import sys
 
 from mudlib.shared import RACES
-from driver.log import THE_LOG
+from mudlib.log import THE_LOG
 
 #--------------------------------------------------------------------------Race
 
 class Race(object):
 
     def __init__(self):
-    
+
 #        self.uuid = None
         self.name = None
         self.filename = None
 
         self.stats = {}
         self.ability = {}
-        
+
 
 #----------------------------------------------------------------Configure race
 
@@ -72,8 +72,8 @@ def configure_race(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add( "!! Unrecognized key(s) in config for race '%s': %s" 
-            % ( race.name, cfg.keys()) ) 
+        THE_LOG.add( "!! Unrecognized key(s) in config for race '%s': %s"
+            % ( race.name, cfg.keys()) )
 
     return race
 
@@ -92,4 +92,4 @@ def register_race(race):
             race.uuid, race.name, race.module) )
         sys.exit(1)
     else:
-        RACES[race.name] = race    
+        RACES[race.name] = race

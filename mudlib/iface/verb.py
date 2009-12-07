@@ -7,14 +7,14 @@
 #------------------------------------------------------------------------------
 
 
-from mudlib.commands import account
-from mudlib.commands import movement
-from mudlib.commands import speech
-from mudlib.commands import info
-from mudlib.commands import usage
-from mudlib.commands import wizard
-from mudlib.commands import system
-#from mudlib.action import silly
+from mudlib.iface import cmd_account
+from mudlib.iface import cmd_movement
+from mudlib.iface import cmd_speech
+from mudlib.iface import cmd_info
+from mudlib.iface import cmd_use
+from mudlib.iface import cmd_wiz
+from mudlib.iface import cmd_system
+#from mudlib.iface import silly
 
 
 VERB_ALIAS = {}
@@ -31,84 +31,84 @@ COMMAND_LIST = (
 
     ## Account
 
-    (('create',), account.create),
-    (('name',), account.name),
-    (('gender',), account.gender),
-    (('race',), account.race),
-    (('guild',), account.guild),
-    (('password',), account.password),
-#    (('email',), account.email),
-    (('review',), account.review),
-    (('save',), account.save),
-    (('load',), account.load),
+    (('create',), cmd_account.create),
+    (('name',), cmd_account.name),
+    (('gender',), cmd_account.gender),
+    (('race',), cmd_account.race),
+    (('guild',), cmd_account.guild),
+    (('password',), cmd_account.password),
+#    (('email',), cmd_account.email),
+    (('review',), cmd_account.review),
+    (('save',), cmd_account.save),
+    (('load',), cmd_account.load),
 
     ## Movement
 
-    (('north', 'n', '8'), movement.north),
-    (('east', 'e', '6'), movement.east),
-    (('south', 's', '2'), movement.south),
-    (('west', 'w', '4'), movement.west),
-#    (('up', 'u', 'climb', '9'), movement.up),
-#    (('down', 'd', '3'), movement.down),
-#    (('recall', 'home'), movement.recall),
-#    (('enter',), movement.enter),
-#    (('exit',), movement.exit),
+    (('north', 'n', '8'), cmd_movement.north),
+    (('east', 'e', '6'), cmd_movement.east),
+    (('south', 's', '2'), cmd_movement.south),
+    (('west', 'w', '4'), cmd_movement.west),
+#    (('up', 'u', 'climb', '9'), cmd_movement.up),
+#    (('down', 'd', '3'), cmd_movement.down),
+#    (('recall', 'home'), cmd_movement.recall),
+#    (('enter',), cmd_movement.enter),
+#    (('exit',), cmd_movement.exit),
 
     ## Communication
 
-    (('broadcast', 'announce'), speech.broadcast),
-    (('emote', '/em', ':', 'em'), speech.emote),
-    (('ooc',), speech.ooc),
-    (('reply', 'r', '/r'), speech.reply),
-    (('say', '/s'), speech.say),
-    (('shout', 'yell', '/y'), speech.shout),
-    (('tell', 'whisper', '/t', '/w'), speech.tell),
+    (('broadcast', 'announce'), cmd_speech.broadcast),
+    (('emote', '/em', ':', 'em'), cmd_speech.emote),
+    (('ooc',), cmd_speech.ooc),
+    (('reply', 'r', '/r'), cmd_speech.reply),
+    (('say', '/s'), cmd_speech.say),
+    (('shout', 'yell', '/y'), cmd_speech.shout),
+    (('tell', 'whisper', '/t', '/w'), cmd_speech.tell),
 
     ## Information
 
-    (('help', '?', 'info'), info.help),
-    (('topics',), info.topics),
-    (('commands','command', 'cmds', '??'), info.commands),
-    (('score', 'played','stats'), info.score),
-    (('time', 'clock', 'hour'), info.time),
-    (('date', 'calendar', 'year'), info.date),
-    (('inventory', 'i', 'inven'), info.inventory),
-    (('look', 'l',), info.look),
-    (('stats', 'stat',), info.stats),
+    (('help', '?', 'info'), cmd_info.help),
+    (('topics',), cmd_info.topics),
+    (('commands','command', 'cmds', '??'), cmd_info.commands),
+    (('score', 'played','stats'), cmd_info.score),
+    (('time', 'clock', 'hour'), cmd_info.time),
+    (('date', 'calendar', 'year'), cmd_info.date),
+    (('inventory', 'i', 'inven'), cmd_info.inventory),
+    (('look', 'l',), cmd_info.look),
+    (('stats', 'stat',), cmd_info.stats),
 
     ## Interaction
 
-    (('wear', 'don', 'equip'), usage.wear),
-    (('remove', 'unequip'), usage.remove),
-    (('take', 'get', 'pickup', 'grab'), usage.take),
-    (('drop', 'discard', 'toss', 'throw'), usage.drop),
-#    (('do', 'cast', 'doability', 'spell'), usage.do),
-#    (('attack', 'kill', 'atk', 'slay'), usage.attack),
-#    (('target', 'tar'), usage.target),
-#    (('search',), usage.search),
+    (('wear', 'don', 'equip'), cmd_use.wear),
+    (('remove', 'unequip'), cmd_use.remove),
+    (('take', 'get', 'pickup', 'grab'), cmd_use.take),
+    (('drop', 'discard', 'toss', 'throw'), cmd_use.drop),
+#    (('do', 'cast', 'doability', 'spell'), cmd_use.do),
+#    (('attack', 'kill', 'atk', 'slay'), cmd_use.attack),
+#    (('target', 'tar'), cmd_use.target),
+#    (('search',), cmd_use.search),
 
     ## System
 
-    (('quit', 'exit', 'logoff'), system.quit),
-    (('bug',), system.bug),
-    (('ansi','color'), system.ansi),
+    (('quit', 'exit', 'logoff'), cmd_system.quit),
+    (('bug',), cmd_system.bug),
+    (('ansi','color'), cmd_system.ansi),
 
     ## Wizardry
-    (('ban',), wizard.ban),
-    (('grant',), wizard.grant),
-    (('kick', 'punt'), wizard.kick),
-    (('revoke',), wizard.revoke),
-    (('summon',), wizard.summon),
-    (('teleport', 'port'), wizard.teleport),
-    (('zap',), wizard.zap),
-    (('shutdown',), wizard.shutdown),
-    (('uptime',), wizard.uptime),
+    (('ban',), cmd_wiz.ban),
+    (('grant',), cmd_wiz.grant),
+    (('kick', 'punt'), cmd_wiz.kick),
+    (('revoke',), cmd_wiz.revoke),
+    (('summon',), cmd_wiz.summon),
+    (('teleport', 'port'), cmd_wiz.teleport),
+    (('zap',), cmd_wiz.zap),
+    (('shutdown',), cmd_wiz.shutdown),
+    (('uptime',), cmd_wiz.uptime),
 
     ## Silly
-#    (('verbose',), silly.verbose),
-#    (('plugh', 'xyzzy'), silly.plugh),
-#    (('pizza',), silly.pizza),
-#    (('iddqd', 'idkfa'), silly.iddqd),
+#    (('verbose',), cmd_silly.verbose),
+#    (('plugh', 'xyzzy'), cmd_silly.plugh),
+#    (('pizza',), cmd_silly.pizza),
+#    (('iddqd', 'idkfa'), cmd_silly.iddqd),
 
     )
 

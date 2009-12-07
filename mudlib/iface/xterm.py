@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/xterm.py
+#   mudlib/iface/xterm.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -39,8 +39,8 @@ ANSI_CODES = (
     ( '^C', '\x1b[1;36m' ),         # bright cyan
     ( '^w', '\x1b[22;37m' ),        # white
     ( '^W', '\x1b[1;37m' ),         # bright white
-    ( '^d', '\x1b[39m' ),           # default (should be white on black)    
-    ( '^i', '\x1b[7m' ),            # inverse text on  
+    ( '^d', '\x1b[39m' ),           # default (should be white on black)
+    ( '^i', '\x1b[7m' ),            # inverse text on
     ( '^I', '\x1b[27m' ),           # inverse text off
     ( '^^', '\x1b[0m' ),            # reset all
     ( '^_', '\x1b[4m' ),            # underline on
@@ -64,7 +64,7 @@ def colorize(text, ansi=True):
 
     else:
         text = strip_caret_codes(text)
-       
+
     return text
 
 
@@ -79,7 +79,7 @@ def strip_caret_codes(text):
     return text
 
 #---------------------------------------------------------------------Word Wrap
-      
+
 def word_wrap(text, columns=78, indent=2, padding=1):
 
     """Given a block of text, breaks into a list of lines wrapped to
@@ -97,8 +97,7 @@ def word_wrap(text, columns=78, indent=2, padding=1):
             if (len(line) + 1 + len(word)) > columns:
                 lines.append(line)
                 line = ' ' * padding
-            line += ' ' + word                      
-        if not line.isspace(): 
-            lines.append(line)     
-    return lines    
-
+            line += ' ' + word
+        if not line.isspace():
+            lines.append(line)
+    return lines

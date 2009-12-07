@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/config.py
+#   mudlib/config.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,7 +8,7 @@
 
 import sys
 
-from driver.loader.file_loader import parse_file
+from mudlib.dbfs.file_loader import parse_file
 
 
 #--[ Read Configuration ]------------------------------------------------------
@@ -27,8 +27,7 @@ YEAR_OFFSET = _cfg['year_offset']
 
 ## YAML uses None for empty values, which would choke socket.bind()
 if ADDRESS == None:
-    ADDRESS = ''   
+    ADDRESS = ''
 
 LOBBY_UUID = _cfg['lobby_uuid']
 START_UUID = _cfg['start_uuid']
-

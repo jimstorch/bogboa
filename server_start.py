@@ -6,27 +6,24 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-#from mudlib import shared
-from driver.log import THE_LOG
-from driver.config import PORT
+from mudlib import shared
+from mudlib.log import THE_LOG
+from mudlib.config import PORT
 
 from miniboa.async import TelnetServer
-from driver.handlers import on_connect
-from driver.handlers import on_disconnect
+from mudlib.handlers import on_connect
+from mudlib.handlers import on_disconnect
 
-from driver.scheduler import THE_SCHEDULER
-from driver.scheduler import Cycle
-from driver.scheduler import Series
+from mudlib.scheduler import THE_SCHEDULER
+from mudlib.scheduler import Cycle
+from mudlib.scheduler import Series
 
-#from driver.monitor import test_connections
-from driver.monitor import kick_idle_clients
-#from driver.monitor import purge_dead_clients
-from driver.monitor import process_client_commands
-from driver.monitor import sweep_rooms
+from mudlib.monitor import kick_idle_clients
+from mudlib.monitor import process_client_commands
+from mudlib.monitor import sweep_rooms
 
-from driver.loader.file_loader import load_module
-from driver.dbms.tables import check_database
-
+from mudlib.dbfs.file_loader import load_module
+from mudlib.dbfs.tables import check_database
 
 
 THE_LOG.add(">> **************")
@@ -67,7 +64,7 @@ Cycle(.25, process_client_commands)
 #       Create the Telnet Server
 #------------------------------------------------------------------------------
 
-server = TelnetServer()
+server = TelnetServer(port=PORT)
 server.on_connect = on_connect
 server.on_disconnect = on_disconnect
 
