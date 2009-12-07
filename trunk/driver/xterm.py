@@ -52,7 +52,7 @@ ANSI_CODES = (
     )
 
 
-#--[ Colorize ]----------------------------------------------------------------
+#----------------------------------------------------------------------Colorize
 
 def colorize(text, ansi=True):
     """ If the client wants ansi, replace the tokens with ansi sequences --
@@ -68,7 +68,7 @@ def colorize(text, ansi=True):
     return text
 
 
-#--[ Strip Caret Codes ]-------------------------------------------------------
+#-------------------------------------------------------------Strip Caret Codes
 
 def strip_caret_codes(text):
 
@@ -78,41 +78,9 @@ def strip_caret_codes(text):
         text = text.replace(token, '')
     return text
 
-
-
-##--[ Word Wrap ]---------------------------------------------------------------
-
-#def word_wrap(text, columns=78, indent=2, padding=2):
-#    """Wraps a block of text to a set column-width with paragraph indentation
-#    and left padding.  Single newlines are not preserved, but double-newlines 
-#    (paragraph breaks) are.  Designed to give text an easy to read, book-like
-#    appearance.
-#    Note: Caret Codes don't display so will cause some lines to shorten."""
-#    # Initially, I wanted to split on '\n\n', but that would have missed lines
-#    # that were only white space -- like '\n\t\t\n'.
-#    paragraphs = text.split('\n')
-#    wtext = ''
-#    line = ' ' * padding + ' ' * indent
-#    for para in paragraphs:
-#        if len(para.strip()):
-#            words = para.split()
-#            for word in words:        
-#                if ( len(line) + len(word) + 1 ) < columns:
-#                    line += word + ' '
-#                else:
-#                    wtext += line + '\n'
-#                    line = ' ' * padding + word + ' '
-#        # So I check here        
-#        else:
-#            wtext += line + '\n\n'
-#            line = ' ' * padding + ' ' * indent
-#    wtext += line            
-#    return wtext
-
-
-#---------------------------------------------------------------------Wrap List
+#---------------------------------------------------------------------Word Wrap
       
-def wrap_list(text, columns=78, indent=2, padding=1):
+def word_wrap(text, columns=78, indent=2, padding=1):
 
     """Given a block of text, breaks into a list of lines wrapped to
     length.  Should be a bit more efficient with telnet sending lines.

@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/tcp/telnet.py
+#   miniboa/telnet.py
 #   Copyright 2009 Jim Storch
-#   Distributed under the terms of the GNU General Public License
-#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
+#   Licensed under the Apache License, Version 2.0 (the "License"); you may
+#   not use this file except in compliance with the License. You may obtain a
+#   copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#   License for the specific language governing permissions and limitations
+#   under the License.
 #------------------------------------------------------------------------------
 
 """Manage one Telnet client connected via a TCP/IP socket."""
 
 import socket
+import time
 
-from mudlib import shared
-#from driver.log import THE_LOG
-from driver.xterm import colorize
-from driver.xterm import wrap_list
-from driver.error import BogClientError
+from miniboa import BogConnectionLost
 
 #---[ Telnet Notes ]-----------------------------------------------------------
 # (See RFC 854 for more information)
@@ -88,23 +91,14 @@ NAWS    = chr( 31)      # Negotiate About Window Size
 LINEMO  = chr( 34)      # Line Mode
 
 
-#--------------------------------------------------------------------Show Bytes
-
-def show_bytes(data, direction):
-    """I use this for troubleshooting while working on Telnet commands."""
-    for index, byte in enumerate(data):
-        ascii = ord(byte)
-        if ascii < 32 or ascii > 126:
-            print '%s %.2d  =     (%d)' % (direction, index + 1, ascii)
-        else:
-            print '%s %.2d  =  %s  %d' % (direction, index + 1, byte, ascii)
-    print ''
-
-
 #-----------------------------------------------------------------Telnet Option
 
 class TelnetOption(object):
-    """Simple class used to track the status of an extended Telnet option."""
+
+    """
+    Simple class used to track the status of an extended Telnet option.
+    """
+
     def __init__(self):
         self.local_option = UNKNOWN     # Local state of an option
         self.remote_option = UNKNOWN    # Remote state of an option
@@ -113,19 +107,25 @@ class TelnetOption(object):
 
 #------------------------------------------------------------------------Telnet
 
-class Telnet(object):
+class TelnetClient(object):
 
-    """Represents a client connection via Telnet."""
+    """
+    Represents a client connection via Telnet.
+
+    First argument is the socket discovered by the Telnet Server.
+    Second argument is the tuple (ip address, port number).
+
+    """
 
     def __init__(self, sock, addr_tup):
         self.protocol = 'telnet'
         self.active = True          # Turns False when the connection is lost
         self.sock = sock            # The connection's socket
         self.fileno = sock.fileno() # The socket's file descriptor
-        self.addr = addr_tup[0]     # The client's remote TCP/IP address
+        self.address = addr_tup[0]  # The client's remote TCP/IP address
         self.port = addr_tup[1]     # The client's remote port
         self.terminal_type = 'unknown client' # set via request_terminal_type()
-        self.use_ansi = True
+        #self.use_ansi = True
         self.columns = 80
         self.rows = 24
         self.send_pending = False
@@ -135,8 +135,8 @@ class Telnet(object):
         self.bytes_received = 0
         self.cmd_ready = False
         self.command_list = []
-        self.connect_time = shared.THE_TIME
-        self.last_input_time = shared.THE_TIME
+        self.connect_time = time.time()
+        self.last_input_time = time.time()
 
         ## State variables for interpreting incoming telnet commands
         self.telnet_got_iac = False # Are we inside an IAC sequence?
@@ -155,8 +155,12 @@ class Telnet(object):
     #---------------------------------------------------------------Get Command
 
     def get_command(self):
-        """Get a line of text that was received from the DE. The class's
-        cmd_ready attribute will be true if lines are available."""
+
+        """
+        Get a line of text that was received from the DE. The class's
+        cmd_ready attribute will be true if lines are available.
+        """
+
         cmd = None
         count = len(self.command_list)
         if count > 0:
@@ -168,57 +172,54 @@ class Telnet(object):
 
     #----------------------------------------------------------------------Send
 
-    def send(self, text):
+    def send(self, line):
 
-        if text:
-            lines = wrap_list(text, self.columns - 2)
-            for line in lines:
-                self.send_buffer += colorize(line, self.use_ansi) + '\r\n'
-                self.send_pending = True
-
-
-    #---------------------------------------------------------------Send Nowrap
-
-    def send_nowrap(self, text):
-        """Queue text to be sent to the DE."""
-
-        ## Needed to make some terminal programs happy
-        #text = text.replace('\n', '\r\n')
-
-        if text:
-            text = colorize(text, self.use_ansi)
-            lines = text.split('\n')
-            for line in lines:
-                self.send_buffer += colorize(line) + '\r\n'
-                self.send_pending = True
-
+        if line:
+            self.send_buffer += line
+            self.send_pending = True
 
     #-----------------------------------------------------------------Addr Port
 
     def addrport(self):
-        """Return the DE's IP address and port number as a string."""
-        return "%s:%s" % (self.addr, self.port)
+
+        """
+        Return the DE's IP address and port number as a string.
+        """
+
+        return "%s:%s" % (self.address, self.port)
 
 
     #----------------------------------------------------------------------Idle
 
     def idle(self):
-        """Returns the number of seconds that have elasped since the DE
-        last sent us some input."""
-        return shared.THE_TIME - self.last_input_time
+
+        """
+        Returns the number of seconds that have elasped since the DE
+        last sent us some input.
+        """
+
+        return time.time() - self.last_input_time
 
 
     #------------------------------------------------------------------Duration
 
     def duration(self):
-        """Returns the number of seconds the DE has been connected."""
-        return shared.THE_TIME - self.connect_time
+
+        """
+        Returns the number of seconds the DE has been connected.
+        """
+
+        return time.time() - self.connect_time
 
 
     #------------------------------------------------------------Request Do SGA
 
     def request_do_sga(self):
-        """Request DE to Suppress Go-Ahead.  See RFC 858."""
+
+        """
+        Request DE to Suppress Go-Ahead.  See RFC 858.
+        """
+
         self._iac_do(SGA)
         self._note_reply_pending(SGA, True)
 
@@ -226,7 +227,11 @@ class Telnet(object):
     #---------------------------------------------------------Request Will Echo
 
     def request_will_echo(self):
-        """Tell the DE that we would like to echo their text.  See RFC 857."""
+
+        """
+        Tell the DE that we would like to echo their text.  See RFC 857.
+        """
+
         self._iac_will(ECHO)
         self._note_reply_pending(ECHO, True)
         self.telnet_echo = True
@@ -235,8 +240,12 @@ class Telnet(object):
     #---------------------------------------------------------Request Wont Echo
 
     def request_wont_echo(self):
-        """Tell the DE that we would like to stop echoing their text.
-        See RFC 857."""
+
+        """
+        Tell the DE that we would like to stop echoing their text.
+        See RFC 857.
+        """
+
         self._iac_wont(ECHO)
         self._note_reply_pending(ECHO, True)
         self.telnet_echo = False
@@ -245,9 +254,11 @@ class Telnet(object):
     #----------------------------------------------------------Password Mode On
 
     def password_mode_on(self):
+
         """
         Tell DE we will echo (but don't) so typed passwords don't show.
         """
+
         self._iac_will(ECHO)
         self._note_reply_pending(ECHO, True)
 
@@ -255,7 +266,11 @@ class Telnet(object):
     #---------------------------------------------------------Password Mode Off
 
     def password_mode_off(self):
-        """Tell DE we are done echoing (we lied) and show typing again."""
+
+        """
+        Tell DE we are done echoing (we lied) and show typing again.
+        """
+
         self._iac_wont(ECHO)
         self._note_reply_pending(ECHO, True)
 
@@ -263,7 +278,11 @@ class Telnet(object):
     #--------------------------------------------------------------Request NAWS
 
     def request_naws(self):
-        """Request to Negotiate About Window Size.  See RFC 1073."""
+
+        """
+        Request to Negotiate About Window Size.  See RFC 1073.
+        """
+
         self._iac_do(NAWS)
         self._note_reply_pending(NAWS, True)
 
@@ -271,8 +290,12 @@ class Telnet(object):
     #-----------------------------------------------------Request Terminal Type
 
     def request_terminal_type(self):
-        """Begins the Telnet negotiations to request the terminal type from
-        the client.  See RFC 779."""
+
+        """
+        Begins the Telnet negotiations to request the terminal type from
+        the client.  See RFC 779.
+        """
+
         self._iac_do(TTYPE)
         self._note_reply_pending(TTYPE, True)
 
@@ -280,17 +303,20 @@ class Telnet(object):
     #---------------------------------------------------------------Socket Send
 
     def socket_send(self):
-        """Called by ThePortManagers when send data is ready."""
+
+        """
+        Called by TelnetServer when send data is ready.
+        """
+
         if len(self.send_buffer):
             try:
                 sent = self.sock.send(self.send_buffer)
             except socket.error, err:
-                THE_LOG.add("!! SEND error '%d:%s' from %s" % (err[0], err[1],
+                print("!! SEND error '%d:%s' from %s" % (err[0], err[1],
                     self.addrport()))
                 self.active = False
                 return
             self.bytes_sent += sent
-            #show_bytes(self.send_buffer[:sent], "<--")
             self.send_buffer = self.send_buffer[sent:]
         else:
             self.send_pending = False
@@ -299,30 +325,29 @@ class Telnet(object):
     #---------------------------------------------------------------Socket Recv
 
     def socket_recv(self):
-        """Called by ThePortManager when recv data is ready."""
+
+        """
+        Called by TelnetServer when recv data is ready.
+        """
+
         try:
             data = self.sock.recv(2048)
-        except socket.error, err:
-            error = ("RECV error '%d:%s' from %s" % (err[0], err[1],
-#                self.addrport()))
-            self.active = False
-            raise BogClientError(error)
+        except socket.error, ex:
+            err_msg = ("Socket.recv() error '%d:%s' from %s" %
+                (ex[0], ex[1], self.addrport()))
+            raise BogConnectionLost(err_msg)
 
         ## Did they close the connection?
         size = len(data)
         if size == 0:
-            self.active = False
-            raise BogClientError('%s disconnected' % self.addrport())
-#            THE_LOG.add("-- Connection dropped by %s" % self.addrport())
-#            self.active = False
-#            return
+            err_msg = 'Connection dropped by %s' % self.addrport()
+            raise BogConnectionLost(err_msg)
 
         ## Update some trackers
-        self.last_input_time = shared.THE_TIME
+        self.last_input_time = time.time()
         self.bytes_received += size
 
         ## Test for telnet commands
-        #show_bytes(data, '-->')
         for byte in data:
             self._iac_sniffer(byte)
 
@@ -332,40 +357,34 @@ class Telnet(object):
             if mark == -1:
                 break
             cmd = self.recv_buffer[:mark].strip()
-            ## Just in case some joker tries:
-            #cmd = strip_caret_codes(cmd)
-
-            ## Taking out the suppression of empty input, better handled
-            ## in the various mode classes.
-            #if len(cmd):
             self.command_list.append(cmd)
             self.cmd_ready = True
-            #print self.command_list, self.cmd_ready
             self.recv_buffer = self.recv_buffer[mark+1:]
 
 
     #-----------------------------------------------------------------Recv Byte
 
     def _recv_byte(self, byte):
-        """Test a received character and only pass those that are printable to
-        the recv_buffer. Echo back to client if needed."""
+
+        """
+        Test a received character and only pass those that are printable to
+        the recv_buffer. Echo back to client if needed.
+        """
+
         ## Filter out non-printing characters
         if (byte >= ' ' and byte <= '~') or byte == '\n':
             if self.telnet_echo:
                 self._echo_byte(byte)
             self.recv_buffer += byte
 
-#        ## Check for flooding
-#        if len(self.recv_buffer) > 512 and self.active:
-#            THE_LOG.add('?? Disconnecting %s for Telnet Flooding.' %
-#                self.addrport())
-#            self.active = False
-
-
     #-----------------------------------------------------------------Echo Byte
 
     def _echo_byte(self, byte):
-        """Echo a character back to the client and convert LF into CR\LF."""
+
+        """
+        Echo a character back to the client and convert LF into CR\LF.
+        """
+
         if byte == '\n':
             self.send_buffer += '\r'
         if self.telnet_echo_password:
@@ -377,8 +396,12 @@ class Telnet(object):
     #---------------------------------------------------------------IAC Sniffer
 
     def _iac_sniffer(self, byte):
-        """Watches incomming data for Telnet IAC sequences. Passes the data,
-        if any, with the Telnet commands stripped to _recv_byte()."""
+
+        """
+        Watches incomming data for Telnet IAC sequences.
+        Passes the data, if any, with the IAC commands stripped to
+        _recv_byte().
+        """
 
         ## Are we not currently in an IAC sequence coming from the DE?
 
@@ -449,7 +472,11 @@ class Telnet(object):
     #--------------------------------------------------------------Two Byte Cmd
 
     def _two_byte_cmd(self, cmd):
-        """Handle incoming Telnet commands that are two bytes long."""
+
+        """
+        Handle incoming Telnet commands that are two bytes long.
+        """
+
         #print "got two byte cmd %d" % ord(cmd)
 
         if cmd == SB:
@@ -496,7 +523,11 @@ class Telnet(object):
     #------------------------------------------------------------Three Byte Cmd
 
     def _three_byte_cmd(self, option):
-        """Handle incoming Telnet commmands that are three bytes long."""
+
+        """
+        Handle incoming Telnet commmands that are three bytes long.
+        """
+
         cmd = self.telnet_got_cmd
         #print "got three byte cmd %d:%d" % (ord(cmd), ord(option))
 
@@ -691,7 +722,11 @@ class Telnet(object):
     #----------------------------------------------------------------SB Decoder
 
     def _sb_decoder(self):
-        """Figures out what to do with a received sub-negotiation block."""
+
+        """
+        Figures out what to do with a received sub-negotiation block.
+        """
+
         #print "at decoder"
         bloc = self.telnet_sb_buffer
         if len(bloc) > 2:
