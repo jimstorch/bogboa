@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/player.py
+#   mudlib/entant.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-# Client --> Player <-- Character
-
 import shared
+from mudlib.player import Player
 from driver.error import BogCmdError
-from mudlib.entity import Entity
 from mudlib.verb import VERB_ALIAS
 from mudlib.verb import VERB_HANDLER
 
@@ -19,14 +17,14 @@ from mudlib.verb import VERB_HANDLER
 
 #------------------------------------------------------------------------Client
 
-class Player(object):
+class Entrant(Player):
 
     def __init__(self):
 
         self.client = None              ## Network connection
         self.active = False             ## Delete during housekeeping?
-        #self.login_attempts = 0
-        #self.name = 'Anonymous'         ## Changed to body name later
+        self.login_attempts = 0
+        self.name = 'Anonymous'         ## Changed to body name later
 
         ## Create and link a fresh body
         self.body = Body()              ## Player's character in the world

@@ -14,23 +14,23 @@ SERVER_RUN = True
 
 ## Since so much of code needs to know the current time it seemed better
 ## to share the value instead a bajillion OS calls via time.time().
-## Note: THE_TIME gets updates each cycle by 
+## Note: THE_TIME gets updates each cycle by
 ## driver.scheduler.THE_SCHEDULER.tick().
 
-THE_TIME = 0.0      
+THE_TIME = 0.0
 
 
 #--[ Client Connections ]------------------------------------------------------
 
-LOBBY = []
-PLAYERS = []        
-BY_NAME = {}          ## key is player name 
+LOBBY_CLIENTS = {}  ## Key is Client object, value is Visitor object
+GAME_CLIENTS = {}   ## Key is Client object, value is Player object
+BY_NAME = {}        ## key is player name, value is Player object
 
 #--[ Reference Objects ]-------------------------------------------------------
 
 GUILDS = {}         ## key is guild name
 HELPS = {}          ## key is help name
-RACES = {}          ## key is race name 
+RACES = {}          ## key is race name
 ITEMS = {}          ## key is item UUID
 SPAWNS = {}         ## key is npc UUID
 
@@ -71,11 +71,8 @@ def find_item(uuid):
 
 #---------------------------------------------------------------------Is Online
 
-def is_online(name):    
+def is_online(name):
 
     """Return True is the given name matches an online player."""
 
-    return name in BY_NAME       
-
-
-   
+    return name in BY_NAME
