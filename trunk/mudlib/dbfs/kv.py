@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#   driver/dbms/kv.py
+#   mudlib/dbfs/kv.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -14,7 +14,7 @@ to take advantage of SQLite's 'INSERT OR REPLACE' mechanism where we don't
 have to worry if the row already exists before inserting or updating.
 """
 
-from driver.dbms.dbconnect import THE_CURSOR
+from mudlib.dbfs.dbconnect import THE_CURSOR
 
 
 #----------------------------------------------------------------------Fetch KV

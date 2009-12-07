@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/room.py
+#   mudlib/world/room.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -10,12 +10,14 @@ import sys
 from random import choice
 
 from mudlib import shared
-from driver.log import THE_LOG
-from driver.bogscript import process_scripts
-from mudlib.calendar import time_msg
-from inventory import Floor
-from mudlib.lang import guestimate
-from mudlib.lang import keyset
+from mudlib.log import THE_LOG
+from mudlib.iface.lang import keyset
+from mudlib.iface.lang import guestimate
+from mudlib.iface.inventory import Floor
+from mudlib.world.calendar import time_msg
+from mudlib.scripting.bogscript import process_scripts
+
+
 
 from mudlib.scripting import SCRIPT_ENV
 

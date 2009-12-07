@@ -23,7 +23,7 @@ THE_TIME = 0.0
 #--[ Client Connections ]------------------------------------------------------
 
 LOBBY_CLIENTS = {}  ## Key is Client object, value is Visitor object
-GAME_CLIENTS = {}   ## Key is Client object, value is Player object
+PLAY_CLIENTS = {}   ## Key is Client object, value is Player object
 BY_NAME = {}        ## key is player name, value is Player object
 
 #--[ Reference Objects ]-------------------------------------------------------

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/bogscript.py
+#   mudlib/scripting/bogscript.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,10 +8,10 @@
 
 import sys
 
-from driver.dsl import lexer
-from driver.dsl import pygen
-from driver.dsl import bytegen
-from driver.error import BogScriptError
+from mudlib.scripting.dsl import lexer
+from mudlib.scripting.dsl import pygen
+from mudlib.scripting.dsl import bytegen
+from mudlib.error import BogScriptError
 
 
 #----------------------------------------------------------------Compile Script

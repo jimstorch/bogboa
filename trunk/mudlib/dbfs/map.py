@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/dbms/map.py
+#   mudlib/dbfs/map.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -10,8 +10,8 @@ import datetime
 import hashlib
 import sys
 
-from driver.log import THE_LOG
-from driver.dbms.dbconnect import THE_CURSOR
+from mudlib.log import THE_LOG
+from mudlib.dbfs.dbconnect import THE_CURSOR
 from mudlib import shared
 
 

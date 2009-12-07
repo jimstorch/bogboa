@@ -6,14 +6,8 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import parsers
-from mudlib.lang import keyset
-
-
-
-
-
-
+from mudlib.iface import parsers
+from mudlib.iface.lang import keyset
 
 
 #--------------------------------------------------------------------------Drop

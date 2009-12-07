@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/brain.py
+#   mudlib/world/ai.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -13,9 +13,9 @@ from mudlib.lookup import find_body
 
 
 class Brain(object):
-    
+
     ## AI Parameters control this creature's tendency to:
-    aggression = 0.0            ##  attack / retaliate 
+    aggression = 0.0            ##  attack / retaliate
     mobility = 0.5              ##  give chase
     memory = 0.50               ##  forget
     evolution = 0.50            ##  use advanced abilities
@@ -96,7 +96,7 @@ class Brain(object):
         if not self.like.has_key(body.index):
             #TODO add some faction testing here
             pass
-                        
+
     def _hear(self, body):
         pass
 
@@ -110,17 +110,17 @@ class Brain(object):
 
         """Imitate free will and choose a new state for the AI."""
 
-        ## Sort our affinity for other bodies by dislike 
+        ## Sort our affinity for other bodies by dislike
         hated = sorted(self.like.iteritems(), key=itemgetter(1))
 
         if hated:
-            enemy = hated[0]        
-            friend = hated[-1]  
-               
-                                
+            enemy = hated[0]
+            friend = hated[-1]
+
+
         else:
             return self._idle
-  
+
 
     #--------------------------------------------------------------------States
 
@@ -129,9 +129,9 @@ class Brain(object):
         return
 
     def _stunned(self):
-        """Brain is temporarily non-reactive."""    
+        """Brain is temporarily non-reactive."""
         if self.timer.ready_check('stunned'):
-            self.state = self._decide()           
+            self.state = self._decide()
 
     def _driving(self):
         pass
@@ -154,8 +154,8 @@ class Brain(object):
 
 
 class ManiacBrain(Brain):
-    
-    """Subclassed brain that attacks anything."""    
+
+    """Subclassed brain that attacks anything."""
 
     aggression = 1.0
     mobility = 1.0
@@ -163,8 +163,8 @@ class ManiacBrain(Brain):
 
 class UndeadBrain(Brain):
 
-    """Subclassed brain that thinks like the undead."""    
-    
+    """Subclassed brain that thinks like the undead."""
+
     aggression = .75
     mobility = .2
     sight = .50
@@ -182,6 +182,3 @@ class PlantBrain(Brain):
     sight = 0.0
     hearing = 0.0
     smell = 0.0
-
-
-    

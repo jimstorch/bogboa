@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/item.py
+#   mudlib/world/item.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,10 +8,10 @@
 
 import sys
 
+from mudlib.log import THE_LOG
 from mudlib.shared import ITEMS
-from mudlib.lang import NameTrie
-from driver.log import THE_LOG
-from driver.bogscript import process_scripts
+from mudlib.iface.lang import NameTrie
+from mudlib.scripting.bogscript import process_scripts
 
 
 #--------------------------------------------------------------------------Item

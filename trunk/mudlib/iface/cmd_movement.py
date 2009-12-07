@@ -8,8 +8,8 @@
 
 from mudlib import shared
 from mudlib import lookup
-from mudlib import parsers
-from driver.error import BogCmdError
+from mudlib.iface import parsers
+from mudlib.error import BogCmdError
 
 #-------------------------------------------------------------------------North
 @parsers.blank
@@ -18,13 +18,13 @@ def north(client):
     """Move north, if able."""
 
     room = client.body.room
-   
+
     if 'north' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['north']]
         leaving.on_exit(client.body, 'the North')
         entering.on_enter(client.body, 'the South')
-    
+
     else:
         raise BogCmdError('The way North is obstructed.')
 
@@ -37,13 +37,13 @@ def south(client):
     """Move north, if able."""
 
     room = client.body.room
-   
+
     if 'south' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['south']]
         leaving.on_exit(client.body, 'to the South')
         entering.on_enter(client.body, 'the North')
-    
+
     else:
         raise BogCmdError('The way South is obstructed.')
 
@@ -55,13 +55,13 @@ def east(client):
     """Move east, if able."""
 
     room = client.body.room
-   
+
     if 'east' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['east']]
         leaving.on_exit(client.body, 'to the East')
         entering.on_enter(client.body, 'the West')
-    
+
     else:
         raise BogCmdError('The way East is obstructed.')
 
@@ -73,13 +73,13 @@ def west(client):
     """Move west, if able."""
 
     room = client.body.room
-   
+
     if 'west' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['west']]
         leaving.on_exit(client.body, 'to the West')
         entering.on_enter(client.body, 'the East')
-    
+
     else:
         raise BogCmdError('The way West is obstructed.')
 
@@ -90,13 +90,13 @@ def up(client):
     """Move up, if able."""
 
     room = client.body.room
-   
+
     if 'up' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['up']]
         leaving.on_exit(client.body, 'upward')
         entering.on_enter(client.body, 'below')
-    
+
     else:
         raise BogCmdError('The way up is obstructed.')
 
@@ -108,13 +108,13 @@ def down(client):
     """Move down, if able."""
 
     room = client.body.room
-   
+
     if 'down' in room.exits:
         leaving = room
         entering = shared.ROOMS[room.exits['down']]
         leaving.on_exit(client.body, 'downward')
         entering.on_enter(client.body, 'above')
-    
+
     else:
         raise BogCmdError('The way down is obstructed.')
 
@@ -134,5 +134,3 @@ def exit(client):
 
 def recall(client):
     pass
-
-

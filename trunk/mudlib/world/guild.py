@@ -9,14 +9,14 @@
 import sys
 
 from mudlib.shared import GUILDS
-from driver.log import THE_LOG
+from mudlib.log import THE_LOG
 
 #-------------------------------------------------------------------------Guild
 
 class Guild(object):
 
     def __init__(self):
-   
+
 #        self.uuid = None
         self.name = None
         self.filename = None
@@ -60,7 +60,7 @@ def configure_guild(cfg):
 #    if 'uuid' in cfg:
 #        guild.uuid = cfg.pop('uuid')
 #    else:
-#        THE_LOG.add("ERROR! Missing UUID in config for guild '%s'." 
+#        THE_LOG.add("ERROR! Missing UUID in config for guild '%s'."
 #            % guild.name)
 #        sys.exit(1)
 
@@ -88,10 +88,10 @@ def configure_guild(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("!! Unrecognized key(s) in config for guild '%s': %s" 
-            % ( guild.name, cfg.keys()) ) 
+        THE_LOG.add("!! Unrecognized key(s) in config for guild '%s': %s"
+            % ( guild.name, cfg.keys()) )
 
-    return guild    
+    return guild
 
 
 #----------------------------------------------------------------Register Guild
@@ -108,4 +108,4 @@ def register_guild(guild):
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        GUILDS[guild.name] = guild    
+        GUILDS[guild.name] = guild

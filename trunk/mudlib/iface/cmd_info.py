@@ -7,9 +7,9 @@
 #------------------------------------------------------------------------------
 
 from mudlib import shared
-from mudlib import parsers
-from mudlib import calendar
-from driver.error import BogCmdError
+from mudlib.iface import parsers
+from mudlib.world import calendar
+from mudlib.error import BogCmdError
 
 #----------------------------------------------------------------------Commands
 @parsers.blank
@@ -39,7 +39,7 @@ def topics(client):
 def stats(client):
 
     """List the player's stats."""
-    
+
     body = client.get_body()
     stats = body.stats.keys()
     stats.sort()
@@ -74,7 +74,7 @@ def help(client, arg):
 
     else:
         client.prose(shared.HELPS['help'].text)
-    
+
 
 #-------------------------------------------------------------------------Score
 
@@ -89,7 +89,7 @@ def score(client):
 def time(client):
 
     """Tell the client the current game time."""
-    
+
     client.inform('The time is %s.' % calendar.time_msg())
 
 
@@ -98,7 +98,7 @@ def time(client):
 def date(client):
 
     """Tell the client the current game date."""
-    
+
     client.inform('The date is %s.' % calendar.date_msg())
 
 

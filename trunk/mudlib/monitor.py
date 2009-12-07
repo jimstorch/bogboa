@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   driver/monitor.py
+#   mudlib/monitor.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from driver.log import THE_LOG
-from driver.config import IDLE_TIMEOUT
 from mudlib import shared
-from mudlib.commands.speech import broadcast
+from mudlib.log import THE_LOG
+from mudlib.config import IDLE_TIMEOUT
+from mudlib.iface.cmd_speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
@@ -44,13 +44,13 @@ def kick_idle_clients():
     with test_connections().
     """
 
-    for client in shared.LOBBY:
+    for client in shared.LOBBY_CLIENTS.values():
         if client.conn.idle() > IDLE_TIMEOUT:
             THE_LOG.add('-- Kicking idle lobby client from %s' %
                 client.conn.addrport())
             client.deactivate()
 
-    for client in shared.PLAYERS:
+    for client in shared.PLAY_CLIENTS.values():
         if client.conn.idle() > IDLE_TIMEOUT:
             THE_LOG.add('.. Kicking idle %s from %s' % (
                 client.name, client.conn.addrport()))
@@ -80,12 +80,12 @@ def process_client_commands():
 
     """Test clients for commands and process them."""
 
-    for client in shared.LOBBY:
+    for client in shared.LOBBY_CLIENTS.values():
         if client.active and client.conn.active:
             if client.conn.cmd_ready:
                 client.process_command()
 
-    for client in shared.PLAYERS:
+    for client in shared.PLAY_CLIENTS.values():
         if client.active and client.conn.active:
             if client.conn.cmd_ready:
                 client.process_command()

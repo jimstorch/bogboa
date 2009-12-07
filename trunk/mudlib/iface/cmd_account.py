@@ -8,18 +8,19 @@
 
 import uuid
 
-from driver.log import THE_LOG
 from mudlib import shared
-from driver.dbms.map import check_name
-from driver.dbms.map import save_new_body
-from driver.dbms.map import check_login
-from driver.dbms.map import load_body
-from driver.dbms.map import ban_ip
-from driver.dbms.map import record_visit
-from driver.dbms.map import last_on
-from driver.config import LOBBY_UUID
-from driver.config import START_UUID
-from mudlib.commands.speech import broadcast
+from mudlib.log import THE_LOG
+from mudlib.config import LOBBY_UUID
+from mudlib.config import START_UUID
+
+from mudlib.dbfs.map import check_name
+#from mudlib.dbfs.map import save_new_body
+from mudlib.dbfs.map import check_login
+#from mudlib.dbfs.map import load_body
+from mudlib.dbfs.map import ban_ip
+from mudlib.dbfs.map import record_visit
+#from mudlib.dbfs.map import last_on
+from mudlib.iface.cmd_speech import broadcast
 
 
 """Functions for creating a new character."""
@@ -46,20 +47,20 @@ def create(client):
 #--------------------------------------------------------------------------Name
 
 def name(client):
-    
+
     if len(client.verb_args) != 1:
         client.alert("Please use the format 'name Charactername'.")
         return
 
     _name = client.verb_args[0]
-   
+
     if len(_name) < 3:
         client.alert("That name is too short.")
         return
 
     if len(_name) > 30:
         client.alert("That name is too long.")
-        return       
+        return
 
     if check_name(_name):
         client.alert("Sorry, that name is not available.")
@@ -76,7 +77,7 @@ def name(client):
     ###########################################################################
 
     client.body.name = _name
-    client.inform("Your name is now %s." % _name)    
+    client.inform("Your name is now %s." % _name)
     review(client)
 
 
@@ -110,7 +111,7 @@ def race(client):
 
     if _race not in shared.RACES:
         client.alert("That is not a playable race.")
-        return        
+        return
 
     client.body.race = _race
     client.inform("Your race is now %s." % _race)
@@ -134,7 +135,7 @@ def guild(client):
 
     if _guild not in shared.GUILDS:
         client.alert("That is not a playable guild.")
-        return   
+        return
 
     client.body.guild = _guild
     client.inform("Your guild is now %s." % _guild)
@@ -150,14 +151,14 @@ def password(client):
         return
 
     _password = client.verb_args[0]
-   
+
     if len(_password) < 3:
         client.alert("That password is too short.")
         return
 
     if len(_password) > 40:
         client.alert("That password is too long.")
-        return       
+        return
 
     client.body.password = _password
     client.inform("Your password is now %s." % _password)
@@ -180,7 +181,7 @@ def password(client):
 
 #    if len(_password) > 90:
 #        client.send("That email is too long.")
-#        return  
+#        return
 
 #    client.body.email = email
 #    client.send("Your email is now %s." % _email)
@@ -204,10 +205,10 @@ def review(client):
 #--------------------------------------------------------------------------Save
 
 def save(client):
-    
+
     if client.body.name == '':
         client.alert('You must select a name first.')
-  
+
     elif client.body.gender == '':
         client.alert('You must select a gender first.')
 
@@ -218,8 +219,8 @@ def save(client):
         client.alert('You must select a guild first.')
 
     elif client.body.password == '':
-        client.alert('You must select a password first.')    
- 
+        client.alert('You must select a password first.')
+
     else:
         client.inform('Saving your new character...')
         ## Assign a permanent UUID
@@ -236,16 +237,16 @@ def load(client):
 
     if len(client.verb_args) != 2:
         client.alert("Please use the format 'load name password'.")
-        return        
-    
+        return
+
     name = client.verb_args[0]
     password = client.verb_args[1]
 
     if check_login(name, password):
-       
+
         if shared.is_online(name.lower()):
             THE_LOG.add("?? Attempt to use active '%s' from %s" %
-                (name, client.origin())) 
+                (name, client.origin()))
             client.warn("That account is already in use.")
             return
 
@@ -263,15 +264,15 @@ def load(client):
         client.alert("Character name or password error.")
 
         if client.login_attempts > 3:
-            THE_LOG.add("?? Suspicious login guessing '%s'/'%s' from %s" % 
+            THE_LOG.add("?? Suspicious login guessing '%s'/'%s' from %s" %
                 (name, password, client.origin()))
 
-        ## Watch for excessive login guesses and if, so, ban them            
+        ## Watch for excessive login guesses and if, so, ban them
         if client.login_attempts > 30:
-            ban_ip(client.conn.addr, 'account.py', 
+            ban_ip(client.conn.addr, 'account.py',
                 'Auto-banned for 30+ consecutive login guesses.')
             client.deactivate()
-     
+
 
 #------------------------------------------------------------Player Command Set
 
@@ -283,31 +284,31 @@ def player_command_set(client):
 
     ## Start with a clean slate
     client.clear_commands()
-    
-    ## Start Granting 
-    ## change these to grant_command_silect() if too spammy    
+
+    ## Start Granting
+    ## change these to grant_command_silect() if too spammy
     client.grant_command('north')
     client.grant_command('south')
     client.grant_command('east')
-    client.grant_command('west')    
+    client.grant_command('west')
 
-    client.grant_command('tell') 
-    client.grant_command('reply')   
+    client.grant_command('tell')
+    client.grant_command('reply')
     client.grant_command('say')
-    client.grant_command('emote')  
+    client.grant_command('emote')
     client.grant_command('ooc')
-    client.grant_command('shout') 
+    client.grant_command('shout')
 
-    client.grant_command('help')  
-    client.grant_command('commands')  
-    client.grant_command('quit')   
+    client.grant_command('help')
+    client.grant_command('commands')
+    client.grant_command('quit')
 
-    client.grant_command('kick')   
-    client.grant_command('time')   
-    client.grant_command('date')  
-    client.grant_command('uptime')  
-    client.grant_command('ansi')  
-    client.grant_command('stats') 
+    client.grant_command('kick')
+    client.grant_command('time')
+    client.grant_command('date')
+    client.grant_command('uptime')
+    client.grant_command('ansi')
+    client.grant_command('stats')
     client.grant_command('topics')
     client.grant_command('look')
     client.grant_command('shutdown')
@@ -323,7 +324,7 @@ def player_connect(client):
     """
 
     ## Log the terminal type for general info
-    THE_LOG.add('tt %s is using %s' % (client.name, 
+    THE_LOG.add('tt %s is using %s' % (client.name,
         client.conn.terminal_type))
 
     ## Assing a normal set of player commands
@@ -349,8 +350,3 @@ def player_connect(client):
     ## And walk in
     client.body.is_visible = True
     client.body.room.on_enter(client.body)
-
-    
-
-
-

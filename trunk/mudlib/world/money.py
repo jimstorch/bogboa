@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/money.py
+#   mudlib/world/money.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.hardwired import COPPER_COIN
-from mudlib.hardwired import SILVER_COIN
-from mudlib.hardwired import GOLD_COIN
+#from mudlib.hardwired import COPPER_COIN
+#from mudlib.hardwired import SILVER_COIN
+#from mudlib.hardwired import GOLD_COIN
 
 ## 100 copper = 1 silver
 ## 10,000 copper = 100 silver = 1 gold
@@ -37,6 +37,5 @@ def money_str(amount):
     if not silver and not gold:
         retval = '%d coppers' % copper
     elif copper:
-        retval += ', %d coppers' % copper        
+        retval += ', %d coppers' % copper
     return retval
-          

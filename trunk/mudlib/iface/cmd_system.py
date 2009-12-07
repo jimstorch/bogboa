@@ -6,17 +6,18 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from driver.scheduler import THE_SCHEDULER
-from driver.log import THE_LOG
-from mudlib import parsers
-from driver.dbms.map import set_ansi
+
+from mudlib.log import THE_LOG
+from mudlib.scheduler import THE_SCHEDULER
+from mudlib.iface import parsers
+#from mudlib.dbfs.map import set_ansi
 
 #--------------------------------------------------------------------------Ansi
 @parsers.set_or_show
 def ansi(client, setting):
 
     """Turn on or off ANSI color.  No parameters means show current setting."""
-    
+
     if setting == None:
         curr = client.conn.use_ansi
         if curr:
@@ -34,7 +35,7 @@ def ansi(client, setting):
     else:
         client.conn.use_ansi = False
         client.send('Setting ANSI to off.')
-        ## store preference in database         
+        ## store preference in database
         set_ansi(client.name, False)
 
 #--------------------------------------------------------------------------Quit

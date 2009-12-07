@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/help.py
+#   mudlib/iface/help.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -9,7 +9,7 @@
 import sys
 
 from mudlib.shared import HELPS
-from driver.log import THE_LOG
+from mudlib.log import THE_LOG
 
 
 #--------------------------------------------------------------------------Help
@@ -68,8 +68,8 @@ def configure_help(cfg):
 #        help.module = cfg.pop('module')
 #    else:
 #        help.module = None
-#        THE_LOG.add("WARNING: Missing 'module' value for help '%s'." 
-#            % help.name)       
+#        THE_LOG.add("WARNING: Missing 'module' value for help '%s'."
+#            % help.name)
 
     ## Ignore from Guild files
     if 'skills' in cfg:
@@ -86,10 +86,10 @@ def configure_help(cfg):
 
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
-        THE_LOG.add("!! Unrecognized key(s) in config for help '%s': %s" 
-            % ( help.name, cfg.keys()) ) 
+        THE_LOG.add("!! Unrecognized key(s) in config for help '%s': %s"
+            % ( help.name, cfg.keys()) )
 
-    return help    
+    return help
 
 
 #-----------------------------------------------------------------Register Help
@@ -112,9 +112,8 @@ def register_help(help):
         for keyword in help.keywords:
             if keyword in HELPS:
                 THE_LOG.add("!! Duplicate keyword found while registering "
-                    "help text '%s' in module '%s'."  %  
+                    "help text '%s' in module '%s'."  %
                     (help.name, help.module))
-                sys.exit(1)        
+                sys.exit(1)
             else:
                 HELPS[keyword] = help
-

@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib.shared import THE_TIME
-from driver.error import BogCmdError, BogDepleteCond
+from mudlib.error import BogCmdError, BogDepleteCond
 
 
 """Generic resource management."""
