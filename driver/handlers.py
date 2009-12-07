@@ -9,7 +9,7 @@
 import random
 
 from mudlib import shared
-from mudlib.client import Client
+from mudlib.player import Player
 from driver.config import LOBBY_UUID
 
 
@@ -28,21 +28,22 @@ greeting = """^kb%s^s
 BCOLORS = ['^R', '^B', '^C', '^M', '^G', '^Y',
     '^r', '^b', '^c', '^m', '^g', '^y', ]
 
-#-----------------------------------------------------------------Lobby Connect
+#--------------------------------------------------------------------On Connect
 
+def on_connect(client):
 
-
-
-
-def lobby_connect(conn):
-
-    client = Client()
-    client.conn = conn
+    player = Player()
+    player.client = client
     client.send_nowrap(greeting % random.choice(BCOLORS))
-    conn.request_terminal_type()
-    conn.request_naws()
-    client.active = True
-    shared.LOBBY.append(client)
-    #print client
+    client.request_terminal_type()
+    client.request_naws()
+    player.active = True
+    shared.LOBBY.append(player)
     ## Fire the on_enter event
-    shared.ROOMS[LOBBY_UUID].on_enter(client.body)
+    shared.ROOMS[LOBBY_UUID].on_enter(player.body)
+
+
+#-----------------------------------------------------------------On Disconnect
+
+def on_disconnect(client):
+    pass

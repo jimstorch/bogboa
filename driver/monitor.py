@@ -17,22 +17,22 @@ from mudlib.commands.speech import broadcast
 ## wouldn't broadcast the disconnection of someone from the Welcome screen.
 
 
-#--------------------------------------------------------------Test Connections
+##--------------------------------------------------------------Test Connections
 
-def test_connections():
+#def test_connections():
 
-    """Iterate through the clients and check for dead connections."""
+#    """Iterate through the clients and check for dead connections."""
 
-    #print len(shared.LOBBY), len(shared.PLAYERS)
+#    #print len(shared.LOBBY), len(shared.PLAYERS)
 
-    for client in shared.LOBBY:
-        if client.conn.active == False:
-            client.deactivate()
+#    for client in shared.LOBBY:
+#        if client.conn.active == False:
+#            client.deactivate()
 
-    for client in shared.PLAYERS:
-        if client.conn.active == False:
-            client.deactivate()
-            broadcast('^g%s has gone offline.^w' % client.name)    
+#    for client in shared.PLAYERS:
+#        if client.conn.active == False:
+#            client.deactivate()
+#            #broadcast('^g%s has gone offline.^w' % client.name)    
 
 
 #-------------------------------------------------------------Kill Idle Clients
@@ -58,20 +58,20 @@ def kill_idle_clients():
             broadcast('^g%s has gone offline.^w' % client.name)
 
 
-#------------------------------------------------------------Purge Dead Clients
+##------------------------------------------------------------Purge Dead Clients
 
-def purge_dead_clients():
+#def purge_dead_clients():
 
-    """
-    Remove all clients that are flagged inactive.  This will also close their
-    sockets when their Connections are garbage collected.
-    """
+#    """
+#    Remove all clients that are flagged inactive.  This will also close their
+#    sockets when their Connections are garbage collected.
+#    """
 
-    shared.LOBBY = [ client for client in shared.LOBBY 
-        if client.active == True ]
-        
-    shared.PLAYERS = [ client for client in shared.PLAYERS 
-        if client.active == True ]         
+#    shared.LOBBY = [ client for client in shared.LOBBY 
+#        if client.active == True ]
+#        
+#    shared.PLAYERS = [ client for client in shared.PLAYERS 
+#        if client.active == True ]         
 
 
 #----------------------------------------------------------Process Client Input
