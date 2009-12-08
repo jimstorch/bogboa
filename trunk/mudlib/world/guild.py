@@ -8,8 +8,8 @@
 
 import sys
 
-from mudlib.shared import GUILDS
-from mudlib.log import THE_LOG
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
 
 #-------------------------------------------------------------------------Guild
 
@@ -102,10 +102,10 @@ def register_guild(guild):
     Given a configured guild, register it with the shared guild dictionary.
     """
 
-    if guild.name in GUILDS:
+    if guild.name in shared.GUILDS:
         THE_LOG.add("!! Duplicate name (%s) found while registering "
             "guild '%s' from module '%s'."  %  (
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        GUILDS[guild.name] = guild
+        shared.GUILDS[guild.name] = guild

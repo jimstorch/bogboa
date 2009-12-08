@@ -163,6 +163,6 @@ class Scheduler(object):
 
 #--[ Global Instance ]---------------------------------------------------------
 
-#THE_SCHEDULER = Scheduler()
+THE_SCHEDULER = Scheduler()
 
 #------------------------------------------------------------------------------
