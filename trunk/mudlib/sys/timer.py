@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/timer.py
+#   mudlib/sys/timer.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from shared import THE_TIME
+from mudlib.sys import shared
 
 ##  The eggtimer class is used to track cooldowns of certain abilities.
 ##  It should be used for timers that ellaspse even while the character
@@ -21,7 +21,7 @@ class Timer(object):
 
     def __init__(self):
         self.eggs = {}
-        self.session_start = THE_TIME
+        self.session_start = shared.THE_TIME
 
     #-----------------------------------------------------------------Set Timer
 
@@ -31,7 +31,7 @@ class Timer(object):
         Sets a timer by name and duration in seconds.
         """
 
-        self.eggs[egg] = THE_TIME + duration
+        self.eggs[egg] = shared.THE_TIME + duration
 
     #---------------------------------------------------------------Ready Check
 
@@ -42,7 +42,7 @@ class Timer(object):
         """
 
         target = self.eggs.get(egg, 0)
-        if target < THE_TIME:
+        if target < shared.THE_TIME:
             return True
         else:
             return False
@@ -57,7 +57,7 @@ class Timer(object):
 
         target = self.eggs.get(egg, 0)
 
-        if target < THE_TIME:
+        if target < shared.THE_TIME:
             return 0
         else:
-            return target - THE_TIME
+            return target - shared.THE_TIME

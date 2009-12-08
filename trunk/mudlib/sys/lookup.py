@@ -6,15 +6,15 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
+from mudlib.sys import shared
 
 
 #---------------------------------------------------------------------Is Online
-     
+
 #def is_online(handle):
 
 #    """Check if a player with the given handle is currently playing."""
-#    
+#
 #    if shared.HANDLE_DICT.has_key(handle):
 #        return True
 #    else:
@@ -53,11 +53,8 @@ def find_body(index):
 #---------------------------------------------------------------Next Body Index
 
 def next_body_index():
-    
+
     """Increments and returns the mob index key value."""
 
     shared.INDEX += 1
-    return shared.INDEX    
-
-
-
+    return shared.INDEX

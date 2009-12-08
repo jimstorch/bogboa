@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/log.py
+#   mudlib/sys/log.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -38,5 +38,5 @@ class Log(object):
 
 #--[ Global Instance ]---------------------------------------------------------
 
-THE_LOG = Log('server.log', append=True)
+#THE_LOG = Log('server.log', append=True)
 #BUG_LOG = Log('bugs.log', append=True)
