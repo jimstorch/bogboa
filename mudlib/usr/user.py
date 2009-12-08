@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/iface/user.py
+#   mudlib/usr/user.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------# Client --> Player <-- Character
 
-from mudlib import shared
-from mudlib.error import BogCmdError
+from mudlib.sys import shared
+from mudlib.sys.error import BogCmdError
 from mudlib.world.entity import Entity
-from mudlib.iface.verb import VERB_ALIAS
-from mudlib.iface.verb import VERB_HANDLER
-from mudlib.iface.xterm import word_wrap
+from mudlib.usr.verb import VERB_ALIAS
+from mudlib.usr.verb import VERB_HANDLER
+from mudlib.usr.xterm import word_wrap
 
 
 #------------------------------------------------------------------------Client

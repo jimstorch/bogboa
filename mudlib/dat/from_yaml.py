@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/dbfs/from_yaml.py
+#   mudlib/dat/from_yaml.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -15,7 +15,7 @@ except ImportError:
             "See www.pyyaml.org" )
     sys.exit(1)
 
-from mudlib.error import BogYAMLError
+from mudlib.sys.error import BogYAMLError
 
 
 #------------------------------------------------------------------Parse Markup

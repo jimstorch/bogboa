@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/entant.py
+#   mudlib/usr/entant.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 #import shared
-from mudlib.error import BogCmdError
-from mudlib.iface.user import User
-from mudlib.iface.verb import VERB_ALIAS
-from mudlib.iface.verb import VERB_HANDLER
+from mudlib.sys.error import BogCmdError
+from mudlib.usr.user import User
+from mudlib.usr.verb import VERB_ALIAS
+from mudlib.usr.verb import VERB_HANDLER
 
 #from driver.decorate import word_wrap
 

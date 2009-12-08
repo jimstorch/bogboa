@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/dbfs/file_loader.py
+#   mudlib/dat/file_loader.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -16,10 +16,10 @@ import os
 import sys
 import glob
 
-from mudlib import shared
-from mudlib.log import THE_LOG
-from mudlib.error import BogYAMLError
-from mudlib.dbfs.from_yaml import parse_markup
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.error import BogYAMLError
+from mudlib.dat.from_yaml import parse_markup
 
 
 ##  Order of Precedence:
@@ -62,7 +62,7 @@ def load_module(module):
         register_room(room)
 
     ## Load Help
-    from mudlib.iface.help import configure_help, register_help
+    from mudlib.usr.help import configure_help, register_help
     for cfg in help_directory(module):
         help = configure_help(cfg)
         register_help(help)

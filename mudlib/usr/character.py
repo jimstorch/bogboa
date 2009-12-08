@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/character.py
+#   mudlib/usr/character.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -10,7 +10,7 @@ import copy
 
 from mudlib import shared
 from mudlib.world import calendar
-from mudlib.iface.inventory import Bag
+from mudlib.usr.inventory import Bag
 from mudlib.resource import ResourceManager
 from mublib.world.entity import Entity
 

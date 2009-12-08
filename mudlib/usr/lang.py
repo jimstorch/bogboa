@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/iface/lang.py
+#   mudlib/usr/lang.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,7 +8,7 @@
 
 import re
 
-from mudlib.error import BogCmdError
+from mudlib.sys.error import BogCmdError
 
 _VOWELS = 'aeiou'
 

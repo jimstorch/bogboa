@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/commands/account.py
+#   mudlib/usr/cmd_account.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,19 +8,19 @@
 
 import uuid
 
-from mudlib import shared
-from mudlib.log import THE_LOG
-from mudlib.config import LOBBY_UUID
-from mudlib.config import START_UUID
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.config import LOBBY_UUID
+from mudlib.sys.config import START_UUID
 
-from mudlib.dbfs.map import check_name
-#from mudlib.dbfs.map import save_new_body
-from mudlib.dbfs.map import check_login
-#from mudlib.dbfs.map import load_body
-from mudlib.dbfs.map import ban_ip
-from mudlib.dbfs.map import record_visit
-#from mudlib.dbfs.map import last_on
-from mudlib.iface.cmd_speech import broadcast
+from mudlib.dat.map import check_name
+#from mudlib.dat.map import save_new_body
+from mudlib.dat.map import check_login
+#from mudlib.dat.map import load_body
+from mudlib.dat.map import ban_ip
+from mudlib.dat.map import record_visit
+#from mudlib.dat.map import last_on
+from mudlib.usr.cmd_speech import broadcast
 
 
 """Functions for creating a new character."""
