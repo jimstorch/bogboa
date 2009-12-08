@@ -57,10 +57,3 @@ def on_disconnect(client):
     """
 
     pass
-
-
-#-----------------------------------------------------------------------On Play
-
-def begin_play(entrant, character_name):
-
-    pass
