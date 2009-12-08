@@ -11,9 +11,9 @@ from random import choice
 
 from mudlib import shared
 from mudlib.log import THE_LOG
-from mudlib.iface.lang import keyset
-from mudlib.iface.lang import guestimate
-from mudlib.iface.inventory import Floor
+from mudlib.usr.lang import keyset
+from mudlib.usr.lang import guestimate
+from mudlib.usr.inventory import Floor
 from mudlib.world.calendar import time_msg
 from mudlib.scripting.bogscript import process_scripts
 

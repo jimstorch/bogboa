@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
+from mudlib.sys import shared
 
 
 """
@@ -130,6 +130,6 @@ def sunlight():
     Calculate the current sunlight level.
     Return an integer value in the range of 0 (Midnight) to 12 (Noon).
     """
-    tstamp = shared.THE_TIME- UNIX_ADJ
+    tstamp = shared.THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))

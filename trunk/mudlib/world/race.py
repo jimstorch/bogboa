@@ -8,8 +8,8 @@
 
 import sys
 
-from mudlib.shared import RACES
-from mudlib.log import THE_LOG
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
 
 #--------------------------------------------------------------------------Race
 
@@ -86,10 +86,10 @@ def register_race(race):
     Given a configured race, register it with the shared race dictionary.
     """
 
-    if race.name in RACES:
+    if race.name in shared.RACES:
         print ( "!! Duplicate name (%s) found while registering "
             "race '%s' from module '%s'."  %  (
             race.uuid, race.name, race.module) )
         sys.exit(1)
     else:
-        RACES[race.name] = race
+        shared.RACES[race.name] = race

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/commands/wizard.py
+#   mudlib/usr/cmd_wiz.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 #from mudlib import parsers
-from mudlib import shared
-from mudlib.log import THE_LOG
-from mudlib.scheduler import THE_SCHEDULER
-from mudlib.iface import parsers
-from mudlib.iface.cmd_speech import broadcast
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.scheduler import THE_SCHEDULER
+from mudlib.usr import parsers
+from mudlib.usr.cmd_speech import broadcast
 
 
 #---------------------------------------------------------------------------Ban

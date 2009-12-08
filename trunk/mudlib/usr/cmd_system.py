@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/commands/system.py
+#   mudlib/usr/cmd_system.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 
-from mudlib.log import THE_LOG
-from mudlib.scheduler import THE_SCHEDULER
-from mudlib.iface import parsers
-#from mudlib.dbfs.map import set_ansi
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.scheduler import THE_SCHEDULER
+from mudlib.usr import parsers
+#from mudlib.dat.map import set_ansi
 
 #--------------------------------------------------------------------------Ansi
 @parsers.set_or_show

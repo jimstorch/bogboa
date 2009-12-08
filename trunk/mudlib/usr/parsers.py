@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/iface/parsers.py
+#   mudlib/usr/parsers.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
-from mudlib.error import BogCmdError
+from mudlib.sys import shared
+from mudlib.sys.error import BogCmdError
 
 
 """

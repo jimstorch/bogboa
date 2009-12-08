@@ -8,10 +8,10 @@
 
 import copy
 
-from mudlib import shared
+from mudlib.sys import shared
 from mudlib.world import calendar
-from mudlib.iface.inventory import Bag
-from mudlib.resource import ResourceManager
+from mudlib.usr.inventory import Bag
+from mudlib.world.resource import ResourceManager
 
 
 ## Pronouns by Gender

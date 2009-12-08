@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/verb.py
+#   mudlib/usr/verb.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 
-from mudlib.iface import cmd_account
-from mudlib.iface import cmd_movement
-from mudlib.iface import cmd_speech
-from mudlib.iface import cmd_info
-from mudlib.iface import cmd_use
-from mudlib.iface import cmd_wiz
-from mudlib.iface import cmd_system
-#from mudlib.iface import silly
+from mudlib.usr import cmd_account
+from mudlib.usr import cmd_movement
+from mudlib.usr import cmd_speech
+from mudlib.usr import cmd_info
+from mudlib.usr import cmd_use
+from mudlib.usr import cmd_wiz
+from mudlib.usr import cmd_system
+#from mudlib.usr import silly
 
 
 VERB_ALIAS = {}

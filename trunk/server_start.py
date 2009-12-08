@@ -6,24 +6,21 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
-from mudlib.log import THE_LOG
-from mudlib.config import PORT
-
 from miniboa.async import TelnetServer
-from mudlib.handlers import on_connect
-from mudlib.handlers import on_disconnect
 
-from mudlib.scheduler import THE_SCHEDULER
-from mudlib.scheduler import Cycle
-from mudlib.scheduler import Series
-
-from mudlib.monitor import kick_idle_clients
-from mudlib.monitor import process_client_commands
-from mudlib.monitor import sweep_rooms
-
-from mudlib.dbfs.file_loader import load_module
-from mudlib.dbfs.tables import check_database
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.config import PORT
+from mudlib.sys.handlers import on_connect
+from mudlib.sys.handlers import on_disconnect
+from mudlib.sys.scheduler import THE_SCHEDULER
+from mudlib.sys.scheduler import Cycle
+from mudlib.sys.scheduler import Series
+from mudlib.sys.monitor import kick_idle_clients
+from mudlib.sys.monitor import process_client_commands
+from mudlib.sys.monitor import sweep_rooms
+from mudlib.dat.file_loader import load_module
+from mudlib.dat.tables import check_database
 
 
 THE_LOG.add(">> **************")

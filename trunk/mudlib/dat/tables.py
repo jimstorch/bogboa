@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/dbfs/tables.py
+#   mudlib/dat/tables.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,8 +8,8 @@
 
 import datetime
 
-from mudlib.log import THE_LOG
-from mudlib.dbfs.dbconnect import THE_CURSOR
+from mudlib.sys.log import THE_LOG
+from mudlib.dat.dbconnect import THE_CURSOR
 
 
 #----------------------------------------------------------------Check Database

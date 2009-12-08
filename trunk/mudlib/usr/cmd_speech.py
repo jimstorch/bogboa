@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/commands/speech.py
+#   mudlib/usr/cmd_speech.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
-from mudlib.iface import parsers
+from mudlib.sys import shared
+from mudlib.usr import parsers
 
 #---------------------------------------------------------------------Broadcast
 

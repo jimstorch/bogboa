@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/commands/movement.py
+#   mudlib/usr/cmd_movement.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
-from mudlib import lookup
-from mudlib.iface import parsers
-from mudlib.error import BogCmdError
+from mudlib.usr import parsers
+from mudlib.sys import shared
+from mudlib.sys import lookup
+from mudlib.sys.error import BogCmdError
 
 #-------------------------------------------------------------------------North
 @parsers.blank
