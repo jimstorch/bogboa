@@ -11,7 +11,7 @@ import sys
 from mudlib.scripting.dsl import lexer
 from mudlib.scripting.dsl import pygen
 from mudlib.scripting.dsl import bytegen
-from mudlib.error import BogScriptError
+from mudlib.sys.error import BogScriptError
 
 
 #----------------------------------------------------------------Compile Script

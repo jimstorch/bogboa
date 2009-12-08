@@ -8,8 +8,8 @@
 
 import sys
 
-from mudlib.shared import HELPS
-from mudlib.log import THE_LOG
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
 
 
 #--------------------------------------------------------------------------Help
@@ -100,20 +100,20 @@ def register_help(help):
     Given a configured help, register it with the shared HELP dictionary.
     """
 
-    if help.name in HELPS:
+    if help.name in shared.HELPS:
         THE_LOG.add("!! Duplicate name found while registering "
             "help text '%s' in module '%s'."  %  (help.name, help.module))
         sys.exit(1)
     else:
-        HELPS[help.name] = help
+        shared.HELPS[help.name] = help
 
     ## Also map any aliases for this text
     if help.keywords:
         for keyword in help.keywords:
-            if keyword in HELPS:
+            if keyword in shared.HELPS:
                 THE_LOG.add("!! Duplicate keyword found while registering "
                     "help text '%s' in module '%s'."  %
                     (help.name, help.module))
                 sys.exit(1)
             else:
-                HELPS[keyword] = help
+                shared.HELPS[keyword] = help

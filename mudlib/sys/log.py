@@ -38,5 +38,5 @@ class Log(object):
 
 #--[ Global Instance ]---------------------------------------------------------
 
-#THE_LOG = Log('server.log', append=True)
+THE_LOG = Log('server.log', append=True)
 #BUG_LOG = Log('bugs.log', append=True)

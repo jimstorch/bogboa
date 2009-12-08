@@ -123,10 +123,11 @@ def create_key_value_table():
             category TEXT,
             key TEXT,
             value TEXT,
-            PRIMARY KEY(uuid, category, key),
+            PRIMARY KEY(uuid, category, key)
             );
         """
 
+    THE_CURSOR.execute(sql)
 
 #------------------------------------------------------Create Reject Name Table
 

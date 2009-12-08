@@ -9,8 +9,8 @@
 import sys
 from random import choice
 
-from mudlib import shared
-from mudlib.log import THE_LOG
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
 from mudlib.usr.lang import keyset
 from mudlib.usr.lang import guestimate
 from mudlib.usr.inventory import Floor

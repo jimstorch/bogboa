@@ -8,7 +8,7 @@
 
 import re
 
-from mudlib.error import BogScriptError
+from mudlib.sys.error import BogScriptError
 
 #-------------------------------------------------------------------------Lexer
 
