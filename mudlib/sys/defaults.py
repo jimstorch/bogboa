@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/defaults.py
+#   mudlib/sys/defaults.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -11,8 +11,8 @@ These are the default settings for new characters and mobs.
 """
 
 import copy
-from driver.config import LOBBY_UUID
-from driver.config import START_UUID
+from mudlib.sys.config import LOBBY_UUID
+from mudlib.sys.config import START_UUID
 
 #---------------------------------------------------------------------Abilities
 
@@ -59,7 +59,6 @@ _BAG_TYPE = {}
 
 def default bag_type():
     return copy.copy(_BAG_TYPE)
-
 
 
 #-------------------------------------------------------------------Preferences

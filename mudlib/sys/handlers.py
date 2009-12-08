@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/hanlders.py
+#   mudlib/sys/handlers.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,10 +8,10 @@
 
 import random
 
-from mudlib import shared
-from mudlib.iface.entrant import Entrant
-from mudlib.iface.player import Player
-from mudlib.config import LOBBY_UUID
+from mudlib.sys import shared
+from mudlib.sys.config import LOBBY_UUID
+from mudlib.usr.entrant import Entrant
+from mudlib.usr.player import Player
 
 
 greeting = """^kb%s^s

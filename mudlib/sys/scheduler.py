@@ -13,7 +13,7 @@ import time
 import operator
 from bisect import insort
 
-from mudlib import shared
+from mudlib.sys import shared
 
 
 #-------------------------------------------------------------------------Event
@@ -23,9 +23,9 @@ class Event(object):
     """ Wraps a delayed function call, used by the Scheduler class."""
 
     def __init__(self, delay, func, args):
-    
+
         self.active = True
-        self.when = shared.THE_TIME + delay 
+        self.when = shared.THE_TIME + delay
         self.func = func
         self.args = args
 
@@ -60,18 +60,18 @@ class Cycle(object):
         self._schedule()
 
     def _fire(self):
-        ## call the requested func 
+        ## call the requested func
         self.func(*self.args)
-        ## and reschedule our _fire method       
-        self._schedule()        
+        ## and reschedule our _fire method
+        self._schedule()
 
     def _schedule(self):
         ## Schedule an event to call our _fire method
-        self.next_event = THE_SCHEDULER.add(self.delay, self._fire)           
+        self.next_event = THE_SCHEDULER.add(self.delay, self._fire)
 
     def cancel(self):
         """Half the cycle and the next event."""
-        self.active = False        
+        self.active = False
         self.next_event.cancel()
 
 
@@ -96,7 +96,7 @@ class Series(object):
     """
 
     def __init__(self, count, delay, func, args=() ):
-    
+
         self.active = True
         self.event_list = []
 
@@ -130,9 +130,9 @@ class Scheduler(object):
         and may be a decimal."""
         ## create a new event object
         event = Event(delay, func, args)
-        ## Do an in-order insertion 
+        ## Do an in-order insertion
         insort(self.event_list, event)
-        return event 
+        return event
 
     def age(self):
         """Return the age of the scheduler in seconds."""
@@ -143,7 +143,7 @@ class Scheduler(object):
         ## Give up some CPU time, just to be nice
         time.sleep(.001)
 
-        ## Update the global time value 
+        ## Update the global time value
         shared.THE_TIME = time.time()
 
         while self.event_list:
@@ -157,13 +157,12 @@ class Scheduler(object):
                 ## and delete it from the list
                 self.event_list.pop(0)
             else:
-                ## all pending events are gone, let's get out of here 
+                ## all pending events are gone, let's get out of here
                 break
 
 
 #--[ Global Instance ]---------------------------------------------------------
 
-THE_SCHEDULER = Scheduler()
+#THE_SCHEDULER = Scheduler()
 
 #------------------------------------------------------------------------------
-   

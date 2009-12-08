@@ -1,15 +1,24 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/shared.py
+#   mudlib/sys/shared.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 
+from mudlib.sys.log import Log
+from mudlib.sys.scheduler import Scheduler
+
+
 ## Boolean used by the main loop, False = stop the server
 
 SERVER_RUN = True
+
+#--------------------------------------------------------------Shared Instances
+
+LOG = Log('server.log', append=True)
+SCHEDULER = Scheduler()
 
 
 ## Since so much of code needs to know the current time it seemed better

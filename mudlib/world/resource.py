@@ -6,8 +6,8 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.shared import THE_TIME
-from mudlib.error import BogCmdError, BogDepleteCond
+from mudlib.sys import shared
+from mudlib.sys.error import BogCmdError, BogDepleteCond
 
 
 """Generic resource management."""
@@ -41,7 +41,7 @@ class ResourceManager(object):
     def __init__(self):
 
         self.resources = {}
-        self.last_tick = THE_TIME
+        self.last_tick = shared.THE_TIME
 
     def create_resource(self, name, displayed_name=None):
         """
@@ -140,7 +140,7 @@ class ResourceManager(object):
                 else:
                     res.current -= (t * res.ungen)
 
-            self.last_time = THE_TIME
+            self.last_time = shared.THE_TIME
 
     def db_save(self, uuid):
         """Write current resource amounts to the database."""

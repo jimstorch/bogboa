@@ -6,10 +6,10 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib import shared
-from mudlib.log import THE_LOG
-from mudlib.config import IDLE_TIMEOUT
-from mudlib.iface.cmd_speech import broadcast
+from mudlib.sys import shared
+from mudlib.sys.log import THE_LOG
+from mudlib.sys.config import IDLE_TIMEOUT
+from mudlib.usr.cmd_speech import broadcast
 
 
 ## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
