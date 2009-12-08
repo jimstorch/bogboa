@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/eggtimer.py
+#   mudlib/timer.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -13,10 +13,10 @@ from shared import THE_TIME
 ##  if offline.
 
 
-class EggTimer(object):
+class Timer(object):
 
     """
-    Silly named class to track a dictionary of timers by string values.
+    Simple class to track a dictionary of timers by string values.
     """
 
     def __init__(self):
@@ -26,12 +26,12 @@ class EggTimer(object):
     #-----------------------------------------------------------------Set Timer
 
     def set_timer(self, egg, duration):
-        
+
         """
         Sets a timer by name and duration in seconds.
         """
 
-        self.eggs[egg] = THE_TIME + duration  
+        self.eggs[egg] = THE_TIME + duration
 
     #---------------------------------------------------------------Ready Check
 
@@ -45,10 +45,10 @@ class EggTimer(object):
         if target < THE_TIME:
             return True
         else:
-            return False     
+            return False
 
     #-----------------------------------------------------------------Time Left
-    
+
     def time_remaining(self, egg)
 
         """
@@ -61,6 +61,3 @@ class EggTimer(object):
             return 0
         else:
             return target - THE_TIME
-
-
-
