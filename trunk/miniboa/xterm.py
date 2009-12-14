@@ -2,8 +2,14 @@
 #------------------------------------------------------------------------------
 #   mudlib/usr/xterm.py
 #   Copyright 2009 Jim Storch
-#   Distributed under the terms of the GNU General Public License
-#   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
+#   Licensed under the Apache License, Version 2.0 (the "License"); you may
+#   not use this file except in compliance with the License. You may obtain a
+#   copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#   License for the specific language governing permissions and limitations
+#   under the License.
 #------------------------------------------------------------------------------
 
 import re
@@ -13,7 +19,7 @@ import re
 
 #--[ Caret Code to ANSI TABLE ]------------------------------------------------
 
-ANSI_CODES = (
+_ANSI_CODES = (
 
     # Note: order here matters to keep '^b' from clobbering '^bb'
     ( '^kb', '\x1b[40m' ),          # black background
@@ -52,37 +58,43 @@ ANSI_CODES = (
     )
 
 
+#-------------------------------------------------------------Strip Caret Codes
+
+def strip_caret_codes(text):
+
+    """
+    Strip out any caret codes from a string.
+    """
+
+    for token, throwaway in ANSI_CODES:
+        text = text.replace(token, '')
+    return text
+
+
 #----------------------------------------------------------------------Colorize
 
 def colorize(text, ansi=True):
-    """ If the client wants ansi, replace the tokens with ansi sequences --
-    otherwise, simply strip them out."""
+
+    """
+    If the client wants ansi, replace the tokens with ansi sequences --
+    otherwise, simply strip them out.
+    """
 
     if ansi:
-        for token, code in ANSI_CODES:
+        for token, code in _ANSI_CODES:
             text = text.replace(token, code)
-
     else:
         text = strip_caret_codes(text)
 
     return text
 
 
-#-------------------------------------------------------------Strip Caret Codes
-
-def strip_caret_codes(text):
-
-    """Strip out any caret codes from a string."""
-
-    for token, throwaway in ANSI_CODES:
-        text = text.replace(token, '')
-    return text
-
 #---------------------------------------------------------------------Word Wrap
 
 def word_wrap(text, columns=78, indent=2, padding=1):
 
-    """Given a block of text, breaks into a list of lines wrapped to
+    """
+    Given a block of text, breaks into a list of lines wrapped to
     length.  Should be a bit more efficient with telnet sending lines.
     """
 

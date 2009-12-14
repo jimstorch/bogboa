@@ -67,10 +67,11 @@ def fetch_kv_dict(uuid, category):
 #-----------------------------------------------------------Fetch KV Dict Float
 
 def fetch_kv_dict_float(uuid, category):
-     """
+    """
     Given a UUID and category, select matching rows and convert them to a
     dictionary of floating point values.
     """
+
     sql = """
         SELECT key, value
         FROM key_value
@@ -91,10 +92,10 @@ def store_kv_dict(uuid, category, dct):
     """
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
-        VALUES (?, ?, ?, ?');
+        VALUES (?, ?, ?, ?);
         """
     ## build a list comprehension of arguments for executemany()
-    rows = [ uuid, set_name, k, v) for k, v in dct.items() ]
+    rows = [ (uuid, category, k, v) for k, v in dct.items() ]
     THE_CURSOR.executemany(sql, rows)
 
 

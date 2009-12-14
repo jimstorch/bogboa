@@ -11,11 +11,11 @@ from miniboa.async import TelnetServer
 from mudlib.sys import shared
 from mudlib.sys.log import THE_LOG
 from mudlib.sys.config import PORT
-from mudlib.sys.handlers import on_connect
-from mudlib.sys.handlers import on_disconnect
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.sys.scheduler import Cycle
 from mudlib.sys.scheduler import Series
+from mudlib.sys.monitor import on_connect
+from mudlib.sys.monitor import on_disconnect
 from mudlib.sys.monitor import kick_idle_clients
 from mudlib.sys.monitor import process_client_commands
 from mudlib.sys.monitor import sweep_rooms
@@ -50,9 +50,7 @@ load_module(module)
 #       Schedule Repeating Events
 #------------------------------------------------------------------------------
 
-#Cycle(2, test_connections)
 Cycle(2, kick_idle_clients)
-#Cycle(2, purge_dead_clients)
 Cycle(10, sweep_rooms)
 Cycle(.25, process_client_commands)
 
@@ -72,8 +70,8 @@ server.on_disconnect = on_disconnect
 THE_LOG.add(">> Listening for connections on port %d" % PORT)
 
 while shared.SERVER_RUN == True:
-    server.poll()
     THE_SCHEDULER.tick()
+    server.poll()
 
 
 ## All done

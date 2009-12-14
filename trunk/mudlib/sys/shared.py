@@ -23,7 +23,7 @@ THE_TIME = 0.0
 
 LOBBY_CLIENTS = {}  ## Key is Client object, value is Visitor object
 PLAY_CLIENTS = {}   ## Key is Client object, value is Player object
-BY_NAME = {}        ## key is player name, value is Player object
+#BY_NAME = {}        ## key is player name, value is Player object
 
 #--[ Reference Objects ]-------------------------------------------------------
 
@@ -31,47 +31,47 @@ GUILDS = {}         ## key is guild name
 HELPS = {}          ## key is help name
 RACES = {}          ## key is race name
 ITEMS = {}          ## key is item UUID
-SPAWNS = {}         ## key is npc UUID
+#SPAWNS = {}         ## key is npc UUID
 
 
 #--[ Objects in the game world ]-----------------------------------------------
 
 OBJECTS = {}        ## key is object UUID
 ROOMS = {}          ## key is room UUID
-BODIES = {}         ## key is body UUID
-BRAINS = []         ## List of AI's
+#BODIES = {}         ## key is body UUID
+#BRAINS = []         ## List of AI's
 
 
-#-------------------------------------------------------------------Find Player
+##-------------------------------------------------------------------Find Player
 
-def find_player(name):
+#def find_player(name):
 
-    """Given a player's name, return the client or None."""
+#    """Given a player's name, return the client or None."""
 
-    return BY_NAME.get(name.lower(), None)
-
-
-#---------------------------------------------------------------------Find Room
-
-def find_room(uuid):
-
-    """Given a room UUID, return the room object or None."""
-
-    return ROOMS.get(uuid, None)
+#    return BY_NAME.get(name.lower(), None)
 
 
-#---------------------------------------------------------------------Find Item
+##---------------------------------------------------------------------Find Room
 
-def find_item(uuid):
+#def find_room(uuid):
 
-    """Given an item UUID, return the item object or None."""
+#    """Given a room UUID, return the room object or None."""
 
-    return ITEMS.get(uuid, None)
+#    return ROOMS.get(uuid, None)
 
-#---------------------------------------------------------------------Is Online
 
-def is_online(name):
+##---------------------------------------------------------------------Find Item
 
-    """Return True is the given name matches an online player."""
+#def find_item(uuid):
 
-    return name in BY_NAME
+#    """Given an item UUID, return the item object or None."""
+
+#    return ITEMS.get(uuid, None)
+
+##---------------------------------------------------------------------Is Online
+
+#def is_online(name):
+
+#    """Return True is the given name matches an online player."""
+
+#    return name in BY_NAME
