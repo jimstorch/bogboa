@@ -58,6 +58,11 @@ class Entrant(User):
 #        print "Entrant destructor called"
 #        #pass
 
+
+    def _do_nothing(self):
+        """Do nothing driver for users that being kicked."""
+        pass
+
     #---------------------------------------------------------Returning Players
 
     def req_username(self):
@@ -84,21 +89,25 @@ class Entrant(User):
         password = self.client.get_command()
         if password == '':
             self.req_password()
-            
+
         else:
             self.client.password_mode_off()
             uuid, status = check_credentials(self.username, password)
             if status == 'failed':
-                self.alert('\nSorry, username or password error.\n')
+                self.alert('\nUsername and/or password not found.\n')
                 self.req_username()
 
             elif status == 'banned':
                 self.alert('\nAccount has been permanently banned.\n')
                 record_visit(self.username, self.client.address)
+                self.delayed_deactivate()
+                self.cmd_driver = self._do_nothing
 
             elif status == 'suspended':
                 self.alert('\nAccount is under temporary suspension.\n')
                 record_visit(self.username, self.client.address)
+                self.delayed_deactivate()
+                self.cmd_driver = self._do_nothing
 
             else:
                 ## Load existing account
@@ -106,14 +115,15 @@ class Entrant(User):
                 self.load_account()
 
     #--------------------------------------------------------------Load Account
-        
+
     def load_account(self):
 
         self.send('\nWelcome back, %s.\n' % self.username)
         self.send('Your last visit was %s.\n' % last_on(self.username))
-        record_visit(self.username, self.client.address)  
+        record_visit(self.username, self.client.address)
 
         profile = fetch_kv_dict(self.uuid, 'profile')
+
 
     #--------------------------------------------------------------New Accounts
 
@@ -131,7 +141,7 @@ class Entrant(User):
             self.req_new_username()
         elif rejected_name(name):
             self.alert('Sorry, that name is not available.\n')
-            self.req_new_username()            
+            self.req_new_username()
         else:
             self.username = name
             self.req_new_password()
@@ -139,7 +149,7 @@ class Entrant(User):
     def req_new_password(self):
         self.send('Password for new account: ')
         self.client.password_mode_on()
-        self.cmd_driver = self._get_new_password        
+        self.cmd_driver = self._get_new_password
 
     def _get_new_password(self):
         password =  self.client.get_command()
@@ -147,12 +157,12 @@ class Entrant(User):
             self.send('\n')
             self.req_new_password()
         else:
-            self.password = password    
+            self.password = password
             self.req_new_password_again()
 
     def req_new_password_again(self):
         self.send('\nType the password again just to be sure: ')
-        self.cmd_driver = self._get_new_password_again  
+        self.cmd_driver = self._get_new_password_again
 
     def _get_new_password_again(self):
         password =  self.client.get_command()
@@ -169,7 +179,7 @@ class Entrant(User):
     def create_account(self):
 
         self.send("\nCreating your account. "
-                "Please don't lose your name or password.\n")
+                "Please don't forgot your username or password.\n")
         self.uuid = uuid4().get_hex()
         add_account(self.username, self.password, self.uuid,
             self.client.address)
@@ -183,12 +193,3 @@ class Entrant(User):
             }
 
         store_kv_dict(self.uuid, 'profile', profile)
-
-
-
-
-
-
-
-
-

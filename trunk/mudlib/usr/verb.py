@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 
-from mudlib.usr import cmd_account
+#from mudlib.usr import cmd_account
 from mudlib.usr import cmd_movement
 from mudlib.usr import cmd_speech
 from mudlib.usr import cmd_info
@@ -31,16 +31,16 @@ COMMAND_LIST = (
 
     ## Account
 
-    (('create',), cmd_account.create),
-    (('name',), cmd_account.name),
-    (('gender',), cmd_account.gender),
-    (('race',), cmd_account.race),
-    (('guild',), cmd_account.guild),
-    (('password',), cmd_account.password),
+#    (('create',), cmd_account.create),
+#    (('name',), cmd_account.name),
+#    (('gender',), cmd_account.gender),
+#    (('race',), cmd_account.race),
+#    (('guild',), cmd_account.guild),
+#    (('password',), cmd_account.password),
 #    (('email',), cmd_account.email),
-    (('review',), cmd_account.review),
-    (('save',), cmd_account.save),
-    (('load',), cmd_account.load),
+#    (('review',), cmd_account.review),
+#    (('save',), cmd_account.save),
+#    (('load',), cmd_account.load),
 
     ## Movement
 
