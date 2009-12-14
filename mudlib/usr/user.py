@@ -4,11 +4,12 @@
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 
 """Base class for interacting with a human operator."""
 
 from mudlib.sys import shared
+from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.sys.error import BogCmdError
 from mudlib.world.entity import Entity
 from mudlib.usr.verb import VERB_ALIAS
@@ -136,14 +137,24 @@ class User(object):
 
     #----------------------------------------------------------------Deactivate
 
-#    def deactivate(self):
+    def deactivate(self):
 
-#        """
-#        Kick the user from the server via the client.
-#        """
+        """
+        Kick the user from the server via the client.
+        """
 
-#        ## 
-#        self.client.deactivate()
+        self.client.deactivate()
+
+    #--------------------------------------------------------Delayed Deactivate
+
+    def delayed_deactivate(self):
+
+        """
+        Kick the user from the server in 1 second.
+        """
+
+        THE_SCHEDULER.add(1, self.client.deactivate)
+
 
     #-------------------------------------------------------------------Verbing
 

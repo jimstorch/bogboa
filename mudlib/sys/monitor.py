@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/monitor.py
+#   mudlib/sys/monitor.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -12,25 +12,6 @@ from mudlib.sys.config import IDLE_TIMEOUT
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.usr.entrant import Entrant
 from mudlib.usr.cmd_speech import broadcast
-
-
-##-------------------------------------------------------------Deactivate Client
-
-#def deactivate_client(client):
-
-#    """
-#    Gracefully disconnect a client and associated user from the game.
-#    """
-
-#    client.active = False
-
-
-
-#------------------------------------------------------------Delayed Deactivate
-
-def delayed_deactivate(client):
-
-    THE_SCHEDULER.add(1, client.deactivate)
 
 
 #--------------------------------------------------------------------On Connect
@@ -61,12 +42,13 @@ def on_disconnect(client):
         user = shared.LOBBY_CLIENTS[client]
         shared.LOBBY_CLIENTS[client] = None
         del shared.LOBBY_CLIENTS[client]
+        # force garbage collection of Client to drop socket
         del user.client
 
     elif client in shared.PLAY_CLIENTS:
         user = shared.PLAY_CLIENTS[client]
         broadcast('^g%s has gone offline.^w' % client.name)
-        THE_LOG.add('-- Deactivated player %s from %s.' % 
+        THE_LOG.add('-- Deactivated player %s from %s.' %
             (user.name, client.addrport()))
         del shared.PLAY_CLIENTS[client]
         del user.client
@@ -76,7 +58,7 @@ def on_disconnect(client):
 def kick_idle_clients():
 
     """
-    Test for and drop clients who aren't doing anything. 
+    Test for and drop clients who aren't doing anything.
     """
 
     #print len(shared.LOBBY_CLIENTS), len(shared.PLAY_CLIENTS)
