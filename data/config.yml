@@ -15,7 +15,7 @@ port: 7777
 address: ''
 
 ##   Number of seconds before kicking an idle player
-idle_timeout: 60000
+idle_timeout: 600
 
 ##   Year Offset is added to the year when displaying in-game dates.   
 year_offset: 0

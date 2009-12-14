@@ -9,69 +9,89 @@
 from mudlib.sys import shared
 from mudlib.sys.log import THE_LOG
 from mudlib.sys.config import IDLE_TIMEOUT
+from mudlib.sys.scheduler import THE_SCHEDULER
+from mudlib.usr.entrant import Entrant
 from mudlib.usr.cmd_speech import broadcast
 
 
-## You'll notice that we keep two lists of clients; LOBBY_LIST and PLAY_LIST.
-## They are split so we can handle them differently.  For instance, you
-## wouldn't broadcast the disconnection of someone from the Welcome screen.
+##-------------------------------------------------------------Deactivate Client
+
+#def deactivate_client(client):
+
+#    """
+#    Gracefully disconnect a client and associated user from the game.
+#    """
+
+#    client.active = False
 
 
-##--------------------------------------------------------------Test Connections
 
-#def test_connections():
+#------------------------------------------------------------Delayed Deactivate
 
-#    """Iterate through the clients and check for dead connections."""
+def delayed_deactivate(client):
 
-#    #print len(shared.LOBBY), len(shared.PLAYERS)
+    THE_SCHEDULER.add(1, client.deactivate)
 
-#    for client in shared.LOBBY:
-#        if client.conn.active == False:
-#            client.deactivate()
 
-#    for client in shared.PLAYERS:
-#        if client.conn.active == False:
-#            client.deactivate()
-#            #broadcast('^g%s has gone offline.^w' % client.name)
+#--------------------------------------------------------------------On Connect
 
+def on_connect(client):
+
+    """
+    Handler for new client connections, called by miniboa server.
+    """
+
+    THE_LOG.add('++ New client from %s.' % client.addrport())
+    client.request_terminal_type()
+    client.request_naws()
+    user = Entrant(client)
+    shared.LOBBY_CLIENTS[client] = user
+
+
+#-----------------------------------------------------------------On Disconnect
+
+def on_disconnect(client):
+
+    """
+    Handler for lost client connections, called by miniboa server.
+    """
+
+    if client in shared.LOBBY_CLIENTS:
+        THE_LOG.add('-- Lost entrant client from %s.' % client.addrport())
+        user = shared.LOBBY_CLIENTS[client]
+        shared.LOBBY_CLIENTS[client] = None
+        del shared.LOBBY_CLIENTS[client]
+        del user.client
+
+    elif client in shared.PLAY_CLIENTS:
+        user = shared.PLAY_CLIENTS[client]
+        broadcast('^g%s has gone offline.^w' % client.name)
+        THE_LOG.add('-- Deactivated player %s from %s.' % 
+            (user.name, client.addrport()))
+        del shared.PLAY_CLIENTS[client]
+        del user.client
 
 #-------------------------------------------------------------Kill Idle Clients
 
 def kick_idle_clients():
 
     """
-    Test for and drop clients who aren't doing anything.  I might merge this
-    with test_connections().
+    Test for and drop clients who aren't doing anything. 
     """
 
-    for client in shared.LOBBY_CLIENTS.values():
-        if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('-- Kicking idle lobby client from %s' %
-                client.conn.addrport())
-            client.deactivate()
-
-    for client in shared.PLAY_CLIENTS.values():
-        if client.conn.idle() > IDLE_TIMEOUT:
-            THE_LOG.add('.. Kicking idle %s from %s' % (
-                client.name, client.conn.addrport()))
-            client.deactivate()
-#            broadcast('^g%s has gone offline.^w' % client.name)
+    #print len(shared.LOBBY_CLIENTS), len(shared.PLAY_CLIENTS)
 
 
-##------------------------------------------------------------Purge Dead Clients
+    for client in shared.LOBBY_CLIENTS.keys():
+        if client.idle() > IDLE_TIMEOUT:
+            THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
+            client.send('\nIdle timeout.\n')
+            delayed_deactivate(client)
 
-#def purge_dead_clients():
-
-#    """
-#    Remove all clients that are flagged inactive.  This will also close their
-#    sockets when their Connections are garbage collected.
-#    """
-
-#    shared.LOBBY = [ client for client in shared.LOBBY
-#        if client.active == True ]
-#
-#    shared.PLAYERS = [ client for client in shared.PLAYERS
-#        if client.active == True ]
+    for client in shared.PLAY_CLIENTS.keys():
+        if client.idle() > IDLE_TIMEOUT:
+            THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
+            deactivate_client(client)
 
 
 #----------------------------------------------------------Process Client Input
@@ -80,15 +100,13 @@ def process_client_commands():
 
     """Test clients for commands and process them."""
 
-    for client in shared.LOBBY_CLIENTS.values():
-        if client.active and client.conn.active:
-            if client.conn.cmd_ready:
-                client.process_command()
+    for user in shared.LOBBY_CLIENTS.values():
+        if user.client.active and user.client.cmd_ready:
+            user.cmd_driver()
 
-    for client in shared.PLAY_CLIENTS.values():
-        if client.active and client.conn.active:
-            if client.conn.cmd_ready:
-                client.process_command()
+    for user in shared.PLAY_CLIENTS.values():
+        if user.client.active and user.client.cmd_ready:
+            user.cmd_driver()
 
 #-------------------------------------------------------------------Sweep Rooms
 

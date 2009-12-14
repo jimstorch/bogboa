@@ -8,30 +8,35 @@
 
 # Client --> Player <-- Character
 
-from mudlib.sys import shared
-from mudlib.sys.error import BogCmdError
-from mudlib.world.entity import Entity
-from mudlib.usr.verb import VERB_ALIAS
-from mudlib.usr.verb import VERB_HANDLER
+#from mudlib.sys import shared
+#from mudlib.sys.error import BogCmdError
+#from mudlib.world.entity import Entity
+#from mudlib.usr.verb import VERB_ALIAS
+#from mudlib.usr.verb import VERB_HANDLER
 
 #from driver.decorate import word_wrap
+
+from mublib.usr.user import User
 
 
 #------------------------------------------------------------------------Client
 
-class Player(object):
+class Player(User):
 
-    def __init__(self):
+    def __init__(self, client):
 
-        self.client = None              ## Network connection
+        self.account_name = None
+        self.password = None
+
+        self.client = client            ## Network connection
         self.active = False             ## Delete during housekeeping?
         #self.login_attempts = 0
         #self.name = 'Anonymous'         ## Changed to body name later
 
         ## Create and link a fresh body
-        self.body = Body()              ## Player's character in the world
-        self.body.is_player = True
-        self.body.mind = self
+        #self.body = Body()              ## Player's character in the world
+        #self.body.is_player = True
+        #self.body.mind = self
         self.commands = set()           ## Permitted commands
         self.verb_args = []             ## arguments for the verb handlers
         self.last_tell = None           ## used for replies

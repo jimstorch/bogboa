@@ -13,9 +13,9 @@ from mudlib.sys.log import THE_LOG
 from mudlib.sys.config import LOBBY_UUID
 from mudlib.sys.config import START_UUID
 
-from mudlib.dat.map import check_name
+#from mudlib.dat.map import check_name
 #from mudlib.dat.map import save_new_body
-from mudlib.dat.map import check_login
+#from mudlib.dat.map import check_login
 #from mudlib.dat.map import load_body
 from mudlib.dat.map import ban_ip
 from mudlib.dat.map import record_visit

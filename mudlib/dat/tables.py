@@ -72,38 +72,18 @@ def create_account_table():
 
     THE_CURSOR.execute(sql)
 
-#    sql = """
-#        CREATE TABLE IF NOT EXISTS account
-#            (
-#            name TEXT PRIMARY KEY,
-#            uuid TEXT KEY,
-#            hashed_password TEXT,
-#            email TEXT,
-#            race TEXT,
-#            gender TEXT,
-#            guild TEXT,
-#            level INTEGER,
-#            room_uuid TEXT,
-#            bind_uuid TEXT,
-#            bag_name TEXT,
-#            bag_limit REAL,
-#            bag_reduction REAL,
-#            use_ansi BOOLEAN DEFAULT TRUE,
-#            last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#            last_ip TEXT,
-#            play_count INTEGER
-#            );
-#        """
-
     sql = """
         CREATE TABLE IF NOT EXISTS account
             (
-            name TEXT PRIMARY KEY,
+            username TEXT PRIMARY KEY,
+            hashed_password TEXT,
             uuid TEXT KEY,
-            hashed_password TEXT
+            status TEXT DEFAULT 'ok',
+            date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            last_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            last_ip TEXT            
             );
         """
-
 
     THE_CURSOR.execute(sql)
 

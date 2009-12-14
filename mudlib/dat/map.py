@@ -15,6 +15,96 @@ from mudlib.sys.log import THE_LOG
 from mudlib.dat.dbconnect import THE_CURSOR
 
 
+#-------------------------------------------------------------------Add Account
+
+def add_account(username, password, uuid, ip):
+
+    sql = """
+        INSERT INTO account (username, hashed_password, uuid, last_ip,
+           date_created, last_on)
+        VALUES (?, ?, ?, ?, ?, ?);
+        """
+    
+    hashed_password = hashlib.sha256(password).hexdigest()
+    now = datetime.datetime.now()
+    THE_CURSOR.execute(sql, (username, hashed_password, uuid, ip, now, now))
+    block_name(username, 'taken by player', 'may.py')
+
+
+#--------------------------------------------------------------------Check Name
+
+def rejected_name(name):
+
+    """
+    Return True if the given name should be rejected.
+    The name may have been banned, reserved, or already be taken.
+    """
+
+    sql = """
+        SELECT COUNT(name_lower)
+        FROM reject_name
+        WHERE name_lower = ?;
+        """
+    result = THE_CURSOR.execute(sql, (name.lower() ,)).fetchone()[0]
+    return bool(result)
+    
+
+#-------------------------------------------------------------Check Credentials
+
+def check_credentials(username, password):
+
+    """
+    Returns the account UUID if the specified name and password match or
+    False if they dont. Both name and password are case sensitive.
+    """
+
+    sql = """
+        SELECT uuid, status
+        FROM account
+        WHERE username = ? and hashed_password = ?;
+        """
+
+    ## We don't store passwords in cleartext
+    hashed_password = hashlib.sha256(password).hexdigest()
+
+    result = THE_CURSOR.execute(sql, (username,hashed_password)).fetchone()
+    if result:
+        return result[0], result[1]
+    else:
+        return None, 'failed'        
+
+
+#--------------------------------------------------------------------Block Name
+
+def block_name(name, gm='', comment=''):
+
+    """Add the given name to the bad names list."""
+
+    sql = """
+        INSERT INTO reject_name
+        VALUES (?, ?, ?, ?);
+        """
+
+    now = datetime.datetime.now()
+    THE_CURSOR.execute(sql, (name.lower(), now, gm, comment))
+
+
+#------------------------------------------------------------------Record Visit
+
+def record_visit(username, ip):
+
+        """Notes a returning player's IP and timestamp."""
+
+        sql = """
+            UPDATE account
+            SET last_on = ?, last_ip = ?
+            WHERE username = ?; 
+            """
+
+        now = datetime.datetime.now()
+        THE_CURSOR.execute(sql, (now, ip, username))
+
+
 #------------------------------------------------------------------------Ban IP
 
 def ban_ip(ip, gm, note):
@@ -59,37 +149,6 @@ def check_banned_ip(ip):
     result = THE_CURSOR.execute(sql,(ip,)).fetchone()[0]
     return bool(result)
 
-#--------------------------------------------------------------------Check Name
-
-def check_name(name):
-
-    """
-    Return True if the given name should be rejected.
-    The name may have been banned, reserved, or already be taken.
-    """
-
-    sql = """
-        SELECT COUNT(name_lower)
-        FROM reject_name
-        WHERE name_lower = ?;
-        """
-    result = THE_CURSOR.execute(sql, (name.lower() ,)).fetchone()[0]
-    return bool(result)
-
-
-#--------------------------------------------------------------------Block Name
-
-def block_name(name, gm='', comment=''):
-
-    """Add the given name to the bad names list."""
-
-    sql = """
-        INSERT INTO reject_name
-        VALUES (?, ?, ?, ?);
-        """
-    now = datetime.datetime.now()
-    THE_CURSOR.execute(sql, (name.lower(), now, gm, comment))
-
 
 #--------------------------------------------------------------Check Suspension
 
@@ -122,36 +181,7 @@ def check_suspension(uuid):
     return 0
 
 
-#-------------------------------------------------------------------Check Login
 
-def check_login(name, password):
-
-    """
-    Returns True if the specified name and password match.
-    Both name and password are case sensitive.
-    """
-
-    sql = """
-        SELECT COUNT(name)
-        FROM account
-        WHERE name = ? and hashed_password = ?;
-        """
-
-    ## We don't store passwords in cleartext
-    hashed_password = hashlib.sha256(password).hexdigest()
-
-    result = THE_CURSOR.execute(sql, (name, hashed_password)).fetchone()[0]
-    return bool(result)
-
-
-#------------------------------------------------------------------Record Visit
-
-def record_visit(uuid, ip):
-
-        """Notes a returning player's IP and timestamp."""
-
-        now = datetime.datetime.now()
-        pass
 
 
 #----------------------------------------------------------------------Set ANSI
@@ -175,21 +205,21 @@ def record_visit(uuid, ip):
 
 #-----------------------------------------------------------------------Last On
 
-#def last_on(name):
+def last_on(username):
 
-#    sql = """
-#        SELECT last_on FROM body
-#        WHERE name = ?;
-#        """
+    sql = """
+        SELECT last_on FROM account
+        WHERE username = ?;
+        """
 
-#    result = THE_CURSOR.execute(sql, (name,)).fetchone()
+    result = THE_CURSOR.execute(sql, (username,)).fetchone()
 
-#    if result:
-#        last_on = result['last_on']
-#        return last_on.strftime('%B %d, %Y %I:%M %p')
+    if result:
+        last_on = result[0]
+        return last_on.strftime('%B %d, %Y %I:%M %p')
 
-#    else:
-#        return "not found."
+    else:
+        return "not found."
 
 
 #-----------------------------------------------------------------Save New Body

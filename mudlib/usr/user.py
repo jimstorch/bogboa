@@ -4,14 +4,15 @@
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
-#------------------------------------------------------------------------------# Client --> Player <-- Character
+#------------------------------------------------------------------------------ 
+
+"""Base class for interacting with a human operator."""
 
 from mudlib.sys import shared
 from mudlib.sys.error import BogCmdError
 from mudlib.world.entity import Entity
 from mudlib.usr.verb import VERB_ALIAS
 from mudlib.usr.verb import VERB_HANDLER
-from mudlib.usr.xterm import word_wrap
 
 
 #------------------------------------------------------------------------Client
@@ -21,58 +22,67 @@ class User(object):
     def __init__(self, client):
 
         self.client = client            ## Network connection
-        self.active = True
         self.commands = set()           ## Permitted commands
         self.verb_args = []             ## arguments for the verb handlers
+
+
+#    def __del__(self):
+
+#        print "User destructor called"
+#        pass
 
     #----------------------------------------------------------------------Send
 
     def send(self, msg):
-        """Transmit text to the distant end with word wrapping."""
+        """Transmit text to the distant end, with word wrapping."""
+        self.client.send_cc(msg)
+
+    #--------------------------------------------------------------Send Wrapped
+
+    def send_wrapped(self, msg):
+        self.client_send_wrapped(msg)
+
+    #----------------------------------------------------------------------Send
+
+    def send_raw(self, msg):
+        """Transmit raw text to the distant end."""
         self.client.send(msg)
-
-    #---------------------------------------------------------------Send Nowrap
-
-    def send_nowrap(self, msg):
-        """Transmit text to the distant end, without word wrapping."""
-        self.client.send_nowrap(msg)
-
 
     #-------------------------------------------------------------------whisper
 
     def whisper(self, msg):
         """Transmit msg wrapped in whisper color (dark green)."""
-        self.client.send('^g%s^w' % msg)
+        self.client.send_cc('^g%s^w' % msg)
 
     #---------------------------------------------------------------------Prose
 
     def prose(self, msg):
         """Transmit msg wrapped in reading color (dark white)."""
-        self.client.send('^w%s^w' % msg)
+        self.client.send_cc('^w%s^w' % msg)
 
     #--------------------------------------------------------------------Inform
 
     def inform(self, msg):
         """Transmit msg wrapped in informing color (bright white)."""
-        self.client.send('^W%s^w' % msg)
+        self.client.send_cc('^W%s^w' % msg)
 
     #---------------------------------------------------------------------Alert
 
     def alert(self, msg):
         """Transmit msg wrapped in alert color (bright yellow)."""
-        self.client.send('^Y%s^w' % msg)
+        self.client.send_cc('^Y%s^w' % msg)
 
     #----------------------------------------------------------------------Warn
 
     def warn(self, msg):
         """Transmit msg wrapped in warn color (dark red)."""
-        self.client.send('^r%s^w' % msg)
+        self.client.send_cc('^r%s^w' % msg)
 
     #----------------------------------------------------------------------Warn
 
     def exclaim(self, msg):
         """Transmit msg wrapped in exclaime color (bright red)."""
-        self.client.send('^R%s^w' % msg)
+        self.client.send_cc('^R%s^w' % msg)
 
 
 #    #---------------------------------------------------------------Send Pretty
@@ -126,12 +136,14 @@ class User(object):
 
     #----------------------------------------------------------------Deactivate
 
-    def deactivate(self):
-        """Client disconnected or was kicked."""
+#    def deactivate(self):
 
-        ## Schedule for cleanup via driver.monitor.test_connections()
-        self.active = False
-        self.client.active = False
+#        """
+#        Kick the user from the server via the client.
+#        """
+
+#        ## 
+#        self.client.deactivate()
 
     #-------------------------------------------------------------------Verbing
 
