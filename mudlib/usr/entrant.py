@@ -6,11 +6,12 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""User-parented Class to handle logins and new account creation."""
+
 import random
 from uuid import uuid4
 
 from mudlib.sys.log import THE_LOG
-from mudlib.usr.user import User
 from mudlib.dat.map import rejected_name
 from mudlib.dat.map import check_credentials
 from mudlib.dat.map import add_account
@@ -18,6 +19,7 @@ from mudlib.dat.map import last_on
 from mudlib.dat.map import record_visit
 from mudlib.dat.kv import store_kv_dict
 from mudlib.dat.kv import fetch_kv_dict
+from mudlib.usr.user import User
 
 
 _GREETING = """^kb%s^s

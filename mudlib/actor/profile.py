@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/world/entity.py
+#   mudlib/world/profile.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-import copy
-
-from mudlib.sys import shared
-from mudlib.world import calendar
-from mudlib.usr.inventory import Bag
-from mudlib.world.resource import ResourceManager
-
+"""
+Base class to provide dictionary lookups for referencing profile attributes
+in string templates.
+"""
 
 ## Pronouns by Gender
 _NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
@@ -23,23 +20,11 @@ _REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
     'group':'themselves'}
 
 
-class Entity(object):
+class Profile(object):
 
     def __init__(self):
 
-
-        self.name = None
-        self.uuid = None
-        self.client = None
-
-        self.profile = None
-        self.abilities = None
-        self.bag = Bag()
-        self.resource = ResourceManager()
-        self.stats = None
-        self.skills = None
-        self.wardrobe = None
-        self.target = None
+        ## Children must provide the dictionary 'profile' as a class property
 
         ## Keywords for String Templates
         self.keywords = {
@@ -63,56 +48,102 @@ class Entity(object):
             'tar_pos':self.get_tar_possessive,
             'tar_posn':self.get_tar_possessive_noun,
             'tar_reflx':self.get_tar_reflexive,
-            'room_name':self.get_room_name,
-            'time':calendar.time_msg,
-            'date':calendar.date_msg,
             }
 
-    ##--[ Methods to support String Templates ]--------------------------------
+    #---------------------------------------Methods to support String Templates
 
     def __getitem__(self, key): return self.keywords[key]()
 
     def get_name(self):
         return self.profile['name']
+
     def get_alias(self):
         return self.profile['alias']
+
     def get_race(self):
         return self.profile['race']
-    def get_guild(self):
-        return self.profile['guild']
-    def get_level(self):
-        return self.profile['level']
+
     def get_gender(self):
         return self.profile['gender']
+
+    def get_guild(self):
+        return self.profile['guild']
+
+    def get_level(self):
+        return self.profile['level']
+
+
     def get_nominative(self):
         return _NOMINATIVE[self.profile['gender']]
+
     def get_objective(self):
         return _OBJECTIVE[self.profile['gender']]
+
     def get_possessive(self):
         return _POSSESSIVE[self.profile['gender']]
+
     def get_possessive_noun(self):
         return _POSSESSIVE_NOUN[self.profile['gender']]
+
     def get_reflexive(self):
         return _REFLEXIVE[self.profile['gender']]
+
     def get_tar_name(self):
-        return self.target.name if self.target else '<notar name>'
+        if target:
+            return self.target.get_name()
+        else:
+            return '<notarget name>'
+
     def get_tar_race(self):
-        return self.target.race if self.target else '<notar race>'
-    def get_tar_guild(self):
-        return self.target.guild if self.target else '<notar guild>'
+        if target:
+            return self.target.get_race()
+        else:
+            return '<notarget race>'
+
     def get_tar_gender(self):
-        return self.target.gender if self.target else '<notar gender>'
+        if target:
+            return self.target.get_gender()
+        else:
+            return '<notarget gender>'
+
+    def get_tar_guild(self):
+        if target:
+            return self.target.get_guild()
+        else:
+            return '<notarget guild>'
+
     def get_tar_level(self):
-        return self.target.level if self.target else '<notar level>'
+        if target:
+            return self.target.get_level()
+        else:
+            return '<notarget level>'
+
     def get_tar_nominative(self):
-        return _NOMINATIVE[target.gender] if self.target else '<notar nom>'
+        if target:
+            return _NOMINATIVE[target.get_gender]
+        else:
+            return '<notarget nominative>'
+
     def get_tar_objective(self):
-        return _OBJECTIVE[target.gender] if self.target else '<notar obj>'
+        if target:
+            return _OBJECTIVE[target.get_gender()]
+        else:
+            return '<notarget objective>'
+
     def get_tar_possessive(self):
-        return _POSSESSIVE[target.gender] if self.target else '<notar pos>'
+        if target:
+            return _POSSESSIVE[target.get_gender()]
+        else:
+            return '<notar possessive>'
+
     def get_tar_possessive_noun(self):
-        return _POS_NOUN[target.gender] if self.target else '<notar posn>'
+        if target:
+            return _POS_NOUN[target.get_gender()]
+        else:
+            return '<notar possessive noun>'
+
     def get_tar_reflexive(self):
-        return _REFLEXIVE[target.gender] if self.target else '<notar reflx>'
-    def get_room_name(self):
-        return self.room.name
+        if target:
+            return _REFLEXIVE[target.get_gender()]
+        else:
+            return '<notarget reflexive>'
