@@ -150,10 +150,10 @@ class TelnetClient(object):
         self.telnet_echo_password = False  # Echo back '*' for passwords?
         self.telnet_sb_buffer = ''  # Buffer for sub-negotiations
 
-#    def __del__(self):
+    def __del__(self):
 
-#        print "Telnet destructor called"
-#        pass
+        print "Telnet destructor called"
+        pass
 
     #---------------------------------------------------------------Get Command
 
@@ -188,20 +188,20 @@ class TelnetClient(object):
     #-------------------------------------------------------------------Send CC
 
     def send_cc(self, text):
-    
+
         """
         Send text with caret codes converted to ansi.
         """
 
         self.send(colorize(text, self.use_ansi))
 
-    #--------------------------------------------------------------Send Wrapped  
+    #--------------------------------------------------------------Send Wrapped
 
     def send_wrapped(self, text):
 
         """
         Send text padded and wrapped to the user's screen width.
-        """        
+        """
 
         lines = word_wrap(text)
         for line in lines:
@@ -211,13 +211,13 @@ class TelnetClient(object):
 
 
     def deactivate(self):
-        
+
         """
         Set the client to disconnect on the next server poll.
         """
-        
+
         self.active = False
-        
+
 
     #-----------------------------------------------------------------Addr Port
 

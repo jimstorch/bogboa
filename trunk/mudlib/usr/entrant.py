@@ -55,27 +55,26 @@ class Entrant(User):
         client.send_cc(_GREETING % random.choice(_BCOLORS))
         self.req_username()
 
-#    def __del__(self):
+    def __del__(self):
 
-#        print "Entrant destructor called"
-#        #pass
+        print "Entrant destructor called"
 
-
-    def _do_nothing(self):
-        """Do nothing driver for users that being kicked."""
-        pass
 
     #---------------------------------------------------------Returning Players
 
     def req_username(self):
         self.send("Username or ^!new^1 to create an account: ")
-        self.cmd_driver = self._get_username
+        self.cmd_driver = self.get_username
 
-    def _get_username(self):
+    def get_username(self):
         name = self.client.get_command()
 
         if name.lower() == 'new':
             self.req_new_username()
+        elif name.lower() == 'quit':
+            self.send('Seeya.\n')
+            self.deactivate()
+
         elif name == '':
             self.req_username()
         else:
@@ -85,9 +84,9 @@ class Entrant(User):
     def req_password(self):
         self.send("password: ")
         self.client.password_mode_on()
-        self.cmd_driver = self._get_password
+        self.cmd_driver = self.get_password
 
-    def _get_password(self):
+    def get_password(self):
         password = self.client.get_command()
         if password == '':
             self.req_password()
@@ -103,13 +102,13 @@ class Entrant(User):
                 self.alert('\nAccount has been permanently banned.\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
-                self.cmd_driver = self._do_nothing
+                #self.cmd_driver = self._do_nothing
 
             elif status == 'suspended':
                 self.alert('\nAccount is under temporary suspension.\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
-                self.cmd_driver = self._do_nothing
+                #self.cmd_driver = self._do_nothing
 
             else:
                 ## Load existing account
@@ -131,9 +130,9 @@ class Entrant(User):
 
     def req_new_username(self):
         self.send('Username for new account: ')
-        self.cmd_driver = self._get_new_username
+        self.cmd_driver = self.get_new_username
 
-    def _get_new_username(self):
+    def get_new_username(self):
         name = self.client.get_command()
         if len(name) < 3:
             self.alert('Sorry, that name is too short.\n')
@@ -151,9 +150,9 @@ class Entrant(User):
     def req_new_password(self):
         self.send('Password for new account: ')
         self.client.password_mode_on()
-        self.cmd_driver = self._get_new_password
+        self.cmd_driver = self.get_new_password
 
-    def _get_new_password(self):
+    def get_new_password(self):
         password =  self.client.get_command()
         if password == '':
             self.send('\n')
@@ -164,9 +163,9 @@ class Entrant(User):
 
     def req_new_password_again(self):
         self.send('\nType the password again just to be sure: ')
-        self.cmd_driver = self._get_new_password_again
+        self.cmd_driver = self.get_new_password_again
 
-    def _get_new_password_again(self):
+    def get_new_password_again(self):
         password =  self.client.get_command()
         if password != self.password:
             self.alert('\nPasswords do not match.\n')
