@@ -15,9 +15,9 @@ port: 7777
 address: ''
 
 ##   Number of seconds before kicking an idle player
-idle_timeout: 600
+idle_timeout: 10
 
-##   Year Offset is added to the year when displaying in-game dates.   
+##   Year Offset is added to the year when displaying in-game dates.
 year_offset: 0
 
 ## UUID of the lobby room for new connections
@@ -25,4 +25,3 @@ lobby_uuid: 0c9997b9-5068-46d9-a245-12991bdf3f17
 
 ## UUID of the starting room for new players
 start_uuid: 8611ad17d6be417a8d9027b628f52ce3
-

@@ -28,7 +28,6 @@ def on_connect(client):
     user = Entrant(client)
     shared.LOBBY_CLIENTS[client] = user
 
-
 #-----------------------------------------------------------------On Disconnect
 
 def on_disconnect(client):
@@ -40,10 +39,12 @@ def on_disconnect(client):
     if client in shared.LOBBY_CLIENTS:
         THE_LOG.add('-- Lost entrant client from %s.' % client.addrport())
         user = shared.LOBBY_CLIENTS[client]
-        shared.LOBBY_CLIENTS[client] = None
+        del user.cmd_driver
         del shared.LOBBY_CLIENTS[client]
+        del user
         # force garbage collection of Client to drop socket
-        del user.client
+        #del user.client
+        #del user
 
     elif client in shared.PLAY_CLIENTS:
         user = shared.PLAY_CLIENTS[client]
@@ -61,19 +62,22 @@ def kick_idle_clients():
     Test for and drop clients who aren't doing anything.
     """
 
-    #print len(shared.LOBBY_CLIENTS), len(shared.PLAY_CLIENTS)
+    print len(shared.LOBBY_CLIENTS), len(shared.PLAY_CLIENTS)
 
 
     for client in shared.LOBBY_CLIENTS.keys():
         if client.idle() > IDLE_TIMEOUT:
+            user = shared.LOBBY_CLIENTS[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            client.send('\nIdle timeout.\n')
-            delayed_deactivate(client)
+            user.inform('\nIdle timeout.\n')
+            user.delayed_deactivate()
 
     for client in shared.PLAY_CLIENTS.keys():
         if client.idle() > IDLE_TIMEOUT:
+            user = shared.LOBBY_CLIENTS[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            deactivate_client(client)
+            user.inform('\nIdle timeout.\n')
+            user.delayed_deactivate()
 
 
 #----------------------------------------------------------Process Client Input
@@ -92,9 +96,9 @@ def process_client_commands():
 
 #-------------------------------------------------------------------Sweep Rooms
 
-def sweep_rooms():
+#def sweep_rooms():
 
-    """Remove rotted items from the floors."""
+#    """Remove rotted items from the floors."""
 
-    for uuid in shared.ROOMS.keys():
-        shared.ROOMS[uuid].sweep()
+#    for uuid in shared.ROOMS.keys():
+#        shared.ROOMS[uuid].sweep()

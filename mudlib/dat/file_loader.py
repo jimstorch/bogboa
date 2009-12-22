@@ -32,13 +32,13 @@ def load_module(module):
     THE_LOG.add(">> Loading Module: '%s'"  % module)
 
     ## Load Races
-    from mudlib.world.race import configure_race, register_race
+    from mudlib.actor.race import configure_race, register_race
     for cfg in race_directory(module):
         race = configure_race(cfg)
         register_race(race)
 
     ## Load Guilds
-    from mudlib.world.guild import configure_guild, register_guild
+    from mudlib.actor.guild import configure_guild, register_guild
     for cfg in guild_directory(module):
         guild = configure_guild(cfg)
         register_guild(guild)

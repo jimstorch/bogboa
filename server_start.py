@@ -18,7 +18,7 @@ from mudlib.sys.monitor import on_connect
 from mudlib.sys.monitor import on_disconnect
 from mudlib.sys.monitor import kick_idle_clients
 from mudlib.sys.monitor import process_client_commands
-from mudlib.sys.monitor import sweep_rooms
+#from mudlib.sys.monitor import sweep_rooms
 from mudlib.dat.file_loader import load_module
 from mudlib.dat.tables import check_database
 
@@ -50,8 +50,8 @@ load_module(module)
 #       Schedule Repeating Events
 #------------------------------------------------------------------------------
 
-Cycle(2, kick_idle_clients)
-Cycle(10, sweep_rooms)
+#Cycle(2, kick_idle_clients)
+#Cycle(10, sweep_rooms)
 Cycle(.25, process_client_commands)
 
 
@@ -59,9 +59,10 @@ Cycle(.25, process_client_commands)
 #       Create the Telnet Server
 #------------------------------------------------------------------------------
 
-server = TelnetServer(port=PORT)
+server = TelnetServer(port=PORT, timeout=.05)
 server.on_connect = on_connect
 server.on_disconnect = on_disconnect
+
 
 #------------------------------------------------------------------------------
 #       Main Loop
@@ -72,7 +73,7 @@ THE_LOG.add(">> Listening for connections on port %d" % PORT)
 while shared.SERVER_RUN == True:
     THE_SCHEDULER.tick()
     server.poll()
-
+    #print server.client_count()
 
 ## All done
 THE_LOG.add('?? Administrative shutdown')

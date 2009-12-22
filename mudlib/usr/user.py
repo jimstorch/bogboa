@@ -11,7 +11,6 @@
 from mudlib.sys import shared
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.sys.error import BogCmdError
-from mudlib.world.entity import Entity
 from mudlib.usr.verb import VERB_ALIAS
 from mudlib.usr.verb import VERB_HANDLER
 
@@ -25,12 +24,15 @@ class User(object):
         self.client = client            ## Network connection
         self.commands = set()           ## Permitted commands
         self.verb_args = []             ## arguments for the verb handlers
+        self.cmd_driver = self._do_nothing
 
+    def __del__(self):
 
-#    def __del__(self):
+        print "User destructor called"
 
-#        print "User destructor called"
-#        pass
+    def _do_nothing(self):
+        """Do nothing driver for users that being kicked."""
+        pass
 
     #----------------------------------------------------------------------Send
 
@@ -117,23 +119,18 @@ class User(object):
                     handler(self)
                 except BogCmdError, error:
                     self.alert(error)
-
             else:
                 self.alert("Unknown action.")
-
-            #self.prompt()
-
         else:
             self.verb_args = None
-            #self.soft_prompt()
 
-    #--------------------------------------------------------------------Origin
+#    #--------------------------------------------------------------------Origin
 
-    def origin(self):
+#    def origin(self):
 
-        """Return the client's IP address and Port Numnber."""
+#        """Return the client's IP address and Port Numnber."""
 
-        return self.client.addrport()
+#        return self.client.addrport()
 
     #----------------------------------------------------------------Deactivate
 
@@ -152,7 +149,7 @@ class User(object):
         """
         Kick the user from the server in 1 second.
         """
-
+        self.cmd_driver = self._do_nothing
         THE_SCHEDULER.add(1, self.client.deactivate)
 
 
@@ -184,49 +181,48 @@ class User(object):
             args = words[1:]
 
         one_true_verb = VERB_ALIAS.get(verb, None)
-
         return (one_true_verb, args)
 
-    #-------------------------------------------------------------Grant Command
+#    #-------------------------------------------------------------Grant Command
 
-    def grant_command(self, command_name):
-        """Authorize player to use an command and tell them."""
-        if command_name not in self.commands:
-            self.commands.add(command_name)
-            self.send('You receive a new command: ^W%s^w' % command_name)
-        else:
-            self.send("Oddness -- attempt to re-grant command '%s'." %
-                command_name)
+#    def grant_command(self, command_name):
+#        """Authorize player to use an command and tell them."""
+#        if command_name not in self.commands:
+#            self.commands.add(command_name)
+#            self.send('You receive a new command: ^W%s^w' % command_name)
+#        else:
+#            self.send("Oddness -- attempt to re-grant command '%s'." %
+#                command_name)
 
-    #------------------------------------------------------------Revoke Command
+#    #------------------------------------------------------------Revoke Command
 
-    def revoke_command(self, command_name):
-        """De-authorize player to use an command and tell them."""
-        if command_name in self.commands:
-            self.commands.remove(command_name)
-            self.send("You lose a command: ^y%s^w" % command_name)
+#    def revoke_command(self, command_name):
+#        """De-authorize player to use an command and tell them."""
+#        if command_name in self.commands:
+#            self.commands.remove(command_name)
+#            self.send("You lose a command: ^y%s^w" % command_name)
 
-    #-----------------------------------------------------Revoke Command Silent
+#    #-----------------------------------------------------Revoke Command Silent
 
-    def revoke_command_silent(self, command_name):
-        """Silently de-authorize a player to use an command."""
-        if command_name in self.commands:
-            self.commands.remove(command_name)
+#    def revoke_command_silent(self, command_name):
+#        """Silently de-authorize a player to use an command."""
+#        if command_name in self.commands:
+#            self.commands.remove(command_name)
 
-    #------------------------------------------------------Grant Command Silent
+#    #------------------------------------------------------Grant Command Silent
 
-    def grant_command_silent(self, ability_name):
-        """Silently authorize a player to use an command."""
-        self.command.add(command_name)
+#    def grant_command_silent(self, ability_name):
+#        """Silently authorize a player to use an command."""
+#        self.command.add(command_name)
 
-    #-------------------------------------------------------------Clear Command
+#    #-------------------------------------------------------------Clear Command
 
-    def clear_commands(self):
-        """Remove all command from client."""
-        self.commands.clear()
+#    def clear_commands(self):
+#        """Remove all command from client."""
+#        self.commands.clear()
 
-    #---------------------------------------------------------------Has Command
+#    #---------------------------------------------------------------Has Command
 
-    def has_command(self, command_name):
-        """Return True if client has access to the given command."""
-        return command_name in self.commands
+#    def has_command(self, command_name):
+#        """Return True if client has access to the given command."""
+#        return command_name in self.commands

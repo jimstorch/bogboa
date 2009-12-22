@@ -140,8 +140,6 @@ class Scheduler(object):
 
     def tick(self):
         """Fire and delete all events that have a schedule time < now."""
-        ## Give up some CPU time, just to be nice
-        time.sleep(.001)
 
         ## Update the global time value
         shared.THE_TIME = time.time()
