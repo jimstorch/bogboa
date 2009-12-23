@@ -150,10 +150,10 @@ class TelnetClient(object):
         self.telnet_echo_password = False  # Echo back '*' for passwords?
         self.telnet_sb_buffer = ''  # Buffer for sub-negotiations
 
-    def __del__(self):
+#    def __del__(self):
 
-        print "Telnet destructor called"
-        pass
+#        print "Telnet destructor called"
+#        pass
 
     #---------------------------------------------------------------Get Command
 

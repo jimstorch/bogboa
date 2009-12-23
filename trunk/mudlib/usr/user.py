@@ -26,13 +26,8 @@ class User(object):
         self.verb_args = []             ## arguments for the verb handlers
         self.cmd_driver = self._do_nothing
 
-    def __del__(self):
-
-        print "User destructor called"
-
-    def _do_nothing(self):
-        """Do nothing driver for users that being kicked."""
-        pass
+#    def __del__(self):
+#        print "User destructor called"
 
     #----------------------------------------------------------------------Send
 

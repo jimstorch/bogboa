@@ -6,6 +6,9 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+import gc
+gc.set_debug(gc.DEBUG_LEAK)
+
 from miniboa.async import TelnetServer
 
 from mudlib.sys import shared
@@ -21,6 +24,7 @@ from mudlib.sys.monitor import process_client_commands
 #from mudlib.sys.monitor import sweep_rooms
 from mudlib.dat.file_loader import load_module
 from mudlib.dat.tables import check_database
+
 
 
 THE_LOG.add(">> **************")
