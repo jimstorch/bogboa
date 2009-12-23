@@ -39,9 +39,9 @@ def on_disconnect(client):
     if client in shared.LOBBY_CLIENTS:
         THE_LOG.add('-- Lost entrant client from %s.' % client.addrport())
         user = shared.LOBBY_CLIENTS[client]
-        del user.cmd_driver
+        #del user.cmd_driver
         del shared.LOBBY_CLIENTS[client]
-        del user
+        #del user
         # force garbage collection of Client to drop socket
         #del user.client
         #del user

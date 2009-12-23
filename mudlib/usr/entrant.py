@@ -55,9 +55,13 @@ class Entrant(User):
         client.send_cc(_GREETING % random.choice(_BCOLORS))
         self.req_username()
 
-    def __del__(self):
+#    def __del__(self):
+#        print "Entrant destructor called"
 
-        print "Entrant destructor called"
+
+    def _do_nothing(self):
+        """Do nothing driver for users that being kicked."""
+        pass
 
 
     #---------------------------------------------------------Returning Players
