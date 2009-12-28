@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/actor/profile.py
+#   mudlib/actor/actor.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-"""
-Base class to provide dictionary lookups for referencing profile attributes
-in string templates.
-"""
+
+from mudlib.actor.resource import Resource
+from mudlib.actor.skill import Skill
 
 ## Pronouns by Gender
 _NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
@@ -21,30 +20,40 @@ _REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
     'group':'themselves'}
 
 
-class BaseProfile(object):
+"""
+Base Class for PCs and NPCs.
+"""
+
+class Actor(object):
 
     def __init__(self):
 
-        ## Children must provide the dictionary 'profile' as a class property
+        ## Profile
+        self.name   = '_spawn_'
+        self.alias  = '_alias_'
+        self.race   = '_race_'
+        self.gender = 'neutral'
+        self.guild  = '_guild_'
+        self.level  = 1
 
-        ## Keywords for String Templates
-        self.__keywords = {
-            'name':self.get_name,
-            'alias':self.get_alias,
-            'race':self.get_race,
-            'guild':self.get_guild,
-            'gender':self.get_gender,
-            'level':self.get_level,
-            'nom':self.get_nom,
-            'obj':self.get_obj,
-            'pos':self.get_pos,
-            'npos':self.get_npos,
-            'reflx':self.get_reflx,
-            }
+        ## 
+        self.abilities = set()
+        self.stats = {}
+        self.resources = {}         # Dictionary of resource objects by name
+        self.worn = {}
+        self.carried = {}
 
-    #---------------------------------------Methods to support String Templates
+        ## 
+        self.target = None
 
-    def __getitem__(self, key): return self.__keywords[key]()
+
+    #-------------------------------------------------------------------Scaling
+
+    def get_adj_stat(self, stat_name):
+        return self.stats.get(stat_name, 0.0)
+
+
+    #---------------------------------------Methods to support action messaging
 
     def get_name(self): return self.name
     def get_alias(self): return self.alias
@@ -57,5 +66,4 @@ class BaseProfile(object):
     def get_pos(self): return _POSSESSIVE[self.gender]
     def get_npos(self): return _NOUN_POSSESSIVE[self.gender]
     def get_reflx(self): return _REFLEXIVE[self.gender]
-
-
+    

@@ -19,6 +19,12 @@ from mublib.usr.user import User
 
 class Player(User):
 
-    def __init__(self, client):
+    def __init__(self, client, actor):
 
-        pass
+        User.__init__(self, client)
+        self.actor = actor
+
+    
+
+
+

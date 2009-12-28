@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/world/race.py
+#   mudlib/actor/race.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -17,12 +17,18 @@ class Race(object):
 
     def __init__(self):
 
-#        self.uuid = None
         self.name = None
         self.filename = None
 
         self.stats = {}
-        self.ability = {}
+        self.abilities = set()
+
+
+    def get_stats(self):
+        """
+        Return a copy of the race stats.
+        """
+        return self.stats[:]
 
 
 #----------------------------------------------------------------Configure race
