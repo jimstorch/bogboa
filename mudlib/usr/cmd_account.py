@@ -6,6 +6,12 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+
+
+## Most of this is deprecated by entrant.py
+
+
+
 import uuid
 
 from mudlib.sys import shared

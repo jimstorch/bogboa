@@ -51,26 +51,26 @@ class Entrant(User):
         self.username = 'Anonymous'
         self.password = None
         self.uuid = None
-
         client.send_cc(_GREETING % random.choice(_BCOLORS))
+
+        self.state = None
         self.req_username()
 
 #    def __del__(self):
 #        print "Entrant destructor called"
 
-
-    def _do_nothing(self):
-        """Do nothing driver for users that being kicked."""
-        pass
-
-
     #---------------------------------------------------------Returning Players
 
     def req_username(self):
         self.send("Username or ^!new^1 to create an account: ")
-        self.cmd_driver = self.get_username
+        self.change_state('get_username')
 
-    def get_username(self):
+    def req_password(self):
+        self.send("password: ")
+        self.client.password_mode_on()
+        self.change_state('get_password')
+
+    def _fsm_get_username(self):
         name = self.client.get_command()
 
         if name.lower() == 'new':
@@ -78,19 +78,13 @@ class Entrant(User):
         elif name.lower() == 'quit':
             self.send('Seeya.\n')
             self.deactivate()
-
         elif name == '':
             self.req_username()
         else:
             self.username = name
             self.req_password()
 
-    def req_password(self):
-        self.send("password: ")
-        self.client.password_mode_on()
-        self.cmd_driver = self.get_password
-
-    def get_password(self):
+    def _fsm_get_password(self):
         password = self.client.get_command()
         if password == '':
             self.req_password()
@@ -106,37 +100,34 @@ class Entrant(User):
                 self.alert('\nAccount has been permanently banned.\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
-                #self.cmd_driver = self._do_nothing
 
             elif status == 'suspended':
                 self.alert('\nAccount is under temporary suspension.\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
-                #self.cmd_driver = self._do_nothing
 
             else:
                 ## Load existing account
                 self.uuid = uuid
                 self.load_account()
 
-    #--------------------------------------------------------------Load Account
-
-    def load_account(self):
-
-        self.send('\nWelcome back, %s.\n' % self.username)
-        self.send('Your last visit was %s.\n' % last_on(self.username))
-        record_visit(self.username, self.client.address)
-
-        profile = fetch_kv_dict(self.uuid, 'profile')
-
 
     #--------------------------------------------------------------New Accounts
 
     def req_new_username(self):
         self.send('Username for new account: ')
-        self.cmd_driver = self.get_new_username
+        self.change_state('get_new_username')
 
-    def get_new_username(self):
+    def req_new_password(self):
+        self.send('Password for new account: ')
+        self.client.password_mode_on()
+        self.change_state('get_new_password')
+
+    def req_new_password_again(self):
+        self.send('\nType the password again just to be sure: ')
+        self.change_state('get_new_password_again')
+
+    def _fsm_get_new_username(self):
         name = self.client.get_command()
         if len(name) < 3:
             self.alert('Sorry, that name is too short.\n')
@@ -151,12 +142,7 @@ class Entrant(User):
             self.username = name
             self.req_new_password()
 
-    def req_new_password(self):
-        self.send('Password for new account: ')
-        self.client.password_mode_on()
-        self.cmd_driver = self.get_new_password
-
-    def get_new_password(self):
+    def _fsm_get_new_password(self):
         password =  self.client.get_command()
         if password == '':
             self.send('\n')
@@ -165,11 +151,7 @@ class Entrant(User):
             self.password = password
             self.req_new_password_again()
 
-    def req_new_password_again(self):
-        self.send('\nType the password again just to be sure: ')
-        self.cmd_driver = self.get_new_password_again
-
-    def get_new_password_again(self):
+    def _fsm_get_new_password_again(self):
         password =  self.client.get_command()
         if password != self.password:
             self.alert('\nPasswords do not match.\n')
@@ -179,12 +161,22 @@ class Entrant(User):
             self.client.password_mode_off()
             self.create_account()
 
+
+    #--------------------------------------------------------------Load Account
+
+    def load_account(self):
+
+        self.send('\nWelcome back, %s.\n' % self.username)
+        self.send('Your last visit was %s.\n' % last_on(self.username))
+        record_visit(self.username, self.client.address)
+        profile = fetch_kv_dict(self.uuid, 'profile')
+
     #------------------------------------------------------------Create Account
 
     def create_account(self):
 
         self.send("\nCreating your account. "
-                "Please don't forgot your username or password.\n")
+                "Please don't forget your username or password.\n")
         self.uuid = uuid4().get_hex()
         add_account(self.username, self.password, self.uuid,
             self.client.address)

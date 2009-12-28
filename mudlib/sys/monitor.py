@@ -37,14 +37,8 @@ def on_disconnect(client):
     """
 
     if client in shared.LOBBY_CLIENTS:
-        THE_LOG.add('-- Lost entrant client from %s.' % client.addrport())
-        user = shared.LOBBY_CLIENTS[client]
-        #del user.cmd_driver
+        THE_LOG.add('-- Lost lobby client from %s.' % client.addrport())
         del shared.LOBBY_CLIENTS[client]
-        #del user
-        # force garbage collection of Client to drop socket
-        #del user.client
-        #del user
 
     elif client in shared.PLAY_CLIENTS:
         user = shared.PLAY_CLIENTS[client]
@@ -52,7 +46,7 @@ def on_disconnect(client):
         THE_LOG.add('-- Deactivated player %s from %s.' %
             (user.name, client.addrport()))
         del shared.PLAY_CLIENTS[client]
-        del user.client
+
 
 #-------------------------------------------------------------Kill Idle Clients
 
@@ -61,9 +55,6 @@ def kick_idle_clients():
     """
     Test for and drop clients who aren't doing anything.
     """
-
-    print len(shared.LOBBY_CLIENTS), len(shared.PLAY_CLIENTS)
-
 
     for client in shared.LOBBY_CLIENTS.keys():
         if client.idle() > IDLE_TIMEOUT:
@@ -96,9 +87,9 @@ def process_client_commands():
 
 #-------------------------------------------------------------------Sweep Rooms
 
-#def sweep_rooms():
+def sweep_rooms():
 
-#    """Remove rotted items from the floors."""
+    """Remove rotted items from the floors."""
 
-#    for uuid in shared.ROOMS.keys():
-#        shared.ROOMS[uuid].sweep()
+    for room in shared.ROOMS.values():
+        room.sweep()
