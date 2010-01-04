@@ -9,7 +9,7 @@
 import sys
 from random import choice
 
-from mudlib.sys import ROOMS
+from mudlib import gvar
 from mudlib.sys import THE_LOG
 from mudlib.usr.lang import keyset
 from mudlib.usr.lang import guestimate
@@ -152,7 +152,7 @@ class Room(object):
         Execute the script for a given event name.
         """
         if event_name in self.scripts:
-            exec self.scripts[event_name]       
+            exec self.scripts[event_name]
 
 
     def on_enter(self, body, direction=None):
@@ -321,10 +321,10 @@ def register_room(room):
     Given a configured room, register it with the ROOMS dictionary.
     """
 
-    if room.uuid in ROOMS:
+    if room.uuid in gvar.ROOMS:
         THE_LOG.add("!! Duplicate UUID (%s) found while registering "
             "room '%s' in module '%s'."  %
             (room.uuid, room.name, room.module))
         sys.exit(1)
     else:
-        ROOMS[room.uuid] = room
+        gvar.ROOMS[room.uuid] = room

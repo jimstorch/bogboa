@@ -10,4 +10,4 @@
 Module for interfacing player clients with the game.
 """
 
-from mudlib.usr.user import User
+from mudlib.usr.base_user import BaseUser

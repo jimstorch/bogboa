@@ -6,42 +6,13 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""
+Module to Manage Logs, Scheduling, and Network IO.
+"""
+
+
 from mudlib.sys.log import Log
 from mudlib.sys.error import *
 
 ## Shared Log instance
 THE_LOG = Log('server.log', append=True)
-
-## Boolean used by the main loop, False = stop the server
-
-SERVER_RUN = True
-
-
-## Since so much of code needs to know the current time it seemed better
-## to share the value instead a bajillion OS calls via time.time().
-## Note: THE_TIME gets updates each cycle by
-## driver.scheduler.THE_SCHEDULER.tick().
-
-THE_TIME = 0.0
-
-
-#--[ Client Connections ]------------------------------------------------------
-
-LOBBY = {}       ## Key is Client object, value is Entrant object
-PLAYERS = {}        ## Key is Client object, value is Player object
-AVATARS = {}        ## key is player name, value is Avatar object
-
-
-#--[ Reference Objects ]-------------------------------------------------------
-
-GUILDS = {}         ## key is guild name
-HELPS = {}          ## key is help name
-RACES = {}          ## key is race name
-ITEMS = {}          ## key is item UUID
-SPAWNS = {}         ## key is npc UUID
-
-
-#--[ Objects in the game world ]-----------------------------------------------
-
-OBJECTS = {}        ## key is object UUID
-ROOMS = {}          ## key is room UUID

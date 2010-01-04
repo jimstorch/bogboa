@@ -12,13 +12,12 @@ Account creation, loading, and updating.
 
 from uuid import uuid4
 
+from mudlib import gvar
 from mudlib.sys import THE_LOG
-from mudlib.sys import LOBBY, PLAYERS, AVATARS
 from mudlib.sys.config import LOBBY_UUID
 from mudlib.sys.config import START_UUID
 from mudlib.dat import add_account
 from mudlib.dat import last_on
-from mudlib.dat import record_visit
 from mudlib.dat import store_kv_dict
 from mudlib.dat import fetch_kv_dict
 from mudlib.dat import store_kv_set
@@ -35,7 +34,7 @@ def create_account(client, name, password):
             "Please don't forget your username or password.\n")
 
     ## Preserve the client but nuke the user
-    del LOBBY[client]
+    del gvar.LOBBY[client]
 
     profile = {
         'name':name,
@@ -56,48 +55,56 @@ def create_account(client, name, password):
     actor = Avatar()
     #actor.client = client
     actor.profile = profile
-    play_account(actor)
+    play_account(avatar)
 
 
 def load_account(client, name, uuid):
     """
-    load a previously created account.     
+    load a previously created account.
     """
     client.send('\nWelcome back, %s.\n' % name)
     client.send('Your last visit was %s.\n' % last_on(name))
-    record_visit(name, client.address)
 
     #client.deactivate()
-    del LOBBY[client]
+    del gvar.LOBBY[client]
     ## Create an in-game Avatar from stored data
-    actor = Avatar()
+    avatar = Avatar(client)
     #actor.client = client
     ## Read from database
-    actor.profile = fetch_kv_dict(uuid, 'profile')
-    actor.resources = fetch_kv_dict(uuid, 'resources')
-    actor.skills = fetch_kv_dict(uuid, 'skills') 
-    actor.worn = fetch_kv_dict(uuid, 'worn')
-    actor.carried = fetch_kv_dict(uuid, 'carried')
-    actor.commands.update(fetch_kv_set(uuid, 'commands'))
-    #play_account(actor)
-    
+    avatar.profile = fetch_kv_dict(uuid, 'profile')
+    avatar.resources = fetch_kv_dict(uuid, 'resources')
+    avatar.skills = fetch_kv_dict(uuid, 'skills')
+    avatar.worn = fetch_kv_dict(uuid, 'worn')
+    avatar.carried = fetch_kv_dict(uuid, 'carried')
+    avatar.abilities.update(fetch_kv_set(uuid, 'abilities'))
+    play_account(avatar)
 
-def play_account(actor):
-    
-    pass
-    ## Preserve the connection...
-    #client = actor.client
 
-    ## Remove Entrant(User) from Lobby List
-    #del LOBBY[client]
+def play_account(avatar):
+    """
+    Given a game Avatar, create a Player instance to manage it.
+    """
 
     ## Initialize the Avatar
+    avatar.prep()
+    ## Create the Player(User)
+    player = Player(avatar.client, avatar)
 
-    ## Create the Player(User)  
+    commands = set([
+        'north', 'south', 'east', 'west',
+        'tell', 'reply', 'say', 'emote',
+        'ooc', 'shout',
+        'help', 'commands', 'quit',
+        'kick', 'time', 'date', 'uptime',
+        'ansi', 'stats', 'topics',
+        'look', 'shutdown', 'take',
+        ])
 
+    player.commands.update(commands)
+    #player.commands.update(fetch_kv_set(avatar.uuid, 'commands'))
     ## Add to Play List
-
-
+    gvar.PLAYERS[avatar.client] = player
+    gvar.AVATARS[avatar.get_name().lower()] = avatar
 
 ##------------------------------------------------------------------------Create
 

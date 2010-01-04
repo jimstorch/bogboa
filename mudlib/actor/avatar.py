@@ -10,95 +10,68 @@
 The player's identity in the game world. Inherits from BaseActor.
 """
 
-from mudlib.sys import RACES
-from mudlib.sys import GUILDS
-from mudlib.actor.base_actor import BaseActor
 
+from mudlib.actor.base_actor import BaseActor
+from mudlib.dat import set_kv
+from mudlib.dat import delete_kv
+from mudlib.dat import delete_kv_category
 
 class Avatar(BaseActor):
 
-    def __init__(self):
+    def __init__(self, client):
         BaseActor.__init__(self)
-        self.commands = set()
+        self.client = client
+        self.abilities = set()
+
+    def prep(self):
+        """
+        Set calculated fields based on gear, race, guild, and level.
+        """
+        pass
+
+
+    #--[ Ability Authorizing ]------------------------------------------------
 
     def grant_ability(self, ability_name):
-        self.abilities
-
-    #----------------------------------------------------------Command Handling
-
-    def grant_command(self, command_name):
-        """Authorize Avatar to use an command and tell them."""
+        """
+        Authorize Avatar to use an ability and tell them.
+        """
         if command_name not in self.commands:
-            self.commands.add(command_name)
-            self.send('You receive a new command: ^W%s^w' % command_name)
-        else:
-            self.send("Oddness -- attempt to re-grant command '%s'." %
-                command_name)
+            self.grant_ability_silent(ability_name)
+            self.send('You receive a new ability: ^W%s^w' % ability_name)
 
-    def revoke_command(self, command_name):
-        """De-authorize player to use an command and tell them."""
-        if command_name in self.commands:
-            self.commands.remove(command_name)
-            self.send("You lose a command: ^y%s^w" % command_name)
-
-    def revoke_command_silent(self, command_name):
-        """Silently de-authorize a player to use an command."""
-        if command_name in self.commands:
-            self.commands.remove(command_name)
-
-    def grant_command_silent(self, ability_name):
-        """Silently authorize a player to use an command."""
-        self.command.add(command_name)
-
-    def clear_commands(self):
-        """Remove all command from client."""
-        self.commands.clear()
-
-    def has_command(self, command_name):
-        """Return True if client has access to the given command."""
-        return command_name in self.commands
-
-    def _verbing(self, cmd):
+    def grant_ability_silent(self, ability_name):
         """
-        'Verbing weirds language'
-        -- Calvin and Hobbes
+        Silently authorize an Avatar to use an ability.
+        """
+        self.abilities.add(ability_name)
+        set_kv(self.uuid, 'abilities', ability_name)
 
-        Split a command line into an array of words and convert the first
-        one into the One True Verb(tm).
+    def revoke_ability(self, ability_name):
         """
-        words = cmd.split()
-        count = len(words)
-        if count == 0:
-            verb = None
-            args = []
-        elif count == 1:
-            verb = words[0].lower()
-            args = []
-        else:
-            verb = words[0].lower()
-            args = words[1:]
-        one_true_verb = VERB_ALIAS.get(verb, None)
-        return (one_true_verb, args)
+        Dis-allow an Avatar to use an ability and tell them.
+        """
+        if ability_name in self.ability:
+            self.revoke_ability_silent(ability_name)
+            self.send("You lose a ability: ^y%s^w" % ability_name)
 
-    def _fsm_user_command(self):
+    def revoke_ability_silent(self, ability_name):
         """
-        Retrieve a line of text sent from the distant end and attempt to
-        execute as a game command, with or without additional arguments.
+        Silently dis-allow an Avatar to use an ability.
         """
-        cmd = self.client.get_command()
-        if cmd:
-            verb, args = self._verbing(cmd)
-            ## Did we get a verb and it is authozied?
-            if verb and verb in self.commands:
-                self.verb_args = args
-                ## Find the function mapped to this verb
-                handler = VERB_HANDLER[verb]
-                ## and call it, passing it the client
-                try:
-                    handler(self)
-                except BogCmdError, error:
-                    self.alert(error)
-            else:
-                self.alert("Unknown action.")
-        else:
-            self.verb_args = None
+        if ability_name in self.abilities:
+            self.abilities.remove(ability_name)
+            delete_kv(self.uuid, 'abilities', ability_name)
+
+    def clear_abilities(self):
+        """
+        Remove all abilities from Avatar.
+        """
+        self.abilities.clear()
+        delete_kv_category(self.uuid, 'abilities')
+
+    def has_ability(self, ability_name):
+        """
+        Return True if Avatar has access to the given ability.
+        """
+        return ability_name in self.abilities

@@ -15,7 +15,7 @@ import time
 import operator
 from bisect import insort
 
-from mudlib.sys import THE_TIME
+from mudlib import gvar
 
 
 class Event(object):
@@ -24,7 +24,7 @@ class Event(object):
     """
     def __init__(self, delay, func, args):
         self.active = True
-        self.when = THE_TIME + delay
+        self.when = gvar.THE_TIME + delay
         self.func = func
         self.args = args
 
@@ -129,21 +129,20 @@ class Scheduler(object):
         """
         Return the age of the scheduler in seconds.
         """
-        return THE_TIME - self.start_time
+        return gvar.THE_TIME - self.start_time
 
     def tick(self):
         """
         Fire and delete all events that have a schedule time < now.
         """
         ## Update the global time value
-        global THE_TIME
-        THE_TIME = time.time()
+        gvar.THE_TIME = time.time()
 
         while self.event_list:
             ## Look at the first event
             event = self.event_list[0]
             ## Is is past time for it to fire?
-            if event.when < THE_TIME:
+            if event.when < gvar.THE_TIME:
                 ## And is it still active?
                 if event.active:
                     event.func(*event.args)

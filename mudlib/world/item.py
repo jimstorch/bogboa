@@ -8,8 +8,8 @@
 
 import sys
 
+from mudlib import gvar
 from mudlib.sys import THE_LOG
-from mudlib.sys import ITEMS
 from mudlib.usr.lang import NameTrie
 from mudlib.scripting.bogscript import process_scripts
 
@@ -300,9 +300,9 @@ def register_item(item):
     """
     Given a configured item, register it with the shared ITEM dictionary.
     """
-    if item.uuid in ITEMS:
+    if item.uuid in gvar.ITEMS:
         THE_LOG.add("!! Duplicate UUID (%s) found while registering item"
             " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:
-        ITEMS[item.uuid] = item
+        gvar.ITEMS[item.uuid] = item

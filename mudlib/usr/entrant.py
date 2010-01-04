@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 """
-User-parented Class to handle logins and new account creation.
+BaseUser derived class to handle logins and new account creation.
 """
 
 import random
@@ -15,7 +15,8 @@ import random
 from mudlib.sys import THE_LOG
 from mudlib.dat import rejected_name
 from mudlib.dat import check_credentials
-from mudlib.usr import User
+from mudlib.dat import record_visit
+from mudlib.usr import BaseUser
 from mudlib.usr.account import create_account
 from mudlib.usr.account import load_account
 
@@ -35,7 +36,7 @@ _BCOLORS = ['^R', '^B', '^C', '^M', '^G', '^Y',
     '^r', '^b', '^c', '^m', '^g', '^y', ]
 
 
-class Entrant(User):
+class Entrant(BaseUser):
 
     """
     Process logins and new account registrations.
@@ -43,7 +44,7 @@ class Entrant(User):
 
     def __init__(self, client):
 
-        User.__init__(self, client)
+        BaseUser.__init__(self, client)
         self.client = client
         self.login_attempts = 0
         self.username = 'Anonymous'
@@ -68,7 +69,7 @@ class Entrant(User):
         self.client.password_mode_on()
         self.change_state('get_password')
 
-    def _fsm_get_username(self):
+    def state__get_username(self):
         name = self.client.get_command()
 
         if name.lower() == 'new':
@@ -82,7 +83,7 @@ class Entrant(User):
             self.username = name
             self.req_password()
 
-    def _fsm_get_password(self):
+    def state__get_password(self):
         password = self.client.get_command()
         if password == '':
             self.req_password()
@@ -107,8 +108,9 @@ class Entrant(User):
             else:
                 ## Load existing account
                 self.uuid = uuid
+                record_visit(self.username, self.client.address)
                 load_account(self.client, self.username, self.uuid)
-                
+
     #--------------------------------------------------------------New Accounts
 
     def req_new_username(self):
@@ -124,7 +126,7 @@ class Entrant(User):
         self.send('\nType the password again just to be sure: ')
         self.change_state('get_new_password_again')
 
-    def _fsm_get_new_username(self):
+    def state__get_new_username(self):
         name = self.client.get_command()
         if len(name) < 3:
             self.alert('Sorry, that name is too short.\n')
@@ -139,7 +141,7 @@ class Entrant(User):
             self.username = name
             self.req_new_password()
 
-    def _fsm_get_new_password(self):
+    def state__get_new_password(self):
         password =  self.client.get_command()
         if password == '':
             self.send('\n')
@@ -148,7 +150,7 @@ class Entrant(User):
             self.password = password
             self.req_new_password_again()
 
-    def _fsm_get_new_password_again(self):
+    def state__get_new_password_again(self):
         password =  self.client.get_command()
         if password != self.password:
             self.alert('\nPasswords do not match.\n')
@@ -157,5 +159,3 @@ class Entrant(User):
             ## Create a new account
             self.client.password_mode_off()
             create_account(self)
-
-

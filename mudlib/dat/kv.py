@@ -32,11 +32,22 @@ def fetch_kv(uuid, category, key):
 
 def store_kv(uuid, category, key, value):
     """
-    Given a UUID, category, and dictionary, write them to the database.
+    Given a UUID, category, key, and value, write it to the database.
     """
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
-        VALUES (?, ?, ?, ?');
+        VALUES (?, ?, ?, ?);
+        """
+    THE_CURSOR.execute(sql, (uuid, category, key, value))
+
+
+def set_kv(uuid, category, key):
+    """
+    Given a UUID, category, and key, set the value to 1.
+    """
+    sql = """
+        INSERT OR REPLACE INTO key_value (uuid, category, key, value)
+        VALUES (?, ?, ?, 1);
         """
     THE_CURSOR.execute(sql, (uuid, category, key, value))
 
@@ -97,6 +108,23 @@ def fetch_kv_dict_float(uuid, category):
     return dct
 
 
+def fetch_kv_dict_int(uuid, category):
+    """
+    Given a UUID and category, select matching rows and convert them to a
+    dictionary of integers.
+    """
+    sql = """
+        SELECT key, value
+        FROM key_value
+        WHERE uuid = ? AND category = ?;
+        """
+    dct = {}
+    THE_CURSOR.execute(sql, (uuid, category))
+    for row in THE_CURSOR:
+        dct[row[0]] = int(row[1])
+    return dct
+
+
 def store_kv_dict(uuid, category, dct):
     """
     Given a UUID, category, and dictionary, write them to the database.
@@ -130,7 +158,7 @@ def store_kv_set(uuid, category, st):
     """
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
-        VALUES (?, ?, ?, '1');
+        VALUES (?, ?, ?, 1);
         """
     ## build a list comprehension of arguments for executemany()
     rows = [ (uuid, category, k) for k in st ]
