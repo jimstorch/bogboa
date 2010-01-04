@@ -6,6 +6,10 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""
+Language and intent code.
+"""
+
 import re
 
 from mudlib.sys.error import BogCmdError

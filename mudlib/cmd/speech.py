@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import shared
+from mudlib.sys import LOBBY, PLAYERS
 from mudlib.usr import parsers
 
 #---------------------------------------------------------------------Broadcast
@@ -27,7 +27,7 @@ def broadcast_all(msg):
 
     broadcast(msg)
 
-    for client in shared.LOBBY:
+    for client in LOBBY:
         client.send(msg)
 
 
@@ -91,7 +91,7 @@ def ooc(client, msg):
 
     """Sends 'message' to every players."""
 
-    for player in shared.PLAYERS:
+    for player in PLAYERS:
 
         if player == client:
             player.send('^gYou OOC^w, %s' % msg)
@@ -107,7 +107,7 @@ def shout(client, msg):
 
     """Sends 'message' to every players."""
 
-    for player in shared.PLAYERS:
+    for player in PLAYERS:
 
         if player == client:
             player.send('^rYou shout^w, %s' % msg)

@@ -13,15 +13,14 @@ text:
     
     The race of man.
 
-
 ###  Racial Stats
 
 stats:
-    agi: 12
-    chr: 12
-    dex: 12
-    int: 12
-    luc: 16
-    sta: 14
-    str: 14
-    wis: 12
+    brawn: 12       
+    vigor: 11       
+    precision: 14   
+    knowledge: 10
+    faith: 10
+    cunning: 12
+
+

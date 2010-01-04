@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/usr/help.py
+#   mudlib/world/help.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,36 +8,30 @@
 
 import sys
 
-from mudlib.sys import shared
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import HELPS
+from mudlib.sys import THE_LOG
 
-
-#--------------------------------------------------------------------------Help
 
 class Help(object):
-
+ 
     def __init__(self):
-
-#        self.uuid = None
         self.module = None
         self.name = None
         self.keywords = None
         self.text = None
 
     def on_read(self, client):
-        """Send the contents of the help text to the player."""
+        """
+        Send the contents of the help text to the player.
+        """
         client.inform(self.text)
 
 
-#----------------------------------------------------------------Configure Help
-
 def configure_help(cfg):
-
     """
     Given a configuration dictionary, create a help object and configure it.
     Returns the configured help.
     """
-
     help = Help()
 
     help.filename = cfg.pop('filename')
@@ -92,28 +86,24 @@ def configure_help(cfg):
     return help
 
 
-#-----------------------------------------------------------------Register Help
-
 def register_help(help):
-
     """
     Given a configured help, register it with the shared HELP dictionary.
     """
-
-    if help.name in shared.HELPS:
+    if help.name in HELPS:
         THE_LOG.add("!! Duplicate name found while registering "
             "help text '%s' in module '%s'."  %  (help.name, help.module))
         sys.exit(1)
     else:
-        shared.HELPS[help.name] = help
+        HELPS[help.name] = help
 
     ## Also map any aliases for this text
     if help.keywords:
         for keyword in help.keywords:
-            if keyword in shared.HELPS:
+            if keyword in HELPS:
                 THE_LOG.add("!! Duplicate keyword found while registering "
                     "help text '%s' in module '%s'."  %
                     (help.name, help.module))
                 sys.exit(1)
             else:
-                shared.HELPS[keyword] = help
+                HELPS[keyword] = help

@@ -7,8 +7,7 @@
 #------------------------------------------------------------------------------
 
 from mudlib.usr import parsers
-from mudlib.sys import shared
-from mudlib.sys import lookup
+from mudlib.sys import ROOMS
 from mudlib.sys.error import BogCmdError
 
 #-------------------------------------------------------------------------North
@@ -21,7 +20,7 @@ def north(client):
 
     if 'north' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['north']]
+        entering = ROOMS[room.exits['north']]
         leaving.on_exit(client.body, 'the North')
         entering.on_enter(client.body, 'the South')
 
@@ -40,7 +39,7 @@ def south(client):
 
     if 'south' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['south']]
+        entering = ROOMS[room.exits['south']]
         leaving.on_exit(client.body, 'to the South')
         entering.on_enter(client.body, 'the North')
 
@@ -58,7 +57,7 @@ def east(client):
 
     if 'east' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['east']]
+        entering = ROOMS[room.exits['east']]
         leaving.on_exit(client.body, 'to the East')
         entering.on_enter(client.body, 'the West')
 
@@ -76,7 +75,7 @@ def west(client):
 
     if 'west' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['west']]
+        entering = ROOMS[room.exits['west']]
         leaving.on_exit(client.body, 'to the West')
         entering.on_enter(client.body, 'the East')
 
@@ -93,7 +92,7 @@ def up(client):
 
     if 'up' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['up']]
+        entering = ROOMS[room.exits['up']]
         leaving.on_exit(client.body, 'upward')
         entering.on_enter(client.body, 'below')
 
@@ -111,7 +110,7 @@ def down(client):
 
     if 'down' in room.exits:
         leaving = room
-        entering = shared.ROOMS[room.exits['down']]
+        entering = ROOMS[room.exits['down']]
         leaving.on_exit(client.body, 'downward')
         entering.on_enter(client.body, 'above')
 

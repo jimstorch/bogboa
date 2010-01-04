@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import shared
+from mudlib.sys import HELPS
 from mudlib.sys.error import BogCmdError
 from mudlib.usr import parsers
 from mudlib.world import calendar
@@ -29,7 +29,7 @@ def topics(client):
 
     """List the player's granted command set."""
 
-    tlist = list(shared.HELPS.keys())
+    tlist = list(HELPS.keys())
     tlist.sort()
     topics = ', '.join(tlist)
     client.send('Available help topics are: ^W%s^w' % topics)
@@ -68,13 +68,13 @@ def help(client, arg):
 
     if arg != None:
         topic = arg.lower()
-        if topic in shared.HELPS:
-            client.prose(shared.HELPS[topic].text)
+        if topic in HELPS:
+            client.prose(HELPS[topic].text)
         else:
             raise BogCmdError('Help topic not found')
 
     else:
-        client.prose(shared.HELPS['help'].text)
+        client.prose(HELPS['help'].text)
 
 
 #-------------------------------------------------------------------------Score

@@ -7,18 +7,18 @@
 #------------------------------------------------------------------------------
 
 from mudlib.sys import shared
-from mudlib.actor.base_actor import Actor
+from mudlib.actor.base_actor import BaseActor
 
 """
 Non-Player Characters.  Inherits from Actor.
 """
 
 
-class Mob(Actor):
+class Mob(BaseActor):
 
     def __init__(self):
 
-        Actor.__init__(self)
+        BaseActor.__init__(self):
 
 
     def get_adj_stat(self, stat_name):
@@ -28,3 +28,9 @@ class Mob(Actor):
         base_stat = level * 2
         adj_stat = self.get_stat(stat_name)
         return base_stat + adj_stat
+
+
+    #-------------------------------------------------------------------Scaling
+
+    def get_stat(self, stat_name):
+        return self.stats.get(stat_name, 0.0)

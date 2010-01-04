@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/guild.py
+#   mudlib/world/guild.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,23 +8,17 @@
 
 import sys
 
-from mudlib.sys import shared
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import GUILDS
+from mudlib.sys import THE_LOG
 
-#-------------------------------------------------------------------------Guild
 
 class Guild(object):
 
     def __init__(self):
-
-#        self.uuid = None
         self.name = None
         self.filename = None
-
         self.skill_mods = {}    # Dictionary of Skill modifiers
         self.ability = {}       # List of guild abilities by name
-
-    #-------------------------------------------------------------Get Skill Mod
 
     def get_skill_mod(self, skill_name):
         """
@@ -32,21 +26,15 @@ class Guild(object):
         """
         return self.skill_mods(skill_name, 0.0)
 
-    #---------------------------------------------------------------Has Ability
-
     def has_ability(self, ability_name):
         return ability_name in self.ability
 
 
-#---------------------------------------------------------------Configure Guild
-
 def configure_guild(cfg):
-
     """
     Given a configuration dictionary, create a guild and configure it.
     Returns the configured guild.
     """
-
     guild = Guild()
 
     guild.filename = cfg.pop('filename')
@@ -84,8 +72,6 @@ def configure_guild(cfg):
     if 'version' in cfg:
         cfg.pop('version')
 
-
-
     ## Complain if there are leftover keys -- probably a typo in the YAML
     if cfg:
         THE_LOG.add("!! Unrecognized key(s) in config for guild '%s': %s"
@@ -94,18 +80,14 @@ def configure_guild(cfg):
     return guild
 
 
-#----------------------------------------------------------------Register Guild
-
 def register_guild(guild):
-
     """
     Given a configured guild, register it with the shared guild dictionary.
     """
-
-    if guild.name in shared.GUILDS:
+    if guild.name in GUILDS:
         THE_LOG.add("!! Duplicate name (%s) found while registering "
             "guild '%s' from module '%s'."  %  (
             guild.uuid, guild.name, guild.module) )
         sys.exit(1)
     else:
-        shared.GUILDS[guild.name] = guild
+        GUILDS[guild.name] = guild

@@ -12,14 +12,14 @@
 #from mudlib.usr.verb import VERB_ALIAS
 #from mudlib.usr.verb import VERB_HANDLER
 
-from mublib.usr.user import User
+from mudlib.usr.user import User
 
 
 #------------------------------------------------------------------------Client
 
 class Player(User):
 
-    def __init__(self, client, actor):
+    def __init__(self, actor, client):
 
         User.__init__(self, client)
         self.actor = actor

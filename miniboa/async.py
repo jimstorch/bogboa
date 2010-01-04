@@ -12,15 +12,16 @@
 #   under the License.
 #------------------------------------------------------------------------------
 
-"""Handle Asynchronous Telnet Connections."""
+"""
+Handle Asynchronous Telnet Connections.
+"""
 
 import socket
 import select
-import time
 import sys
 
 from miniboa.telnet import TelnetClient
-from miniboa import BogConnectionLost
+from miniboa.error import BogConnectionLost
 
 ## Cap sockets to 512 on Windows because winsock can only process 512 at time
 if sys.platform == 'win32':
@@ -33,24 +34,26 @@ else:
 #-----------------------------------------------------Dummy Connection Handlers
 
 def _on_connect(client):
-    """Placeholder new connection handler."""
+    """
+    Placeholder new connection handler.
+    """
     print "++ Opened connection to %s, sending greeting..." % client.addrport()
     client.send("Greetings from Miniboa! "
-        " Now it's time to add your code.\r\n")
+        " Now it's time to add your code.\n")
 
 def _on_disconnect(client):
-    """Placeholder lost connection handler."""
+    """
+    Placeholder lost connection handler.
+    """
     print "-- Lost connection to %s" % client.addrport()
 
 
 #-----------------------------------------------------------------Telnet Server
 
 class TelnetServer(object):
-
     """
     Poll sockets for new connections and sending/receiving data from clients.
     """
-
     def __init__(self, port=7777, address='', on_connect=_on_connect,
             on_disconnect=_on_disconnect, timeout=0.005):
         """
@@ -85,8 +88,8 @@ class TelnetServer(object):
         try:
             server_socket.bind((address, port))
             server_socket.listen(5)
-        except socket.error, e:
-            print >>sys.stderr, "Unable to create the server socket:", e
+        except socket.error, err:
+            print >> sys.stderr, "Unable to create the server socket:", err
             sys.exit(1)
 
         self.server_socket = server_socket
@@ -97,38 +100,31 @@ class TelnetServer(object):
         self.clients = {}
 
     def client_count(self):
-
         """
         Returns the number of active connections.
         """
-
         return len(self.clients)
 
     def client_list(self):
-
         """
         Returns a list of connected clients.
         """
-
         return self.clients.values()
 
 
     def poll(self):
-
         """
         Perform a non-blocking scan of recv and send states on the server
         and client connection sockets.  Process new connection requests,
         read incomming data, and send outgoing data.  Sends and receives may
         be partial.
         """
-
         #print len(self.connections)
-
         ## Build a list of connections to test for receive data pending
         recv_list = [self.server_fileno]    # always add the server
 
         for client in self.clients.values():
-            if client.active == True:
+            if client.active:
                 recv_list.append(client.fileno)
             ## Delete inactive connections from the dictionary
             else:
@@ -151,7 +147,7 @@ class TelnetServer(object):
 
         except select.error, err:
             ## If we can't even use select(), game over man, game over
-            print >>sys.stderr, ("!! FATAL SELECT error '%d:%s'!"
+            print >> sys.stderr, ("!! FATAL SELECT error '%d:%s'!"
                 % (err[0], err[1]))
             sys.exit(1)
 
@@ -166,7 +162,7 @@ class TelnetServer(object):
                     sock, addr_tup = self.server_socket.accept()
 
                 except socket.error, err:
-                    print >>sys.stderr, ("!! ACCEPT error '%d:%s'." %
+                    print >> sys.stderr, ("!! ACCEPT error '%d:%s'." %
                         (err[0], err[1]))
                     continue
 
@@ -177,19 +173,16 @@ class TelnetServer(object):
                     continue
 
                 new_client = TelnetClient(sock, addr_tup)
-                #print "++ Opened connection to %s" % client.addrport()
-                ## Add the connection to our dictionary
+                #print "++ Opened connection to %s" % new_client.addrport()
+                ## Add the connection to our dictionary and call handler
                 self.clients[new_client.fileno] = new_client
-
-                ## Whatever we do with new connections goes here:
                 self.on_connect(new_client)
 
             else:
                 ## Call the connection's recieve method
                 try:
                     self.clients[sock_fileno].socket_recv()
-                except BogConnectionLost, ex:
-                    #print ex, 'BCE!'
+                except BogConnectionLost:
                     self.clients[sock_fileno].deactivate()
 
         ## Process sockets with data to send

@@ -8,13 +8,11 @@
 
 import sys
 
-from mudlib.sys.log import THE_LOG
-from mudlib.sys import shared
+from mudlib.sys import THE_LOG
+from mudlib.sys import ITEMS
 from mudlib.usr.lang import NameTrie
 from mudlib.scripting.bogscript import process_scripts
 
-
-#--------------------------------------------------------------------------Item
 
 class Item(object):
 
@@ -229,15 +227,11 @@ class Item(object):
         pass
 
 
-#----------------------------------------------------------------Configure Item
-
 def configure_item(cfg):
-
     """
     Given a configuration dictionary, create an item and configure it.
     Returns the configured item.
     """
-
     item = Item()
 
     item.filename = cfg.pop('filename')
@@ -302,17 +296,13 @@ def configure_item(cfg):
     return item
 
 
-#-----------------------------------------------------------------Register Item
-
 def register_item(item):
-
     """
     Given a configured item, register it with the shared ITEM dictionary.
     """
-
-    if item.uuid in shared.ITEMS:
+    if item.uuid in ITEMS:
         THE_LOG.add("!! Duplicate UUID (%s) found while registering item"
             " '%s'."  % (item.uuid, item.name) )
         sys.exit(1)
     else:
-        shared.ITEMS[item.uuid] = item
+        ITEMS[item.uuid] = item

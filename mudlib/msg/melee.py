@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/world/__init__.py
+#   mudlib/msg/melee.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-World objects and resources.
+Melee related action messages.
 """
 
-from mudlib.world.guild import *
-from mudlib.world.help import *
-from mudlib.world.race import *
-from mudlib.world.room import *
-from mudlib.world.item import *
+from mudlib.msg.msg_base import BaseMsg
+
+
+class SlashMsg(BaseMsg):
+    source = 'You slash {tname}.\n'
+    viewer = '{sname} slashes {tname}.\n'
+
+
+class BashMsg(BaseMsg):,lp =
+    source = 'You bash {tname}.\n'
+    viewer = '{sname} bashes {tname}.\n'
+
+
 

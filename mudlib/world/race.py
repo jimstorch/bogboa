@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/actor/race.py
+#   mudlib/world/race.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -8,10 +8,9 @@
 
 import sys
 
-from mudlib.sys import shared
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import RACES
+from mudlib.sys import THE_LOG
 
-#--------------------------------------------------------------------------Race
 
 class Race(object):
 
@@ -19,10 +18,8 @@ class Race(object):
 
         self.name = None
         self.filename = None
-
         self.stats = {}
         self.abilities = set()
-
 
     def get_stats(self):
         """
@@ -31,15 +28,11 @@ class Race(object):
         return self.stats[:]
 
 
-#----------------------------------------------------------------Configure race
-
 def configure_race(cfg):
-
     """
     Given a configuration dictionary, create a race and configure it.
     Returns the configured race.
     """
-
     race = Race()
 
     race.filename = cfg.pop('filename')
@@ -84,18 +77,14 @@ def configure_race(cfg):
     return race
 
 
-#-----------------------------------------------------------------Register race
-
 def register_race(race):
-
     """
     Given a configured race, register it with the shared race dictionary.
     """
-
-    if race.name in shared.RACES:
+    if race.name in RACES:
         print ( "!! Duplicate name (%s) found while registering "
             "race '%s' from module '%s'."  %  (
             race.uuid, race.name, race.module) )
         sys.exit(1)
     else:
-        shared.RACES[race.name] = race
+        RACES[race.name] = race

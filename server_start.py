@@ -6,13 +6,13 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-import gc
-gc.set_debug(gc.DEBUG_LEAK)
+#import gc
+#gc.set_debug(gc.DEBUG_LEAK)
 
-from miniboa.async import TelnetServer
+from miniboa import TelnetServer
 
-from mudlib.sys import shared
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import SERVER_RUN
+from mudlib.sys import THE_LOG
 from mudlib.sys.config import PORT
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.sys.scheduler import Cycle
@@ -22,8 +22,8 @@ from mudlib.sys.monitor import on_disconnect
 from mudlib.sys.monitor import kick_idle_clients
 from mudlib.sys.monitor import process_client_commands
 from mudlib.sys.monitor import sweep_rooms
-from mudlib.dat.file_loader import load_module
-from mudlib.dat.tables import check_database
+from mudlib.dat import load_module
+from mudlib.dat import check_database
 
 
 THE_LOG.add(">> **************")
@@ -42,11 +42,8 @@ check_database()
 #       Load Game Data
 #------------------------------------------------------------------------------
 
-module = 'data/base'
-load_module(module)
-
-module = 'data/testville'
-load_module(module)
+load_module('data/base')
+load_module('data/testville')
 
 
 #------------------------------------------------------------------------------
@@ -73,7 +70,7 @@ server.on_disconnect = on_disconnect
 
 THE_LOG.add(">> Listening for connections on port %d" % PORT)
 
-while shared.SERVER_RUN == True:
+while SERVER_RUN == True:
     THE_SCHEDULER.tick()
     server.poll()
 

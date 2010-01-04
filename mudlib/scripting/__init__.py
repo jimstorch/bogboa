@@ -6,16 +6,15 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""
+Build a script environment where all script functions are local.
+"""
+
 from mudlib.scripting import of_effects
 from mudlib.scripting import of_items
 from mudlib.scripting import of_mobs
 from mudlib.scripting import of_players
 from mudlib.scripting import of_rooms
-
-
-"""
-Build a script environment where all script functions are local.
-"""
 
 
 SCRIPT_ENV = {}
