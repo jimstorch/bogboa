@@ -22,15 +22,16 @@ text:
 #
 
 skills:
-    health:       1.0
-    dodge:        .65
-    swords:       1.0
-    greatswords:  1.0
-    armor:        1.0
-    magic items:  .25
-    fists:        .8   
-    archery:      .7
-    daggers:      .7
+    body: 1.0
+    mind: 1.0
+    melee_combat: 1.0
+    ranged_combat: 1.0
+    magic_combat: 1.0
+    swords: 1.0
+    detrimental_magic: 1.0
+    beneficial_magic: 1.0
+    
+    
 
 
 

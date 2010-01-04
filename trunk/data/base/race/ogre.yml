@@ -13,15 +13,12 @@ text:
 
     This space intentionally left blank. 
 
-
 ###  Racial Stats
 
 stats:
-    agi: 7
-    chr: 3
-    dex: 7
-    int: 7
-    luc: 7
-    sta: 18
-    str: 18
-    wis: 7
+    brawn: 19       
+    vigor: 18       
+    precision: 8   
+    knowledge: 8
+    faith: 10
+    cunning: 8

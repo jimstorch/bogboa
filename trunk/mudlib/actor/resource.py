@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/resource.py
+#   mudlib/actor/resource.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import shared
+"""
+Generic resource management.
+"""
+
+from mudlib.sys import THE_TIME
 from mudlib.sys.error import BogCmdError, BogDepleteCond
-
-
-"""Generic resource management."""
 
 
 class Resource(object):
@@ -22,7 +23,7 @@ class Resource(object):
         self.maximum = maximum                  ## Maximum resource level
         self.regen = regen                      ## Regeneration per second
         self.ungen = ungen                      ## Decay rate for overages
-        self.last_tick = shared.THE_TIME
+        self.last_tick = THE_TIME
                   
     def deduct(self, name, amount):
         """
@@ -87,6 +88,6 @@ class Resource(object):
                 self.current -= (t * self.ungen)
                 if self.current < self.maximum:
                     self.current = self.maximum
-            self.last_time = shared.THE_TIME
+            self.last_time = THE_TIME
 
 

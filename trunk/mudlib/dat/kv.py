@@ -17,88 +17,62 @@ have to worry if the row already exists before inserting or updating.
 from mudlib.dat.dbconnect import THE_CURSOR
 
 
-#----------------------------------------------------------------------Fetch KV
-
 def fetch_kv(uuid, category, key):
-
     """
     Given a UUID, category, and key, retrieves the value from the database.
     """
-
     sql = """
         SELECT value
         FROM key_value
         WHERE uuid = ? AND category = ? AND key = ?;
         """
-
     THE_CURSOR.execute(sql, (uuid, category, key))
     return THE_CURSOR.fetchone()[0]
 
 
-#----------------------------------------------------------------------Store KV
-
 def store_kv(uuid, category, key, value):
-
     """
     Given a UUID, category, and dictionary, write them to the database.
     """
-
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
         VALUES (?, ?, ?, ?');
         """
-
     THE_CURSOR.execute(sql, (uuid, category, key, value))
 
 
-
-#---------------------------------------------------------------------Delete KV
-
 def delete_kv(uuid, category, key):
-
     """
     Given a UUID, category, and key, delete the corresponding table row.
     """
-
     sql = """
         DELETE FROM key_value
         WHERE uuid = ? AND catergory = ? AND key = ?;
         """
-
     THE_CURSOR.execute(sql, (uuid, category, key))
 
 
-#------------------------------------------------------------Delete KV Category
-
 def delete_kv_category(uuid, category):
-
     """
     Given a UUID and category, delete all matching rows.
     """
-
     sql = """
         DELETE FROM key_value
         WHERE uuid = ? AND catergory = ?;
         """
-
     THE_CURSOR.execute(sql, (uuid, category))
 
 
-#-----------------------------------------------------------------Fetch KV Dict
-
 def fetch_kv_dict(uuid, category):
-
     """
     Given a UUID and category, select matching rows and convert them to a
     dictionary.
     """
-
     sql = """
         SELECT key, value
         FROM key_value
         WHERE uuid = ? AND category = ?;
         """
-
     dct = {}
     THE_CURSOR.execute(sql, (uuid, category))
     for row in THE_CURSOR:
@@ -106,21 +80,16 @@ def fetch_kv_dict(uuid, category):
     return dct
 
 
-#-----------------------------------------------------------Fetch KV Dict Float
-
 def fetch_kv_dict_float(uuid, category):
-
     """
     Given a UUID and category, select matching rows and convert them to a
     dictionary of floating point values.
     """
-
     sql = """
         SELECT key, value
         FROM key_value
         WHERE uuid = ? AND category = ?;
         """
-
     dct = {}
     THE_CURSOR.execute(sql, (uuid, category))
     for row in THE_CURSOR:
@@ -128,33 +97,24 @@ def fetch_kv_dict_float(uuid, category):
     return dct
 
 
-#-----------------------------------------------------------------Store KV Dict
-
 def store_kv_dict(uuid, category, dct):
-
     """
     Given a UUID, category, and dictionary, write them to the database.
     """
-
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
         VALUES (?, ?, ?, ?);
         """
-
     ## build a list comprehension of arguments for executemany()
     rows = [ (uuid, category, k, v) for k, v in dct.items() ]
     THE_CURSOR.executemany(sql, rows)
 
 
-#------------------------------------------------------------------Fetch KV Set
-
 def fetch_kv_set(uuid, category):
-
     """
     Given a UUID and category, select matching row keys and convert them to a
     set.
     """
-
     sql = """
         SELECT key
         FROM key_value
@@ -164,19 +124,14 @@ def fetch_kv_set(uuid, category):
     return set( [ row[0] for row in THE_CURSOR ] )
 
 
-#------------------------------------------------------------------Store KV Set
-
 def store_kv_set(uuid, category, st):
-
     """
     Given a UUID, category, and set, write them to the database.
     """
-
     sql = """
         INSERT OR REPLACE INTO key_value (uuid, category, key, value)
         VALUES (?, ?, ?, '1');
         """
-
     ## build a list comprehension of arguments for executemany()
     rows = [ (uuid, category, k) for k in st ]
     THE_CURSOR.executemany(sql, rows)

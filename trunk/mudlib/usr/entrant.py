@@ -6,21 +6,18 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-"""User-parented Class to handle logins and new account creation."""
+"""
+User-parented Class to handle logins and new account creation.
+"""
 
 import random
-from uuid import uuid4
 
-from mudlib.sys.log import THE_LOG
-from mudlib.dat.map import rejected_name
-from mudlib.dat.map import check_credentials
-from mudlib.dat.map import add_account
-from mudlib.dat.map import last_on
-from mudlib.dat.map import record_visit
-from mudlib.dat.kv import store_kv_dict
-from mudlib.dat.kv import fetch_kv_dict
-from mudlib.usr.user import User
-
+from mudlib.sys import THE_LOG
+from mudlib.dat import rejected_name
+from mudlib.dat import check_credentials
+from mudlib.usr import User
+from mudlib.usr.account import create_account
+from mudlib.usr.account import load_account
 
 _GREETING = """^kb%s^s
      ____              ____
@@ -47,6 +44,7 @@ class Entrant(User):
     def __init__(self, client):
 
         User.__init__(self, client)
+        self.client = client
         self.login_attempts = 0
         self.username = 'Anonymous'
         self.password = None
@@ -109,9 +107,8 @@ class Entrant(User):
             else:
                 ## Load existing account
                 self.uuid = uuid
-                self.load_account()
-
-
+                load_account(self.client, self.username, self.uuid)
+                
     #--------------------------------------------------------------New Accounts
 
     def req_new_username(self):
@@ -159,34 +156,6 @@ class Entrant(User):
         else:
             ## Create a new account
             self.client.password_mode_off()
-            self.create_account()
+            create_account(self)
 
 
-    #--------------------------------------------------------------Load Account
-
-    def load_account(self):
-
-        self.send('\nWelcome back, %s.\n' % self.username)
-        self.send('Your last visit was %s.\n' % last_on(self.username))
-        record_visit(self.username, self.client.address)
-        profile = fetch_kv_dict(self.uuid, 'profile')
-
-    #------------------------------------------------------------Create Account
-
-    def create_account(self):
-
-        self.send("\nCreating your account. "
-                "Please don't forget your username or password.\n")
-        self.uuid = uuid4().get_hex()
-        add_account(self.username, self.password, self.uuid,
-            self.client.address)
-
-        profile = {
-            'name':self.username,
-            'race':'human',
-            'gender':'male',
-            'guild':'fighter',
-            'level':1,
-            }
-
-        store_kv_dict(self.uuid, 'profile', profile)

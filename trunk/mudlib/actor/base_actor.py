@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/actor/actor.py
+#   mudlib/actor/base_actor.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""
+Base Class for Avatars and Mobs.
+"""
 
-from mudlib.actor.resource import Resource
-from mudlib.actor.skill import Skill
+from mudlib.sys import GUILDS
+from mudlib.sys import RACES
 
 ## Pronouns by Gender
 _NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
@@ -20,50 +23,86 @@ _REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
     'group':'themselves'}
 
 
-"""
-Base Class for PCs and NPCs.
-"""
-
-class Actor(object):
+class BaseActor(object):
 
     def __init__(self):
+        pass
 
-        ## Profile
-        self.name   = '_spawn_'
-        self.alias  = '_alias_'
-        self.race   = '_race_'
-        self.gender = 'neutral'
-        self.guild  = '_guild_'
-        self.level  = 1
+    def get_name(self):
+        """
+        Actor's name.
+        """
+        return self.profile['name']
 
-        ## 
-        self.abilities = set()
-        self.stats = {}
-        self.resources = {}         # Dictionary of resource objects by name
-        self.worn = {}
-        self.carried = {}
+    def get_alias(self):
+        """
+        Actor's alias.
+        """
+        return self.profile['alias']
 
-        ## 
-        self.target = None
+    def get_race(self):
+        """ 
+        Actor's race as a string.
+        """ 
+        return self.profile['race']
 
+    def get_race_instance(self):
+        """
+        Actor's Race object or None.
+        """
+        return RACES[self.get_race()]
 
-    #-------------------------------------------------------------------Scaling
+    def get_gender(self):
+        """
+        Actor's gender as a string.
+        """ 
+        return self.profile['gender']
 
-    def get_adj_stat(self, stat_name):
-        return self.stats.get(stat_name, 0.0)
+    def get_guild(self):
+        """
+        Actor's guild as a string.
+        """
+        return self.profile['guild']
 
+    def get_guild_instance(self):
+        """
+        Actor's guild object or None.
+        """
+        return GUILDS.get(self.get_guild(), None)
 
-    #---------------------------------------Methods to support action messaging
+    def get_level(self):
+        """
+        Actor's level as an integer value.
+        """
+        return int(self.profile['level'])
 
-    def get_name(self): return self.name
-    def get_alias(self): return self.alias
-    def get_race(self): return self.race
-    def get_gender(self): return self.gender
-    def get_guild(self): return self.guild
-    def get_level(self): return self.level
-    def get_nom(self): return _NOMINATIVE[self.gender]
-    def get_obj(self): return _OBJECTIVE[self.gender]
-    def get_pos(self): return _POSSESSIVE[self.gender]
-    def get_npos(self): return _NOUN_POSSESSIVE[self.gender]
-    def get_reflx(self): return _REFLEXIVE[self.gender]
+    def get_nom(self): 
+        """
+        Actor's nominative form; he, she, it, they.
+        """
+        return _NOMINATIVE[self.get_gender()]
+
+    def get_obj(self):
+        """
+        Actor's objective form; him, her, it, them.
+        """
+        return _OBJECTIVE[self.get_gender()]
+
+    def get_pos(self):
+        """
+        Actor's possessive form; his, her, its, their.
+        """
+        return _POSSESSIVE[self.get_gender()]
+
+    def get_npos(self):
+        """
+        Actor's possessive form following the noun; his, hers, its, theirs.       
+        """
+        return _NOUN_POSSESSIVE[self.get_gender()]
+
+    def get_reflx(self):
+        """
+        Actor's reflexive form; himself, herself, itself, themselves.
+        """
+        return _REFLEXIVE[self.get_gender()]
     

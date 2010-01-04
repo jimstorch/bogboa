@@ -8,7 +8,7 @@
 
 import datetime
 
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import THE_LOG
 from mudlib.dat.dbconnect import THE_CURSOR
 
 

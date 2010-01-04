@@ -7,9 +7,9 @@
 #------------------------------------------------------------------------------
 
 class BogError(Exception):
-
-    """Base class for errors in BogBoa."""
-
+    """
+    Base class for errors in BogBoa.
+    """
     def __init__(self, value):
         self.value = value
 
@@ -18,30 +18,38 @@ class BogError(Exception):
 
 
 class BogCmdError(BogError):
-
-    """Exception to notify client of failed commands."""
-
+    """
+    Exception to notify client of failed commands.
+    """
+    pass
 
 class BogClientError(BogError):
-
-    """Exception to signal lost connection."""
+    """
+    Exception to signal lost connection.
+    """
+    pass
 
 
 class BogDepleteCond(BogError):
-
-    """Exception to signal a depleted resource."""
-
+    """
+    Exception to signal a depleted resource.
+    """
+    pass
 
 class BogExceedCond(BogError):
-
-    """Exception to signal a depleted resource."""
-
+    """
+    Exception to signal a depleted resource.
+    """
+    pass
 
 class BogScriptError(BogError):
-
-    """Exception to raise scripting errors."""
-
+    """
+    Exception to raise scripting errors.
+    """
+    pass
 
 class BogYAMLError(BogError):
-
-    """Exception to raise YAML parsing errors."""
+    """
+    Exception to raise YAML parsing errors.
+    """
+    pass

@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import shared
+from mudlib.sys import THE_TIME
 
 
 """
@@ -69,14 +69,12 @@ GAME_SECOND = GAME_MINUTE / 60.0
 #    phase = self.year % 12
 #    house = HOUSES[self.phase]
 
-#----------------------------------------------------------------------Date Msg
-
 
 def date_msg():
     """
     Return the julian date and the current house.
     """
-    tstamp = shared.THE_TIME - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
     year = int(tstamp / GAME_YEAR) + CENTURY_OFFSET
     phase = year % 12
@@ -84,23 +82,19 @@ def date_msg():
         (julian, HOUSES[phase]))
 
 
-#----------------------------------------------------------------------Time Msg
-
 def time_msg():
     """
     Return HH:MM and the period of day.
     """
-    tstamp = shared.THE_TIME - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
-
     if hour < 1:
         clock = '12:%.2d' % minute
     elif hour >= 1 and hour < 13:
         clock = '%d:%.2d' % (hour, minute)
     else:
         clock = '%d:%.2d' % (hour - 12, minute)
-
     if hour < 12:
         retval = '%s in the morning' % clock
     elif hour >= 12 and hour < 17:
@@ -109,11 +103,8 @@ def time_msg():
         retval = '%s in the evening' % clock
     else:
         retval = '%s at night' % clock
-
     return retval
 
-
-#------------------------------------------------------------------Datetime Msg
 
 def datetime_msg():
     """
@@ -122,14 +113,11 @@ def datetime_msg():
     return '%s, %s' % (time_msg(), date_msg())
 
 
-#----------------------------------------------------------------------Sunlight
-
 def sunlight():
-
     """
     Calculate the current sunlight level.
     Return an integer value in the range of 0 (Midnight) to 12 (Noon).
     """
-    tstamp = shared.THE_TIME - UNIX_ADJ
+    tstamp = THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))

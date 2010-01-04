@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/action/msg_magic.py
+#   mudlib/msg/magic.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
@@ -10,7 +10,7 @@
 Magic related action messages.
 """
 
-from mudlib.action.msg_base import BaseMsg
+from mudlib.msg.msg_base import BaseMsg
 
 
 #--------------------------------------------------------Begin Casting Messages

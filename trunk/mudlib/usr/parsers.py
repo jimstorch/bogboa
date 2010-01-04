@@ -6,38 +6,31 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import shared
-from mudlib.sys.error import BogCmdError
-
-
 """
 Decorator functions to parse and error check arguments for player commands and
 general search functions.
 """
 
+from mudlib.sys.error import BogCmdError
 
-#-------------------------------------------------------------------------Blank
 
 def blank(cmd_func):
-
-    """Decorator to enforce zero arguments."""
-
+    """
+    Decorator to enforce zero arguments.
+    """
     def parse_func(client):
         args = client.verb_args
         if len(args):
             raise BogCmdError('That command does not use parameters.')
         else:
             cmd_func(client)
-
     return parse_func
 
 
-#----------------------------------------------------------------------Singular
-
 def singular(cmd_func):
-
-    """Decorator to enforce single parameter commands."""
-
+    """
+    Decorator to enforce single parameter commands.
+    """
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
@@ -46,17 +39,13 @@ def singular(cmd_func):
             raise BogCmdError('Too many parameters -- use one.')
         else:
             cmd_func(client, args[0])
-
     return parse_func
 
 
-
-#-------------------------------------------------------------------None or One
-
 def none_or_one(cmd_func):
-
-    """Decorator that accepts zero or one parameters."""
-
+    """
+    Decorator that accepts zero or one parameters.
+    """
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
@@ -65,18 +54,14 @@ def none_or_one(cmd_func):
             arg = args[0]
         else:
             arg = None
-
         cmd_func(client, arg)
-
     return parse_func
 
 
-#---------------------------------------------------------------------Monologue
-
 def monologue(cmd_func):
-
-    """Decorator to combine all args into a single string."""
-
+    """
+    Decorator to combine all args into a single string.
+    """
     def parse_func(client):
         args = client.verb_args
         if not len(args):
@@ -87,13 +72,10 @@ def monologue(cmd_func):
     return parse_func
 
 
-
-#----------------------------------------------------------------------Dialogue
-
 def dialogue(cmd_func):
-
-    """Decorator to identify a target and combine remaining arguments."""
-
+    """
+    Decorator to identify a target and combine remaining arguments.
+    """
     def parse_func(client):
         args = client.verb_args
         if len(args) == 0:
@@ -110,11 +92,7 @@ def dialogue(cmd_func):
     return parse_func
 
 
-
-#-------------------------------------------------------------------Set or Show
-
 def set_or_show(cmd_func):
-
     """
     Set/Unset decorator parser.  Returns:
 
@@ -122,15 +100,12 @@ def set_or_show(cmd_func):
     True for yes-like args -- turn it on.
     False for no-like args -- turn it off.
     """
-
     def parse_func(client):
         args = client.verb_args
         if len(args) > 1:
             raise BogCmdError('Too many parameters.')
-
         if len(args) == 0:
             setting = None
-
         else:
             arg = args[0].lower()
 
@@ -142,45 +117,35 @@ def set_or_show(cmd_func):
 
             else:
                 raise BogCmdError('Please use a yes/no or on/off parameter.')
-
         cmd_func(client, setting)
-
     return parse_func
 
 
-#-----------------------------------------------------------------Online Player
-
 def online_player(cmd_func):
-
-    """Decorator to target an online player."""
-
+    """
+    Decorator to target an online player.
+    """
     def parse_func(client):
         args = client.verb_args
         if len(args) != 1:
             client.alert('That command requires a player name.')
             return
         else:
-
             name = args[0]
             target = shared.find_player(name)
             if target == None:
                 client.alert('Player not found online.')
                 return
-
             cmd_func(client, target)
-
     return parse_func
 
 
-#------------------------------------------------------------------Name and Qty
-
 def name_and_qty(cmd_func):
-
+    ##TODO: this is a mess
     """
     Decorator to parse quantity and name of item(s) to select.
     Qty == -1 for all.
     """
-
     def parse_func(client):
         args = client.verb_args
         count = len(args)
@@ -233,8 +198,6 @@ def name_and_qty(cmd_func):
 
     return parse_func
 
-#---------------------------------------------------------------------Item Pick
 
 def item_pick(cmd_func):
-
     pass

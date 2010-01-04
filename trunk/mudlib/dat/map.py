@@ -10,8 +10,7 @@ import datetime
 import hashlib
 import sys
 
-from mudlib.sys import shared
-from mudlib.sys.log import THE_LOG
+from mudlib.sys import THE_LOG
 from mudlib.dat.dbconnect import THE_CURSOR
 
 
