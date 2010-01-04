@@ -10,14 +10,13 @@
 Base Class for Avatars and Mobs.
 """
 
-from mudlib.sys import GUILDS
-from mudlib.sys import RACES
+from mudlib import gvar
 
 ## Pronouns by Gender
 _NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
 _OBJECTIVE = {'male':'him', 'female':'her', 'neutral':'it', 'group':'them'}
 _POSSESSIVE = {'male':'his', 'female':'her', 'neutral':'its', 'group':'their'}
-_NOUN_POSSESSIVE = {'male':'his', 'female':'hers', 'neutral':'its', 
+_NOUN_POSSESSIVE = {'male':'his', 'female':'hers', 'neutral':'its',
     'group':'theirs'}
 _REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
     'group':'themselves'}
@@ -41,21 +40,21 @@ class BaseActor(object):
         return self.profile['alias']
 
     def get_race(self):
-        """ 
+        """
         Actor's race as a string.
-        """ 
+        """
         return self.profile['race']
 
     def get_race_instance(self):
         """
         Actor's Race object or None.
         """
-        return RACES[self.get_race()]
+        return gvar.RACES[self.get_race()]
 
     def get_gender(self):
         """
         Actor's gender as a string.
-        """ 
+        """
         return self.profile['gender']
 
     def get_guild(self):
@@ -68,7 +67,7 @@ class BaseActor(object):
         """
         Actor's guild object or None.
         """
-        return GUILDS.get(self.get_guild(), None)
+        return gvar.GUILDS.get(self.get_guild(), None)
 
     def get_level(self):
         """
@@ -76,7 +75,7 @@ class BaseActor(object):
         """
         return int(self.profile['level'])
 
-    def get_nom(self): 
+    def get_nom(self):
         """
         Actor's nominative form; he, she, it, they.
         """
@@ -96,7 +95,7 @@ class BaseActor(object):
 
     def get_npos(self):
         """
-        Actor's possessive form following the noun; his, hers, its, theirs.       
+        Actor's possessive form following the noun; his, hers, its, theirs.
         """
         return _NOUN_POSSESSIVE[self.get_gender()]
 
@@ -105,4 +104,3 @@ class BaseActor(object):
         Actor's reflexive form; himself, herself, itself, themselves.
         """
         return _REFLEXIVE[self.get_gender()]
-    

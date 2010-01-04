@@ -8,12 +8,12 @@
 
 import sys
 
-from mudlib.sys import HELPS
+from mudlib import gvar
 from mudlib.sys import THE_LOG
 
 
 class Help(object):
- 
+
     def __init__(self):
         self.module = None
         self.name = None
@@ -90,20 +90,20 @@ def register_help(help):
     """
     Given a configured help, register it with the shared HELP dictionary.
     """
-    if help.name in HELPS:
+    if help.name in gvar.HELPS:
         THE_LOG.add("!! Duplicate name found while registering "
             "help text '%s' in module '%s'."  %  (help.name, help.module))
         sys.exit(1)
     else:
-        HELPS[help.name] = help
+        gvar.HELPS[help.name] = help
 
     ## Also map any aliases for this text
     if help.keywords:
         for keyword in help.keywords:
-            if keyword in HELPS:
+            if keyword in gvar.HELPS:
                 THE_LOG.add("!! Duplicate keyword found while registering "
                     "help text '%s' in module '%s'."  %
                     (help.name, help.module))
                 sys.exit(1)
             else:
-                HELPS[keyword] = help
+                gvar.HELPS[keyword] = help

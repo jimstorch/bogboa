@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import LOBBY, PLAYERS, ROOMS
+from mudlib import gvar
 from mudlib.sys import THE_LOG
 from mudlib.sys.config import IDLE_TIMEOUT
 from mudlib.sys.scheduler import THE_SCHEDULER
@@ -22,38 +22,38 @@ def on_connect(client):
     client.request_terminal_type()
     client.request_naws()
     user = Entrant(client)
-    LOBBY[client] = user
+    gvar.LOBBY[client] = user
 
 
 def on_disconnect(client):
     """
     Handler for lost client connections, called by miniboa server.
     """
-    if client in LOBBY:
+    if client in gvar.LOBBY:
         THE_LOG.add('-- Lost lobby client from %s.' % client.addrport())
-        del LOBBY[client]
+        del gvar.LOBBY[client]
 
-    elif client in PLAYERS:
-        user = PLAYERS[client]
+    elif client in gvar.PLAYERS:
+        user = gvar.PLAYERS[client]
         broadcast('^g%s has gone offline.^w' % client.name)
         THE_LOG.add('-- Deactivated player %s from %s.' %
             (user.name, client.addrport()))
-        del PLAYERS[client]
+        del gvar.PLAYERS[client]
 
 
 def kick_idle_clients():
     """
     Test for and drop clients who aren't doing anything.
     """
-    for client in LOBBY:
+    for client in gvar.LOBBY:
         if client.idle() > IDLE_TIMEOUT:
-            user = LOBBY[client]
+            user = gvar.LOBBY[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
             user.inform('\nIdle timeout.\n')
             user.delayed_deactivate()
-    for client in PLAYERS:
+    for client in gvar.PLAYERS:
         if client.idle() > IDLE_TIMEOUT:
-            user = LOBBY[client]
+            user = gvar.LOBBY[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
             user.inform('\nIdle timeout.\n')
             user.delayed_deactivate()
@@ -64,12 +64,12 @@ def process_client_commands():
     Test clients for commands and process them.
     """
 
-    print len(LOBBY), len(PLAYERS)
+    print len(gvar.LOBBY), len(gvar.PLAYERS)
 
-    for user in LOBBY.values():
+    for user in gvar.LOBBY.values():
         if user.client.active and user.client.cmd_ready:
             user.cmd_driver()
-    for user in PLAYERS.values():
+    for user in gvar.PLAYERS.values():
         if user.client.active and user.client.cmd_ready:
             user.cmd_driver()
 
@@ -78,5 +78,5 @@ def sweep_rooms():
     """
     Remove rotted items from the floors.
     """
-    for room in ROOMS.values():
+    for room in gvar.ROOMS.values():
         room.sweep()

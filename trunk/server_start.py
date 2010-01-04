@@ -6,12 +6,12 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-#import gc
-#gc.set_debug(gc.DEBUG_LEAK)
+import gc
+gc.set_debug(gc.DEBUG_LEAK)
 
 from miniboa import TelnetServer
 
-from mudlib.sys import SERVER_RUN
+from mudlib import gvar
 from mudlib.sys import THE_LOG
 from mudlib.sys.config import PORT
 from mudlib.sys.scheduler import THE_SCHEDULER
@@ -70,7 +70,7 @@ server.on_disconnect = on_disconnect
 
 THE_LOG.add(">> Listening for connections on port %d" % PORT)
 
-while SERVER_RUN == True:
+while gvar.SERVER_RUN == True:
     THE_SCHEDULER.tick()
     server.poll()
 

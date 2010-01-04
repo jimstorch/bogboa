@@ -10,7 +10,7 @@
 Manage items inside rooms.
 """
 
-from mudlib.sys import THE_TIME
+from mudlib import gvar
 from mudlib.sys.error import BogCmdError
 
 
@@ -62,7 +62,7 @@ class Floor(object):
         for item in self.items.keys():
             qty, age = self.items[item]
             ## Is the item tuple older than decay time?
-            if ( THE_TIME - age ) > _ITEM_DECAY:
+            if ( gvar.THE_TIME - age ) > _ITEM_DECAY:
                 self.subtract(item, qty)
                 is_cleaner = True
         return is_cleaner
@@ -101,7 +101,7 @@ class Floor(object):
         """
         curr = self.count(item)
         ## Note that adding an existing item resets the timer for all
-        self.items[item] = (curr + qty, THE_TIME)
+        self.items[item] = (curr + qty, gvar.THE_TIME)
         self.burden += ( item.burden * qty )
 
     def subtract(self, item, qty=1):
@@ -113,6 +113,5 @@ class Floor(object):
             del self.items[item]
         else:
             left = curr - qty
-            self.items[item] = (left, THE_TIME)
+            self.items[item] = (left, gvar.THE_TIME)
         self.burden -= (item.burden * qty)
-

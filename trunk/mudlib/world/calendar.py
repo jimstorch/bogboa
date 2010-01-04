@@ -6,7 +6,7 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.sys import THE_TIME
+from mudlib import gvar
 
 
 """
@@ -74,7 +74,7 @@ def date_msg():
     """
     Return the julian date and the current house.
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = gvar.THE_TIME - UNIX_ADJ
     julian = int((tstamp % GAME_YEAR) / GAME_JULIAN) + 1
     year = int(tstamp / GAME_YEAR) + CENTURY_OFFSET
     phase = year % 12
@@ -86,7 +86,7 @@ def time_msg():
     """
     Return HH:MM and the period of day.
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = gvar.THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     minute = int((tstamp % GAME_HOUR) / GAME_MINUTE)
     if hour < 1:
@@ -118,6 +118,6 @@ def sunlight():
     Calculate the current sunlight level.
     Return an integer value in the range of 0 (Midnight) to 12 (Noon).
     """
-    tstamp = THE_TIME - UNIX_ADJ
+    tstamp = gvar.THE_TIME - UNIX_ADJ
     hour = int((tstamp % GAME_DAY) / GAME_HOUR)
     return int(12 - abs(12 - hour))
