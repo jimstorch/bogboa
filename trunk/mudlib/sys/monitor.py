@@ -64,7 +64,7 @@ def process_client_commands():
     Test clients for commands and process them.
     """
 
-    print len(gvar.LOBBY), len(gvar.PLAYERS)
+    #print len(gvar.LOBBY), len(gvar.PLAYERS)
 
     for user in gvar.LOBBY.values():
         if user.client.active and user.client.cmd_ready:
