@@ -36,7 +36,8 @@ class BaseUser(object):
 
     def cmd_driver(self):
         ## call the driver method for current state via class introspection
-        self.__class__.__dict__[self.state](self)
+        #self.__class__.__dict__[self.state](self)
+        self.__getattribute__(self.state)()
 
     def _fsm_do_nothing(self):
         """Do nothing driver for users that being kicked."""

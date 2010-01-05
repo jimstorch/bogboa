@@ -30,7 +30,7 @@ def create_account(client, name, password):
     """
     Create a new account for a freshly registered player.
     """
-    user.send("\nCreating your account. "
+    client.send("\nCreating your account. "
             "Please don't forget your username or password.\n")
 
     ## Preserve the client but nuke the user
@@ -52,9 +52,8 @@ def create_account(client, name, password):
     store_kv_dict(uuid, 'profile', profile)
 
     ## Create an in-game Avatar from locally generated data
-    actor = Avatar()
-    #actor.client = client
-    actor.profile = profile
+    avatar = Avatar(client)
+    avatar.profile = profile
     play_account(avatar)
 
 
@@ -65,7 +64,6 @@ def load_account(client, name, uuid):
     client.send('\nWelcome back, %s.\n' % name)
     client.send('Your last visit was %s.\n' % last_on(name))
 
-    #client.deactivate()
     del gvar.LOBBY[client]
     ## Create an in-game Avatar from stored data
     avatar = Avatar(client)

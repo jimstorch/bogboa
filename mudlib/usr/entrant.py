@@ -158,4 +158,4 @@ class Entrant(BaseUser):
         else:
             ## Create a new account
             self.client.password_mode_off()
-            create_account(self)
+            create_account(self.client, self.username, self.password)

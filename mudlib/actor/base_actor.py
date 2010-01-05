@@ -25,7 +25,7 @@ _REFLEXIVE = {'male':'himself', 'female':'herself', 'neutral':'itself',
 class BaseActor(object):
 
     def __init__(self):
-        pass
+        self.room = None
 
     def get_name(self):
         """
