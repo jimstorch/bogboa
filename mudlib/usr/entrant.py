@@ -13,10 +13,10 @@ BaseUser derived class to handle logins and new account creation.
 import random
 
 from mudlib.sys import THE_LOG
-from mudlib.dat import rejected_name
 from mudlib.dat import check_credentials
 from mudlib.dat import record_visit
 from mudlib.usr import BaseUser
+from mudlib.usr.account import check_name
 from mudlib.usr.account import create_account
 from mudlib.usr.account import load_account
 
@@ -128,14 +128,10 @@ class Entrant(BaseUser):
 
     def state__get_new_username(self):
         name = self.client.get_command()
-        if len(name) < 3:
-            self.alert('Sorry, that name is too short.\n')
-            self.req_new_username()
-        elif len(name) > 20:
-            self.alert('Sorry, that name is too long.\n')
-            self.req_new_username()
-        elif rejected_name(name):
-            self.alert('Sorry, that name is not available.\n')
+
+        happy, err = check_name(name)
+        if not happy:
+            self.send(err)
             self.req_new_username()
         else:
             self.username = name
