@@ -18,12 +18,14 @@ from mudlib.sys.config import LOBBY_UUID
 from mudlib.sys.config import START_UUID
 from mudlib.dat import add_account
 from mudlib.dat import last_on
+from mudlib.dat import rejected_name
 from mudlib.dat import store_kv_dict
 from mudlib.dat import fetch_kv_dict
 from mudlib.dat import store_kv_set
 from mudlib.dat import fetch_kv_set
 from mudlib.usr.player import Player
 from mudlib.actor.avatar import Avatar
+
 
 
 def create_account(client, name, password):
@@ -103,6 +105,29 @@ def play_account(avatar):
     ## Add to Play List
     gvar.PLAYERS[avatar.client] = player
     gvar.AVATARS[avatar.get_name().lower()] = avatar
+
+
+def check_name(name):
+    """
+    Check the format of a desired username.
+    """
+    if len(name) < 3:
+        err = 'Sorry, that name is too short.\n'
+        happy = False
+    elif len(name) > 20:
+        err = 'Sorry, that name is too long.\n'
+        happy = False
+    elif rejected_name(name):
+        err = 'Sorry, that name is not available.\n'
+        happy = False
+    elif not name.isalpha():
+        err = "Please use letters only.\n'
+        happy = False
+    else:
+        err= ''
+        happy = True
+    return happy, err
+
 
 ##------------------------------------------------------------------------Create
 
