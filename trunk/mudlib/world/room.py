@@ -6,6 +6,10 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
+"""
+Room Class, configuration, and registration. 
+"""
+
 import sys
 from random import choice
 
@@ -14,7 +18,6 @@ from mudlib.sys import THE_LOG
 from mudlib.usr.lang import keyset
 from mudlib.usr.lang import guestimate
 from mudlib.world.floor import Floor
-from mudlib.world.calendar import time_msg
 from mudlib.scripting.bogscript import process_scripts
 
 
@@ -48,20 +51,8 @@ class Room(object):
         self.is_outside = False
         self.exits = {}
         self.scripts = {}
-        self.bodies = []
+        self.actors = []
         self.floor = Floor()
-
-
-#    def body_and_room(method):
-
-#        """
-#        Decorator to pass self as 'room' for simpler scripting syntax.
-#        """
-
-#        def method_wrapper(self, body):
-#            room = self
-#            method(self, body, room)
-#        return method_wrapper
 
     def item_search(self, client, ks, qty=1):
         """
@@ -108,40 +99,35 @@ class Room(object):
         if self.floor.clean():
             self.tell_all('^g... %s^w' % choice(_CLEANERS))
 
-    def tell_all(self, msg):
-        """
-        Send a message to every player in the room.
-        """
-        for body in self.bodies:
-            if body.is_player:
-                body.mind.send(msg)
 
-    def tell_all_but(self, body, msg):
+    def get_exit(self, direction):
         """
-        Send a message to every player in the room except body.
+        If direction is a valid exit, return the corresponding room instance.
         """
-        for a_body in self.bodies:
-            if a_body.is_player and a_body != body:
-                a_body.send(msg)
+        uuid = self.exits.get(direction, None)
+        if uuid:
+            return gvar.ROOMS[uuid]
+        else:
+            return None
 
-    def client_see(self, client):
-        """
-        Look at the current room. Also used by info.look()
-        """
-        room = client.body.room
-        client.send('^c== ^C%s^c, %s ==^w' % (room.name, time_msg()))
-        client.send(room.text)
-        bodies = room.bodies
-        if len(bodies) > 1:
-            client.send('Here with you are;')
-            for body in room.bodies:
-                if body != client.body:
-                    client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
-        ## anything laying here?
-        contents = self.floor.contents()
-        if contents:
-            client.send('Laying here you find;')
-            client.send(contents)
+#    def client_see(self, client):
+#        """
+#        Look at the current room. Also used by info.look()
+#        """
+#        room = client.body.room
+#        client.send('^c== ^C%s^c, %s ==^w' % (room.name, time_msg()))
+#        client.send(room.text)
+#        bodies = room.bodies
+#        if len(bodies) > 1:
+#            client.send('Here with you are;')
+#            for body in room.bodies:
+#                if body != client.body:
+#                    client.send('^G%s^w the ^W%s^w.' % (body.name, body.guild))
+#        ## anything laying here?
+#        contents = self.floor.contents()
+#        if contents:
+#            client.send('Laying here you find;')
+#            client.send(contents)
 
 
     #--------------------------------------------------------------------Events
@@ -154,73 +140,54 @@ class Room(object):
         if event_name in self.scripts:
             exec self.scripts[event_name]
 
+    def on_enter(self, actor):
+        self.actors.append(actor)
 
-    def on_enter(self, body, direction=None):
-        body.room = self
-        if body.uuid:
-            if direction:
-                self.tell_all('^g%s enters from %s.^w' %
-                    (body.name, direction))
-            else:
-                self.tell_all("^g%s appears.^w" % body.name )
+    def on_exit(self, actor):
+        self.actors.remove(actor)
 
-            if body.is_player:
-                self.client_see(body.mind)
-        self.bodies.append(body)
-
-
-    def on_exit(self, body, direction=None):
-        self.bodies.remove(body)
-        if body.uuid:
-            if direction:
-                self.tell_all('^g%s exits %s.^w' %
-                    (body.name, direction))
-            else:
-                self.tell_all('^g%s vanishes.^w' % body.name)
-        self.run_script('on_exit')
-
-    def on_death(self, body):
+    def on_death(self, actor):
         self.run_script('on_death')
 
     def on_destroy(self):
         self.run_script('on_destroy')
 
-    def on_detect_aura(self, body):
+    def on_detect_aura(self, actor):
         self.run_script('on_detect_aura')
 
-    def on_detect_magic(self, body):
+    def on_detect_magic(self, actor):
         self.run_script('on_detect_magic')
 
-    def on_detect_traps(self, body):
+    def on_detect_traps(self, actor):
         self.run_script('on_detect_traps')
 
     def on_drop(self, item):
         self.run_script('on_drop')
 
-    def on_hear(self, body, msg):
+    def on_hear(self, actor, msg):
 
         print "on_hear fired"
         if 'on_hear' in self.scripts:
 
             _local = {
                 'room':self,
-                'player':body,
+                'actor':actor,
                 'message':msg,
                 }
 
             room = self
             exec self.scripts['on_hear'] in SCRIPT_ENV, _local
 
-    def on_identify(self, body):
+    def on_identify(self, actor):
         self.run_script('on_identify')
 
     def on_init(self):
         self.run_script('on_init')
 
-    def on_inspect(self, body):
+    def on_inspect(self, actor):
         self.run_script('on_inspect')
 
-    def on_look(self, body):
+    def on_look(self, actor):
         self.run_script('on_look')
 
     def on_signal(self, signal):

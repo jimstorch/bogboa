@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/usr/cmd_info.py
+#   mudlib/usr/info.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
+
+"""
+Information related Player commands.
+"""
 
 from mudlib import gvar
 from mudlib.sys.error import BogCmdError
@@ -12,102 +16,95 @@ from mudlib.usr import parsers
 from mudlib.world import calendar
 
 
-#----------------------------------------------------------------------Commands
 @parsers.blank
-def commands(client):
-
-    """List the player's granted command set."""
-
-    clist = list(client.commands)
+def commands(player):
+    """
+    List the player's granted command set.
+    """
+    clist = list(player.commands)
     clist.sort()
     cmds = ', '.join(clist)
-    client.send('Your current commands are: ^W%s^w' % cmds)
+    player.send_wrapped('Your current commands are: ^W%s^w\n' % cmds)
 
-#------------------------------------------------------------------------Topics
+
 @parsers.blank
-def topics(client):
-
-    """List the player's granted command set."""
-
+def topics(player):
+    """
+    List the player's granted command set.
+    """
     tlist = list(gvar.HELPS.keys())
     tlist.sort()
     topics = ', '.join(tlist)
-    client.send('Available help topics are: ^W%s^w' % topics)
+    player.send_wrapped('Available help topics are: ^W%s^w\n' % topics)
 
 
-#-------------------------------------------------------------------------Stats
 @parsers.blank
-def stats(client):
-
-    """List the player's stats."""
-
-    body = client.get_body()
-    stats = body.stats.keys()
+def stats(player):
+    """
+    List the player's stats.
+    """
+    stats = player.avatar.stats.keys()
     stats.sort()
     s = ''
     for stat in stats:
-        s += '%s=%s ' % (stat.upper(), body.stats[stat])
-    client.send('Your current stats: ^W%s^w' % s)
+        s += '%s=%s ' % (stat.upper(), player.avatar.stats[stat])
+    player.send_wrapped('Your current stats: ^W%s^w\n' % s)
 
 
-#--------------------------------------------------------------------------Look
 @parsers.blank
-def look(client):
+def look(player):
+    """
+    Look at the current room.
+    """
+    room = player.avatar.get_room_obj()
+    player.send('^c^!%s^1, %s.\n^w' % (room.name, calendar.time_msg()))
+    player.send_wrapped(room.text)
 
-    """Look at the current room."""
 
-    room = client.body.room
-    room.client_see(client)
-
-
-#--------------------------------------------------------------------------Help
 @parsers.none_or_one
-def help(client, arg):
+def help(player, arg):
 
     """Display the selected help text."""
 
     if arg != None:
         topic = arg.lower()
         if topic in gvar.HELPS:
-            client.prose(HELPS[topic].text)
+            player.send_wrapped(gvar.HELPS[topic].text)
         else:
             raise BogCmdError('Help topic not found')
 
     else:
-        client.prose(gvar.HELPS['help'].text)
+        player.send_wrapped(gvar.HELPS['help'].text)
 
 
-#-------------------------------------------------------------------------Score
+def score(player):
+    """
+    Fix Me
+    """
+    raise BogCmdError('Not implemented')
 
-def score(client):
 
-    """Fix Me"""
-
-    pass
-
-#--------------------------------------------------------------------------Time
 @parsers.blank
-def time(client):
+def time(player):
+    """
+    Tell the player the current game time.
+    """
+    player.send_wrapped('^CThe time is %s.^w\n' % calendar.time_msg())
+    print player.avatar.profile
 
-    """Tell the client the current game time."""
-
-    client.inform('The time is %s.' % calendar.time_msg())
 
 
-#--------------------------------------------------------------------------Date
 @parsers.blank
-def date(client):
+def date(player):
+    """
+    Tell the player the current game date.
+    """
+    player.send_wrapped('^CThe date is %s.^w\n' % calendar.date_msg())
 
-    """Tell the client the current game date."""
-
-    client.inform('The date is %s.' % calendar.date_msg())
 
 
-
-#---------------------------------------------------------------------Inventory
-
-def inventory(client):
-
-    """Fix Me"""
-
-    pass
+def inventory(player):
+    """
+    Fix Me
+    """
+    raise BogCmdError('Not implemented')

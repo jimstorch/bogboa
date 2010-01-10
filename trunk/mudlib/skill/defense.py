@@ -10,7 +10,7 @@
 Compute defensive skills.
 """
 
-from mudlib.stat import stat_bonus
+from mudlib.skill import stat_bonus
 from mudlib.skill import skill_check
 
 

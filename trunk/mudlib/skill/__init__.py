@@ -23,6 +23,7 @@ of current skill + stat bonus is called the Rating.  Ratings are the values
 used when testing for success/failure of an action or a magnitude of effect. 
 """
 
+from mudlib.skill.stat_math import *
 from mudlib.skill.skill_math import *
 from mudlib.skill.passive import *
 from mudlib.skill.defense import *

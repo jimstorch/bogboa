@@ -15,11 +15,14 @@ from mudlib.actor.base_actor import BaseActor
 from mudlib.dat import set_kv
 from mudlib.dat import delete_kv
 from mudlib.dat import delete_kv_category
+from mudlib.act import msg
+
 
 class Avatar(BaseActor):
 
     def __init__(self, client):
         BaseActor.__init__(self)
+        self.is_player = True
         self.client = client
         self.abilities = set()
 
@@ -29,6 +32,23 @@ class Avatar(BaseActor):
         """
         pass
 
+    def send(self, msg):
+        """
+        Send message with caret color encoding.
+        """
+        self.client.send_cc(msg)
+
+    def send_raw(self, msg):
+        """
+        Send message, ignore caret color codes.
+        """
+        self.client.send(msg)
+            
+    def send_wrapped(self, msg):
+        """
+        Send message with word wrapping and caret color codes.
+        """
+        self.client.send_wrapped(msg)
 
     #--[ Ability Authorizing ]------------------------------------------------
 
@@ -38,7 +58,8 @@ class Avatar(BaseActor):
         """
         if command_name not in self.commands:
             self.grant_ability_silent(ability_name)
-            self.send('You receive a new ability: ^W%s^w' % ability_name)
+            msg.send(self, 'You receive a new ability: ^W%s^w\n' % 
+                ability_name)
 
     def grant_ability_silent(self, ability_name):
         """
@@ -53,7 +74,7 @@ class Avatar(BaseActor):
         """
         if ability_name in self.ability:
             self.revoke_ability_silent(ability_name)
-            self.send("You lose a ability: ^y%s^w" % ability_name)
+            msg.send(self, "You lose a ability: ^y%s^w\n" % ability_name)
 
     def revoke_ability_silent(self, ability_name):
         """

@@ -6,8 +6,8 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-import gc
-gc.set_debug(gc.DEBUG_LEAK)
+#import gc
+#gc.set_debug(gc.DEBUG_LEAK)
 
 from miniboa import TelnetServer
 
@@ -52,7 +52,7 @@ load_module('data/testville')
 
 Cycle(2, kick_idle_clients)
 Cycle(10, sweep_rooms)
-Cycle(.25, process_client_commands)
+Cycle(.1, process_client_commands)
 
 
 #------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ server.on_disconnect = on_disconnect
 
 THE_LOG.add(">> Listening for connections on port %d" % PORT)
 
-while gvar.SERVER_RUN == True:
+while gvar.SERVER_RUN:
     THE_SCHEDULER.tick()
     server.poll()
 
