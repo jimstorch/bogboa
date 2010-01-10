@@ -65,7 +65,7 @@ class Cycle(object):
 
     def cancel(self):
         """
-        Half the cycle and the next event.
+        Halt the cycle and the next event.
         """
         self.active = False
         self.next_event.cancel()

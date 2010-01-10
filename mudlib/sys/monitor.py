@@ -35,9 +35,9 @@ def on_disconnect(client):
 
     elif client in gvar.PLAYERS:
         user = gvar.PLAYERS[client]
-        broadcast('^g%s has gone offline.^w' % client.name)
+        #broadcast('^g%s has gone offline.^w' % client.name)
         THE_LOG.add('-- Deactivated player %s from %s.' %
-            (user.name, client.addrport()))
+            (user.avatar.get_name(), client.addrport()))
         del gvar.PLAYERS[client]
 
 

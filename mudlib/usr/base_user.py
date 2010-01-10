@@ -36,64 +36,39 @@ class BaseUser(object):
 
     def cmd_driver(self):
         ## call the driver method for current state via class introspection
-        #self.__class__.__dict__[self.state](self)
         self.__getattribute__(self.state)()
 
     def _fsm_do_nothing(self):
-        """Do nothing driver for users that being kicked."""
+        """
+        Do nothing driver for users that being kicked.
+        """
         pass
 
-    #----------------------------------------------Various text sending methods
-
     def send(self, msg):
-        """Transmit text to the distant end, with word wrapping."""
+        """
+        Send message with caret color encoding.
+        """
         self.client.send_cc(msg)
 
-    def send_wrapped(self, msg):
-        self.client_send_wrapped(msg)
-
     def send_raw(self, msg):
-        """Transmit raw text to the distant end."""
+        """
+        Send message, ignore caret color codes.
+        """
         self.client.send(msg)
-
-    def whisper(self, msg):
-        """Transmit msg wrapped in whisper color (dark green)."""
-        self.client.send_cc('^g%s^w' % msg)
-
-    def prose(self, msg):
-        """Transmit msg wrapped in reading color (dark white)."""
-        self.client.send_wrapped('^w%s^w' % msg)
-
-    def inform(self, msg):
-        """Transmit msg wrapped in informing color (bright white)."""
-        self.client.send_cc('^W%s^w' % msg)
-
-    def alert(self, msg):
-        """Transmit msg wrapped in alert color (bright yellow)."""
-        self.client.send_cc('^Y%s^w' % msg)
-
-    def warn(self, msg):
-        """Transmit msg wrapped in warn color (dark red)."""
-        self.client.send_cc('^r%s^w' % msg)
-
-    def exclaim(self, msg):
-        """Transmit msg wrapped in exclaime color (bright red)."""
-        self.client.send_cc('^R%s^w' % msg)
-
-    #----------------------------------------------------------------Deactivate
+            
+    def send_wrapped(self, msg):
+        """
+        Send message with word wrapping and caret color codes.
+        """
+        self.client.send_wrapped(msg)
 
     def deactivate(self):
-
         """
         Kick the user from the server via the client.
         """
-
         self.client.deactivate()
 
-    #--------------------------------------------------------Delayed Deactivate
-
     def delayed_deactivate(self):
-
         """
         Kick the user from the server in 1 second.
         """
@@ -139,8 +114,8 @@ class BaseUser(object):
                 try:
                     handler(self)
                 except BogCmdError, error:
-                    self.alert(error)
+                    self.send('^y%s\n^w' % error)
             else:
-                self.alert("Unknown action.")
+                self.send("^yUnknown action.^w\n")
         else:
             self.verb_args = None

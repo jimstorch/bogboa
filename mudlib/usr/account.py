@@ -13,8 +13,8 @@ Account creation, loading, and updating.
 from uuid import uuid4
 
 from mudlib import gvar
+from mudlib.act import move
 from mudlib.sys import THE_LOG
-from mudlib.sys.config import LOBBY_UUID
 from mudlib.sys.config import START_UUID
 from mudlib.dat import add_account
 from mudlib.dat import last_on
@@ -26,6 +26,27 @@ from mudlib.dat import fetch_kv_set
 from mudlib.usr.player import Player
 from mudlib.actor.avatar import Avatar
 
+
+def check_name(name):
+    """
+    Check the format of a desired username.
+    """
+    if len(name) < 3:
+        err = 'Sorry, that name is too short.\n'
+        happy = False
+    elif len(name) > 20:
+        err = 'Sorry, that name is too long.\n'
+        happy = False
+    elif rejected_name(name):
+        err = 'Sorry, that name is not available.\n'
+        happy = False
+    elif not name.isalpha():
+        err = 'Please use letters only.\n'
+        happy = False
+    else:
+        err= ''
+        happy = True
+    return happy, err
 
 
 def create_account(client, name, password):
@@ -44,6 +65,7 @@ def create_account(client, name, password):
         'gender':'male',
         'guild':'fighter',
         'level':1,
+        'room':START_UUID,
         }
 
     ## Create an account entry
@@ -63,9 +85,8 @@ def load_account(client, name, uuid):
     """
     load a previously created account.
     """
-    client.send('\nWelcome back, %s.\n' % name)
-    client.send('Your last visit was %s.\n' % last_on(name))
-
+    client.send('\nWelcome back, %s. Your last visit was %s.\n\n' %
+         (name, last_on(name)))
     del gvar.LOBBY[client]
     ## Create an in-game Avatar from stored data
     avatar = Avatar(client)
@@ -105,28 +126,9 @@ def play_account(avatar):
     ## Add to Play List
     gvar.PLAYERS[avatar.client] = player
     gvar.AVATARS[avatar.get_name().lower()] = avatar
+    move.enter(avatar, avatar.get_room_obj())
 
 
-def check_name(name):
-    """
-    Check the format of a desired username.
-    """
-    if len(name) < 3:
-        err = 'Sorry, that name is too short.\n'
-        happy = False
-    elif len(name) > 20:
-        err = 'Sorry, that name is too long.\n'
-        happy = False
-    elif rejected_name(name):
-        err = 'Sorry, that name is not available.\n'
-        happy = False
-    elif not name.isalpha():
-        err = "Please use letters only.\n'
-        happy = False
-    else:
-        err= ''
-        happy = True
-    return happy, err
 
 
 ##------------------------------------------------------------------------Create

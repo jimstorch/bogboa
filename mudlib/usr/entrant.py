@@ -92,16 +92,16 @@ class Entrant(BaseUser):
             self.client.password_mode_off()
             uuid, status = check_credentials(self.username, password)
             if status == 'failed':
-                self.alert('\nUsername and/or password not found.\n')
+                self.send('^Y\nUsername and/or password not found.^w\n')
                 self.req_username()
 
             elif status == 'banned':
-                self.alert('\nAccount has been permanently banned.\n')
+                self.send('^R\nAccount has been permanently banned.^w\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
 
             elif status == 'suspended':
-                self.alert('\nAccount is under temporary suspension.\n')
+                self.send(self, '^r\nAccount is under temporary suspension.^w\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
 
@@ -149,7 +149,7 @@ class Entrant(BaseUser):
     def state__get_new_password_again(self):
         password =  self.client.get_command()
         if password != self.password:
-            self.alert('\nPasswords do not match.\n')
+            self.send('^Y\nPasswords do not match.^w\n')
             self.req_new_password()
         else:
             ## Create a new account

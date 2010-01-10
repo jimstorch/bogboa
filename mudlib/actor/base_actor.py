@@ -26,30 +26,13 @@ class BaseActor(object):
 
     def __init__(self):
         self.room = None
-
-    def get_name(self):
-        """
-        Actor's name.
-        """
-        return self.profile['name']
+        self.is_player = False
 
     def get_alias(self):
         """
         Actor's alias.
         """
         return self.profile['alias']
-
-    def get_race(self):
-        """
-        Actor's race as a string.
-        """
-        return self.profile['race']
-
-    def get_race_instance(self):
-        """
-        Actor's Race object or None.
-        """
-        return gvar.RACES[self.get_race()]
 
     def get_gender(self):
         """
@@ -63,7 +46,7 @@ class BaseActor(object):
         """
         return self.profile['guild']
 
-    def get_guild_instance(self):
+    def get_guild_obj(self):
         """
         Actor's guild object or None.
         """
@@ -74,6 +57,39 @@ class BaseActor(object):
         Actor's level as an integer value.
         """
         return int(self.profile['level'])
+
+    def get_name(self):
+        """
+        Actor's name.
+        """
+        return self.profile['name']
+
+    def get_race(self):
+        """
+        Actor's race as a string.
+        """
+        return self.profile['race']
+
+    def get_room_uuid(self):
+        """
+        UUID of the Actor's room.
+        """
+        return self.profile['room']
+
+    def get_room_obj(self):
+        """
+        Actor's Room object.
+        """
+        return gvar.ROOMS[self.get_room_uuid()]
+
+
+    def get_race_obj(self):
+        """
+        Actor's Race object or None.
+        """
+        return gvar.RACES[self.get_race()]
+
+    ##-----------------------------------------------------------------Pronouns
 
     def get_nom(self):
         """

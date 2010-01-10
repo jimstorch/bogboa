@@ -128,14 +128,12 @@ def online_player(cmd_func):
     def parse_func(client):
         args = client.verb_args
         if len(args) != 1:
-            client.alert('That command requires a player name.')
-            return
+            raise BogCmdError('That command requires a player name.')
         else:
             name = args[0]
             target = shared.find_player(name)
             if target == None:
-                client.alert('Player not found online.')
-                return
+                raise BogCmdError('Player not found online.')
             cmd_func(client, target)
     return parse_func
 

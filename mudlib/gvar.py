@@ -25,7 +25,7 @@ THE_TIME = 0.0
 
 #--[ Client Connections ]------------------------------------------------------
 
-LOBBY = {}       ## Key is Client object, value is Entrant object
+LOBBY = {}          ## Key is Client object, value is Entrant object
 PLAYERS = {}        ## Key is Client object, value is Player object
 AVATARS = {}        ## key is player name, value is Avatar object
 
@@ -43,3 +43,24 @@ SPAWNS = {}         ## key is npc UUID
 
 OBJECTS = {}        ## key is object UUID
 ROOMS = {}          ## key is room UUID
+
+
+def find_room(uuid):
+    """
+    Given a UUID, return the corresponding Room Instance.
+    """
+    return ROOMS.get(uuid, None)
+
+def find_avatar(name):
+    """
+    Given a name, return the corresponding avatar.
+    """
+    return AVATARS.get(name.lower(), None)
+
+def find_item(uuid):
+    """
+    Give a UUID, return the corresponding item.
+    """
+    return ITEMS.get(uuid, None)
+
+    
