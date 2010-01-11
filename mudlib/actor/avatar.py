@@ -10,12 +10,10 @@
 The player's identity in the game world. Inherits from BaseActor.
 """
 
-
 from mudlib.actor.base_actor import BaseActor
 from mudlib.dat import set_kv
 from mudlib.dat import delete_kv
 from mudlib.dat import delete_kv_category
-from mudlib.act import msg
 
 
 class Avatar(BaseActor):
@@ -58,7 +56,7 @@ class Avatar(BaseActor):
         """
         if command_name not in self.commands:
             self.grant_ability_silent(ability_name)
-            msg.send(self, 'You receive a new ability: ^W%s^w\n' % 
+            self.send('You receive a new ability: ^W%s^w\n' % 
                 ability_name)
 
     def grant_ability_silent(self, ability_name):
@@ -74,7 +72,7 @@ class Avatar(BaseActor):
         """
         if ability_name in self.ability:
             self.revoke_ability_silent(ability_name)
-            msg.send(self, "You lose a ability: ^y%s^w\n" % ability_name)
+            self.send("You lose a ability: ^y%s^w\n" % ability_name)
 
     def revoke_ability_silent(self, ability_name):
         """

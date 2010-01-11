@@ -13,7 +13,7 @@ Account creation, loading, and updating.
 from uuid import uuid4
 
 from mudlib import gvar
-from mudlib.act import move
+from mudlib import action
 from mudlib.sys import THE_LOG
 from mudlib.sys.config import START_UUID
 from mudlib.dat import add_account
@@ -126,7 +126,7 @@ def play_account(avatar):
     ## Add to Play List
     gvar.PLAYERS[avatar.client] = player
     gvar.AVATARS[avatar.get_name().lower()] = avatar
-    move.enter(avatar, avatar.get_room_obj())
+    action.enter(avatar, avatar.get_room_obj())
 
 
 

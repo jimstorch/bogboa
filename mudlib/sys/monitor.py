@@ -7,11 +7,11 @@
 #------------------------------------------------------------------------------
 
 from mudlib import gvar
+from mudlib import action
 from mudlib.sys import THE_LOG
 from mudlib.sys.config import IDLE_TIMEOUT
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.usr.entrant import Entrant
-from mudlib.cmd.speech import broadcast
 
 
 def on_connect(client):
@@ -35,27 +35,35 @@ def on_disconnect(client):
 
     elif client in gvar.PLAYERS:
         user = gvar.PLAYERS[client]
+        avatar = user.avatar
+        ## Remove them from the world
+        action.leave(avatar, avatar.get_room_obj())
+        name = avatar.get_name()
         #broadcast('^g%s has gone offline.^w' % client.name)
-        THE_LOG.add('-- Deactivated player %s from %s.' %
-            (user.avatar.get_name(), client.addrport()))
+        THE_LOG.add('-- Lost player %s from %s.' %
+            (name, client.addrport()))
+        ## Delete references
         del gvar.PLAYERS[client]
+        del gvar.AVATARS[name.lower()]
+        #avatar.client = None
 
 
 def kick_idle_clients():
     """
     Test for and drop clients who aren't doing anything.
     """
+    #print len(gvar.LOBBY), len(gvar.PLAYERS), len(gvar.AVATARS)
     for client in gvar.LOBBY:
         if client.idle() > IDLE_TIMEOUT:
             user = gvar.LOBBY[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            user.inform('\nIdle timeout.\n')
+            user.inform('\n^YIdle timeout.^w\n')
             user.delayed_deactivate()
     for client in gvar.PLAYERS:
         if client.idle() > IDLE_TIMEOUT:
-            user = gvar.LOBBY[client]
+            user = gvar.PLAYERS[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            user.inform('\nIdle timeout.\n')
+            user.inform('\n^YIdle timeout.^w\n')
             user.delayed_deactivate()
 
 
@@ -63,9 +71,6 @@ def process_client_commands():
     """
     Test clients for commands and process them.
     """
-
-    #print len(gvar.LOBBY), len(gvar.PLAYERS)
-
     for user in gvar.LOBBY.values():
         if user.client.active and user.client.cmd_ready:
             user.cmd_driver()

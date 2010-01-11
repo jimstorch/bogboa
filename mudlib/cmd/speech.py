@@ -7,24 +7,8 @@
 #------------------------------------------------------------------------------
 
 from mudlib import gvar
+from mudlib import action
 from mudlib.usr import parsers
-
-
-def broadcast(msg):
-    """
-    Send a message to all players.
-    """
-    for client in gvar.PLAYERS:
-        client.send(msg)
-
-
-def broadcast_all(msg):
-    """
-    Send a message to players and lobby clients.
-    """
-    broadcast(msg)
-    for client in gvar.LOBBY:
-        client.send(msg)
 
 
 @parsers.monologue
@@ -93,14 +77,15 @@ def shout(client, msg):
 
 
 @parsers.monologue
-def say(client, msg):
+def say(player, msg):
     """
     Sends message to every player in client's room.
     """
-    room = client.get_room()
-    body = client.body
-    room.tell_all_but(body, '^W%s says^w, %s' % (body.name, msg))
-    client.send('^WYou say^w, %s' % msg)
+    avatar = player.avatar
+    room = avatar.get_room_obj()
+    action.tell_all_but(room, '^W%s says^w, %s' % (avatar.get_name(), msg), 
+        avatar)
+    player.send('^WYou say^w, %s' % msg)
     ## Fire the on hear event
-    room.on_hear(client.body, msg)
+    room.on_hear(avatar, msg)
 

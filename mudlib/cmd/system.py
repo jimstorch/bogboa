@@ -45,7 +45,7 @@ def quit(player):
 
     """Exit from the game."""
 
-    player.send('Logging you off -- take care.')
+    player.send('\n^YLogging you off -- take care.^w\n')
     THE_LOG.add('.. %s quits from %s' % (player.avatar.get_name(), 
         player.client.addrport()))
     THE_SCHEDULER.add(.10, player.deactivate)
