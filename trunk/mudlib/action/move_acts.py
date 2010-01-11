@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/act/act_movement.py
-#   Copyright 2009 Jim Storch
+#   mudlib/action/move_acts.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 Movement Actions
 """
 
-from mudlib.action.messaging import tell_all
+from mudlib.action.speech_acts import tell_all
 from mudlib.world import calendar
 
 #--------------------------------------------------------------common waypoints
@@ -20,17 +20,17 @@ def _arrive(actor, room):
     Actor enters a room.
     """
     if actor.is_player:
-        actor.send_wrapped('^cYou enter ^!%s^1 at %s.\n^w' % (room.name, 
+        actor.send_wrapped('^cYou enter ^!%s^1 at %s.\n^w' % (room.name,
             calendar.time_msg()))
         actor.send_wrapped(room.text)
     actor.profile['room'] = room.uuid
-    room.on_enter(actor)    
+    room.on_enter(actor)
 
 def _depart(actor, room):
     """
     Actor leaves a room.
     """
-    room.on_exit(actor)   
+    room.on_exit(actor)
 
 #----------------------------------------------------------------------entering
 
@@ -74,14 +74,14 @@ def enter_up(actor, room):
     Directional enter.
     """
     tell_all(room, '\n%s comes down from above.\n' % actor.get_name())
-    _arrive(actor, room)    
+    _arrive(actor, room)
 
 def enter_down(actor, room):
     """
     Directional enter.
     """
     tell_all(room, '\n%s comes up from below.\n' % actor.get_name())
-    _arrive(actor, room)  
+    _arrive(actor, room)
 
 
 #-----------------------------------------------------------------------leaving
@@ -99,7 +99,7 @@ def leave_north(actor, room):
     """
     _depart(actor, room)
     tell_all(room, '\n%s leaves towards the North.\n' % actor.get_name())
-    
+
 def leave_east(actor, room):
     """
     Directional departure.

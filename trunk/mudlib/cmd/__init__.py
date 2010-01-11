@@ -10,11 +10,11 @@
 Functions to execute commands typed in by the players.
 """
 
-#from mudlib.cmd.account import *
-#from mudlib.cmd.info import *
-#from mudlib.cmd.movement import *
-#from mudlib.cmd.silly import *
-#from mudlib.cmd.speech import *
-#from mudlib.cmd.system import *
-#from mudlib.cmd.use import *
-#from mudlib.cmd.wizard import *
+
+from mudlib.cmd.info_cmds import *
+from mudlib.cmd.move_cmds import *
+from mudlib.cmd.silly_cmds import *
+from mudlib.cmd.speech_cmds import *
+from mudlib.cmd.system_cmds import *
+from mudlib.cmd.usage_cmds import *
+from mudlib.cmd.wizard_cmds import *

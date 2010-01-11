@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/action/msg.py
-#   Copyright 2009 Jim Storch
+#   mudlib/action/speech_acts.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -9,6 +9,9 @@
 """
 Message related actions.
 """
+
+from mudlib import gvar
+
 
 def tell_all(room, msg):
     """
@@ -28,7 +31,7 @@ def tell_all_but(room, msg, stinky_pete):
     for actor in room.actors:
         if actor.is_player and actor != stinky_pete:
             actor.send(msg)
-   
+
 
 def broadcast(msg):
     """
@@ -75,5 +78,3 @@ def warn(actor, msg):
 def exclaim(actor, msg):
     """Transmit msg wrapped in exclaime color (bright red)."""
     actor.client.send_cc('^R%s^w' % msg)
-
-

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/skill/melee.py
-#   Copyright 2009 Jim Storch
+#   mudlib/skill/melee_skills.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-Functions related to melee skills.
+Rate melee combat skills.
 """
 
 from mudlib.stat import stat_bonus
@@ -19,7 +19,7 @@ def dual_wield_rating(actor, tutor=True):
     Rate Actor's abilty to use two weapons at once.
     """
     if tutor:
-        skillup_check(actor, 'dual_wield')     
+        skillup_check(actor, 'dual_wield')
     base = actor.get_skill('dual_wield')
     bonus = stat_bonus(actor, 'cunning')
     return base * bonus
@@ -30,7 +30,7 @@ def melee_combat_rating(actor, tutor=True):
     Rate Actor's general combat prowess.
     """
     if tutor:
-        skillup_check(actor, 'melee_combat')              
+        skillup_check(actor, 'melee_combat')
     base = actor.get_skill('melee_combat')
     bonus = stat_bonus(actor, 'brawn')
     return base * bonus
@@ -42,10 +42,10 @@ def primary_weapon_rating(actor, tutor=True):
     """
     weapon_type = actor.get_primary_type()
     if tutor:
-        skillup_check(actor, weapon_type)  
+        skillup_check(actor, weapon_type)
     base = actor.get_skill(weapon_type)
     bonus = stat_bonus(actor, 'precision')
-    return base * bonus    
+    return base * bonus
 
 
 def primary_hit_rating(actor):
@@ -70,7 +70,7 @@ def primary_crit_rating(actor):
     weapon_type = actor.get_primary_type()
     base = actor.get_skill(weapon_type)
     bonus = stat_bonus(actor, 'cunning')
-    return base * bonus 
+    return base * bonus
 
 
 def primary_max_dmg(actor):
@@ -88,10 +88,10 @@ def secondary_weapon_rating(actor, tutor=True):
     """
     weapon_type = actor.get_secondary_type()
     if tutor:
-        skillup_check(actor, weapon_type)  
+        skillup_check(actor, weapon_type)
     base = actor.get_skill(weapon_type)
     bonus = stat_bonus(actor, 'precision')
-    return base * bonus 
+    return base * bonus
 
 
 def secondary_hit_rating(actor):
@@ -116,7 +116,7 @@ def secondary_crit_rating(actor):
     weapon_type = actor.get_primary_type()
     base = actor.get_skill(weapon_type)
     bonus = stat_bonus(actor, 'cunning')
-    return base * bonus  
+    return base * bonus
 
 
 def secondary_max_dmg(actor):
@@ -125,8 +125,4 @@ def secondary_max_dmg(actor):
     """
     dmg = actor.get_primary_dmg()
     bonus = stat_bonus(actor, 'brawn')
-    return dmg * bonus    
-
-
-
-    
+    return dmg * bonus

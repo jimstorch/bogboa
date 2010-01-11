@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/skill/passive.py
-#   Copyright 2009 Jim Storch
+#   mudlib/skill/passive_skills.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-Compute passive skills.
+Rate passive skills.
 """
 
 from mudlib.stat import stat_bonus, greater_of_bonus
@@ -35,7 +35,7 @@ def body_regen_rating(actor):
     """
     base = actor.get_skill('recovery')
     bonus = stat_bonus(actor, 'vigor')
-    return base * bonus   
+    return base * bonus
 
 
 def mind_rating(actor):
@@ -54,5 +54,3 @@ def mind_regen_rating(actor):
     base = actor.get_skill('meditation')
     bonus = stat_bonus(actor, 'faith')
     return base * bonus
-
-

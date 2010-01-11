@@ -10,14 +10,7 @@
 Map game verbs to associated command functions.
 """
 
-#from mudlib.cmd import account
-from mudlib.cmd import movement
-from mudlib.cmd import speech
-from mudlib.cmd import info
-from mudlib.cmd import use
-from mudlib.cmd import wizard
-from mudlib.cmd import system
-from mudlib.cmd import silly
+from mudlib import cmd
 
 
 VERB_ALIAS = {}
@@ -47,71 +40,71 @@ COMMAND_LIST = (
 
     ## Movement
 
-    (('north', 'n', '8'), movement.north),
-    (('east', 'e', '6'), movement.east),
-    (('south', 's', '2'), movement.south),
-    (('west', 'w', '4'), movement.west),
-#    (('up', 'u', 'climb', '9'), movement.up),
-#    (('down', 'd', '3'), movement.down),
-#    (('recall', 'home'), movement.recall),
-#    (('enter',), movement.enter),
-#    (('exit',), movement.exit),
+    (('north', 'n', '8'), cmd.north),
+    (('east', 'e', '6'), cmd.east),
+    (('south', 's', '2'), cmd.south),
+    (('west', 'w', '4'), cmd.west),
+    (('up', 'u', 'climb', '9'), cmd.up),
+    (('down', 'd', '3'), cmd.down),
+    (('recall', 'home'), cmd.recall),
+    (('enter',), cmd.enter),
+    (('exit',), cmd.exit),
 
     ## Communication
 
 #    (('broadcast', 'announce'), speech.broadcast),
-    (('emote', '/em', ':', 'em'), speech.emote),
-    (('ooc',), speech.ooc),
-    (('reply', 'r', '/r'), speech.reply),
-    (('say', '/s'), speech.say),
-    (('shout', 'yell', '/y'), speech.shout),
-    (('tell', 'whisper', '/t', '/w'), speech.tell),
+    (('emote', '/em', ':', 'em'), cmd.emote),
+    (('ooc',), cmd.ooc),
+    (('reply', 'r', '/r'), cmd.reply),
+    (('say', '/s'), cmd.say),
+    (('shout', 'yell', '/y'), cmd.shout),
+    (('tell', 'whisper', '/t', '/w'), cmd.tell),
 
     ## Information
 
-    (('help', '?', 'info'), info.help),
-    (('topics',), info.topics),
-    (('commands','command', 'cmds', '??'), info.commands),
-    (('score', 'played','stats'), info.score),
-    (('time', 'clock', 'hour'), info.time),
-    (('date', 'calendar', 'year'), info.date),
-    (('inventory', 'i', 'inven'), info.inventory),
-    (('look', 'l',), info.look),
-    (('stats', 'stat',), info.stats),
+    (('help', '?', 'info'), cmd.help),
+    (('topics',), cmd.topics),
+    (('commands','command', 'cmds', '??'), cmd.commands),
+    (('score', 'played','stats'), cmd.score),
+    (('time', 'clock', 'hour'), cmd.time),
+    (('date', 'calendar', 'year'), cmd.date),
+    (('inventory', 'i', 'inven'), cmd.inventory),
+    (('look', 'l',), cmd.look),
+    (('stats', 'stat',), cmd.stats),
 
     ## Interaction
 
-    (('wear', 'don', 'equip'), use.wear),
-    (('remove', 'unequip'), use.remove),
-    (('take', 'get', 'pickup', 'grab'), use.take),
-    (('drop', 'discard', 'toss', 'throw'), use.drop),
-#    (('do', 'cast', 'doability', 'spell'), use.do),
-#    (('attack', 'kill', 'atk', 'slay'), use.attack),
-#    (('target', 'tar'), use.target),
-#    (('search',), use.search),
+    (('wear', 'don', 'equip'), cmd.wear),
+    (('remove', 'unequip'), cmd.remove),
+    (('take', 'get', 'pickup', 'grab'), cmd.take),
+    (('drop', 'discard', 'toss', 'throw'), cmd.drop),
+#    (('do', 'cast', 'doability', 'spell'), cmd.do),
+#    (('attack', 'kill', 'atk', 'slay'), cmd.attack),
+#    (('target', 'tar'), cmd.target),
+#    (('search',), cmd.search),
 
     ## System
 
-    (('quit', 'exit', 'logoff'), system.quit),
-    (('bug',), system.bug),
-    (('ansi','color'), system.ansi),
+    (('quit', 'exit', 'logoff'), cmd.quit),
+    (('bug',), cmd.bug),
+    (('ansi','color'), cmd.ansi),
 
     ## Wizardry
-    (('ban',), wizard.ban),
-    (('grant',), wizard.grant),
-    (('kick', 'punt'), wizard.kick),
-    (('revoke',), wizard.revoke),
-    (('summon',), wizard.summon),
-    (('teleport', 'port'), wizard.teleport),
-    (('zap',), wizard.zap),
-    (('shutdown',), wizard.shutdown),
-    (('uptime',), wizard.uptime),
+    (('ban',), cmd.ban),
+    (('grant',), cmd.grant),
+    (('kick', 'punt'), cmd.kick),
+    (('revoke',), cmd.revoke),
+    (('summon',), cmd.summon),
+    (('teleport', 'port'), cmd.teleport),
+    (('zap',), cmd.zap),
+    (('shutdown',), cmd.shutdown),
+    (('uptime',), cmd.uptime),
 
     ## Silly
-#    (('verbose',), silly.verbose),
-#    (('plugh', 'xyzzy'), silly.plugh),
-#    (('pizza',), silly.pizza),
-#    (('iddqd', 'idkfa'), silly.iddqd),
+#    (('verbose',), cmd.verbose),
+#    (('plugh', 'xyzzy'), cmd.plugh),
+#    (('pizza',), cmd.pizza),
+#    (('iddqd', 'idkfa'), cmd.iddqd),
 
     )
 

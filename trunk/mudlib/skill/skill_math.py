@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   mudlib/skill/skill_math.py
-#   Copyright 2009 Jim Storch
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-Skill related computations. 
+Skill related computations.
 """
 
 import math
@@ -28,12 +28,12 @@ def skill_cap(actor, skill_name)
 
 def update_skill(actor, skill_name, value):
     """
-    Permanetly modify the Actor's given skill value. 
+    Permanetly modify the Actor's given skill value.
     """
     value = int(value)
     actor.set_skill(skill_name, value)
     ## TODO: enable this
-    #store_kv(actor.uuid, 'skills', skill_name, value)    
+    #store_kv(actor.uuid, 'skills', skill_name, value)
 
 
 def skillup_check(actor, skill_name):
@@ -44,15 +44,15 @@ def skillup_check(actor, skill_name):
     """
     cap = skill_cap(actor, skill_name)
     ## Does their Guild allow this skill?
-    if cap > 0.0:  
+    if cap > 0.0:
         skill = actor.get_skill(skill_name)
         if skill < cap:
             chance = ( cap / float(skill) ) / 100.00
             bonus = actor.get_stat('cunning') / 1000.0
             if (random.random() + bonus) > chance:
-                skill += 1 
+                skill += 1
                 update_skill(actor, skill_name, skill)
-                actor.inform('\nYour skill at %s has improved to %d.' % 
+                actor.inform('\nYour skill at %s has improved to %d.' %
                     (skill_name, skill))
 
 
@@ -68,4 +68,3 @@ def diminishing_returns(val, scale):
         trinum = (math.sqrt(8.0 * mult + 1.0) - 1.0) / 2.0
         retval = trinum * scale
     return retval
-
