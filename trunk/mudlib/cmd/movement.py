@@ -13,7 +13,7 @@ Handling Player Movement
 from mudlib import gvar
 from mudlib.usr import parsers
 from mudlib.sys.error import BogCmdError
-from mudlib.act import move
+from mudlib import action
 
 
 @parsers.blank
@@ -25,8 +25,8 @@ def north(player):
     room = actor.get_room_obj()
     dest = room.get_exit('north')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way North is obstructed.')
 
@@ -40,8 +40,8 @@ def east(player):
     room = actor.get_room_obj()
     dest = room.get_exit('east')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way East is obstructed.')
 
@@ -55,8 +55,8 @@ def south(player):
     room = actor.get_room_obj()
     dest = room.get_exit('south')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way South is obstructed.')
 
@@ -70,8 +70,8 @@ def west(player):
     room = actor.get_room_obj()
     dest = room.get_exit('west')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way West is obstructed.')
 
@@ -85,8 +85,8 @@ def up(player):
     room = actor.get_room_obj()
     dest = room.get_exit('up')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way up is obstructed.')
 
@@ -100,8 +100,8 @@ def down(player):
     room = actor.get_room_obj()
     dest = room.get_exit('down')
     if dest:
-        move.leave_north(actor, room)
-        move.enter_south(actor, dest) 
+        action.leave_north(actor, room)
+        action.enter_south(actor, dest) 
     else:
         raise BogCmdError('The way down is obstructed.')
 

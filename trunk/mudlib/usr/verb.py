@@ -10,7 +10,6 @@
 Map game verbs to associated command functions.
 """
 
-
 #from mudlib.cmd import account
 from mudlib.cmd import movement
 from mudlib.cmd import speech
@@ -60,7 +59,7 @@ COMMAND_LIST = (
 
     ## Communication
 
-    (('broadcast', 'announce'), speech.broadcast),
+#    (('broadcast', 'announce'), speech.broadcast),
     (('emote', '/em', ':', 'em'), speech.emote),
     (('ooc',), speech.ooc),
     (('reply', 'r', '/r'), speech.reply),
