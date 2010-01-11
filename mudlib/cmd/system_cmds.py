@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/usr/cmd_system.py
-#   Copyright 2009 Jim Storch
+#   mudlib/cmd/system_cmds.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ def quit(player):
     """Exit from the game."""
 
     player.send('\n^YLogging you off -- take care.^w\n')
-    THE_LOG.add('.. %s quits from %s' % (player.avatar.get_name(), 
+    THE_LOG.add('.. %s quits from %s' % (player.avatar.get_name(),
         player.client.addrport()))
     THE_SCHEDULER.add(.10, player.deactivate)
 

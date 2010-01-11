@@ -9,9 +9,9 @@
 """
 Action related functions.
 
-Actions are called by Commands and Abilities.  
+Actions are called by Commands and Abilities.
 Actions generate Messages and Effects.
 """
 
-from mudlib.action.moving import *
-from mudlib.action.messaging import *    
+from mudlib.action.move_acts import *
+from mudlib.action.speech_acts import *

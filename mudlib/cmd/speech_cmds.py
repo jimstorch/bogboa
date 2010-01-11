@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/usr/cmd_speech.py
-#   Copyright 2009 Jim Storch
+#   mudlib/cmd/speech_cmds.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -83,9 +83,8 @@ def say(player, msg):
     """
     avatar = player.avatar
     room = avatar.get_room_obj()
-    action.tell_all_but(room, '^W%s says^w, %s' % (avatar.get_name(), msg), 
+    action.tell_all_but(room, '^W%s says^w, %s' % (avatar.get_name(), msg),
         avatar)
     player.send('^WYou say^w, %s' % msg)
     ## Fire the on hear event
     room.on_hear(avatar, msg)
-

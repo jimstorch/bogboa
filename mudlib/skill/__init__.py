@@ -20,18 +20,14 @@ of that guild at zero forever.
 
 Skills may recieve a bonus or penalty based on character stats. The combination
 of current skill + stat bonus is called the Rating.  Ratings are the values
-used when testing for success/failure of an action or a magnitude of effect. 
+used when testing for success/failure of an action or a magnitude of effect.
 """
 
 from mudlib.skill.stat_math import *
 from mudlib.skill.skill_math import *
-from mudlib.skill.passive import *
-from mudlib.skill.defense import *
-from mudlib.skill.melee import *
-from mudlib.skill.ranged import *
-from mudlib.skill.magic import *
-from mudlib.skill.crafting import *
-
-
-
-
+from mudlib.skill.passive_skills import *
+from mudlib.skill.defense_skills import *
+from mudlib.skill.melee_skills import *
+from mudlib.skill.ranged_skills import *
+from mudlib.skill.magic_skills import *
+from mudlib.skill.crafting_skills import *

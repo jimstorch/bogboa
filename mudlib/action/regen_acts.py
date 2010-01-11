@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/skill/crafting.py
-#   Copyright 2009 Jim Storch
+#   mudlib/action/regen_acts.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-"""
-Functions related to crafting skills.
-"""
-
-from mudlib.skill import skill_check
+from mudlib.skill import *

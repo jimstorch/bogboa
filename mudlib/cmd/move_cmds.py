@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/usr/movement.py
-#   Copyright 2009 Jim Storch
+#   mudlib/cmds/move_cmds.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ def north(player):
     dest = room.get_exit('north')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way North is obstructed.')
 
@@ -41,7 +41,7 @@ def east(player):
     dest = room.get_exit('east')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way East is obstructed.')
 
@@ -56,7 +56,7 @@ def south(player):
     dest = room.get_exit('south')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way South is obstructed.')
 
@@ -71,7 +71,7 @@ def west(player):
     dest = room.get_exit('west')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way West is obstructed.')
 
@@ -86,7 +86,7 @@ def up(player):
     dest = room.get_exit('up')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way up is obstructed.')
 
@@ -101,7 +101,7 @@ def down(player):
     dest = room.get_exit('down')
     if dest:
         action.leave_north(actor, room)
-        action.enter_south(actor, dest) 
+        action.enter_south(actor, dest)
     else:
         raise BogCmdError('The way down is obstructed.')
 

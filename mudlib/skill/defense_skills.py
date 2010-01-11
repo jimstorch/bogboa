@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/skill/defense.py
-#   Copyright 2009 Jim Storch
+#   mudlib/skill/defense_skills.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -30,32 +30,30 @@ def defense_rating(actor, tutor=True):
     Uses defense skill + armor.
     """
     if tutor:
-        skillup_check(actor, 'defense')  
+        skillup_check(actor, 'defense')
     base = actor.get_skill('defense')
     bonus = stat_bonus(actor, 'brawn')
     armor = armor_rating(actor)
     return base * bonus + armor
 
 
-def dodge_rating(actor):
+def dodge_rating(actor, tutor=True):
     """
     Actor rating to dodge a melee attack.
     """
     if tutor:
-        skillup_check(actor, 'dodge')  
+        skillup_check(actor, 'dodge')
     base = actor.get_skill('dodge')
     bonus = stat_bonus(actor, 'cunning')
-    return base * bonus    
+    return base * bonus
 
 
-def parry_rating(actor):
+def parry_rating(actor, tutor=True):
     """
     Actor rating to parry a melee attack.
     """
     if tutor:
-        skillup_check(actor, 'parry')  
+        skillup_check(actor, 'parry')
     base = actor.get_skill('parry')
     bonus = stat_bonus(actor, 'precision')
-    return base * bonus    
-
-
+    return base * bonus

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
 #   mudlib/stat/stat_math.py
-#   Copyright 2009 Jim Storch
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
@@ -26,10 +26,10 @@ The stats in use are:
 Warrior     - brawn, vigor, precision
 Monk        - Precision, Faith, Vigor
 Paladin     - Brawn, Faith, Knowledge
-Priest      - Faith, Knowledge, Precision  
-Necromancer - Knowledge, Precision, Cunning    
-Ninja       - Cunning, Precision, Brawn  
-Ranger      - Precision, Faith, Cunning 
+Priest      - Faith, Knowledge, Precision
+Necromancer - Knowledge, Precision, Cunning
+Ninja       - Cunning, Precision, Brawn
+Ranger      - Precision, Faith, Cunning
 Rogue       - Precision, Brawn, Cunning
 Shaman      - Faith, Brawn, Knowledge
 Druid       - Knowledge, Faith, Cunning
@@ -37,9 +37,9 @@ Druid       - Knowledge, Faith, Cunning
 
 def bonus_calc(stat):
     """
-    Calculate stat bonus or penalty.  
+    Calculate stat bonus or penalty.
     10 points = 1% = 1.01.
-    Negative stat values are ten times as detrimental.        
+    Negative stat values are ten times as detrimental.
     """
     ## -100 and below = 0 multiplier
     if stat < -99.9:
@@ -50,7 +50,7 @@ def bonus_calc(stat):
     ## Above 0 = .1x bonus
     else:
         bonus = 1.0 + (stat / 1000.0)
-    return bonus    
+    return bonus
 
 
 def stat_bonus(actor, stat_name):

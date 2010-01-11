@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/skill/ranged.py
-#   Copyright 2009 Jim Storch
+#   mudlib/skill/ranged_skills.py
+#   Copyright 2010 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-Functions related to ranged weapon skills.
+Rate ranged weapon skills.
 """
 
 from mudlib.skill import skill_check
@@ -18,7 +18,7 @@ def ranged_combat_rating(actor, tutor=True):
     Rate Actor's general combat prowess.
     """
     if tutor:
-        skillup_check(actor, 'ranged_combat')              
+        skillup_check(actor, 'ranged_combat')
     base = actor.get_skill('ranged_combat')
     bonus = stat_bonus(actor, 'brawn')
     return base * bonus
@@ -30,10 +30,10 @@ def ranged_weapon_rating(actor):
     """
     weapon_type = actor.get_ranged_type()
     if tutor:
-        skillup_check(actor, weapon_type)  
+        skillup_check(actor, weapon_type)
     base = actor.get_skill(weapon_type)
     bonus = stat_bonus(actor, 'precision')
-    return base * bonus    
+    return base * bonus
 
 
 def ranged_hit_rating(actor):
@@ -63,9 +63,3 @@ def ranged_max_dmg(actor):
     dmg = actor.get_primary_dmg()
     bonus = stat_bonus(actor, 'precision')
     return dmg * bonus
-
-
-
-
- 
-

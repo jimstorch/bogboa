@@ -29,4 +29,5 @@ YEAR_OFFSET = _cfg['year_offset']
 if ADDRESS == None:
     ADDRESS = ''
 
+## Key for the new player starting location
 START_UUID = _cfg['start_uuid']
