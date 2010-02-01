@@ -17,7 +17,7 @@ def give_item(actor, item, qty=1):
         if qty == 1:
             actor.send('^!%s^. added to inventory.\n' % item.name)
         else:
-            actor.send('^!%s x %d^. added to inventory.\n' 
+            actor.send('^!%s x %d^. added to inventory.\n'
                 % (item.name, qty))
 
 
@@ -26,7 +26,7 @@ def give_item_by_uuid(actor, uuid, qty=1):
     Add qty of item to actor's inventory by UUID.
     """
     item = gvar.ITEMS[uuid]
-    give_item(actor, item, qty)       
+    give_item(actor, item, qty)
 
 
 def take_item(actor, item, qty=1):
@@ -38,7 +38,7 @@ def take_item(actor, item, qty=1):
         if qty == 1:
             actor.send('^!%s^. removed from inventory.\n' % item.name)
         else:
-            actor.send('^!%s x %d^. removed from inventory.\n' 
+            actor.send('^!%s x %d^. removed from inventory.\n'
                 % (item.name, qty))
 
 
@@ -47,5 +47,4 @@ def take_item_by_uuid(actor, uuid, qty=1):
     Remove qty of item to actor's inventory by UUID.
     """
     item = gvar.ITEMS[uuid]
-    take_item(actor, item, qty)  
-
+    take_item(actor, item, qty)

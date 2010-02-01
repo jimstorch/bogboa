@@ -13,5 +13,4 @@ name: Gold Piece
 hint: coin
 text: a coin of the realm, expertly milled from lustrous gold
 burden: .01
-
-
+value: 1
