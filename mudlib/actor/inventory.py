@@ -10,12 +10,7 @@
 Classes for managing Item storage.
 """
 
-from mudlib.sys import THE_TIME
 from mudlib.sys.error import BogCmdError
-
-
-## Time for dropped items to vanish from floors
-_ITEM_DECAY = 300
 
 ## Maximum permitted stack size for any item, including coins.
 _MAX_STACK_SIZE = 99999999
@@ -26,7 +21,7 @@ _WEAR_SLOTS = set(['head', 'face', 'ears', 'neck', 'shoulders', 'back',
         'waist', 'legs', 'feet'])
 
 
-class Wardrobe(object):
+class Outfit(object):
     """
     Paper-doll Class to manage worn items.
     """
@@ -91,16 +86,16 @@ class Wardrobe(object):
 
 class Bag(object):
     """
-    Class for managing player carried items.
+    Class for managing actor carried items.
     """
 
     def __init__(self):
         ## Start out with some beginner settings
         ## A 'new bag' simply improves on these values
-        self.name = 'Apprentice Sack'       ## Displayed name
-        self.burden = 0.0                   ## Current weight/mass
-        self.limit = 50.0                   ## maxium allowed
-        self.reduction = 0.0                ## magical burden reduction %
+        self.name = 'bag'       ## Displayed name
+        self.burden = 0.0       ## Current weight/mass
+        self.limit = 50.0       ## maxium allowed
+        self.reduction = 0.0    ## magical burden reduction %
         ## Dict of Contents
         ##   key = item, value = count
         self.items = {}
@@ -111,15 +106,15 @@ class Bag(object):
         """
         return burden - ( burden * self.reduction )
 
-    def contents(self):
-        """
-        Return a string listing the contents.
-        """
-        s = ''
-        for items in self.items.keys():
-            qty = self.items[item]
-            s+='%-40s,%d\n\n' % (item.name, qty)
-        return s
+#    def contents(self):
+#        """
+#        Return a string listing the contents.
+#        """
+#        s = ''
+#        for items in self.items.keys():
+#            qty = self.items[item]
+#            s+='%-40s,%d\n\n' % (item.name, qty)
+#        return s
 
     def search(self, keyset, qty=1):
         found = []
@@ -159,7 +154,7 @@ class Bag(object):
         """
         curr = self.count(item)
         self.items[item] = curr + qty
-        self.burden += _self.reduce( item.burden * qty )
+        self.burden += self._reduce( item.burden * qty )
 
     def subtract(self, item, qty=1):
         """

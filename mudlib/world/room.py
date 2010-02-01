@@ -19,9 +19,9 @@ from mudlib.usr.lang import keyset
 from mudlib.usr.lang import guestimate
 from mudlib.world.floor import Floor
 from mudlib.scripting.bogscript import process_scripts
+from mudlib import action
 
-
-from mudlib.scripting import SCRIPT_ENV
+#from mudlib.scripting import SCRIPT_ENV
 
 _CLEANERS = [
     'thieving mice scurry past',
@@ -144,7 +144,8 @@ class Room(object):
         self.actors.append(actor)
 
     def on_exit(self, actor):
-        self.actors.remove(actor)
+        if actor in self.actors:
+            self.actors.remove(actor)
 
     def on_death(self, actor):
         self.run_script('on_death')
@@ -169,14 +170,14 @@ class Room(object):
         print "on_hear fired"
         if 'on_hear' in self.scripts:
 
-            _local = {
-                'room':self,
-                'actor':actor,
-                'message':msg,
-                }
+#            _local = {
+#                'room':self,
+#                'actor':actor,
+#                'message':msg,
+#                }
 
-            room = self
-            exec self.scripts['on_hear'] in SCRIPT_ENV, _local
+            #room = self
+            exec self.scripts['on_hear'] #in SCRIPT_ENV, _local
 
     def on_identify(self, actor):
         self.run_script('on_identify')

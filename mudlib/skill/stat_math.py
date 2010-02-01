@@ -15,24 +15,18 @@ Stats
 Stats are character statistics.  Derived from the Actor's race and increased
 (or lowered) by equipment and spells.
 
-The stats in use are:
+Physical Stats
 
-    Physical    Mental
-    ---------------------
-    Brawn       Knowledge
-    Vigor       Faith
-    Precision   Cunning
+    * Brawn - strength, heartiness, and balance.
+    * Vigor - stamina, pain tolerance, and body recuperation rate.
+    * Precision - dexterity, grace, accuracy, and physical reaction time.
 
-Warrior     - brawn, vigor, precision
-Monk        - Precision, Faith, Vigor
-Paladin     - Brawn, Faith, Knowledge
-Priest      - Faith, Knowledge, Precision
-Necromancer - Knowledge, Precision, Cunning
-Ninja       - Cunning, Precision, Brawn
-Ranger      - Precision, Faith, Cunning
-Rogue       - Precision, Brawn, Cunning
-Shaman      - Faith, Brawn, Knowledge
-Druid       - Knowledge, Faith, Cunning
+
+Mental Stats
+
+    * Knowledge - memory, education, and life experience (street smarts).
+    * Faith - confidence, willpower, zealotry, and mental recuperation rate.
+    * Cunning - intelligence, ingenuity, and mental reaction time.
 """
 
 def bonus_calc(stat):

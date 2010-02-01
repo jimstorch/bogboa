@@ -88,6 +88,7 @@ COMMAND_LIST = (
     (('quit', 'exit', 'logoff'), cmd.quit),
     (('bug',), cmd.bug),
     (('ansi','color'), cmd.ansi),
+    (('ansitest','ansi_test'), cmd.ansi_test),
 
     ## Wizardry
     (('ban',), cmd.ban),

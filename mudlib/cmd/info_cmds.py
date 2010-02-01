@@ -57,7 +57,7 @@ def look(player):
     Look at the current room.
     """
     room = player.avatar.get_room_obj()
-    player.send('^c^!%s^1, %s.\n^w' % (room.name, calendar.time_msg()))
+    player.send_wrapped('^c^!%s^1, %s.\n^w' % (room.name, calendar.time_msg()))
     player.send_wrapped(room.text)
 
 
@@ -105,6 +105,23 @@ def date(player):
 
 def inventory(player):
     """
-    Fix Me
+    Display the avatar's inventory.
     """
-    raise BogCmdError('Not implemented')
+    items = player.avatar.bag.items
+
+    if not items:
+        player.send('Your inventory is empty.\n')
+
+    else:
+        player.send('--^!Item^.------------------------------------'
+            '^!Quantity^.----^!Burden^.----^!Rough Value^.--\n')
+        for item in items:
+            qty = items[item]
+
+            player.send('  ^Y%-38s^w' % item.name)
+            player.send('%10d' % qty)
+            player.send('%10.2f' % (qty * item.burden))
+            player.send('%15.2f' % (qty * item.value))
+            player.send('\n')
+
+

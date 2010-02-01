@@ -26,7 +26,7 @@ class Item(object):
         self.text = None        # description
         self.slot = None        # which wardrobe slot, if any, the item fits
         self.burden = 0.0       # the mass/weight for tracking encumbrance
-        self.value = None       # What a vendor will pay for it
+        self.value = 0.0        # What a vendor will pay for it
         self.scripts = {}       # Builder defined event scripts
 
 
@@ -273,10 +273,10 @@ def configure_item(cfg):
         item.slot = cfg.pop('slot')
 
     if 'burden' in cfg:
-        item.burden = cfg.pop('burden')
+        item.burden = float(cfg.pop('burden'))
 
     if 'value' in cfg:
-        item.value = cfg.pop('value')
+        item.value = float(cfg.pop('value'))
 
     ## For future use
     if 'version' in cfg:
