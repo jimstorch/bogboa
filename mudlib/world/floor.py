@@ -67,17 +67,17 @@ class Floor(object):
                 is_cleaner = True
         return is_cleaner
 
-    def contents(self):
-        """
-        Return a string describing the contents.
-        Unlike bags, we're going to list the shorter nicks instead of full
-        names.
-        """
-        s = ''
-        for item in self.items.keys():
-            qty, foo = self.items[item]
-            s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
-        return s
+#    def contents(self):
+#        """
+#        Return a string describing the contents.
+#        Unlike bags, we're going to list the shorter nicks instead of full
+#        names.
+#        """
+#        s = ''
+#        for item in self.items.keys():
+#            qty, foo = self.items[item]
+#            s+='^Y%s^w (x%d)\n\n' % (item.name, qty)
+#        return s
 
     def has(self, item, qty=1):
         """

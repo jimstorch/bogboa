@@ -17,7 +17,7 @@ def emote(client, msg):
     Displays an emote to everyone in the room.
     """
     room = client.get_room()
-    room.tell_all('^G... %s %s^w' % (client.name, msg))
+    room.tell_all('^G... %s %s^w\n' % (client.name, msg))
 
 
 @parsers.dialogue
@@ -26,10 +26,10 @@ def tell(client, target, msg):
     Send message from client to client.
     """
     if client == target:
-        target.send('^mYou tell yourself^w, %s' % msg)
+        target.send('^mYou tell yourself^w, %s\n' % msg)
     else:
-        target.send('^M%s tells you^w, %s' % (client.name, msg))
-        client.send('^mYou tell %s^w, %s' % (target.name, msg))
+        target.send('^M%s tells you^w, %s\n' % (client.name, msg))
+        client.send('^mYou tell %s^w, %s\n' % (target.name, msg))
         ## note the sender so that a reply works
         target.last_tell = client.name
 
@@ -42,14 +42,14 @@ def reply(client, msg):
     if client.last_tell:
         target = shared.find_player(client.last_tell)
         if target:
-            target.send('^M%s replies^w, %s' % (client.name, msg))
-            client.send('^mYou reply to %s^w, %s' % (target.name, msg))
+            target.send('^M%s replies^w, %s\n' % (client.name, msg))
+            client.send('^mYou reply to %s^w, %s\n' % (target.name, msg))
             ## note the sender so that a reply works
             target.last_tell = client.name
         else:
             client.alert('%s is no longer online.\n' % client.last_tell)
     else:
-        client.alert('You have not recieved anything to reply to.')
+        client.alert('You have not recieved anything to reply to.\n')
 
 
 @parsers.monologue
@@ -59,9 +59,9 @@ def ooc(client, msg):
     """
     for player in gvar.PLAYERS:
         if player == client:
-            player.send('^gYou OOC^w, %s' % msg)
+            player.send('^gYou OOC^w, %s\n' % msg)
         else:
-            player.send('^G%s OOCs^w, %s' % (client.name, msg))
+            player.send('^G%s OOCs^w, %s\n' % (client.name, msg))
 
 
 @parsers.monologue
@@ -71,9 +71,9 @@ def shout(client, msg):
     """
     for player in gvar.PLAYERS:
         if player == client:
-            player.send('^rYou shout^w, %s' % msg)
+            player.send('^rYou shout^w, %s\n' % msg)
         else:
-            player.send('^R%s shouts^w, %s' % (client.name, msg))
+            player.send('^R%s shouts^w, %s\n' % (client.name, msg))
 
 
 @parsers.monologue
@@ -83,8 +83,8 @@ def say(player, msg):
     """
     avatar = player.avatar
     room = avatar.get_room_obj()
-    action.tell_all_but(room, '^W%s says^w, %s' % (avatar.get_name(), msg),
+    action.tell_all_but(room, '^W%s says^w, %s\n' % (avatar.get_name(), msg),
         avatar)
-    player.send('^WYou say^w, %s' % msg)
+    player.send('^WYou say^w, %s\n' % msg)
     ## Fire the on hear event
     room.on_hear(avatar, msg)
