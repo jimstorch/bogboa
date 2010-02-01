@@ -48,6 +48,12 @@ class Avatar(BaseActor):
         """
         self.client.send_wrapped(msg)
 
+    def get_origin(self):
+        """
+        Return the IP address & port number of the player.
+        """
+        return self.client.addrport()
+
     #--[ Ability Authorizing ]------------------------------------------------
 
     def grant_ability(self, ability_name):

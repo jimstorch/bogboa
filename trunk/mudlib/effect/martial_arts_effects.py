@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------------------------
-#   mudlib/action/__init__.py
+#   mudlib/effect/martial_combat_effects.py
 #   Copyright 2009 Jim Storch
 #   Distributed under the terms of the GNU General Public License
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
 """
-Action related functions.
-
-Actions are called by Commands and Abilities.
-Actions generate Messages and Effects.
+Martial Arts combat requiring more skill than unarmed.
 """
 
-from mudlib.action.move_acts import *
-from mudlib.action.speech_acts import *
-from mudlib.action.equipment_acts import *
+def flip(delay, amount=1.0):
+    pass
+
+def flyingkick(delay, amount=1.0):
+    pass

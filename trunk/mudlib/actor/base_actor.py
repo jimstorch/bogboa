@@ -11,6 +11,8 @@ Base Class for Avatars and Mobs.
 """
 
 from mudlib import gvar
+from mudlib.actor.inventory import Bag
+#from mudlib.actor.inventory import Outfit
 
 ## Pronouns by Gender
 _NOMINATIVE = {'male':'he', 'female':'she', 'neutral':'it', 'group':'they'}
@@ -27,6 +29,8 @@ class BaseActor(object):
     def __init__(self):
         self.room = None
         self.is_player = False
+        self.bag = Bag()
+        #self.outfit = Outfit()
 
     def get_alias(self):
         """

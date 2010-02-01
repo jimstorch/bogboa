@@ -19,7 +19,7 @@ def on_connect(client):
     Handler for new client connections, called by miniboa server.
     """
     THE_LOG.add('++ New client from %s.' % client.addrport())
-    client.request_terminal_type()
+    #client.request_terminal_type()
     client.request_naws()
     user = Entrant(client)
     gvar.LOBBY[client] = user
@@ -57,13 +57,13 @@ def kick_idle_clients():
         if client.idle() > IDLE_TIMEOUT:
             user = gvar.LOBBY[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            user.inform('\n^YIdle timeout.^w\n')
+            user.send('\n^YIdle timeout.^w\n')
             user.delayed_deactivate()
     for client in gvar.PLAYERS:
         if client.idle() > IDLE_TIMEOUT:
             user = gvar.PLAYERS[client]
             THE_LOG.add('-- Kicking idle client from %s' % client.addrport())
-            user.inform('\n^YIdle timeout.^w\n')
+            user.send('\n^YIdle timeout.^w\n')
             user.delayed_deactivate()
 
 

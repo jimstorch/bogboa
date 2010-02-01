@@ -16,6 +16,7 @@ from mudlib import gvar
 from mudlib import action
 from mudlib.sys import THE_LOG
 from mudlib.sys.config import START_UUID
+from mudlib.dat import check_credentials
 from mudlib.dat import add_account
 from mudlib.dat import last_on
 from mudlib.dat import rejected_name
@@ -47,6 +48,14 @@ def check_name(name):
         err= ''
         happy = True
     return happy, err
+
+
+def is_online(name):
+    """
+    Return True is the character is already online.
+    """
+    return bool(name.lower in gvar.AVATARS)
+        
 
 
 def create_account(client, name, password):
@@ -106,6 +115,12 @@ def play_account(avatar):
     Given a game Avatar, create a Player instance to manage it.
     """
 
+    ## Seed some gear for testing
+    action.give_item_by_uuid(avatar, 'f8988e8f6b1a41cdb2f1d63dc313c58d', 1)
+    action.give_item_by_uuid(avatar, 'ffbefc071b3647999068bf402289625b', 50)  
+
+
+
     ## Initialize the Avatar
     avatar.prep()
     ## Create the Player(User)
@@ -119,14 +134,27 @@ def play_account(avatar):
         'kick', 'time', 'date', 'uptime',
         'ansi', 'stats', 'topics',
         'look', 'shutdown', 'take',
+        'inventory', 'ansitest',
         ])
 
     player.commands.update(commands)
     #player.commands.update(fetch_kv_set(avatar.uuid, 'commands'))
     ## Add to Play List
     gvar.PLAYERS[avatar.client] = player
-    gvar.AVATARS[avatar.get_name().lower()] = avatar
-    action.enter(avatar, avatar.get_room_obj())
+
+
+    ## Check if the character is already in play.
+    ## The reason I'm checking so late in the login process is to allow
+    ## the character name to differ from the account name.
+    if avatar.get_name().lower() in gvar.AVATARS:
+        player.send("\n^RThat character is in use.^w\n")
+        player.delayed_deactivate()
+        THE_LOG.add('?? Attempt to play active character %s from %s.' %
+            (avatar.get_name(), avatar.get_origin()))
+
+    else:
+        gvar.AVATARS[avatar.get_name().lower()] = avatar
+        action.enter(avatar, avatar.get_room_obj())
 
 
 

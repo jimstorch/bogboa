@@ -61,7 +61,7 @@ class Entrant(BaseUser):
     #---------------------------------------------------------Returning Players
 
     def req_username(self):
-        self.send("Username or ^!new^1 to create an account: ")
+        self.send("Username or ^!new^. to create an account: ")
         self.change_state('get_username')
 
     def req_password(self):
@@ -101,7 +101,8 @@ class Entrant(BaseUser):
                 self.delayed_deactivate()
 
             elif status == 'suspended':
-                self.send(self, '^r\nAccount is under temporary suspension.^w\n')
+                self.send(self, 
+                    '^r\nAccount is under temporary suspension.^w\n')
                 record_visit(self.username, self.client.address)
                 self.delayed_deactivate()
 
