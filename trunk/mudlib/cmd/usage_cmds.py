@@ -6,16 +6,14 @@
 #   See docs/LICENSE.TXT or http://www.gnu.org/licenses/ for details
 #------------------------------------------------------------------------------
 
-from mudlib.usr import parsers
-from mudlib.usr.lang import keyset
+from mudlib.lang import parsers
+from mudlib.lang import create_keyset
 
 
-#--------------------------------------------------------------------------Drop
 
 def drop(client, keyset, qty=0, idx=0):
     pass
 
-#------------------------------------------------------------------------Remove
 
 def remove(client):
 
@@ -23,9 +21,7 @@ def remove(client):
 
     pass
 
-@parsers.name_and_qty
-#--------------------------------------------------------------------------Take
-
+#@parsers.name_and_qty
 def take(client, phrase, qty):
     print phrase, qty
     room = client.get_room()
@@ -33,7 +29,6 @@ def take(client, phrase, qty):
     room.item_search(client, ks, qty)
 
 
-#--------------------------------------------------------------------------Wear
-
-def wear(client):
+#@parsers.name_trie
+def wear(player, name_trie):
     pass

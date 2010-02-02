@@ -7,12 +7,17 @@
 #------------------------------------------------------------------------------
 
 """
-Action related functions.
+Action Function Library
+-----------------------
 
-Actions are called by Commands and Abilities.
-Actions generate Messages and Effects.
+Actions are called by Commands, Abilities, and Scripts.  It is assumed that
+validation has already occurred above this level, therefore no argument
+testing or exception raising will be attempted.
+
+In other words, don't call take_item() without knowing that the actor has it.
 """
 
+from mudlib.action.stat_acts import *
 from mudlib.action.move_acts import *
 from mudlib.action.speech_acts import *
-from mudlib.action.equipment_acts import *
+from mudlib.action.inventory_acts import *

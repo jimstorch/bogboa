@@ -8,7 +8,7 @@
 
 from mudlib import gvar
 from mudlib import action
-from mudlib.usr import parsers
+from mudlib.lang import parsers
 
 
 @parsers.monologue

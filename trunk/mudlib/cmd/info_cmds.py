@@ -11,8 +11,9 @@ Information related Player commands.
 """
 
 from mudlib import gvar
+from mudlib.actor import DISPLAY_SLOTS
 from mudlib.sys.error import BogCmdError
-from mudlib.usr import parsers
+from mudlib.lang import parsers
 from mudlib.world import calendar
 
 
@@ -57,7 +58,7 @@ def look(player):
     Look at the current room.
     """
     room = player.avatar.get_room_obj()
-    player.send_wrapped('^c^!%s^1, %s.\n^w' % (room.name, calendar.time_msg()))
+    player.send_wrapped('^c^!%s^., %s.\n^w' % (room.name, calendar.time_msg()))
     player.send_wrapped(room.text)
 
 
@@ -77,6 +78,7 @@ def help(player, arg):
         player.send_wrapped(gvar.HELPS['help'].text)
 
 
+@parsers.blank
 def score(player):
     """
     Fix Me
@@ -93,7 +95,6 @@ def time(player):
     print player.avatar.profile
 
 
-
 @parsers.blank
 def date(player):
     """
@@ -101,13 +102,21 @@ def date(player):
     """
     player.send_wrapped('^CThe date is %s.^w\n' % calendar.date_msg())
 
-
-
+@parsers.blank
 def inventory(player):
     """
-    Display the avatar's inventory.
+    Display the avatar's worn and carried items.
     """
-    items = player.avatar.bag.items
+    worn(player)
+    carried(player)
+
+
+@parsers.blank
+def carried(player):
+    """
+    Display the avatar's carried items.
+    """
+    items = player.avatar.carried
 
     if not items:
         player.send('Your inventory is empty.\n')
@@ -125,3 +134,45 @@ def inventory(player):
             player.send('\n')
 
 
+def match_carried(actor, keyset):
+    matches = []
+    for item in actor.carried:
+        if item.trie.match_keyset(keyset):
+            matches.append(item)
+    return matches
+
+@parsers.arg_keyset
+def examine(player, keyset):
+    """
+    Examine an item in inventory.
+    """
+    matches = match_carried(player.avatar, keyset)
+    if matches:
+        for item in matches:
+            player.send('^!%s^.: %s\n' % (item.name, item.text))
+    else:
+        player.send('^yItem not found.^w\n')
+
+
+
+
+@parsers.blank
+def worn(player):
+    """
+    Display the avatar's worn items.
+    """
+    player.send('--^!Slot^.--------^!Item^.-----------------------------'
+        '----^!Burden^.----^!Rough Value^.--\n')
+
+    for slot in DISPLAY_SLOTS:
+        player.send('  ^Y%-12s^w' % slot)
+        item = player.avatar.worn.get(slot, None)
+        if item:
+            player.send('  ^Y%-30s^w' % item.name)
+#        player.send('%10d' % qty)
+#        player.send('%10.2f' % (qty * item.burden))
+#        player.send('%15.2f' % (qty * item.value))
+            player.send('\n')
+
+        else:
+            player.send('--empty--\n')

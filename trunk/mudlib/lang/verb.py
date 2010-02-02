@@ -68,8 +68,11 @@ COMMAND_LIST = (
     (('score', 'played','stats'), cmd.score),
     (('time', 'clock', 'hour'), cmd.time),
     (('date', 'calendar', 'year'), cmd.date),
-    (('inventory', 'i', 'inven'), cmd.inventory),
+    (('inventory', 'i', 'inven', ), cmd.inventory),
+    (('worn', 'outfit', 'clothes', 'armor',), cmd.worn),
+    (('carried', 'items', 'bag',), cmd.carried),
     (('look', 'l',), cmd.look),
+    (('examine', 'ex',), cmd.examine),
     (('stats', 'stat',), cmd.stats),
 
     ## Interaction

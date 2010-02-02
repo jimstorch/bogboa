@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 
 """
-Room Class, configuration, and registration. 
+Room Class, configuration, and registration.
 """
 
 import sys
@@ -15,8 +15,6 @@ from random import choice
 
 from mudlib import gvar
 from mudlib.sys import THE_LOG
-from mudlib.usr.lang import keyset
-from mudlib.usr.lang import guestimate
 from mudlib.world.floor import Floor
 from mudlib.scripting.bogscript import process_scripts
 from mudlib import action

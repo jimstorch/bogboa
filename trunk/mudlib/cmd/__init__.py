@@ -7,7 +7,13 @@
 #------------------------------------------------------------------------------
 
 """
-Functions to execute commands typed in by the players.
+Command Function Library
+------------------------
+
+These are handlers for player typed commands.
+
+Commands take arguments parsed from the player's input, validate them, and
+either calll Actions to perform them or raise the appropriate exception.
 """
 
 

@@ -10,7 +10,7 @@ from mudlib import gvar
 from mudlib import action
 from mudlib.sys import THE_LOG
 from mudlib.sys.scheduler import THE_SCHEDULER
-from mudlib.usr import parsers
+from mudlib.lang import parsers
 
 
 def ban(player):

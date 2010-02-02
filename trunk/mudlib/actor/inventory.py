@@ -15,10 +15,10 @@ from mudlib.sys.error import BogCmdError
 ## Maximum permitted stack size for any item, including coins.
 _MAX_STACK_SIZE = 99999999
 
-## Defined wear slots for equipable weapons, armor, and jewelry.
-_WEAR_SLOTS = set(['head', 'face', 'ears', 'neck', 'shoulders', 'back',
-        'chest', 'arms', 'wrists', 'hands', 'fingers', 'primary', 'secondary',
-        'waist', 'legs', 'feet'])
+### Defined wear slots for equipable weapons, armor, and jewelry.
+#WEAR_SLOTS = set(['head', 'face', 'ears', 'neck', 'shoulders', 'back',
+#        'chest', 'arms', 'wrists', 'hands', 'fingers',
+#        'main hand', 'off hand', 'both hands','waist', 'legs', 'feet'])
 
 
 class Outfit(object):
@@ -30,57 +30,52 @@ class Outfit(object):
         self.slots = {}
         self.burden = 0.0
 
-    def can_equip_uuid(self, uuid):
-        item = find_item[uuid]
-        return self.can_equip_item(item)
-
-    def can_equip_item(self, item):
-        return bool(item.slot in _WEAR_SLOTS)
-
-    def equip_uuid(self, uuid):
-        """
-        Given a UUID, fill a slot with the corresponding item object.
-        """
-        item = find_item[uuid]
-        self.equip_item(item)
-
-    def equip_item(self, item, body):
-        self.slots[slot] = item
-        ## TODO: dbms update
-        item.on_equip(body)
+    def equip_item(self, item):
+        self.slots[item.slot] = item
         self.burden += item.burden
-
-    def in_slot(self, slotname):
-        """
-        Return the item in a given slotname, or None for empty.
-        """
-        return self.slots.get(slotname, None)
-
-    def remove_uuid(self, uuid):
-        item = find_item(uuid)
-        self.remove_item(item)
 
     def remove_item(self, slot):
         self.slots[item.slot] = None
-        ## Todo: dbms update
-        item.on_remove(body)
         self.burden -= item.burden
 
-    def cascade_event(self, event, body):
-        """
-        Apply an event to all worn items to fire custom scripts.
-        """
-        pass
+#    def can_equip_uuid(self, uuid):
+#        item = find_item[uuid]
+#        return self.can_equip_item(item)
 
-    def describe(self):
-        pass
+#    def can_equip_item(self, item):
+#        return bool(item.slot in WEAR_SLOTS)
 
+#    def equip_uuid(self, uuid):
+#        """
+#        Given a UUID, fill a slot with the corresponding item object.
+#        """
+#        item = find_item[uuid]
+#        self.equip_item(item)
 
-    def db_save(self, uuid):
-        pass
+#    def in_slot(self, slot):
+#        """
+#        Return the item in a given slot, or None for empty.
+#        """
+#        return self.slots.get(slot, None)
 
-    def db_load(self, uuid):
-        pass
+#    def remove_uuid(self, uuid):
+#        item = find_item(uuid)
+#        self.remove_item(item)
+
+#    def cascade_event(self, event, body):
+#        """
+#        Apply an event to all worn items to fire custom scripts.
+#        """
+#        pass
+
+#    def describe(self):
+#        pass
+
+#    def db_save(self, uuid):
+#        pass
+
+#    def db_load(self, uuid):
+#        pass
 
 #---------------------------------------------------------------------------Bag
 
