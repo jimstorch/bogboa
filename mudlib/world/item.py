@@ -10,7 +10,7 @@ import sys
 
 from mudlib import gvar
 from mudlib.sys import THE_LOG
-from mudlib.usr.lang import NameTrie
+from mudlib.lang import NameTrie
 from mudlib.scripting.bogscript import process_scripts
 
 

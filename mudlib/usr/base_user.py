@@ -12,8 +12,8 @@ Base class for interacting with a human operator.
 
 from mudlib.sys.scheduler import THE_SCHEDULER
 from mudlib.sys.error import BogCmdError
-from mudlib.usr.verb import VERB_ALIAS
-from mudlib.usr.verb import VERB_HANDLER
+from mudlib.lang.verb import VERB_ALIAS
+from mudlib.lang.verb import VERB_HANDLER
 
 
 class BaseUser(object):
@@ -55,7 +55,7 @@ class BaseUser(object):
         Send message, ignore caret color codes.
         """
         self.client.send(msg)
-            
+
     def send_wrapped(self, msg):
         """
         Send message with word wrapping and caret color codes.

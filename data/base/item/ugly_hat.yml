@@ -7,16 +7,8 @@
 #------------------------------------------------------------------------------
 version: 1001
 
-uuid:   f8988e8f6b1a41cdb2f1d63dc313c58d
-#nick:   dagger
-name:   Apprentice Dagger
-hint:   weapon
-text:   a short blade with a wound leather grip and brass pommel
-burden: 7
-slot:   main hand
-
-#on_equip:
-#    body.adj_stat('dex', 10)
-
-#on_remove:
-#    body.adj_stat('dex', -10)
+uuid:   0496162b704442e9b5197451937ea03a
+name:   An Ugly Hat
+text:   It not only looks bad, it smells bad too.
+burden: 1
+slot:   head

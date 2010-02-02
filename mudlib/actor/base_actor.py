@@ -11,7 +11,7 @@ Base Class for Avatars and Mobs.
 """
 
 from mudlib import gvar
-from mudlib.actor.inventory import Bag
+#from mudlib.actor.inventory import Bag
 #from mudlib.actor.inventory import Outfit
 
 ## Pronouns by Gender
@@ -29,8 +29,23 @@ class BaseActor(object):
     def __init__(self):
         self.room = None
         self.is_player = False
-        self.bag = Bag()
-        #self.outfit = Outfit()
+        ## Character Stats;
+        ## key = stat name, value = amount
+        self.stats = {}
+        ## Carried items;
+        ## key = Item Obj, value = item count
+        self.carried = {}
+        ## Worn Items;
+        ## key = slot name, value = Item Obj
+        self.worn = {}
+        ## Burden = adjusted weight of carried items + worn items
+        self.burden = 0.0
+
+    def get_burden(self):
+        """
+        Return the actor's burden of carried and worn items.
+        """
+        return self.bag.burden + self.outfit.burden
 
     def get_alias(self):
         """

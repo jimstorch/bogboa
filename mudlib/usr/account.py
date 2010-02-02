@@ -55,7 +55,7 @@ def is_online(name):
     Return True is the character is already online.
     """
     return bool(name.lower in gvar.AVATARS)
-        
+
 
 
 def create_account(client, name, password):
@@ -117,9 +117,8 @@ def play_account(avatar):
 
     ## Seed some gear for testing
     action.give_item_by_uuid(avatar, 'f8988e8f6b1a41cdb2f1d63dc313c58d', 1)
-    action.give_item_by_uuid(avatar, 'ffbefc071b3647999068bf402289625b', 50)  
-
-
+    action.give_item_by_uuid(avatar, '0496162b704442e9b5197451937ea03a', 1)
+    action.give_item_by_uuid(avatar, 'ffbefc071b3647999068bf402289625b', 50)
 
     ## Initialize the Avatar
     avatar.prep()
@@ -134,7 +133,8 @@ def play_account(avatar):
         'kick', 'time', 'date', 'uptime',
         'ansi', 'stats', 'topics',
         'look', 'shutdown', 'take',
-        'inventory', 'ansitest',
+        'inventory', 'worn', 'carried',
+        'ansitest', 'examine',
         ])
 
     player.commands.update(commands)
