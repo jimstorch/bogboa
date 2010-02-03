@@ -12,3 +12,4 @@ Language related code.
 
 from mudlib.lang.trie import NameTrie
 from mudlib.lang.trie import create_keyset
+from mudlib.lang.finders import *

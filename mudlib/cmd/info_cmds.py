@@ -12,8 +12,9 @@ Information related Player commands.
 
 from mudlib import gvar
 from mudlib.actor import DISPLAY_SLOTS
-from mudlib.sys.error import BogCmdError
+from mudlib.sys import BogCmdError
 from mudlib.lang import parsers
+from mudlib.lang import match_carried
 from mudlib.world import calendar
 
 
@@ -127,19 +128,12 @@ def carried(player):
         for item in items:
             qty = items[item]
 
-            player.send('  ^Y%-38s^w' % item.name)
+            player.send('  ^!%-38s^.' % item.name)
             player.send('%10d' % qty)
             player.send('%10.2f' % (qty * item.burden))
             player.send('%15.2f' % (qty * item.value))
             player.send('\n')
 
-
-def match_carried(actor, keyset):
-    matches = []
-    for item in actor.carried:
-        if item.trie.match_keyset(keyset):
-            matches.append(item)
-    return matches
 
 @parsers.arg_keyset
 def examine(player, keyset):
@@ -154,21 +148,33 @@ def examine(player, keyset):
         player.send('^yItem not found.^w\n')
 
 
-
-
 @parsers.blank
 def worn(player):
     """
     Display the avatar's worn items.
     """
+    worn = player.avatar.worn
     player.send('--^!Slot^.--------^!Item^.-----------------------------'
-        '----^!Burden^.----^!Rough Value^.--\n')
+        '------^!Burden^.----^!Rough Value^.--\n')
 
+    ## Held items
+    both = worn.get('both hands', None)
+    main = worn.get('main hand', None)
+    off = worn.get('off hand', None)
+    if both:
+        player.send('  both hands  ^!%-30s^.\n' % both.name)
+    else:
+        if main:
+            player.send('  main hand   ^!%-30s^.\n' % main.name)
+        if off:
+            player.send('  off hand    ^!%-30s^..\n'% off.name)
+
+    ## Armor slots
     for slot in DISPLAY_SLOTS:
-        player.send('  ^Y%-12s^w' % slot)
-        item = player.avatar.worn.get(slot, None)
+        player.send('  %-12s' % slot)
+        item = worn.get(slot, None)
         if item:
-            player.send('  ^Y%-30s^w' % item.name)
+            player.send('^!%-30s^.' % item.name)
 #        player.send('%10d' % qty)
 #        player.send('%10.2f' % (qty * item.burden))
 #        player.send('%15.2f' % (qty * item.value))

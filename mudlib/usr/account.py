@@ -135,6 +135,7 @@ def play_account(avatar):
         'look', 'shutdown', 'take',
         'inventory', 'worn', 'carried',
         'ansitest', 'examine',
+        'wear', 'remove', 'take', 'drop',
         ])
 
     player.commands.update(commands)

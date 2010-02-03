@@ -12,7 +12,7 @@ Handling Player Movement
 
 from mudlib import gvar
 from mudlib.lang import parsers
-from mudlib.sys.error import BogCmdError
+from mudlib.sys import BogCmdError
 from mudlib import action
 
 
